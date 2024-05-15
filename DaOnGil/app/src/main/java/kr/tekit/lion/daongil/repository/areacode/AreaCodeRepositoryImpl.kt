@@ -7,8 +7,15 @@ import kr.tekit.lion.daongil.dto.response.areacode.AreaCodeResponse
 class AreaCodeRepositoryImpl(
     private val remote: AreaCodeDataSource,
     private val local: AreaCodeDataSource,
-): AreaCodeRepository {
-    override suspend fun getAreaCode(request: AreaCodeRequest): AreaCodeResponse {
-        return remote.getAreaCode(request)
+) : AreaCodeRepository {
+
+    override suspend fun getAreaCode(serviceKey: String, pageNo: String): AreaCodeResponse {
+        return remote.getAreaCode(
+            AreaCodeRequest(
+                serviceKey = "serviceKey",
+                pageNo = "pageNo",
+            ).toRequestModel()
+        )
+
     }
 }

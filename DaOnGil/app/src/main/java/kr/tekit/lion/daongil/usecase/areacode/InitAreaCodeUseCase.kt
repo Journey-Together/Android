@@ -8,7 +8,10 @@ class InitAreaCodeUseCase(
     private val areaCodeRepository: AreaCodeRepository,
     private val setAreaCodeUseCase: SetAreaCodeUseCase
 ): BaseUseCase() {
-    suspend operator fun invoke(serviceKey: String, pageNo: String): Result<Unit> = execute {
-        setAreaCodeUseCase(areaCodeRepository.getAreaCode(serviceKey, pageNo).toDomainModel())
+    suspend operator fun invoke(serviceKey: String): Result<Unit> = execute {
+
+        setAreaCodeUseCase(areaCodeRepository.getAreaCode(serviceKey, "1").toDomainModel())
+        setAreaCodeUseCase(areaCodeRepository.getAreaCode(serviceKey, "2").toDomainModel())
+
     }
 }

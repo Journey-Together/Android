@@ -8,19 +8,19 @@ class LocalAreaCodeDataSource(
     private val areaCodeDao: AreaCodeDao
 ): AreaCodeDataSource {
 
-    override suspend fun getAreaCodes(request: Map<String, String>): AreaCodeResponse {
+    override suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse {
         TODO()
     }
 
-    override suspend fun getAreaCodes(): List<AreaCodeEntity> {
+    override suspend fun getAllAreaCodes(): List<AreaCodeEntity> {
         return areaCodeDao.getAreaCodes()
     }
 
-    override suspend fun getAreaCode(code: String): AreaCodeEntity {
+    override suspend fun getAreaCodeInfo(code: String): AreaCodeEntity {
         return areaCodeDao.getAreaCode(code)
     }
 
-    override suspend fun setAreaCode(areaCodes: List<AreaCodeEntity>){
+    override suspend fun addAreaInfoList(areaCodes: List<AreaCodeEntity>) {
         areaCodeDao.insertAreaCode(areaCodes)
     }
 }

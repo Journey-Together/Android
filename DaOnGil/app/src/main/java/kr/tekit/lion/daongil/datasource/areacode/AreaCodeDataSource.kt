@@ -4,11 +4,11 @@ import kr.tekit.lion.daongil.dto.response.areacode.AreaCodeResponse
 import kr.tekit.lion.daongil.local.AreaCodeEntity
 
 interface AreaCodeDataSource {
-    suspend fun getAreaCodes(request: Map<String, String>): AreaCodeResponse
+    suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse
 
-    suspend fun getAreaCodes(): List<AreaCodeEntity>
+    suspend fun getAllAreaCodes(): List<AreaCodeEntity>
 
-    suspend fun getAreaCode(code: String): AreaCodeEntity
+    suspend fun getAreaCodeInfo(code: String): AreaCodeEntity
 
-    suspend fun setAreaCode(areaCodes: List<AreaCodeEntity>)
+    suspend fun addAreaInfoList(areaCodes: List<AreaCodeEntity>)
 }

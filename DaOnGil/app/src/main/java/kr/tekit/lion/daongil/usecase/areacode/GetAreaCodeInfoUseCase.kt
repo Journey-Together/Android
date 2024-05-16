@@ -4,10 +4,10 @@ import kr.tekit.lion.daongil.local.toDomainModel
 import kr.tekit.lion.daongil.model.AreaCode
 import kr.tekit.lion.daongil.repository.areacode.AreaCodeRepository
 
-class GetAreaCodeUseCase(
+class GetAreaCodeInfoUseCase(
     private val areaCodeRepository: AreaCodeRepository,
 ) {
     suspend operator fun invoke(code: String): AreaCode{
-        return areaCodeRepository.getAreaCode(code).toDomainModel()
+        return areaCodeRepository.getAreaCodeInfo(code).toDomainModel()
     }
 }

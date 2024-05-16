@@ -8,6 +8,6 @@ class GetAllAreaCodeUseCase(
     private val areaCodeRepository: AreaCodeRepository,
 ) {
     suspend operator fun invoke(): List<AreaCode>{
-        return areaCodeRepository.getAreaCodes().map { it.toDomainModel() }
+        return areaCodeRepository.getAllAreaCodes().map { it.toDomainModel() }
     }
 }

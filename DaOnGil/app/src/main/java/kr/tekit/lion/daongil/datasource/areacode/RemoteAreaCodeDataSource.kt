@@ -1,17 +1,33 @@
 package kr.tekit.lion.daongil.datasource.areacode
 
+import android.util.Log
+import kr.tekit.lion.daongil.dto.request.AreaCodeRequest
 import kr.tekit.lion.daongil.dto.response.areacode.AreaCodeResponse
+import kr.tekit.lion.daongil.local.AreaCodeEntity
 import kr.tekit.lion.daongil.network.service.KorWithService
 
 class RemoteAreaCodeDataSource(
     private val korWithService: KorWithService
-): AreaCodeDataSource {
-    override suspend fun getAreaCode(request: Map<String, String>): AreaCodeResponse {
-        return korWithService.getAreaCode(request)
+) : AreaCodeDataSource {
+
+    override suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse {
+        return korWithService.getAreaCode(
+            AreaCodeRequest(
+                serviceKey = serviceCode,
+                pageNo = pageNo
+            ).toRequestModel()
+        )
     }
 
-    override suspend fun setAreaCode() {
-        TODO("Not yet implemented")
+    override suspend fun getAllAreaCodes(): List<AreaCodeEntity> {
+        return emptyList()
     }
+
+
+    override suspend fun getAreaCodeInfo(code: String): AreaCodeEntity {
+        return AreaCodeEntity("", "")
+    }
+
+    override suspend fun addAreaInfoList(areaCodes: List<AreaCodeEntity>) { }
 
 }

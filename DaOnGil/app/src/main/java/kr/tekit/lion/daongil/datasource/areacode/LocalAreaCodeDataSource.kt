@@ -1,13 +1,26 @@
 package kr.tekit.lion.daongil.datasource.areacode
 
 import kr.tekit.lion.daongil.dto.response.areacode.AreaCodeResponse
+import kr.tekit.lion.daongil.local.AreaCodeDao
+import kr.tekit.lion.daongil.local.AreaCodeEntity
 
-class LocalAreaCodeDataSource: AreaCodeDataSource {
-    override suspend fun getAreaCode(request: Map<String, String>): AreaCodeResponse {
-        TODO("Not yet implemented")
+class LocalAreaCodeDataSource(
+    private val areaCodeDao: AreaCodeDao
+): AreaCodeDataSource {
+
+    override suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse {
+        TODO()
     }
 
-    override suspend fun setAreaCode() {
-        TODO("Not yet implemented")
+    override suspend fun getAllAreaCodes(): List<AreaCodeEntity> {
+        return areaCodeDao.getAreaCodes()
+    }
+
+    override suspend fun getAreaCodeInfo(code: String): AreaCodeEntity {
+        return areaCodeDao.getAreaCode(code)
+    }
+
+    override suspend fun addAreaInfoList(areaCodes: List<AreaCodeEntity>) {
+        areaCodeDao.insertAreaCode(areaCodes)
     }
 }

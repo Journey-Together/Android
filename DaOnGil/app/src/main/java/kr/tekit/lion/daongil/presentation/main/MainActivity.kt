@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.presentation.main.vm.MainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
-    private val viewModel: MainViewModel by viewModels { MainViewModelFactory() }
+    private val viewModel: MainViewModel by viewModels { MainViewModelFactory(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

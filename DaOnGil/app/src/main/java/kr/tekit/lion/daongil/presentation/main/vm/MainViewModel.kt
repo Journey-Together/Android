@@ -4,23 +4,21 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.usecase.GetAreaCodeUseCase
+import kr.tekit.lion.daongil.usecase.areacode.GetAllAreaCodeUseCase
+import kr.tekit.lion.daongil.usecase.areacode.GetAreaCodeInfoUseCase
+import kr.tekit.lion.daongil.usecase.areacode.InitAreaCodeInfoUseCase
 import kr.tekit.lion.daongil.usecase.base.onError
 import kr.tekit.lion.daongil.usecase.base.onSuccess
 
 class MainViewModel(
-    private val getAreaCodeUseCase: GetAreaCodeUseCase
+    private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
+    private val getAreaCodeInfoUseCase: GetAreaCodeInfoUseCase,
+    private val initAreaCodeInfoUseCase: InitAreaCodeInfoUseCase
 ): ViewModel() {
     init {
         viewModelScope.launch {
-            getAreaCodeUseCase(
-                    serviceKey = "t2ivQakqcZ/cvxzekT7Ra9Ja8J1N1lBKu6LqVkijMliEeoD1lLXU0Qei+V9AC8aMbNG+TjVkca70NqFB9akmSg==",
-                    pageNo = "2",
-            ).onSuccess {
-                Log.d("AreaCodeRequestResult", it.toString())
-            }.onError {
-                Log.d("AreaCodeRequestResult", it.toString())
-            }
+            initAreaCodeInfoUseCase()
+            Log.d("ApiTestResult", getAreaCodeInfoUseCase("1").toString() )
         }
     }
 }

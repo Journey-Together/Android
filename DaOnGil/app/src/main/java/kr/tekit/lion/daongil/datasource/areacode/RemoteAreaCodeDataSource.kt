@@ -10,8 +10,13 @@ class RemoteAreaCodeDataSource(
     private val korWithService: KorWithService
 ) : AreaCodeDataSource {
 
-    override suspend fun getAreaInfoList(): AreaCodeResponse {
-        return korWithService.getAreaCode(AreaCodeRequest().toRequestModel())
+    override suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse {
+        return korWithService.getAreaCode(
+            AreaCodeRequest(
+                serviceKey = serviceCode,
+                pageNo = pageNo
+            ).toRequestModel()
+        )
     }
 
     override suspend fun getAllAreaCodes(): List<AreaCodeEntity> {

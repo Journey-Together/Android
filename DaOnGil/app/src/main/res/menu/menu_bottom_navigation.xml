@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/homeMainFragment"
+        android:icon="@drawable/ic_home_24px"
+        android:visible="true"
+        android:title="홈" />
+    <item
+        android:id="@+id/searchMainFragment"
+        android:icon="@drawable/ic_list_24px"
+        android:visible="true"
+        android:title="검색" />
+    <item
+        android:id="@+id/emergencyMainFragment"
+        android:icon="@drawable/ic_medical_services_24px"
+        android:visible="true"
+        android:title="응급" />
+    <item
+        android:id="@+id/calenderMainFragment"
+        android:icon="@drawable/ic_calendar_today_24px"
+        android:visible="true"
+        android:title="캘린더" />
+    <item
+        android:id="@+id/myInfoMainFragment"
+        android:icon="@drawable/ic_account_circle_24px"
+        android:visible="true"
+        android:title="내정보" />
+</menu>

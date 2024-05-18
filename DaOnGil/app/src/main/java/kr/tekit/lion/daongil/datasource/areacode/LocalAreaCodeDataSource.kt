@@ -8,7 +8,7 @@ class LocalAreaCodeDataSource(
     private val areaCodeDao: AreaCodeDao
 ): AreaCodeDataSource {
 
-    override suspend fun getAreaInfoList(serviceCode: String, pageNo: String): AreaCodeResponse {
+    override suspend fun getAreaInfoList(): AreaCodeResponse {
         TODO()
     }
 

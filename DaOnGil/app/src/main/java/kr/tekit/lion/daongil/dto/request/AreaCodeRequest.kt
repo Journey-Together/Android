@@ -5,7 +5,7 @@ data class AreaCodeRequest(
     val mobileOs: String = API_MOBILE_OS,
     val mobileApp: String = APP_NAME,
     val type: String = API_TYPE,
-    val areaCode: String = "",
+    val areaCode: String,
     val serviceKey: String = SERVICE_KEY,
 ){
     fun toRequestModel(): Map<String, String> {

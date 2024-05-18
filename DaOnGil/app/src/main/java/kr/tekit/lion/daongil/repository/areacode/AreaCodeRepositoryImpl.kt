@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.repository.areacode
 
 import kr.tekit.lion.daongil.datasource.areacode.AreaCodeDataSource
 import kr.tekit.lion.daongil.local.AreaCodeEntity
+import kr.tekit.lion.daongil.model.VillageCode
 
 class AreaCodeRepositoryImpl(
     private val remote: AreaCodeDataSource,
@@ -18,6 +19,15 @@ class AreaCodeRepositoryImpl(
 
     override suspend fun fetchAreaCodeInfo() {
         val remoteResult = remote.getAreaInfoList().toDomainModel()
-        local.addAreaInfoList(remoteResult)
+        local.addAreaCodeInfoList(remoteResult)
+    }
+
+    override suspend fun fetchVillageCodeInfo() {
+        getAllAreaCodes().map { entity ->
+            val villageCodes = remote.getAreaInfoList(entity.code).toDomainModel().map {
+                VillageCode(entity.code, it.code, it.name)
+            }
+           local.addVillageCodeInfoList(villageCodes)
+        }
     }
 }

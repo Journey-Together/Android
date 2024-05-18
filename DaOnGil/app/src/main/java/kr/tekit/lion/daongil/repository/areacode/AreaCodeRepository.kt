@@ -12,12 +12,16 @@ interface AreaCodeRepository {
     suspend fun getAreaCodeInfo(code: String): AreaCodeEntity
     suspend fun getAllAreaCodes(): List<AreaCodeEntity>
     suspend fun fetchAreaCodeInfo()
+    suspend fun fetchVillageCodeInfo()
 
     companion object{
         fun create(context: Context): AreaCodeRepository{
             return AreaCodeRepositoryImpl(
                 RemoteAreaCodeDataSource(RetrofitInstance.korWithService),
-                LocalAreaCodeDataSource(MainDataBase.getDatabase(context).areaCodeDao())
+                LocalAreaCodeDataSource(
+                    MainDataBase.getDatabase(context).areaCodeDao(),
+                    MainDataBase.getDatabase(context).villageCodeDao()
+                )
             )
         }
     }

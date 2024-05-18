@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@TypeConverters(AreaCodeListConverters::class)
-@Database(entities = [AreaCodeEntity::class], version = 1)
+@TypeConverters(ListConverter::class)
+@Database(entities = [AreaCodeEntity::class, VillageCodeEntity::class], version = 1)
 abstract class MainDataBase: RoomDatabase() {
+
     abstract fun areaCodeDao(): AreaCodeDao
+    abstract fun villageCodeDao(): VillageCodeDao
 
     companion object {
         @Volatile

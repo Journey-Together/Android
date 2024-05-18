@@ -22,3 +22,4 @@ fun AreaCode.toEntity(): AreaCodeEntity =
         code = code,
         name = name
     )
+

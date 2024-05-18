@@ -9,5 +9,6 @@ class InitAreaCodeInfoUseCase(
 ): BaseUseCase() {
     suspend operator fun invoke(): Result<Unit> = execute {
         areaCodeRepository.fetchAreaCodeInfo()
+        areaCodeRepository.fetchVillageCodeInfo()
     }
 }

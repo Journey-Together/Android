@@ -80,5 +80,6 @@ dependencies {
     implementation ("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     implementation("com.naver.maps:map-sdk:3.17.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
 
 }

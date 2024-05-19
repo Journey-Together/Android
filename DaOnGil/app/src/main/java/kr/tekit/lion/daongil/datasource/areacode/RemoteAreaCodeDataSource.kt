@@ -13,7 +13,7 @@ class RemoteAreaCodeDataSource(
 ) : AreaCodeDataSource {
 
     override suspend fun getAreaInfoList(areaCode: String): AreaCodeResponse {
-        return korWithService.getAreaCode(AreaCodeRequest(areaCode = areaCode).toRequestModel())
+        return korWithService.getAreaCode(AreaCodeRequest(areaCode).toRequestModel())
     }
 
     override suspend fun addAreaCodeInfoList(areaCodes: List<AreaCode>) {}

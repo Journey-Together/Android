@@ -2,13 +2,10 @@ package kr.tekit.lion.daongil.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityMainBinding
-import kr.tekit.lion.daongil.presentation.main.vm.MainViewModel
-import kr.tekit.lion.daongil.presentation.main.vm.MainViewModelFactory
 
 class MainActivity : AppCompatActivity() {
 

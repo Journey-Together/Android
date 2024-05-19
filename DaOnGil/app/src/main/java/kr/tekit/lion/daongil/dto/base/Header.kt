@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.dto.response
+package kr.tekit.lion.daongil.dto.base
 
 import com.squareup.moshi.JsonClass
 

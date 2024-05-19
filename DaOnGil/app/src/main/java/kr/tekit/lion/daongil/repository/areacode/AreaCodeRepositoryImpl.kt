@@ -17,12 +17,12 @@ class AreaCodeRepositoryImpl(
         return local.getAllAreaCodes()
     }
 
-    override suspend fun fetchAreaCodeInfo() {
+    override suspend fun addAreaCodeInfo() {
         val remoteResult = remote.getAreaInfoList().toDomainModel()
         local.addAreaCodeInfoList(remoteResult)
     }
 
-    override suspend fun fetchVillageCodeInfo() {
+    override suspend fun addVillageCodeInfo() {
         getAllAreaCodes().map { entity ->
             val villageCodes = remote.getAreaInfoList(entity.code).toDomainModel().map {
                 VillageCode(entity.code, it.code, it.name)

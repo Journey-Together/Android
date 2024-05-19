@@ -11,8 +11,8 @@ interface AreaCodeRepository {
 
     suspend fun getAreaCodeInfo(code: String): AreaCodeEntity
     suspend fun getAllAreaCodes(): List<AreaCodeEntity>
-    suspend fun fetchAreaCodeInfo()
-    suspend fun fetchVillageCodeInfo()
+    suspend fun addAreaCodeInfo()
+    suspend fun addVillageCodeInfo()
 
     companion object{
         fun create(context: Context): AreaCodeRepository{

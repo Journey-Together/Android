@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.local
+package kr.tekit.lion.daongil.local.entity
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

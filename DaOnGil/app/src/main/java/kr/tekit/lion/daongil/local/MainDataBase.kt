@@ -9,22 +9,26 @@ import kr.tekit.lion.daongil.local.dao.AreaCodeDao
 import kr.tekit.lion.daongil.local.dao.RecentSearchKeywordDao
 import kr.tekit.lion.daongil.local.dao.VillageCodeDao
 import kr.tekit.lion.daongil.local.entity.AreaCodeEntity
+import kr.tekit.lion.daongil.local.entity.RecentSearchKeywordEntity
 import kr.tekit.lion.daongil.local.entity.VillageCodeEntity
 
 @TypeConverters(ListConverter::class)
-@Database(entities = [AreaCodeEntity::class, VillageCodeEntity::class], version = 1)
-abstract class MainDataBase: RoomDatabase() {
+@Database(
+    entities = [AreaCodeEntity::class, VillageCodeEntity::class, RecentSearchKeywordEntity::class],
+    version = 2
+)
+abstract class MainDataBase : RoomDatabase() {
 
     abstract fun areaCodeDao(): AreaCodeDao
     abstract fun villageCodeDao(): VillageCodeDao
-    abstract fun searchKeywordDao(): RecentSearchKeywordDao
+    abstract fun RecentSearchKeywordDao(): RecentSearchKeywordDao
 
     companion object {
         @Volatile
-        private var INSTANCE: MainDataBase?= null
+        private var INSTANCE: MainDataBase? = null
 
         fun getDatabase(context: Context): MainDataBase {
-            return INSTANCE ?: synchronized(this){
+            return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     MainDataBase::class.java,

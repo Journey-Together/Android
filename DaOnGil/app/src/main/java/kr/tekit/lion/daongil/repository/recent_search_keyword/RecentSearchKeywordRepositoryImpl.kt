@@ -11,8 +11,10 @@ class RecentSearchKeywordRepositoryImpl(
     private val recentSearchKeywordDataSource: RecentSearchKeywordDataSource
 ) : RecentSearchKeywordRepository {
 
-    override suspend fun addRecentSearchKeyword(keyword: RecentSearchKeyword) {
-        recentSearchKeywordDataSource.addRecentSearchKeyword(keyword.toEntity())
+    override suspend fun addRecentSearchKeyword(keyword: String) {
+        recentSearchKeywordDataSource.addRecentSearchKeyword(
+            RecentSearchKeyword(keyword = keyword).toEntity()
+        )
     }
 
     override suspend fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeyword>> {

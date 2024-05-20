@@ -5,7 +5,7 @@ import kr.tekit.lion.daongil.repository.recent_search_keyword.RecentSearchKeywor
 class AddRecentSearchKeywordUseCase(
     private val recentSearchKeywordRepository: RecentSearchKeywordRepository
 ) {
-    suspend operator fun invoke(){
-        recentSearchKeywordRepository.getAllRecentSearchKeyword()
+    suspend operator fun invoke(keyword: String){
+        recentSearchKeywordRepository.addRecentSearchKeyword(keyword)
     }
 }

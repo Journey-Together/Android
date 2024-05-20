@@ -1,11 +1,11 @@
 package kr.tekit.lion.daongil.datasource.areacode
 
 import kr.tekit.lion.daongil.dto.response.areacode.AreaCodeResponse
-import kr.tekit.lion.daongil.local.AreaCodeDao
-import kr.tekit.lion.daongil.local.AreaCodeEntity
-import kr.tekit.lion.daongil.local.VillageCodeDao
-import kr.tekit.lion.daongil.local.VillageCodeEntity
-import kr.tekit.lion.daongil.local.toEntity
+import kr.tekit.lion.daongil.local.dao.AreaCodeDao
+import kr.tekit.lion.daongil.local.entity.AreaCodeEntity
+import kr.tekit.lion.daongil.local.dao.VillageCodeDao
+import kr.tekit.lion.daongil.local.entity.VillageCodeEntity
+import kr.tekit.lion.daongil.local.entity.toEntity
 import kr.tekit.lion.daongil.model.AreaCode
 import kr.tekit.lion.daongil.model.VillageCode
 

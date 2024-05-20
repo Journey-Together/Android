@@ -2,6 +2,8 @@ package kr.tekit.lion.daongil.local
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import kr.tekit.lion.daongil.local.entity.AreaCodeEntity
+import kr.tekit.lion.daongil.local.entity.VillageCodeEntity
 
 class ListConverter {
 

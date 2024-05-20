@@ -16,9 +16,11 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.usecase.SearchByKeywordUseCase
 import kr.tekit.lion.daongil.usecase.base.onError
 import kr.tekit.lion.daongil.usecase.base.onSuccess
+import kr.tekit.lion.daongil.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
 
 class SearchViewModel(
-    private val searchByKeywordUseCase: SearchByKeywordUseCase
+    private val searchByKeywordUseCase: SearchByKeywordUseCase,
+    private val addRecentSearchKeywordUseCase: AddRecentSearchKeywordUseCase
 ): ViewModel() {
     private val _searchKeyword = MutableStateFlow("")
 
@@ -39,5 +41,9 @@ class SearchViewModel(
 
     fun onCompleteTextChanged(searchKeyword: String){
         _searchKeyword.value = searchKeyword
+        viewModelScope.launch {
+            addRecentSearchKeywordUseCase(searchKeyword)
+        }
+
     }
 }

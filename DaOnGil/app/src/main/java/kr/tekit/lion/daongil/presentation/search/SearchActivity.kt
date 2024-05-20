@@ -11,7 +11,7 @@ import kr.tekit.lion.daongil.presentation.search.vm.SearchViewModel
 import kr.tekit.lion.daongil.presentation.search.vm.SearchViewModelFactory
 
 class SearchActivity : AppCompatActivity() {
-    private val viewModel: SearchViewModel by viewModels{ SearchViewModelFactory() }
+    private val viewModel: SearchViewModel by viewModels{ SearchViewModelFactory(this) }
     private val binding: ActivitySearchBinding by lazy {
         ActivitySearchBinding.inflate(layoutInflater)
     }

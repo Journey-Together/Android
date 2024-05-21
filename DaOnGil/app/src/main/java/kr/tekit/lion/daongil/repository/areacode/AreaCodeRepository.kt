@@ -9,19 +9,17 @@ import kr.tekit.lion.daongil.network.RetrofitInstance
 
 interface AreaCodeRepository {
 
+    suspend fun getAreaCodeInfo(): List<AreaCode>
     suspend fun getAreaCodeInfo(code: String): AreaCode
     suspend fun getAllAreaCodes(): List<AreaCode>
+    suspend fun getDetailAreaCode(areaCode: String): List<AreaCode>
     suspend fun addAreaCodeInfo()
-    suspend fun addVillageCodeInfo()
 
     companion object{
         fun create(context: Context): AreaCodeRepository{
             return AreaCodeRepositoryImpl(
                 RemoteAreaCodeDataSource(RetrofitInstance.korWithService),
-                LocalAreaCodeDataSource(
-                    MainDataBase.getDatabase(context).areaCodeDao(),
-                    MainDataBase.getDatabase(context).villageCodeDao()
-                )
+                LocalAreaCodeDataSource(MainDataBase.getDatabase(context).areaCodeDao())
             )
         }
     }

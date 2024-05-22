@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.search.vm
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +12,8 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.usecase.SearchByKeywordUseCase
-import kr.tekit.lion.daongil.usecase.base.onError
-import kr.tekit.lion.daongil.usecase.base.onSuccess
-import kr.tekit.lion.daongil.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.SearchByKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
 
 class SearchViewModel(
     private val searchByKeywordUseCase: SearchByKeywordUseCase,

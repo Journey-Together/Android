@@ -3,14 +3,14 @@ package kr.tekit.lion.daongil.presentation.main.vm
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import kr.tekit.lion.daongil.repository.areacode.AreaCodeRepository
-import kr.tekit.lion.daongil.repository.villagecode.VillageCodeRepository
-import kr.tekit.lion.daongil.usecase.areacode.AddAreaCodeUseCase
-import kr.tekit.lion.daongil.usecase.areacode.AddVillageCodeUseCase
-import kr.tekit.lion.daongil.usecase.areacode.GetAllAreaCodeUseCase
-import kr.tekit.lion.daongil.usecase.areacode.GetAllDetailAreaCodeUseCase
-import kr.tekit.lion.daongil.usecase.areacode.GetAreaCodeInfoUseCase
-import kr.tekit.lion.daongil.usecase.areacode.InitAreaCodeInfoUseCase
+import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
+import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
+import kr.tekit.lion.daongil.domain.usecase.areacode.AddAreaCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.AddVillageCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllDetailAreaCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.InitAreaCodeInfoUseCase
 import java.lang.IllegalArgumentException
 
 class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {

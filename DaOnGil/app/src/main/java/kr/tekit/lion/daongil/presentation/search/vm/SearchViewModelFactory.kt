@@ -3,10 +3,10 @@ package kr.tekit.lion.daongil.presentation.search.vm
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import kr.tekit.lion.daongil.repository.recent_search_keyword.RecentSearchKeywordRepository
-import kr.tekit.lion.daongil.repository.searchkeyword.SearchKeywordRepository
-import kr.tekit.lion.daongil.usecase.SearchByKeywordUseCase
-import kr.tekit.lion.daongil.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
+import kr.tekit.lion.daongil.domain.repository.RecentSearchKeywordRepository
+import kr.tekit.lion.daongil.domain.repository.SearchKeywordRepository
+import kr.tekit.lion.daongil.domain.usecase.SearchByKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
 import java.lang.IllegalArgumentException
 
 class SearchViewModelFactory(context: Context) : ViewModelProvider.Factory{

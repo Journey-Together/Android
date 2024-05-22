@@ -20,13 +20,13 @@
         android:label="fragment_emrgency_main"
         tools:layout="@layout/fragment_emergency_main" />
     <fragment
-        android:id="@+id/calenderMainFragment"
-        android:name="kr.tekit.lion.daongil.presentation.main.fragment.CalenderMainFragment"
-        android:label="fragment_calender_main"
-        tools:layout="@layout/fragment_calender_main" />
-    <fragment
         android:id="@+id/myInfoMainFragment"
         android:name="kr.tekit.lion.daongil.presentation.main.fragment.MyInfoMainFragment"
         android:label="fragment_my_info_main"
         tools:layout="@layout/fragment_my_info_main" />
+    <fragment
+        android:id="@+id/scheduleMainFragment"
+        android:name="kr.tekit.lion.daongil.presentation.main.fragment.ScheduleMainFragment"
+        android:label="fragment_schedule_main"
+        tools:layout="@layout/fragment_schedule_main" />
 </navigation>

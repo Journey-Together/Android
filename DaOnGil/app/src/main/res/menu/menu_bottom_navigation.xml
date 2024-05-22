@@ -16,10 +16,10 @@
         android:visible="true"
         android:title="응급" />
     <item
-        android:id="@+id/calenderMainFragment"
+        android:id="@+id/scheduleMainFragment"
         android:icon="@drawable/ic_calendar_today_24px"
         android:visible="true"
-        android:title="캘린더" />
+        android:title="일정" />
     <item
         android:id="@+id/myInfoMainFragment"
         android:icon="@drawable/ic_account_circle_24px"

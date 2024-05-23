@@ -2,8 +2,10 @@ package kr.tekit.lion.daongil.data.network.service
 
 import kr.tekit.lion.daongil.data.dto.remote.response.areabased.AreaBasedSearchResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.areacode.AreaCodeResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.barrierfree.BarrierFreeResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchkeyword.SearchKeywordResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface KorWithService {
@@ -21,6 +23,12 @@ interface KorWithService {
     suspend fun getSearchByKeywordResult(
         @QueryMap params: Map<String, String>
     ): SearchKeywordResponse
+
+    @GET("detailWithTour1")
+    suspend fun getBarrierFreeInfo(
+        @QueryMap params: Map<String, String>
+    ): BarrierFreeResponse
+
 
     @GET("detailCommon1")
     suspend fun getSearchByCommonKeyword(

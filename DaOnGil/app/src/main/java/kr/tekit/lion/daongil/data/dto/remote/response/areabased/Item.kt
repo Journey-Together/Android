@@ -20,8 +20,6 @@ data class Item(
     val contentId: String,
     @Json(name = "contenttypeid")
     val contentTypeId: String,
-    @Json(name = "cpyrhtDivCd")
-    val copyrightType: String,
     @Json(name = "createdtime")
     val createdTime: String,
     @Json(name = "firstimage")
@@ -37,7 +35,7 @@ data class Item(
     @Json(name = "modifiedtime")
     val modifiedTime: String,
     @Json(name = "sigungucode")
-    val villageCode: String,
+    val siGunGuCode: String,
     val tel: String,
     val title: String,
     val zipcode: String

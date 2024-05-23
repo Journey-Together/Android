@@ -10,5 +10,16 @@ class ApiConstants {
         const val SERVICE_KEY = "t2ivQakqcZ/cvxzekT7Ra9Ja8J1N1lBKu6LqVkijMliEeoD1lLXU0Qei+V9AC8aMbNG+TjVkca70NqFB9akmSg=="
         const val API_LIST_YN = "Y"
         const val API_ARRANGE = "O"
+
+        val areaBasedSearchRequest: Map<String, String> =
+            mapOf(
+                "numOfRows" to API_RESULT_MAX_NUM_OF_ROWS,
+                "MobileOS" to API_MOBILE_OS,
+                "MobileApp" to APP_NAME,
+                "_type" to API_TYPE,
+                "serviceKey" to SERVICE_KEY,
+                "listYN" to API_LIST_YN,
+                "arrange" to API_ARRANGE,
+            )
     }
 }

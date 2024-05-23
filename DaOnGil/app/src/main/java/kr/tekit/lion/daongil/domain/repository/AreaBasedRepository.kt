@@ -1,7 +1,18 @@
 package kr.tekit.lion.daongil.domain.repository
 
-import kr.tekit.lion.daongil.domain.model.KeywordSearch
+import kr.tekit.lion.daongil.data.datasource.AreaBasedDataSource
+import kr.tekit.lion.daongil.data.network.RetrofitInstance
+import kr.tekit.lion.daongil.data.repository.AreaBasedRepositoryImpl
+import kr.tekit.lion.daongil.domain.model.AreaBased
 
 interface AreaBasedRepository {
-    suspend fun getAreaBasedSearch(contentTypeId: String, villageCode: String): List<KeywordSearch>
+    suspend fun searchAllTouristSpot(): List<AreaBased>
+
+    companion object{
+        fun create(): AreaBasedRepositoryImpl{
+            return AreaBasedRepositoryImpl(
+                AreaBasedDataSource(RetrofitInstance.korWithService)
+            )
+        }
+    }
 }

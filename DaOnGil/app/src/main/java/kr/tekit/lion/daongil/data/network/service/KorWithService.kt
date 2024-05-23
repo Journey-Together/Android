@@ -13,7 +13,7 @@ interface KorWithService {
     ): AreaCodeResponse
 
     @GET("areaBasedList1")
-    suspend fun getSearchByAreaResult(
+    suspend fun getAreaBasedResult(
         @QueryMap params: Map<String, String>
     ): AreaBasedSearchResponse
 

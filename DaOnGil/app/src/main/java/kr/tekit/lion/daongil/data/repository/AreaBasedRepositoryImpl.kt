@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.domain.repository.AreaBasedRepository
 class AreaBasedRepositoryImpl(
     private val areaBasedDataSource: AreaBasedDataSource
 ): AreaBasedRepository {
-    override suspend fun searchAllTouristSpot(): List<AreaBased> {
-        return areaBasedDataSource.getSearchByAreaResult().toDomainModel()
+    override suspend fun searchAllTouristSpot(contentId: String): List<AreaBased> {
+        return areaBasedDataSource.getSearchByAreaResult(contentId).toDomainModel()
     }
 }

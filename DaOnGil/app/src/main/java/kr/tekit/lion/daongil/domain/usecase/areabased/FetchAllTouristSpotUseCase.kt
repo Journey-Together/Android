@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.domain.repository.AreaBasedRepository
 class FetchAllTouristSpotUseCase (
     private val areaBasedRepository: AreaBasedRepository
 ){
-    suspend operator fun invoke(): List<AreaBased> {
-        return areaBasedRepository.searchAllTouristSpot()
+    suspend operator fun invoke(contentId: String): List<AreaBased> {
+        return areaBasedRepository.searchAllTouristSpot(contentId)
     }
 }

@@ -6,8 +6,8 @@ class GetAllBarrierFreeTouristSpotUseCase(
     private val fetchAllTouristSpotUseCase: FetchAllTouristSpotUseCase,
     private val fetchBarrierFreeUseCase: FetchBarrierFreeUseCase
 ) {
-    suspend operator fun invoke(): List<List<BarrierFree>> {
-        return fetchAllTouristSpotUseCase().map{
+    suspend operator fun invoke(contentId: String): List<List<BarrierFree>> {
+        return fetchAllTouristSpotUseCase(contentId).map{
             fetchBarrierFreeUseCase(it.contentId)
         }
     }

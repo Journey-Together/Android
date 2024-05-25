@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.data.repository.AreaBasedRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.AreaBased
 
 interface AreaBasedRepository {
-    suspend fun searchAllTouristSpot(): List<AreaBased>
+    suspend fun searchAllTouristSpot(contentId: String): List<AreaBased>
 
     companion object{
         fun create(): AreaBasedRepositoryImpl{

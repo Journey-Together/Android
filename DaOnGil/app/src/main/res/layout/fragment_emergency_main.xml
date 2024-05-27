@@ -32,15 +32,26 @@
         android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="기본 버튼"
+        android:text="기본 색깔 10"
+        android:background="@drawable/background_radius_10"
         android:layout_margin="20dp" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="무채색 버튼"
+        android:text="무채색 색깔 5"
         android:layout_margin="20dp"
-        android:backgroundTint="@color/button_secondary"/>
+        app:backgroundTint="@color/button_secondary"
+        android:background="@drawable/background_radius_5"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="무채색 색깔 50"
+        android:layout_margin="20dp"
+        app:backgroundTint="@color/button_secondary"
+        android:background="@drawable/background_radius_50"/>
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.data.dto.local.RecentSearchKeywordEntity
 class RecentSearchKeywordDataSource(
     private val recentSearchKeywordDao: RecentSearchKeywordDao
 ) {
-    suspend fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeywordEntity>> {
+    fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeywordEntity>> {
         return recentSearchKeywordDao.readAllKeyword()
     }
 

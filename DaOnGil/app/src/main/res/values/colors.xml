@@ -12,4 +12,6 @@
     <color name="item_background">#FFFFFF</color>
     <color name="navi_background">#FFFFFF</color>
     <color name="text_tertiary">#666666</color>
+
+    <color name="button_secondary">#E0E0E0</color>
 </resources>

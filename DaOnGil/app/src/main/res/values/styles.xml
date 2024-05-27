@@ -10,4 +10,11 @@
         <item name="android:fontFamily">@font/pretendard_bold</item>
     </style>
 
+    <!-- Main Toolbar Title TextApperance 설정 -->
+    <style name="Theme.Title.Toolbar.Main" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="android:textSize">20sp</item>
+        <item name="fontFamily">@font/cafe24_oneprettynight</item>
+        <item name="android:textColor">@color/toolbar_main_title</item>
+    </style>
+
 </resources>

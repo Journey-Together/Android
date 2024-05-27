@@ -3,9 +3,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".presentation.main.fragment.EmergencyMainFragment"
-    android:layout_margin="20dp">
+    tools:context=".presentation.main.fragment.EmergencyMainFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="다온,길"
+        app:titleTextAppearance="@style/Theme.Title.Toolbar.Main"
+        app:navigationIcon="@drawable/toolbar_icon"/>
 
     <TextView
         android:layout_width="match_parent"

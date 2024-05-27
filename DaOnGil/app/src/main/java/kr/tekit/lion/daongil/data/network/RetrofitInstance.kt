@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
-import kr.tekit.lion.daongil.data.network.service.FirebaseService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -26,14 +25,5 @@ object RetrofitInstance {
             .client(okHttpClient)
             .build()
             .create()
-    }
-
-    val firebaseService: FirebaseService by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://asia-northeast3-daongil-a293d.cloudfunctions.net/DaOnGileAPI/")
-            .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(okHttpClient)
-            .build()
-            .create(FirebaseService::class.java)
     }
 }

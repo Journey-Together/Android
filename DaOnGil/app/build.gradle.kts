@@ -4,7 +4,6 @@ plugins {
     id ("kotlin-parcelize")
     id ("kotlin-kapt")
     id ("androidx.navigation.safeargs.kotlin")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -83,6 +82,4 @@ dependencies {
     implementation("com.naver.maps:map-sdk:3.17.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
 
-    implementation(platform("com.google.firebase:firebase-bom:33.0.0"))
-    implementation("com.google.firebase:firebase-analytics")
 }

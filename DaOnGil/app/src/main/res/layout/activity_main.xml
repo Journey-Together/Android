@@ -19,6 +19,7 @@
         android:id="@+id/navigationView"
         android:layout_width="0dp"
         android:layout_height="80dp"
+        android:paddingTop="@dimen/margin_small2"
         android:background="@color/navi_background"
         app:itemActiveIndicatorStyle="@null"
         app:itemBackground="@android:color/transparent"

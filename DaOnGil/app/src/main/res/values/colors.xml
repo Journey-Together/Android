@@ -15,4 +15,9 @@
 
     <color name="button_secondary">#E0E0E0</color>
     <color name="toolbar_main_title">#5F6368</color>
+
+    <color name="profile_background_centerColor">#FECE02</color>
+    <color name="profile_background_endColor">#FFE216</color>
+
+    <color name="button_tertiary">#C92A2A</color>
 </resources>

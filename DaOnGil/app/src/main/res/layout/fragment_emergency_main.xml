@@ -122,7 +122,7 @@
             android:backgroundTint="@color/item_background"
             android:layout_marginLeft="17dp"
             android:layout_marginRight="17dp"
-            android:layout_marginBottom="17dp">
+            android:layout_marginBottom="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"

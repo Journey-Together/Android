@@ -67,14 +67,20 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun logoutDialog() {
         // 삭제 버튼 클릭
         binding.layoutLogout.setOnClickListener {
-            val dialog = ConfirmDialog(this, "로그아웃", "해당 기기에서 로그아웃 됩니다.", "로그아웃")
+            val dialog = ConfirmDialog(
+                this,
+                "로그아웃",
+                "해당 기기에서 로그아웃 됩니다.",
+                "로그아웃",
+                R.color.button_tertiary,
+                R.color.white)
             // 알림창이 띄워져있는 동안 배경 클릭 막기
             dialog.isCancelable = false
             dialog.show(activity?.supportFragmentManager!!, "MyPageDialog")
         }
     }
 
-    override fun onYesButtonClick() {
+    override fun onPosBtnClick() {
         logout()
     }
 

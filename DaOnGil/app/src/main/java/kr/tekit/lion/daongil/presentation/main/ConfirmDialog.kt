@@ -6,14 +6,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogConfirmBinding
 
 class ConfirmDialog(
-        confirmDialogInterface: ConfirmDialogInterface,
-        title: String,
-        subtitle: String,
-        yesButtonTitle: String)
+    confirmDialogInterface: ConfirmDialogInterface,
+    title: String,
+    subtitle: String,
+    posBtnTitle: String,
+    posBtnColorResId: Int,
+    posBtnTextColorResId: Int)
     : DialogFragment() {
 
     private var _binding: DialogConfirmBinding? = null
@@ -23,12 +27,16 @@ class ConfirmDialog(
 
     private var title: String? = null
     private var subtitle: String? = null
-    private var yesButtonTitle: String? = null
+    private var posBtnTitle: String? = null
+    private var posBtnColorResId: Int? = null
+    private var posBtnTextColorResId: Int? = null
 
     init {
         this.title = title
         this.subtitle = subtitle
-        this.yesButtonTitle = yesButtonTitle
+        this.posBtnTitle = posBtnTitle
+        this.posBtnColorResId = posBtnColorResId
+        this.posBtnTextColorResId = posBtnTextColorResId
         this.confirmDialogInterface = confirmDialogInterface
     }
 
@@ -44,16 +52,18 @@ class ConfirmDialog(
 
         binding.textVeiwDialogTitle.text = title
         binding.textVeiwDialogSubtitle.text = subtitle
-        binding.yesButton.text = yesButtonTitle
+        binding.buttonPositivie.text = posBtnTitle
+        binding.buttonPositivie.backgroundTintList = ContextCompat.getColorStateList(requireContext(), posBtnColorResId ?: R.color.primary)
+        binding.buttonPositivie.setTextColor(ContextCompat.getColor(requireContext(), posBtnTextColorResId ?: R.color.text_primary))
 
         // 취소 버튼 클릭
-        binding.noButton.setOnClickListener {
+        binding.buttonNegative.setOnClickListener {
             dismiss()
         }
 
         // 확인 버튼 클릭
-        binding.yesButton.setOnClickListener {
-            this.confirmDialogInterface?.onYesButtonClick()
+        binding.buttonPositivie.setOnClickListener {
+            this.confirmDialogInterface?.onPosBtnClick()
             dismiss()
         }
 
@@ -67,5 +77,5 @@ class ConfirmDialog(
 }
 
 interface ConfirmDialogInterface {
-    fun onYesButtonClick()
+    fun onPosBtnClick()
 }

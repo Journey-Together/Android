@@ -11,22 +11,26 @@
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:title="다온,길"
-        app:titleTextAppearance="@style/Theme.Title.Toolbar.Main"
-        app:navigationIcon="@drawable/toolbar_icon"/>
+        app:navigationIcon="@drawable/toolbar_icon"
+        android:paddingStart="@dimen/margin_basic"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/toolbar_icon"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="첫번째 응급"
-        android:layout_margin="20dp"/>
+        android:layout_margin="@dimen/margin_big2"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@color/text_secondary"
         android:text="두번째 응급"
-        android:layout_margin="20dp"/>
+        android:layout_margin="@dimen/margin_big2" />
 
     <Button
         android:id="@+id/button"
@@ -34,14 +38,14 @@
         android:layout_height="wrap_content"
         android:text="기본 색깔 10"
         android:background="@drawable/background_radius_10"
-        android:layout_margin="20dp" />
+        android:layout_margin="@dimen/margin_big2" />
 
     <Button
         android:id="@+id/button2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="무채색 색깔 5"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin_big2"
         app:backgroundTint="@color/button_secondary"
         android:background="@drawable/background_radius_5"/>
 
@@ -50,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="무채색 색깔 50"
-        android:layout_margin="20dp"
+        android:layout_margin="@dimen/margin_big2"
         app:backgroundTint="@color/button_secondary"
         android:background="@drawable/background_radius_50"/>
 

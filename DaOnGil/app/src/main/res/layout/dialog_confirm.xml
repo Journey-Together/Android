@@ -12,7 +12,7 @@
     android:padding="@dimen/margin_basic">
 
     <TextView
-        android:id="@+id/textVeiwDialogTitle"
+        android:id="@+id/textViewDialogTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/pretendard_medium"
@@ -23,7 +23,7 @@
         tools:text="title" />
 
     <TextView
-        android:id="@+id/textVeiwDialogSubtitle"
+        android:id="@+id/textViewDialogSubtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -51,7 +51,7 @@
             app:backgroundTint="@color/button_secondary" />
 
         <Button
-            android:id="@+id/buttonPositivie"
+            android:id="@+id/buttonPositive"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"

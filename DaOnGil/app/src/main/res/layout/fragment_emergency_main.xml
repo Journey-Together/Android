@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small1"
             android:text="다온, 길"
-            style="@style/Theme.Title.Toolbar.Main"/>
+            style="@style/Theme.Toolbar.Main.Title"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
 

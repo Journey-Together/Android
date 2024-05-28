@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogConfirmBinding
 
 class ConfirmDialog(
@@ -17,18 +18,11 @@ class ConfirmDialog(
     private val posBtnTitle: String,
     private val posBtnColorResId: Int,
     private val posBtnTextColorResId: Int,
-) : DialogFragment() {
+) : DialogFragment(R.layout.dialog_confirm) {
 
-    private var _binding: DialogConfirmBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = DialogConfirmBinding.inflate(inflater, container, false)
-        val view = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = DialogConfirmBinding.bind(view)
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -46,13 +40,6 @@ class ConfirmDialog(
             confirmDialogInterface.onPosBtnClick()
             dismiss()
         }
-
-        return view
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
 

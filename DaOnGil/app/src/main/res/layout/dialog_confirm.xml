@@ -39,7 +39,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/noButton"
+            android:id="@+id/buttonNegative"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_marginEnd="@dimen/margin_big4"
@@ -51,7 +51,7 @@
             app:backgroundTint="@color/button_secondary" />
 
         <Button
-            android:id="@+id/yesButton"
+            android:id="@+id/buttonPositivie"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"

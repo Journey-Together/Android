@@ -1,0 +1,17 @@
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="semi_grey">#D9D9D9</color>
+
+    <color name="background_color">#1C1B1F</color>
+    <color name="primary">#3181FF</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="primary_disabled">#828282</color>
+    <color name="item_background">#3A3A3A</color>
+    <color name="navi_background">#262626</color>
+    <color name="text_secondary">#A7A7A7</color>
+    <color name="text_tertiary">#949494</color>
+
+    <color name="button_secondary">#999999</color>
+    <color name="toolbar_main_title">#969390</color>
+</resources>

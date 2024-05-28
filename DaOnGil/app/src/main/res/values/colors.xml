@@ -2,6 +2,17 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="app_main_color">#FECC00</color>
     <color name="semi_grey">#D9D9D9</color>
+
+    <color name="background_color">#F5F5F5</color>
+    <color name="primary">#FECC00</color>
+    <color name="text_primary">#000000</color>
+    <color name="primary_disabled">#D9D9D9</color>
+    <color name="text_secondary">#474747</color>
+    <color name="item_background">#FFFFFF</color>
+    <color name="navi_background">#FFFFFF</color>
+    <color name="text_tertiary">#666666</color>
+
+    <color name="button_secondary">#E0E0E0</color>
+    <color name="toolbar_main_title">#5F6368</color>
 </resources>

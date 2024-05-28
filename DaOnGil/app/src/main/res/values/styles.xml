@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Bottomnavigation 글자 설정-->
+    <style name="BottomNaviTab" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/pretendard_regular</item>
+    </style>
+    <style name="BottomNaviTab.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12dp</item>
+        <item name="android:fontFamily">@font/pretendard_bold</item>
+    </style>
+
+    <!-- Main Toolbar Title TextApperance 설정 -->
+    <style name="Theme.Toolbar.Main.Title" parent="">
+        <item name="android:textSize">@dimen/font_big1</item>
+        <item name="android:fontFamily">@font/cafe24_oneprettynight</item>
+        <item name="android:textColor">@color/toolbar_main_title</item>
+    </style>
+
+</resources>

@@ -1,13 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".presentation.main.fragment.EmergencyMainFragment">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_basic">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/toolbar_clover_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small1"
+            android:text="다온, 길"
+            style="@style/Theme.Toolbar.Main.Title"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="EmergencyMainFragment"/>
+        android:layout_height="wrap_content"
+        android:text="첫번째 응급"
+        android:layout_margin="@dimen/margin_big2"/>
 
-</FrameLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_secondary"
+        android:text="두번째 응급"
+        android:layout_margin="@dimen/margin_big2" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="기본 색깔 10"
+        android:background="@drawable/background_radius_10"
+        android:layout_margin="@dimen/margin_big2" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="무채색 색깔 5"
+        android:layout_margin="@dimen/margin_big2"
+        app:backgroundTint="@color/button_secondary"
+        android:background="@drawable/background_radius_5"/>
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="무채색 색깔 50"
+        android:layout_margin="@dimen/margin_big2"
+        app:backgroundTint="@color/button_secondary"
+        android:background="@drawable/background_radius_50"/>
+
+</LinearLayout>

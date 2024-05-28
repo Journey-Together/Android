@@ -8,37 +8,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogConfirmBinding
 
 class ConfirmDialog(
-    confirmDialogInterface: ConfirmDialogInterface,
-    title: String,
-    subtitle: String,
-    posBtnTitle: String,
-    posBtnColorResId: Int,
-    posBtnTextColorResId: Int)
-    : DialogFragment() {
+    private val confirmDialogInterface: ConfirmDialogInterface,
+    private val title: String,
+    private val subtitle: String,
+    private val posBtnTitle: String,
+    private val posBtnColorResId: Int,
+    private val posBtnTextColorResId: Int,
+) : DialogFragment() {
 
     private var _binding: DialogConfirmBinding? = null
     private val binding get() = _binding!!
-
-    private var confirmDialogInterface: ConfirmDialogInterface? = null
-
-    private var title: String? = null
-    private var subtitle: String? = null
-    private var posBtnTitle: String? = null
-    private var posBtnColorResId: Int? = null
-    private var posBtnTextColorResId: Int? = null
-
-    init {
-        this.title = title
-        this.subtitle = subtitle
-        this.posBtnTitle = posBtnTitle
-        this.posBtnColorResId = posBtnColorResId
-        this.posBtnTextColorResId = posBtnTextColorResId
-        this.confirmDialogInterface = confirmDialogInterface
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,20 +32,18 @@ class ConfirmDialog(
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        binding.textVeiwDialogTitle.text = title
-        binding.textVeiwDialogSubtitle.text = subtitle
-        binding.buttonPositivie.text = posBtnTitle
-        binding.buttonPositivie.backgroundTintList = ContextCompat.getColorStateList(requireContext(), posBtnColorResId ?: R.color.primary)
-        binding.buttonPositivie.setTextColor(ContextCompat.getColor(requireContext(), posBtnTextColorResId ?: R.color.text_primary))
+        binding.textViewDialogTitle.text = title
+        binding.textViewDialogSubtitle.text = subtitle
+        binding.buttonPositive.text = posBtnTitle
+        binding.buttonPositive.backgroundTintList = ContextCompat.getColorStateList(requireContext(), posBtnColorResId)
+        binding.buttonPositive.setTextColor(ContextCompat.getColor(requireContext(), posBtnTextColorResId))
 
-        // 취소 버튼 클릭
         binding.buttonNegative.setOnClickListener {
             dismiss()
         }
 
-        // 확인 버튼 클릭
-        binding.buttonPositivie.setOnClickListener {
-            this.confirmDialogInterface?.onPosBtnClick()
+        binding.buttonPositive.setOnClickListener {
+            confirmDialogInterface.onPosBtnClick()
             dismiss()
         }
 

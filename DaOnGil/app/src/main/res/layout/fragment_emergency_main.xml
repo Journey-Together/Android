@@ -11,13 +11,21 @@
         android:id="@+id/toolbarSearch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/toolbar_icon"
-        android:paddingStart="@dimen/margin_basic"/>
+        android:paddingStart="@dimen/margin_basic">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/toolbar_icon"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/toolbar_clover_icon"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small1"
+            android:text="다온, 길"
+            style="@style/Theme.Title.Toolbar.Main"/>
+
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <TextView
         android:layout_width="match_parent"

@@ -7,7 +7,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
-import kr.tekit.lion.daongil.presentation.main.MainActivity
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 
@@ -18,10 +17,9 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentScheduleMainBinding.bind(view)
-        val mainActivity = activity as MainActivity
 
         initView(binding)
-        settingRecyclerView(binding, mainActivity)
+        settingRecyclerView(binding, requireContext())
     }
 
     private fun initView(binding : FragmentScheduleMainBinding){

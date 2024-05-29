@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.myinfo.fragment.IceModifyFragment" >
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarIceModify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"  >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="나의 응급 정보"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/font_big2" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_basic">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="생년월일"
+                android:textSize="@dimen/font_big2" />
+
+            <EditText
+                android:id="@+id/editTextIceBirthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:hint="생년월일을 입력해주세요."
+                android:inputType="text"
+                android:paddingBottom="@dimen/margin_big2"
+                android:textSize="@dimen/font_big3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="혈액형"
+                android:textSize="@dimen/font_big2" />
+
+            <EditText
+                android:id="@+id/editTextIceBloodType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:hint="혈액형을 입력해주세요."
+                android:inputType="text"
+                android:paddingBottom="@dimen/margin_big2"
+                android:textSize="@dimen/font_big3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="의학적 질환"
+                android:textSize="@dimen/font_big2" />
+
+            <EditText
+                android:id="@+id/editTextIceDisease"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:hint="질환을 입력해주세요."
+                android:inputType="text"
+                android:paddingBottom="@dimen/margin_big2"
+                android:textSize="@dimen/font_big3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="알레르기 및 부작용"
+                android:textSize="@dimen/font_big2" />
+
+            <EditText
+                android:id="@+id/editTextIceAllergy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:hint="알레르기 및 부작용을 입력해주세요."
+                android:inputType="text"
+                android:paddingBottom="@dimen/margin_big2"
+                android:textSize="@dimen/font_big3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="투여약"
+                android:textSize="@dimen/font_big2" />
+
+            <EditText
+                android:id="@+id/editTextIceMedicine"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="@font/pretendard_medium"
+                android:hint="투여약을 입력해주세요."
+                android:inputType="text"
+                android:paddingBottom="@dimen/margin_big2"
+                android:textSize="@dimen/font_big3" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_small1"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="긴급 연락처"
+                android:textSize="@dimen/font_big2" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextIceRelation1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_small1"
+                    android:layout_marginBottom="@dimen/margin_big4"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="관계"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/margin_big2"
+                    android:textSize="@dimen/font_big3" />
+
+                <EditText
+                    android:id="@+id/editTextIceContact1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_big4"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="전화번호를 입력해주세요."
+                    android:inputType="phone"
+                    android:paddingBottom="@dimen/margin_big2"
+                    android:textSize="@dimen/font_big3" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/editTextIceRelation2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_small1"
+                    android:layout_weight="3"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="관계"
+                    android:inputType="text"
+                    android:paddingBottom="@dimen/margin_big2"
+                    android:textSize="@dimen/font_big3" />
+
+                <EditText
+                    android:id="@+id/editTextIceContact2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="전화번호를 입력해주세요."
+                    android:inputType="phone"
+                    android:paddingBottom="@dimen/margin_big2"
+                    android:textSize="@dimen/font_big3" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/buttonIceSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/background_radius_10"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="수정하기"
+                android:textSize="@dimen/font_big2" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

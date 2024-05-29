@@ -29,14 +29,14 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun initView(binding: FragmentMyInfoMainBinding) {
         if(isUser) {
             with(binding) {
-                textViewMyInfoUserNickname.text = "김사자"
+                textViewMyInfoMainUserNickname.text = "김사자"
             }
         } else {
             with(binding) {
-                textViewMyInfoUserNickname.text = "아직 정보가 없어요!"
-                textViewMyInfoUserTitle.isVisible = false
-                textViewMyInfoReview.text = "로그인을 진행해주세요"
-                textViewMyInfoReviewCnt.isVisible = false
+                textViewMyInfoMainUserNickname.text = "아직 정보가 없어요!"
+                textViewMyInfoMainUserTitle.isVisible = false
+                textViewMyInfoMainReview.text = "로그인을 진행해주세요"
+                textViewMyInfoMainReviewCnt.isVisible = false
             }
         }
     }

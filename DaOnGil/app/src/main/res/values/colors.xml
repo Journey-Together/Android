@@ -22,7 +22,7 @@
     <color name="fab_background">#292C33</color>
     <!--남은 기간, 지난 기간 표기하는 텍스트의 색상값-->
     <color name="days_remaining">#FF6D6D</color>
-    <color name="button_tertiary">#E7E7E7</color>
+    <color name="button_quaternary">#E7E7E7</color>
     <color name="days_elapsed">#BDBDBD</color>
 
     <color name="period_background">#000000</color>

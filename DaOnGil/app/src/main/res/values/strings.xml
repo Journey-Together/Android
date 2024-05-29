@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">DaOnGil</string>
+    <string name="add_schedule"><u>일정 등록하러가기 ＞</u></string>
 </resources>

@@ -11,10 +11,22 @@
     <color name="navi_background">#262626</color>
     <color name="text_secondary">#A7A7A7</color>
     <color name="text_tertiary">#949494</color>
+    <color name="text_quaternary">#6E6E6E</color>
+    <color name="text_quinary">#969390</color>
 
     <color name="button_secondary">#999999</color>
     <color name="toolbar_main_title">#969390</color>
 
+    <!-- 플로팅버튼 배경색 (지도보기, 목록보기, 일정 추가하기)-->
+    <color name="fab_background">#BCBAB5</color>
+    <!--남은 기간, 지난 기간 표기하는 텍스트의 색상값-->
+    <color name="days_remaining">#268C8C</color>
+    <color name="button_quaternary">#E7E7E7</color>
+    <color name="days_elapsed">#545454</color>
+
+    <color name="period_background">#D0CCC9</color>
+
+    <color name="empty_schedule_background">#2C2C2C</color>
     <color name="profile_background_centerColor">#FECE02</color>
     <color name="profile_background_endColor">#FFE216</color>
 

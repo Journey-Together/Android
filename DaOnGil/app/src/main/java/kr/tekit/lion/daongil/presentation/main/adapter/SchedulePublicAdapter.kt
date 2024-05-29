@@ -8,27 +8,20 @@ import kr.tekit.lion.daongil.databinding.RowSchedulePublicBinding
 class SchedulePublicAdapter :
     RecyclerView.Adapter<SchedulePublicAdapter.SchedulePublicViewHolder>() {
 
-    inner class SchedulePublicViewHolder(binding: RowSchedulePublicBinding) :
+    class SchedulePublicViewHolder(private val binding: RowSchedulePublicBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        val binding: RowSchedulePublicBinding
-
-        init {
-            this.binding = binding
-            this.binding.root.layoutParams = ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        }
+            fun bind(){
+                // data와 view연결
+            }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulePublicViewHolder {
-        val binding = RowSchedulePublicBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val schedulePublicViewHolder = SchedulePublicViewHolder(binding)
-
-        return schedulePublicViewHolder
+        val inflater = LayoutInflater.from(parent.context)
+        return SchedulePublicViewHolder(RowSchedulePublicBinding.inflate(inflater, parent, false))
     }
 
     override fun onBindViewHolder(holder: SchedulePublicViewHolder, position: Int) {
-        // "Not yet implemented"
+        holder.bind()
     }
 
     override fun getItemCount(): Int {

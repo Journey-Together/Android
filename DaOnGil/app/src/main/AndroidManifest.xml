@@ -16,11 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.emergency.EmergencyMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.test.TestActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.search.SearchActivity"
             android:exported="true" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="s1kt0zadqe" />

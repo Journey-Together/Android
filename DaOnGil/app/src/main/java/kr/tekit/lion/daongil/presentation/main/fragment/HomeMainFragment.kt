@@ -1,15 +1,12 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
-import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
@@ -77,32 +74,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), ModeSettingDialo
         val homeRecommendRVAdapter = HomeRecommendRVAdapter(touristList, requireContext())
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
         binding.homeRecommendRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-        binding.homeRecommendRv.addItemDecoration(firstItemMarginDecoration(dpToPx(24)))
-    }
-
-    // ItemDecoration을 반환하는 함수 정의
-    private fun firstItemMarginDecoration(margin: Int): RecyclerView.ItemDecoration {
-        return object : RecyclerView.ItemDecoration() {
-            override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
-                super.getItemOffsets(outRect, view, parent, state)
-                val position = parent.getChildAdapterPosition(view)
-                if (position == 0) {
-                    outRect.left = margin
-                } else {
-                    outRect.left = 0
-                }
-            }
-        }
-    }
-
-    // dp 값을 픽셀 값으로 변환
-    private fun dpToPx(dp: Int): Int {
-        return TypedValue.applyDimension(
-            TypedValue.COMPLEX_UNIT_DIP,
-            dp.toFloat(),
-            resources.displayMetrics
-        ).toInt()
     }
 
     private fun settingLocationRVAdapter(binding: FragmentHomeMainBinding) {

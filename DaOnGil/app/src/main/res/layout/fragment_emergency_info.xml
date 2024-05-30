@@ -446,6 +446,7 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
+                    android:id="@+id/emergencyMessageCount"
                     android:layout_width="24dp"
                     android:layout_height="24dp"
                     android:layout_gravity="center"
@@ -454,7 +455,7 @@
                     android:backgroundTint="@color/primary"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center"
-                    android:text="20"
+                    android:text="10"
                     android:textColor="@color/text_primary"
                     android:textSize="@dimen/font_small3" />
 
@@ -468,12 +469,15 @@
                 app:dividerThickness="2dp" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/emergencyInfo"
+                android:id="@+id/emergencyMessageRV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:nestedScrollingEnabled="false"
-                android:overScrollMode="never" />
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_emergency_message"
+                tools:itemCount="10"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -525,7 +529,7 @@
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="모든 정보는 변경될 수 있으므로 병의원/약국/기관 또는 129, 119에 확인 후 이용바랍니다."
                             android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/font_small2"/>
+                            android:textSize="@dimen/font_small1"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -546,7 +550,7 @@
                             android:fontFamily="@font/pretendard_semibold"
                             android:text="응급실에 병상이 남아있더라도, 응급환자를 위한 침대일 수도 있으며, 응급도순으로 진료를 하는 이유로 바로 진료가 어려울 수도 있습니다."
                             android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/font_small2"/>
+                            android:textSize="@dimen/font_small1"/>
 
                     </LinearLayout>
 

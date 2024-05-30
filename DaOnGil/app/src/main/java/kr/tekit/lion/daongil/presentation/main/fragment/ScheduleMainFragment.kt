@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -11,9 +12,10 @@ import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
+import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 
 class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
-    private var isUser = false
+    private var isUser = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,6 +60,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     private fun createNewSchedule(){
         if(isUser){
             // 일정 추가 화면으로 이동
+            val intent = Intent(requireActivity(), ScheduleFormActivity::class.java)
+            startActivity(intent)
         }else{
             // 비회원 -> 로그인 다이얼로그
             displayLoginDialog()

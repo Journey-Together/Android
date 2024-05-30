@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.onboarding.fragment.OnBoardingLastFragment" >
+
+    <ImageView
+        android:id="@+id/onBoardingCloverImageView"
+        android:layout_width="178dp"
+        android:layout_height="177dp"
+        android:src="@drawable/onboarding_clover"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29" />
+
+    <TextView
+        android:id="@+id/onBoardingFisrtTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="행복이 다가온 여행길, 다온길"
+        android:fontFamily="@font/cafe24_oneprettynight"
+        android:textStyle="bold"
+        android:textSize="22dp"
+        android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingCloverImageView" />
+
+    <TextView
+        android:id="@+id/onBoardingSecondTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/cafe24_oneprettynight"
+        android:text="모두를 위한 행운 이정표,"
+        android:textSize="@dimen/font_big3"
+        android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingFisrtTextView" />
+
+    <TextView
+        android:id="@+id/onBoardingThirdTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/cafe24_oneprettynight"
+        android:text="누구든 떠날 자유 모두가 누릴 행복"
+        android:textSize="@dimen/font_big3"
+        android:textColor="@color/text_primary"
+        app:layout_constraintBottom_toTopOf="@+id/onBoardingStartButton"
+        app:layout_constraintEnd_toEndOf="@+id/onBoardingSecondTextView"
+        app:layout_constraintStart_toStartOf="@+id/onBoardingSecondTextView"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingSecondTextView"
+        app:layout_constraintVertical_bias="0.078" />
+
+    <Button
+        android:id="@+id/onBoardingStartButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="140dp"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginEnd="@dimen/margin_basic"
+        android:fontFamily="@font/pretendard_bold"
+        android:text="시작하기"
+        android:textSize="@dimen/font_big2"
+        android:textColor="@color/text_primary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/onBoardingThirdTextView"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="@+id/onBoardingThirdTextView" />
+
+    <TextView
+        android:id="@+id/onBoardingLoginTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big3"
+        android:text="로그인/회원가입 진행하기"
+        android:fontFamily="@font/pretendard_regular"
+        android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingStartButton" />
+</androidx.constraintlayout.widget.ConstraintLayout>

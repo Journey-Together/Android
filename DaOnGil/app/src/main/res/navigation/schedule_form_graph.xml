@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/schedule_form_graph"
+    app:startDestination="@id/nameAndPeriodFormFragment">
+
+    <fragment
+        android:id="@+id/nameAndPeriodFormFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.NameAndPeriodFormFragment"
+        android:label="fragment_name_and_period_form"
+        tools:layout="@layout/fragment_name_and_period_form" >
+        <action
+            android:id="@+id/action_nameAndPeriodFormFragment_to_scheduleDetailsFormFragment"
+            app:destination="@id/scheduleDetailsFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/scheduleDetailsFormFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ScheduleDetailsFormFragment"
+        android:label="fragment_schedule_details_form"
+        tools:layout="@layout/fragment_schedule_details_form" />
+</navigation>

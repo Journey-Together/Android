@@ -84,4 +84,5 @@ dependencies {
 
     implementation ("me.relex:circleindicator:2.1.6")
 
+    implementation("com.google.android.gms:play-services-location:21.2.0")
 }

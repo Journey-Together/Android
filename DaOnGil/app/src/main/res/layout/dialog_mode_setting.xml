@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:src="@drawable/image_mode" />
+        android:src="@drawable/image_mode_setting" />
 
     <Button
         android:id="@+id/dialog_mode_positive_btn"

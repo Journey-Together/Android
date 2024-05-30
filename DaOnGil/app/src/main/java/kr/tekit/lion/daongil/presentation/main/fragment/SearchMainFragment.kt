@@ -6,11 +6,14 @@ import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -26,13 +29,22 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
+import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.main.Category
 import kr.tekit.lion.daongil.presentation.main.CategoryBottomSheet
+import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModel
+import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModelFactory
 
 class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCallback {
+    private val viewModel: SearchMainViewModel by viewModels {
+        SearchMainViewModelFactory(
+            requireContext()
+        )
+    }
 
     private lateinit var launcherForPermission: ActivityResultLauncher<Array<String>>
+
     // 내장 위치 추적 기능 사용
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationSource: FusedLocationSource
@@ -52,15 +64,52 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 progressBar.visibility = View.INVISIBLE
             }
 
+            selectedArea.doAfterTextChanged {
+                if (it != null){
+                    detailAreaSelectLayout.visibility = View.VISIBLE
+                    detailSelectedArea.text = null
+                    viewModel.onCompleteSelectArea(it.toString())
+
+                    categoryContainer.post{
+                        categoryContainer.scrollTo(0, rvSearchResult.top)
+                    }
+                }
+            }
+
+            this@SearchMainFragment.repeatOnStarted {
+                viewModel.areaCode.collect {
+                    val areaList = it.map { area -> area.name }.toTypedArray()
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        areaList
+                    )
+                    binding.selectedArea.setAdapter(adapter)
+                }
+            }
+
+            this@SearchMainFragment.repeatOnStarted {
+                viewModel.villageCode.collect{
+                    val villageCodeList = it.map { area -> area.villageName }.toTypedArray()
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        villageCodeList
+                    )
+                    binding.detailSelectedArea.setAdapter(adapter)
+                }
+            }
+
             modeSwitchBtn.setOnClickListener {
-                when(uiState){
-                    Mode.CATEGORY.mode ->{
+                when (uiState) {
+                    Mode.CATEGORY.mode -> {
                         uiState = Mode.MAP.mode
                         categoryContainer.visibility = View.GONE
                         mapContainer.visibility = View.VISIBLE
                         modeSwitchBtn.setText(R.string.watching_list)
                         modeSwitchBtn.setIconResource(R.drawable.list_icon)
                     }
+
                     Mode.MAP.mode -> {
                         uiState = Mode.CATEGORY.mode
                         categoryContainer.visibility = View.VISIBLE
@@ -128,8 +177,9 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
         initMap()
     }
+
     private fun showBottomSheet(category: String) {
-        CategoryBottomSheet(category){
+        CategoryBottomSheet(category) {
             // ViewModel에 저장하기~
 
         }.show(parentFragmentManager, "bottomSheet")
@@ -316,16 +366,17 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 //    }
 
     private fun isNightMode(): Boolean {
-        val currentNightMode = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val currentNightMode =
+            this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    private fun setMapType(naverMap: NaverMap){
+    private fun setMapType(naverMap: NaverMap) {
         if (isNightMode()) {
             // 야간 모드 허용
             naverMap.mapType = NaverMap.MapType.Navi
             naverMap.isNightModeEnabled = true
-        }else{
+        } else {
             naverMap.mapType = NaverMap.MapType.Basic
             naverMap.isNightModeEnabled = false
         }
@@ -341,7 +392,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
     }
 }
 
-enum class Mode(val mode: String){
+enum class Mode(val mode: String) {
     CATEGORY("category"),
     MAP("map")
 }

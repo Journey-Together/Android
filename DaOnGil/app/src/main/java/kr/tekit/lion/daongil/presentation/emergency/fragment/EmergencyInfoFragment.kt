@@ -12,6 +12,7 @@ import kr.tekit.lion.daongil.presentation.emergency.adapter.EmergencyMessageAdap
 
 class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
+    // 더미 data
     val emergencyMessageList: List<EmergencyMessage> = listOf(
         EmergencyMessage("소아전담 전문의 부재로 소아환자 진료제한 있으니 사전 연락 필히 요청 부탁드립니다.", "2024.05.31 12:15:01"),
         EmergencyMessage("안과 평일 야간(18:00~19:00), 주말 해당 과 사정으로 수용 불가", "2024.05.31 12:15:01"),
@@ -36,7 +37,12 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
         with(binding){
             emergencyMessageCount.text = emergencyMessageList.size.toString()
             emergencyMessageRV.adapter = emergencyMessageadapter
+        }
 
+        with(binding.toolbarEmergencyInfo){
+            setNavigationOnClickListener {
+                requireActivity().finish()
+            }
         }
     }
 }

@@ -22,7 +22,7 @@ class EmergencyInfoActivity : AppCompatActivity() {
         replaceFragment()
     }
 
-    fun replaceFragment(){
+    private fun replaceFragment(){
 
         val name = intent.getStringExtra("infoType")
         Log.d("test", name.toString())

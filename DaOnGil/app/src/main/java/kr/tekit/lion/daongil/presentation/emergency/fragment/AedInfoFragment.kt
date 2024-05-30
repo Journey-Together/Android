@@ -15,5 +15,11 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentAedInfoBinding.bind(view)
+
+        with(binding.toolbarAedInfo){
+            setNavigationOnClickListener {
+                requireActivity().finish()
+            }
+        }
     }
 }

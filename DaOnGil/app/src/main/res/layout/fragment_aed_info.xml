@@ -8,7 +8,7 @@
     tools:context=".presentation.emergency.fragment.AedInfoFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarAedyInfo"
+        android:id="@+id/toolbarAedInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"

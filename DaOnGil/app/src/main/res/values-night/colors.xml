@@ -31,7 +31,4 @@
     <color name="profile_background_endColor">#FFE216</color>
 
     <color name="button_tertiary">#C92A2A</color>
-
-    <color name="button_dialog_positive">#ACACAC</color>
-    <color name="text_dialog_positive">#333333</color>
 </resources>

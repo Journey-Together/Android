@@ -40,6 +40,7 @@
     </style>
 
     <style name="map_category_chip">
+        <item name="background">@android:color/transparent</item>
         <item name="android:textColor">@color/chip_title</item>
         <item name="android:elevation">5dp</item>
         <item name="chipStrokeColor">@android:color/transparent</item>
@@ -49,11 +50,15 @@
 
     <style name="detail_category_chip" parent="ShapeAppearanceOverlay.Material3.Chip">
         <item name="android:textColor">@color/detail_category_chip_state_color</item>
+        <item name="android:padding">5dp</item>
+        <item name="android:checkable">true</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="chipStrokeColor">@color/detail_category_chip_state_color</item>
-        <item name="iconTint">@color/detail_category_chip_state_color</item>
+        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipIconTint">@color/detail_category_chip_state_color</item>
         <item name="chipBackgroundColor">@android:color/transparent</item>
         <item name="chipCornerRadius">20dp</item>
+        <item name="checkedIconVisible">false</item>
     </style>
 
     <style name="area_auto_complete_text_input_layout" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
@@ -70,5 +75,16 @@
         <item name="fontFamily">@font/pretendard_regular</item>
         <item name="backgroundTint">@color/select_area</item>
         <item name="endIconTint">@color/select_area</item>
+    </style>
+
+    <style name="category_bottom_sheet_dialog_theme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:screenOrientation">portrait</item>
+        <item name="bottomSheetStyle">@style/round_corner_modal</item>
+    </style>
+
+    <style name="round_corner_modal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 </resources>

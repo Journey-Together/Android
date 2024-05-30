@@ -38,7 +38,7 @@
     <color name="detail_category_selected_color">#FF4949</color>
 
     <color name="total_cnt">#FF4949</color>
-
     <color name="maker_overlay">#FFF0B1</color>
 
+    <color name="category_bottom_sheet_background">#F5F5F5</color>
 </resources>

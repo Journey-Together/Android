@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.myinfo.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
@@ -26,6 +27,34 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
                 setNavigationIcon(R.drawable.back_icon)
                 setNavigationOnClickListener {
                     findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
+                }
+            }
+        }
+
+        handleTextFieldEditorActions(binding)
+    }
+
+    private fun handleTextFieldEditorActions(binding: FragmentIceModifyBinding) {
+        with(binding) {
+            textFieldIceRelation1.apply {
+                setOnEditorActionListener { v, actionId, event ->
+                    textFieldIceContact1.requestFocus()
+                    true
+                }
+            }
+
+            textFieldIceContact1.apply {
+                setOnEditorActionListener { v, actionId, event ->
+                    textFieldIceRelation2.requestFocus()
+                    true
+                }
+            }
+
+            textFieldIceRelation2.apply {
+                imeOptions = EditorInfo.IME_ACTION_NEXT
+                setOnEditorActionListener { v, actionId, event ->
+                    textFieldIceContact2.requestFocus()
+                    true
                 }
             }
         }

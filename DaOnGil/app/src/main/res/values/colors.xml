@@ -13,8 +13,6 @@
     <color name="navi_background">#FFFFFF</color>
     <color name="text_tertiary">#666666</color>
 
-    <color name="tab_layout_background">#F5F5F5</color>
-
     <color name="button_secondary">#E0E0E0</color>
     <color name="toolbar_main_title">#5F6368</color>
     <color name="chip_title">#292C33</color>
@@ -41,4 +39,9 @@
     <color name="maker_overlay">#FFF0B1</color>
 
     <color name="category_bottom_sheet_background">#F5F5F5</color>
+
+    <color name="profile_background_centerColor">#FECE02</color>
+    <color name="profile_background_endColor">#FFE216</color>
+
+    <color name="button_tertiary">#C92A2A</color>
 </resources>

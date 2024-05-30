@@ -80,8 +80,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
             "로그인이 필요해요!",
             "여행 일정을 추가/관리하고 싶다면\n로그인을 진행해주세요",
             "로그인하기",
-            R.color.button_dialog_positive,
-            R.color.text_dialog_positive)
+            R.color.primary,
+            R.color.text_primary)
         dialog.isCancelable = true
         dialog.show(activity?.supportFragmentManager!!, "ScheduleLoginDialog")
     }

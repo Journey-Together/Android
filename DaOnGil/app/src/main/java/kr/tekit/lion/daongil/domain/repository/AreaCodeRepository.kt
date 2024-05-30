@@ -13,7 +13,6 @@ interface AreaCodeRepository {
     suspend fun getAreaCodeInfo(): List<AreaCode>
     suspend fun getAreaCodeInfo(code: String): AreaCode
     suspend fun getAllAreaCodes(): List<AreaCode>
-    suspend fun getDetailAreaCode(areaCode: String): List<AreaCode>
     suspend fun addAreaCodeInfo()
 
     companion object{

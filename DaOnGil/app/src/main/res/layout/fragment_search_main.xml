@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -8,298 +6,321 @@
     android:layout_height="match_parent"
     tools:context=".presentation.main.fragment.SearchMainFragment">
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/category_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="wrap_content"
         android:visibility="visible">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbarSearch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/margin_basic">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/toolbar_clover_icon" />
-
-            <TextView
-                style="@style/Theme.Toolbar.Main.Title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_small1"
-                android:text="다온, 길" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginEnd="@dimen/margin_big2"
-                android:src="@drawable/search_icon" />
-
-        </com.google.android.material.appbar.MaterialToolbar>
-
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/tab_layout_background"
-            android:elevation="5dp"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="5dp"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabSelectedTextAppearance="@style/tabLayout_text_appearance.Active"
-            app:tabTextAppearance="@style/tabLayout_text_appearance">
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tourist_spot" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restaurant" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lodgment" />
-        </com.google.android.material.tabs.TabLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_basic"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="나에게 맞는 유형을 선택해보세요!"
-                android:textSize="@dimen/font_big2" />
-
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbarSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="@dimen/margin_small1"
-                android:backgroundTint="@color/search_view_background"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="15dp"
-                app:strokeColor="#a3a3a4"
-                app:strokeWidth="0.5dp">
+                android:paddingStart="@dimen/margin_basic">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/toolbar_clover_icon" />
+
+                <TextView
+                    style="@style/Theme.Toolbar.Main.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_small1"
+                    android:text="다온, 길" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="@dimen/margin_big2"
+                    android:src="@drawable/search_icon" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <com.google.android.material.tabs.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tab_layout_background"
+                android:elevation="5dp"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="5dp"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextAppearance="@style/tabLayout_text_appearance.Active"
+                app:tabTextAppearance="@style/tabLayout_text_appearance">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tourist_spot" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restaurant" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lodgment" />
+            </com.google.android.material.tabs.TabLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/margin_basic"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="나에게 맞는 유형을 선택해보세요!"
+                    android:textSize="@dimen/font_big2" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="@dimen/margin_small1"
+                    android:backgroundTint="@color/search_view_background"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="15dp"
+                    app:strokeColor="#a3a3a4"
+                    app:strokeWidth="0.5dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingBottom="20dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btn_physical_disability"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="17dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/item_background"
+                                app:cardCornerRadius="10dp"
+                                app:strokeColor="@color/item_background">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sv_unselected_physical_disability_icon" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btn_visual_impairment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="17dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/item_background"
+                                app:cardCornerRadius="10dp"
+                                app:strokeColor="@color/item_background">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sv_unselected_visual_impairment_icon" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btn_hearing_impairment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/item_background"
+                                app:cardCornerRadius="10dp"
+                                app:strokeColor="@color/item_background">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sv_unselected_hearing_impairment_icon" />
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="30dp"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btn_infant_family"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="17dp"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/item_background"
+                                app:cardCornerRadius="10dp"
+                                app:strokeColor="@color/item_background">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sv_unselected_infant_family_icon" />
+
+                            </com.google.android.material.card.MaterialCardView>
+
+                            <com.google.android.material.card.MaterialCardView
+                                android:id="@+id/btn_elderly_people"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/item_background"
+                                app:cardCornerRadius="10dp"
+                                app:strokeColor="@color/item_background">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:src="@drawable/sv_unselected_elderly_people_icon" />
+
+                            </com.google.android.material.card.MaterialCardView>
+                        </LinearLayout>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
-                    android:paddingBottom="20dp">
+                    android:layout_marginTop="@dimen/margin_small2"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="30dp"
-                        android:orientation="horizontal"
-                        android:weightSum="3">
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_physical_disability"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="17dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/item_background"
-                            app:cardCornerRadius="10dp"
-                            app:strokeColor="@color/item_background">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/sv_unselected_physical_disability_icon" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_visual_impairment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="17dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/item_background"
-                            app:cardCornerRadius="10dp"
-                            app:strokeColor="@color/item_background">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/sv_unselected_visual_impairment_icon" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_hearing_impairment"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/item_background"
-                            app:cardCornerRadius="10dp"
-                            app:strokeColor="@color/item_background">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/sv_unselected_hearing_impairment_icon" />
-
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
                         android:layout_gravity="center"
-                        android:layout_marginTop="30dp"
-                        android:orientation="horizontal">
+                        android:text="지역 선택"
+                        android:textSize="18sp" />
 
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_infant_family"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="17dp"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/item_background"
-                            app:cardCornerRadius="10dp"
-                            app:strokeColor="@color/item_background">
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
 
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/sv_unselected_infant_family_icon" />
-
-                        </com.google.android.material.card.MaterialCardView>
-
-                        <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/btn_elderly_people"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:backgroundTint="@color/item_background"
-                            app:cardCornerRadius="10dp"
-                            app:strokeColor="@color/item_background">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:src="@drawable/sv_unselected_elderly_people_icon" />
-
-                        </com.google.android.material.card.MaterialCardView>
-                    </LinearLayout>
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btn_search"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/background_radius_10"
+                        android:backgroundTint="@color/primary"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="검색"
+                        android:textColor="#262626"
+                        android:textSize="17sp" />
                 </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small2"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small2"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="지역 선택"
-                android:textSize="20sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small2"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/area_auto_complete_text_input_layout"
-                    android:layout_width="100dp"
-                    android:layout_height="55dp"
-                    android:layout_weight="1"
-                    android:hint="전국">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/selected_area"
-                        style="@style/area_auto_complete_text_view"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/area_select_layout"
+                        style="@style/area_auto_complete_text_input_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/black"
+                        android:hint="전국">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <AutoCompleteTextView
+                            android:id="@+id/selected_area"
+                            style="@style/area_auto_complete_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/area_auto_complete_text_input_layout"
-                    android:layout_width="100dp"
-                    android:layout_height="55dp"
-                    android:layout_marginStart="@dimen/margin_small1"
-                    android:layout_weight="1"
-                    android:hint="전체">
-
-                    <AutoCompleteTextView
-                        android:id="@+id/detail_selected_area"
-                        style="@style/area_auto_complete_text_view"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/detail_area_select_layout"
+                        style="@style/area_auto_complete_text_input_layout"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:textColorHint="@color/black"
+                        android:hint="전체"
+                        android:visibility="gone">
 
-                </com.google.android.material.textfield.TextInputLayout>
+                        <AutoCompleteTextView
+                            android:id="@+id/detail_selected_area"
+                            style="@style/area_auto_complete_text_view"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btn_search"
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_small2"
-                    android:background="@drawable/background_radius_10"
-                    android:backgroundTint="@color/primary"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:text="검색"
-                    android:textColor="#262626"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                    android:layout_marginTop="@dimen/margin_basic"
+                    android:orientation="horizontal">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_basic"
-                android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="총 "
+                        android:textColor="@color/select_area_text" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="총 "
-                    android:textColor="@color/select_area_text" />
+                    <TextView
+                        android:id="@+id/total_cnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="5,650"
+                        android:textColor="@color/total_cnt" />
 
-                <TextView
-                    android:id="@+id/total_cnt"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="5,650"
-                    android:textColor="@color/total_cnt" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="건"
+                        android:textColor="@color/select_area_text" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:text="건"
-                    android:textColor="@color/select_area_text" />
-
+                </LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_search_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
             </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/map_container"

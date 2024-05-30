@@ -17,6 +17,9 @@
 
     <color name="button_secondary">#E0E0E0</color>
     <color name="toolbar_main_title">#5F6368</color>
+
+    <color name="card_background_color">#FFFFFFFF</color>
+
     <color name="chip_title">#292C33</color>
     <color name="chip_background">#FAE280</color>
     <color name="reset_button">#FFFFFFFF</color>
@@ -58,4 +61,5 @@
     <color name="profile_background_endColor">#FFE216</color>
 
     <color name="button_tertiary">#C92A2A</color>
+
 </resources>

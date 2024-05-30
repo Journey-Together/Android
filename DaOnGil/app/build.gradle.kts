@@ -82,5 +82,7 @@ dependencies {
     implementation("com.naver.maps:map-sdk:3.17.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
 
+    implementation ("me.relex:circleindicator:2.1.6")
+
     implementation("com.google.android.gms:play-services-location:21.2.0")
 }

@@ -7,11 +7,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 
-class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main) {
-    private var isUser = true
+class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
+    private var isUser = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,6 +22,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main) {
 
         initView(binding)
         settingRecyclerView(binding, requireContext())
+        initNewScheduleButton(binding)
     }
 
     private fun initView(binding : FragmentScheduleMainBinding){
@@ -52,7 +55,38 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main) {
         binding.cardViewEmptySchedule.visibility = View.VISIBLE
     }
 
-    // 로그인 팝업 ( #30 코드 활용할 예정)
+    private fun createNewSchedule(){
+        if(isUser){
+            // 일정 추가 화면으로 이동
+        }else{
+            // 비회원 -> 로그인 다이얼로그
+            displayLoginDialog()
+        }
+    }
 
-    // 일정 추가 버튼 click listener
+    private fun initNewScheduleButton(binding:FragmentScheduleMainBinding){
+        binding.buttonAddSchedule.setOnClickListener {
+            createNewSchedule()
+        }
+
+        binding.textViewAddSchedule.setOnClickListener {
+            createNewSchedule()
+        }
+    }
+
+    private fun displayLoginDialog(){
+        val dialog = ConfirmDialog(
+            this,
+            "로그인이 필요해요!",
+            "여행 일정을 추가/관리하고 싶다면\n로그인을 진행해주세요",
+            "로그인하기",
+            R.color.button_dialog_positive,
+            R.color.text_dialog_positive)
+        dialog.isCancelable = true
+        dialog.show(activity?.supportFragmentManager!!, "ScheduleLoginDialog")
+    }
+
+    override fun onPosBtnClick() {
+        // login 화면으로 이동
+    }
 }

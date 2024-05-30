@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.emergency.EmergencyMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.test.TestActivity"
             android:exported="false" />
         <activity
@@ -27,6 +30,7 @@
         <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="false" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="s1kt0zadqe" />

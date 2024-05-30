@@ -83,39 +83,60 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_small1"
+                android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="닉네임"
                 android:textSize="@dimen/font_big2" />
 
-            <EditText
-                android:id="@+id/editTextUserNickname"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutUserNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/pretendard_medium"
-                android:hint="닉네임을 입력해주세요."
-                android:inputType="text"
-                android:paddingBottom="@dimen/margin_big2"
-                android:textSize="@dimen/font_big3" />
+                android:layout_marginBottom="@dimen/margin_basic"
+                app:boxBackgroundColor="@color/background_color"
+                app:boxBackgroundMode="filled"
+                app:endIconMode="clear_text"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textFieldUserNickname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="닉네임을 입력해주세요."
+                    android:inputType="text"
+                    android:paddingStart="@dimen/margin_small2"
+                    android:textSize="@dimen/font_big3" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_small1"
+                android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="전화번호"
                 android:textSize="@dimen/font_big2" />
 
-            <EditText
-                android:id="@+id/editTextPhoneNumber"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutUserPhoneNumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretendard_medium"
-                android:hint="전화번호를 입력해주세요."
-                android:inputType="phone"
-                android:paddingBottom="@dimen/margin_big2"
-                android:textSize="@dimen/font_big3" />
+                android:layout_marginBottom="@dimen/margin_big2"
+                app:boxBackgroundColor="@color/background_color"
+                app:boxBackgroundMode="filled"
+                app:endIconMode="clear_text"
+                app:hintEnabled="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/textFieldUserPhoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:hint="예시) 010-1234-5678"
+                    android:inputType="phone"
+                    android:paddingStart="@dimen/margin_small2"
+                    android:textSize="@dimen/font_big3" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

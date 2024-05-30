@@ -161,7 +161,7 @@
                     android:layout_marginBottom="@dimen/margin_big4"
                     android:layout_weight="1"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="전화번호를 입력해주세요."
+                    android:hint="예시) 010-1234-5678"
                     android:inputType="phone"
                     android:paddingBottom="@dimen/margin_big2"
                     android:textSize="@dimen/font_big3" />
@@ -190,7 +190,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="전화번호를 입력해주세요."
+                    android:hint="예시) 010-1234-5678"
                     android:inputType="phone"
                     android:paddingBottom="@dimen/margin_big2"
                     android:textSize="@dimen/font_big3" />

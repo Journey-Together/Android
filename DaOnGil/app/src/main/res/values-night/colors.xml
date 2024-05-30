@@ -33,6 +33,7 @@
 
     <color name="total_cnt">#26A6A6</color>
 
+    <color name="tab_layout_background">#2D2D2D</color>
     <color name="floating_action_button">#D9D9D9</color>
     <color name="floating_action_button_title">#434342</color>
     <color name="maker_overlay">#666666</color>

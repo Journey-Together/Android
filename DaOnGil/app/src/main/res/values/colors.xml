@@ -23,6 +23,7 @@
     <color name="search_view_background">#E8E8E9</color>
 
     <color name="tab_layout_common_text">#8A8A8A</color>
+    <color name="tab_layout_background">#F5F5F5</color>
     <color name="floating_action_button">#292C33</color>
     <color name="floating_action_button_title">#E9E9EA</color>
 
@@ -39,6 +40,7 @@
 
     <color name="total_cnt">#FF4949</color>
     <color name="maker_overlay">#FFF0B1</color>
+
 
     <color name="category_bottom_sheet_background">#F5F5F5</color>
 

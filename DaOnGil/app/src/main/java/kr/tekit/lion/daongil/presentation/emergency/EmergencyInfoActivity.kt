@@ -7,6 +7,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyInfoBinding
 import kr.tekit.lion.daongil.presentation.emergency.fragment.AedInfoFragment
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyInfoFragment
+import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyInfoFragment
 
 class EmergencyInfoActivity : AppCompatActivity() {
 
@@ -30,7 +31,7 @@ class EmergencyInfoActivity : AppCompatActivity() {
         when(name) {
             "Emergency" -> fragmentManager.replace(R.id.emergency_info_container, EmergencyInfoFragment())
             "Aed" -> fragmentManager.replace(R.id.emergency_info_container, AedInfoFragment())
-            // "Pharmacy" -> fragmentManager.replace(R.id.emergency_info_container, ())
+            "Pharmacy" -> fragmentManager.replace(R.id.emergency_info_container, PharmacyInfoFragment())
         }
 
         fragmentManager.commit()

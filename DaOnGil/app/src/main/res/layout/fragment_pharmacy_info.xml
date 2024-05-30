@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".presentation.emergency.fragment.AedInfoFragment">
+    tools:context=".presentation.emergency.fragment.PharmacyInfoFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarAedyInfo"
+        android:id="@+id/toolbarPharmcyInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?attr/actionBarSize"
@@ -18,7 +18,7 @@
             style="@style/Theme.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내 주변 AED 찾기" />
+            android:text="내 주변 약국 찾기" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="청원보건소"
+                android:text="가나약국"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big1" />
 
@@ -61,48 +61,26 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="충청북도 청주시 청원구 오창읍 과학산업3로 238, 청원보건소"
+                    android:text="전북특별자치도 전주시 완산구 한두평3길 14 (중화산동2가)"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1" />
 
             </LinearLayout>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/mainEmergencyCall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big3"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/emergencyCall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_radius_5"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:text="관리자"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_big3"
-                    app:backgroundTint="@color/button_tertiary"
-                    app:icon="@drawable/call_icon"
-                    app:iconTint="@color/white" />
-
-                <Button
-                    android:id="@+id/mainEmergencyCall"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small2"
-                    android:layout_weight="1"
-                    android:background="@drawable/background_radius_5"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:text="대표 전화"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big3"
-                    app:backgroundTint="@color/primary"
-                    app:icon="@drawable/call_icon"
-                    app:iconTint="@color/text_primary" />
-            </LinearLayout>
+                android:layout_marginStart="@dimen/margin_small2"
+                android:background="@drawable/background_radius_5"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="대표 전화"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_big3"
+                app:backgroundTint="@color/primary"
+                app:icon="@drawable/call_icon"
+                app:iconTint="@color/text_primary" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -110,7 +88,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginTop="@dimen/margin_big1"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="AED 이용 안내"
+                android:text="약국 이용 안내"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2" />
 
@@ -128,13 +106,13 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedLocationTitle"
+                    android:id="@+id/pharmLocationTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="설치 위치"
+                    android:text="약국 위치"
                     android:textColor="@color/text_primary"
                     android:textSize="@dimen/font_big3"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -142,7 +120,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedLocationIcon"
+                    android:id="@+id/pharmLocationIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -155,18 +133,18 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedLocationText"
+                    android:id="@+id/pharmLocationText"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="대회의실(3층)"
+                    android:text="전주병원 앞"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedLocationIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmLocationIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -178,7 +156,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedMonTitle"
+                    android:id="@+id/pharmMonTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -192,7 +170,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedMonIcon"
+                    android:id="@+id/pharmMonIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -205,7 +183,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedMonTime"
+                    android:id="@+id/pharmMonTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -216,7 +194,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedMonIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmMonIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -228,7 +206,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedTueTitle"
+                    android:id="@+id/pharmTueTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -242,7 +220,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedTueIcon"
+                    android:id="@+id/pharmTueIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -255,7 +233,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedTueTime"
+                    android:id="@+id/pharmTueTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -266,7 +244,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedTueIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmTueIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -278,7 +256,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedWedTitle"
+                    android:id="@+id/pharmWedTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -292,7 +270,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedWedIcon"
+                    android:id="@+id/pharmWedIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -316,7 +294,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedWedIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmWedIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -328,7 +306,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedThuTitle"
+                    android:id="@+id/pharmThuTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -342,7 +320,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedThuIcon"
+                    android:id="@+id/pharmThuIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -366,7 +344,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedThuIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmThuIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -378,7 +356,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedFriTitle"
+                    android:id="@+id/pharmFriTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -392,7 +370,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedFriIcon"
+                    android:id="@+id/pharmFriIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -405,7 +383,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedFriTime"
+                    android:id="@+id/pharmFriTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -416,7 +394,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedFriIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmFriIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -428,7 +406,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedSatTitle"
+                    android:id="@+id/pharmSatTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -442,7 +420,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedSatIcon"
+                    android:id="@+id/pharmSatIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -455,7 +433,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedSatTime"
+                    android:id="@+id/pharmSatTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -466,7 +444,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedSatIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmSatIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -478,7 +456,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedSunTitle"
+                    android:id="@+id/pharmSunTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -492,7 +470,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedSunIcon"
+                    android:id="@+id/pharmSunIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -505,7 +483,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedSunTime"
+                    android:id="@+id/pharmSunTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -516,7 +494,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedSunIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmSunIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -528,7 +506,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedOffTitle"
+                    android:id="@+id/pharmOffTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -542,7 +520,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedOffIcon"
+                    android:id="@+id/pharmOffIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -555,7 +533,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedOffTime"
+                    android:id="@+id/pharmOffTime"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
                     android:layout_gravity="center_vertical"
@@ -566,7 +544,7 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedOffIcon"
+                    app:layout_constraintStart_toEndOf="@+id/pharmOffIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -603,33 +581,9 @@
                     android:orientation="vertical"
                     android:padding="@dimen/margin_big3">
 
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="40dp"
-                            android:layout_height="40dp"
-                            android:src="@drawable/emergency_notice_img" />
-
-                        <TextView
-                            android:id="@+id/aedSunWeekText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="@dimen/margin_big4"
-                            android:fontFamily="@font/pretendard_semibold"
-                            android:layout_gravity="center_vertical"
-                            android:text="일요일은 둘째주, 넷째주에만 사용이 가능합니다."
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/font_small1"/>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/margin_big3"
                         android:orientation="horizontal">
 
                         <ImageView

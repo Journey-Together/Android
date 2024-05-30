@@ -17,6 +17,30 @@
 
     <color name="button_secondary">#E0E0E0</color>
     <color name="toolbar_main_title">#5F6368</color>
+    <color name="chip_title">#292C33</color>
+    <color name="chip_background">#FAE280</color>
+    <color name="reset_button">#FFFFFFFF</color>
+    <color name="search_view_background">#E8E8E9</color>
+
+    <color name="tab_layout_common_text">#8A8A8A</color>
+    <color name="floating_action_button">#292C33</color>
+    <color name="floating_action_button_title">#E9E9EA</color>
+
+    <color name="box_stroke">#A3A5A9</color>
+    <color name="select_area">#E8E8E9</color>
+    <color name="select_area_text">#474747</color>
+    <color name="select_area_box_stroke">#A3A5A9</color>
+    <color name="select_area_end_icon">#898989</color>
+
+    <color name="detail_category_title_text">#FF000000</color>
+
+    <color name="detail_category_unselected_color">#7F8286</color>
+    <color name="detail_category_selected_color">#FF4949</color>
+
+    <color name="total_cnt">#FF4949</color>
+    <color name="maker_overlay">#FFF0B1</color>
+
+    <color name="category_bottom_sheet_background">#F5F5F5</color>
 
     <!-- 플로팅버튼 배경색 (지도보기, 목록보기, 일정 추가하기)-->
     <color name="fab_background">#292C33</color>

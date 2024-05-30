@@ -1,9 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".presentation.test.TestActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_semibold"
+        android:text="상세 카테고리"
+        android:textColor="@color/detail_category_title_text"
+        android:textSize="18sp" />
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/all_chip"
+        style="@style/detail_category_chip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:text="전체" />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_physical_disability"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/parking_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="주차장"
+            app:chipIcon="@drawable/chip_parking_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/public_transport_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="대중교통"
+            app:chipIcon="@drawable/chip_public_transport_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/route_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="접근로" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/ticket_office_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="매표소"
+            app:chipIcon="@drawable/chip_ticket_office_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/promotion_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="홍보물"
+            app:chipIcon="@drawable/chip_promotion_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/wheelchair_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="휠체어"
+            app:chipIcon="@drawable/chip_wheelchair_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/exit_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="출입통로" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/elevator_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="엘리베이터"
+            app:chipIcon="@drawable/chip_elevator_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/restroom_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="화장실"
+            app:chipIcon="@drawable/chip_restroom_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/auditorium_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="관람석" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/room_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="객실" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_visual_impairment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/braileblock_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="점자블럭" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/help_dog_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="보조견동반" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/guide_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="안내요원" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/audio_guide_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="오디오 가이드"
+            app:chipIcon="@drawable/chip_audio_guide_icon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/big_print_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="큰활자 홍보물" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/braile_promotion_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="점자 홍보물/점자 표지판" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/guide_system_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="유도 안내 설비" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_hearing_impairment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/sign_guide_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="수화 안내" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/video_guide_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="자막/비디오가이드" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/hearingroom_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="청각실" />
+
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_infant_family"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/stroller_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="유모차" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/lactation_room_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="수유실"
+            app:chipIcon="@drawable/chip_lactationroom_icon"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/baby_spare_chair_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checkable="true"
+            android:text="유아용 보조의자"
+            app:chipIcon="@drawable/chip_baby_spare_chair_icon"/>
+    </com.google.android.material.chip.ChipGroup>
+</LinearLayout>

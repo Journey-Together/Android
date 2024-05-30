@@ -27,7 +27,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:backgroundTint="@android:color/transparent"
-                    android:drawableLeft="@drawable/ic_arrow_back_ios_24px" />
+                    android:drawableLeft="@drawable/back_icon" />
 
                 <com.google.android.material.search.SearchBar
                     android:id="@+id/searchBarMain"

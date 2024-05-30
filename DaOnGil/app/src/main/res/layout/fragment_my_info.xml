@@ -156,6 +156,7 @@
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:dividerColor="@color/text_tertiary"
                 app:dividerThickness="5dp" />
 
             <LinearLayout

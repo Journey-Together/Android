@@ -23,7 +23,7 @@ class HomeLocationRVAdapter(private val touristList: List<Tourist>, val context:
         holder.bind(touristList[position])
     }
 
-    inner class LocationViewHolder(val binding: ItemTouristBigBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
+    class LocationViewHolder(val binding: ItemTouristBigBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
         fun bind(tourist : Tourist) {
             binding.touristBigLocationTv.text = tourist.touristLocation
             binding.touristBigTitleTv.text = tourist.touristName

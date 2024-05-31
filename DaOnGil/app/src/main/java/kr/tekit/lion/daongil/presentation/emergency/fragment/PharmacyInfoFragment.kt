@@ -12,10 +12,8 @@ class PharmacyInfoFragment : Fragment(R.layout.fragment_pharmacy_info) {
 
         val binding = FragmentPharmacyInfoBinding.bind(view)
 
-        with(binding.toolbarPharmcyInfo){
-            setNavigationOnClickListener {
-                requireActivity().finish()
-            }
+        binding.toolbarPharmcyInfo.setNavigationOnClickListener {
+            requireActivity().finish()
         }
     }
 }

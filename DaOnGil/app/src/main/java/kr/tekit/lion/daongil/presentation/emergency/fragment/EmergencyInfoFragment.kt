@@ -37,10 +37,8 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
         with(binding){
             emergencyMessageCount.text = emergencyMessageList.size.toString()
             emergencyMessageRV.adapter = emergencyMessageadapter
-        }
 
-        with(binding.toolbarEmergencyInfo){
-            setNavigationOnClickListener {
+            toolbarEmergencyInfo.setNavigationOnClickListener {
                 requireActivity().finish()
             }
         }

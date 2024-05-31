@@ -17,6 +17,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.emergency.EmergencyInfoActivity"
             android:name=".presentation.scheduleform.ScheduleFormActivity"
             android:exported="false" />
         <activity

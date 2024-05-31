@@ -13,8 +13,16 @@
     <!-- Main Toolbar Title TextApperance 설정 -->
     <style name="Theme.Toolbar.Main.Title" parent="">
         <item name="android:textSize">@dimen/font_big1</item>
-        <item name="android:fontFamily">@font/cafe24_oneprettynight</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
         <item name="android:textColor">@color/toolbar_main_title</item>
+    </style>
+  
+    <!-- 상세 Toolbar Title TextApperance 설정 -->
+    <style name="Theme.Toolbar.Title" parent="">
+        <item name="android:textSize">@dimen/font_big2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="tabLayout_text_appearance" parent="">
@@ -87,4 +95,5 @@
     <style name="round_corner_modal" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
+
 </resources>

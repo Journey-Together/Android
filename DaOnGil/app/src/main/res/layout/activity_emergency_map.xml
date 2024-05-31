@@ -16,4 +16,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/detailButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="응급실 상세보기 이동 버튼"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mapText" />
+
+    <Button
+        android:id="@+id/detailButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AED 상세보기 이동 버튼"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailButton" />
+
+    <Button
+        android:id="@+id/detailButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="약국 상세보기 이동 버튼"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/detailButton2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

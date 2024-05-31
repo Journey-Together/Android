@@ -83,6 +83,12 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="bottomSheetStyle">@style/round_corner_modal</item>
     </style>
+    
+    <style name="category_option_button" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textColor">@color/category_selected_button</item>
+        <item name="android:backgroundTint">@color/category_unselected_button</item>
+    </style>
 
     <style name="round_corner_modal" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>

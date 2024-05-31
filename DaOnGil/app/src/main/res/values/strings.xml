@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">DaOnGil</string>
+
+    <string-array name="blood_type">
+        <item>A형 Rh+</item>
+        <item>A형 Rh-</item>
+        <item>B형 Rh+</item>
+        <item>B형 Rh-</item>
+        <item>O형 Rh+</item>
+        <item>O형 Rh-</item>
+        <item>AB형 Rh+</item>
+        <item>AB형 Rh-</item>
+    </string-array>
 </resources>

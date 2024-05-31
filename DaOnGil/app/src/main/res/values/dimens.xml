@@ -23,4 +23,5 @@
     <dimen name="font_big2">18dp</dimen>
     <dimen name="font_big3">16dp</dimen>
 
+    <dimen name="category_option_height">55dp</dimen>
 </resources>

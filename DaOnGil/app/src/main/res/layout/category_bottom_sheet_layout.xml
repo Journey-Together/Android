@@ -27,7 +27,7 @@
         style="@style/detail_category_chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="전체" />
+        android:text="@string/text_all" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chip_group_physical_disability"
@@ -43,85 +43,85 @@
             android:id="@+id/parking_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="주차장"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_parking"
             app:chipIcon="@drawable/chip_parking_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/public_transport_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="대중교통"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_public_transport"
             app:chipIcon="@drawable/chip_public_transport_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/route_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="접근로" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_route" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ticket_office_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="매표소"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_ticket_office"
             app:chipIcon="@drawable/chip_ticket_office_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/promotion_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="홍보물"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_promotion"
             app:chipIcon="@drawable/chip_promotion_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/wheelchair_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="휠체어"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_wheelchair"
             app:chipIcon="@drawable/chip_wheelchair_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/exit_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="출입통로" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_exit" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/elevator_chip"
             style="@style/detail_category_chip"
             android:layout_width="120dp"
-            android:layout_height="55dp"
-            android:text="엘리베이터"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_elevator"
             app:chipIcon="@drawable/chip_elevator_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/restroom_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="화장실"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_restroom"
             app:chipIcon="@drawable/chip_restroom_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/auditorium_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="관람석" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_auditorium" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/room_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="객실" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_room" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -140,51 +140,51 @@
             android:id="@+id/braileblock_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="점자블럭" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_braile_block" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/help_dog_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="보조견동반" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_help_dog" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/guide_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="안내요원" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_guide" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/audio_guide_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="오디오 가이드"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_audio_guide"
             app:chipIcon="@drawable/chip_audio_guide_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/big_print_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="큰활자 홍보물" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_big_print" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/braile_promotion_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="점자 홍보물/점자 표지판" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_braile_promotion" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/guide_system_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="유도 안내 설비" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/guide_system" />
     </com.google.android.material.chip.ChipGroup>
 
 
@@ -202,22 +202,15 @@
             android:id="@+id/sign_guide_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="수화 안내" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_sign_guide" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/video_guide_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="자막/비디오가이드" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/hearing_room_chip"
-            style="@style/detail_category_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="청각실" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_video_guide" />
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -236,23 +229,23 @@
             android:id="@+id/stroller_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="유모차" />
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_stroller" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/lactation_room_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="수유실"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_lactation"
             app:chipIcon="@drawable/chip_lactationroom_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/baby_spare_chair_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
-            android:layout_height="55dp"
-            android:text="유아용 보조의자"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_baby_spare_chair"
             app:chipIcon="@drawable/chip_baby_spare_chair_icon" />
     </com.google.android.material.chip.ChipGroup>
 
@@ -267,14 +260,14 @@
             android:id="@+id/btn_reset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:background="@drawable/background_radius_10"
             android:backgroundTint="@color/button_secondary"
             android:drawableStart="@drawable/reset_icon"
             android:fontFamily="@font/pretendard_medium"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
-            android:text="초기화" />
+            android:text="@string/text_reset" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_submit"
@@ -285,6 +278,6 @@
             android:background="@drawable/background_radius_10"
             android:backgroundTint="@color/primary"
             android:fontFamily="@font/pretendard_medium"
-            android:text="적용하기" />
+            android:text="@string/text_apply" />
     </LinearLayout>
 </LinearLayout>

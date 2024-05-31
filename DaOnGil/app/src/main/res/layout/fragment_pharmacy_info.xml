@@ -135,7 +135,7 @@
                 <TextView
                     android:id="@+id/pharmLocationText"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -185,7 +185,7 @@
                 <TextView
                     android:id="@+id/pharmMonTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -235,7 +235,7 @@
                 <TextView
                     android:id="@+id/pharmTueTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -285,7 +285,7 @@
                 <TextView
                     android:id="@+id/aedWedTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -335,7 +335,7 @@
                 <TextView
                     android:id="@+id/aedThuTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -385,7 +385,7 @@
                 <TextView
                     android:id="@+id/pharmFriTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -435,7 +435,7 @@
                 <TextView
                     android:id="@+id/pharmSatTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -485,7 +485,7 @@
                 <TextView
                     android:id="@+id/pharmSunTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -535,7 +535,7 @@
                 <TextView
                     android:id="@+id/pharmOffTime"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"

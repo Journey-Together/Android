@@ -254,7 +254,7 @@
                 <TextView
                     android:id="@+id/emergency"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -304,7 +304,7 @@
                 <TextView
                     android:id="@+id/kidEmergency"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
@@ -341,7 +341,7 @@
                 <TextView
                     android:id="@+id/emergencyDialysis"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"
@@ -378,7 +378,7 @@
                 <TextView
                     android:id="@+id/emergencyBirth"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"
@@ -415,7 +415,7 @@
                 <TextView
                     android:id="@+id/emergencyBurns"
                     android:layout_width="wrap_content"
-                    android:layout_height="22dp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"

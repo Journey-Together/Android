@@ -326,7 +326,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="연락처"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14dp" />
+                        android:textSize="@dimen/font_small1" />
 
                 </LinearLayout>
 
@@ -354,7 +354,7 @@
                         android:fontFamily="@font/pretendard_medium"
                         android:text="연락처"
                         android:textColor="@color/text_secondary"
-                        android:textSize="14dp" />
+                        android:textSize="@dimen/font_small1" />
                 </LinearLayout>
 
             </LinearLayout>

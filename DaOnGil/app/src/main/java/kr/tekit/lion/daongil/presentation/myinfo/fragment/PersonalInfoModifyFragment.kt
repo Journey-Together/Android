@@ -24,23 +24,19 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
     }
 
     private fun initView(binding: FragmentPersonalInfoModifyBinding) {
-        with(binding) {
-            toolbarPersonalInfoModify.apply {
-                setNavigationIcon(R.drawable.back_icon)
-                setNavigationOnClickListener {
-                    findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment, null)
-                }
+        with(binding.toolbarPersonalInfoModify) {
+            setNavigationIcon(R.drawable.back_icon)
+            setNavigationOnClickListener {
+                findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment, null)
             }
         }
     }
 
     private fun PersonalInfoModify(binding: FragmentPersonalInfoModifyBinding) {
-        with(binding) {
-            buttonPersonalInfoSubmit.setOnClickListener {
-                if (isFormValid(binding)) {
-                    showSnackbar(binding, "개인 정보가 수정되었습니다.")
-                    findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment, null)
-                }
+        binding.buttonPersonalInfoSubmit.setOnClickListener {
+            if (isFormValid(binding)) {
+                showSnackbar(binding, "개인 정보가 수정되었습니다.")
+                findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment, null)
             }
         }
     }
@@ -55,19 +51,34 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
         var isValid = true
 
         if (binding.textFieldUserNickname.text.isNullOrBlank()) {
-            view?.requestFocus()
+            binding.textFieldUserNickname.requestFocus()
             context?.showSoftInput(binding.textFieldUserNickname)
             binding.textInputLayoutUserNickname.error = "닉네임을 입력해주세요."
             isValid = false
+        }
+
+        val phoneNumber = binding.textFieldUserPhoneNumber.text.toString()
+        if (phoneNumber.isNotBlank()) {
+            val phonePattern = "^010-\\d{4}-\\d{4}$"
+            if (!phoneNumber.matches(phonePattern.toRegex())) {
+                binding.textFieldUserPhoneNumber.requestFocus()
+                context?.showSoftInput(binding.textFieldUserPhoneNumber)
+                binding.textInputLayoutUserPhoneNumber.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                isValid = false
+            }
         }
 
         return isValid
     }
 
     private fun setupErrorHandling(binding: FragmentPersonalInfoModifyBinding) {
-        binding.apply {
+        with(binding) {
             textFieldUserNickname.doOnTextChanged { text, start, before, count ->
                 textInputLayoutUserNickname.isErrorEnabled = false
+            }
+
+            textFieldUserPhoneNumber.doOnTextChanged { text, start, before, count ->
+                textInputLayoutUserPhoneNumber.isErrorEnabled = false
             }
         }
     }

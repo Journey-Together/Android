@@ -132,7 +132,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="예시) 010-1234-5678"
+                    android:hint="예) 010-1234-5678"
                     android:inputType="phone"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />

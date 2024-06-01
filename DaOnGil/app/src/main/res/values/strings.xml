@@ -6,6 +6,7 @@
     <string name="lodgment">숙박</string>
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
+
     <string name="text_parking">주차장</string>
     <string name="text_public_transport">대중교통</string>
     <string name="text_route">접근로</string>
@@ -38,4 +39,15 @@
     <string name="text_hearing_impairment">청각장애</string>
     <string name="text_infant_family">영유아동반</string>
     <string name="text_elderly_person">고령자</string>
+
+    <string-array name="blood_type">
+        <item>A형 Rh+</item>
+        <item>A형 Rh-</item>
+        <item>B형 Rh+</item>
+        <item>B형 Rh-</item>
+        <item>O형 Rh+</item>
+        <item>O형 Rh-</item>
+        <item>AB형 Rh+</item>
+        <item>AB형 Rh-</item>
+    </string-array>
 </resources>

@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -8,8 +9,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.myinfo.MyInfoActivity
 
 class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDialogInterface {
 
@@ -21,22 +23,23 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
 
         val binding = FragmentMyInfoMainBinding.bind(view)
 
-        changeStatusBarColor()
         initView(binding)
-        logoutDialog(binding)
+        changeStatusBarColor()
     }
 
     private fun initView(binding: FragmentMyInfoMainBinding) {
         if(isUser) {
             with(binding) {
-                textViewMyInfoUserNickname.text = "김사자"
+                textViewMyInfoMainUserNickname.text = "김사자"
+                moveMyInfo(binding)
+                logoutDialog(binding)
             }
         } else {
             with(binding) {
-                textViewMyInfoUserNickname.text = "아직 정보가 없어요!"
-                textViewMyInfoUserTitle.isVisible = false
-                textViewMyInfoReview.text = "로그인을 진행해주세요"
-                textViewMyInfoReviewCnt.isVisible = false
+                textViewMyInfoMainUserNickname.text = "아직 정보가 없어요!"
+                textViewMyInfoMainUserTitle.isVisible = false
+                textViewMyInfoMainReview.text = "로그인을 진행해주세요"
+                textViewMyInfoMainReviewCnt.isVisible = false
             }
         }
     }
@@ -54,6 +57,13 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
             originalStatusBarColor?.let { color ->
                 it.window.statusBarColor = color
             }
+        }
+    }
+
+    private fun moveMyInfo(binding: FragmentMyInfoMainBinding) {
+        binding.layoutProfile.setOnClickListener {
+            val intent = Intent(requireActivity(), MyInfoActivity::class.java)
+            startActivity(intent)
         }
     }
 

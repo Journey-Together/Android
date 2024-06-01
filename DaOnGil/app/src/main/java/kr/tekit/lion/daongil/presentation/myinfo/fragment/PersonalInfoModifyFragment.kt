@@ -63,7 +63,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             if (!phoneNumber.matches(phonePattern.toRegex())) {
                 binding.textFieldUserPhoneNumber.requestFocus()
                 context?.showSoftInput(binding.textFieldUserPhoneNumber)
-                binding.textInputLayoutUserPhoneNumber.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                binding.textInputLayoutUserPhoneNumber.error = "올바른 전화번호 형식을 입력해주세요.\n예: 010-1234-5678"
                 isValid = false
             }
         }

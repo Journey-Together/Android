@@ -60,8 +60,8 @@
                     android:id="@+id/imageViewConcernTypeModifyPhysical"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
                     android:src="@drawable/physical_no_select"
+                    android:tag="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -70,8 +70,8 @@
                     android:id="@+id/imageViewConcernTypeModifyVisual"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
                     android:src="@drawable/visual_no_select"
+                    android:tag="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -87,8 +87,8 @@
                     android:id="@+id/imageViewConcernTypeModifyHearing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
                     android:src="@drawable/hearing_no_select"
+                    android:tag="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -97,8 +97,8 @@
                     android:id="@+id/imageViewConcernTypeModifyInfant"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
                     android:src="@drawable/infant_family_no_select"
+                    android:tag="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -109,8 +109,8 @@
                 android:id="@+id/imageViewConcernTypeModifyElderly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:adjustViewBounds="true"
-                android:src="@drawable/elderly_people_no_select" />
+                android:src="@drawable/elderly_people_no_select"
+                android:tag="false" />
         </LinearLayout>
 
         <Button

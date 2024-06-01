@@ -9,9 +9,9 @@ import kr.tekit.lion.daongil.databinding.CategoryBottomSheetLayoutBinding
 import kr.tekit.lion.daongil.presentation.main.vm.Category
 
 class CategoryBottomSheet(
-    private val selectedOption : List<Int>,
+    private val selectedOption: List<Int>,
     private val selectedCategory: Category,
-    private val itemClick: ( List<Int> ) -> Unit
+    private val itemClick: (List<Int>) -> Unit
 ) : BottomSheetDialogFragment(R.layout.category_bottom_sheet_layout) {
     private val selectedOptions = ArrayList<String>()
 
@@ -23,26 +23,30 @@ class CategoryBottomSheet(
         setOptions(binding)
     }
 
-    private fun initChips(binding: CategoryBottomSheetLayoutBinding){
-        if(selectedOption.isNotEmpty()){
+    private fun initChips(binding: CategoryBottomSheetLayoutBinding) {
+        if (selectedOption.isNotEmpty()) {
             selectedOption.map {
                 when (selectedCategory) {
-                    Category.PhysicalDisability-> {
+                    Category.PhysicalDisability -> {
                         val chip = binding.chipGroupPhysicalDisability.findViewById<Chip>(it)
                         chip.isChecked = true
                     }
+
                     Category.HearingImpairment -> {
                         val chip = binding.chipGroupHearingImpairment.findViewById<Chip>(it)
                         chip.isChecked = true
                     }
+
                     Category.VisualImpairment -> {
                         val chip = binding.chipGroupVisualImpairment.findViewById<Chip>(it)
                         chip.isChecked = true
                     }
+
                     Category.InfantFamily -> {
                         val chip = binding.chipGroupInfantFamily.findViewById<Chip>(it)
                         chip.isChecked = true
                     }
+
                     Category.ElderlyPeople -> {
                         val chip = binding.chipGroupElderlyPerson.findViewById<Chip>(it)
                         chip.isChecked = true
@@ -56,7 +60,7 @@ class CategoryBottomSheet(
     private fun setOptions(binding: CategoryBottomSheetLayoutBinding) {
         with(binding) {
             when (selectedCategory) {
-                Category.PhysicalDisability-> {
+                Category.PhysicalDisability -> {
                     chipGroupPhysicalDisability.visibility = View.VISIBLE
                     chipGroupVisualImpairment.visibility = View.GONE
                     chipGroupHearingImpairment.visibility = View.GONE
@@ -90,7 +94,8 @@ class CategoryBottomSheet(
                     chipGroupElderlyPerson.visibility = View.GONE
 
                 }
-                Category.ElderlyPeople ->{
+
+                Category.ElderlyPeople -> {
                     chipGroupElderlyPerson.visibility = View.VISIBLE
                     chipGroupPhysicalDisability.visibility = View.GONE
                     chipGroupVisualImpairment.visibility = View.GONE
@@ -104,7 +109,7 @@ class CategoryBottomSheet(
 
                 when (selectedCategory) {
                     Category.PhysicalDisability -> {
-                        if(allChip.isChecked) allChip.isChecked = false
+                        if (allChip.isChecked) allChip.isChecked = false
                         chipGroupPhysicalDisability.check(R.id.wheelchair_chip)
                         chipGroupPhysicalDisability.check(R.id.parking_chip)
                         chipGroupPhysicalDisability.check(R.id.public_transport_chip)
@@ -120,7 +125,7 @@ class CategoryBottomSheet(
                     }
 
                     Category.VisualImpairment -> {
-                        if(allChip.isChecked) allChip.isChecked = false
+                        if (allChip.isChecked) allChip.isChecked = false
                         chipGroupVisualImpairment.check(R.id.braileblock_chip)
                         chipGroupVisualImpairment.check(R.id.help_dog_chip)
                         chipGroupVisualImpairment.check(R.id.guide_chip)
@@ -131,19 +136,20 @@ class CategoryBottomSheet(
                     }
 
                     Category.HearingImpairment -> {
-                        if(allChip.isChecked) allChip.isChecked = false
+                        if (allChip.isChecked) allChip.isChecked = false
                         chipGroupHearingImpairment.check(R.id.sign_guide_chip)
                         chipGroupHearingImpairment.check(R.id.video_guide_chip)
                     }
 
                     Category.InfantFamily -> {
-                        if(allChip.isChecked) allChip.isChecked = false
+                        if (allChip.isChecked) allChip.isChecked = false
                         chipGroupInfantFamily.check(R.id.stroller_chip)
                         chipGroupInfantFamily.check(R.id.lactation_room_chip)
                         chipGroupInfantFamily.check(R.id.baby_spare_chair_chip)
                     }
-                    Category.ElderlyPeople ->{
-                        if(allChip.isChecked) allChip.isChecked = false
+
+                    Category.ElderlyPeople -> {
+                        if (allChip.isChecked) allChip.isChecked = false
                         chipGroupInfantFamily.check(R.id.elderly_wheelchair_chip)
                         chipGroupInfantFamily.check(R.id.lend_chip)
                     }
@@ -152,7 +158,7 @@ class CategoryBottomSheet(
 
             btnReset.setOnClickListener {
                 when (selectedCategory) {
-                    Category.PhysicalDisability-> {
+                    Category.PhysicalDisability -> {
                         allChip.isChecked = false
                         chipGroupPhysicalDisability.clearCheck()
                     }
@@ -171,9 +177,10 @@ class CategoryBottomSheet(
                         allChip.isChecked = false
                         chipGroupInfantFamily.clearCheck()
                     }
+
                     Category.ElderlyPeople -> {
                         allChip.isChecked = false
-                        chipGroupInfantFamily.clearCheck()
+                        chipGroupElderlyPerson.clearCheck()
                     }
                 }
             }
@@ -204,9 +211,7 @@ class CategoryBottomSheet(
                         chipGroupElderlyPerson.checkedChipIds
                     }
                 }
-                if (selectedChipIds.isNotEmpty()) {
-                    itemClick.invoke(selectedChipIds)
-                }
+                itemClick.invoke(selectedChipIds)
                 dismiss()
             }
 

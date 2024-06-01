@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -364,10 +365,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             }
 
             with(naverMap.locationOverlay) {
-                val color = androidx.core.content.ContextCompat.getColor(
-                    requireContext(),
-                    R.color.maker_overlay
-                )
+                val color = getColor(requireContext(), R.color.maker_overlay)
                 circleRadius = 200
                 // setAlphaComponent : 투명도 지정
                 // 0(완전 투명) ~ 255(완전 불투명)

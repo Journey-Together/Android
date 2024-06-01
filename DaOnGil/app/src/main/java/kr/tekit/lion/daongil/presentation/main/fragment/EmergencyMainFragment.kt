@@ -27,7 +27,7 @@ class EmergencyMainFragment : Fragment(R.layout.fragment_emergency_main) {
 
         binding.pharmacyCard.setOnClickListener {
             val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
-            intent.putExtra("mapType", "pharmacy")
+            intent.putExtra("mapType", "Pharmacy")
             startActivity(intent)
         }
     }

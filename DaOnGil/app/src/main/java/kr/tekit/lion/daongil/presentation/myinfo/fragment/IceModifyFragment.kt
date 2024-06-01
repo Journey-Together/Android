@@ -96,7 +96,9 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
 
     private fun IceInfoModify(binding: FragmentIceModifyBinding) {
         binding.buttonIceSubmit.setOnClickListener {
-            if(isFormValid(binding)) {
+            if (areAllFieldsEmpty(binding)) {
+                showSnackbar(binding, "입력된 정보가 없습니다. 정보를 입력해주세요!")
+            } else if (isFormValid(binding)) {
                 showSnackbar(binding, "나의 응급 정보가 수정되었습니다.")
                 findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
             }
@@ -146,6 +148,15 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
         }
 
         return isValid
+    }
+
+    private fun areAllFieldsEmpty(binding: FragmentIceModifyBinding): Boolean {
+        return binding.textFieldIceBirthday.text.isNullOrBlank() &&
+                binding.textFieldIceRelation1.text.isNullOrBlank() &&
+                binding.textFieldIceContact1.text.isNullOrBlank() &&
+                binding.textFieldIceRelation2.text.isNullOrBlank() &&
+                binding.textFieldIceContact2.text.isNullOrBlank() &&
+                binding.textFieldIceBloodType.text.isNullOrBlank()
     }
 
     private fun setupErrorHandling(binding: FragmentIceModifyBinding) {

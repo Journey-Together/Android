@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">DaOnGil</string>
+
     <string name="add_schedule"><u>일정 등록하러가기 ＞</u></string>
     <string name="tourist_spot">관광지</string>
     <string name="restaurant">음식점</string>
     <string name="lodgment">숙박</string>
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
+
+    <string-array name="blood_type">
+        <item>A형 Rh+</item>
+        <item>A형 Rh-</item>
+        <item>B형 Rh+</item>
+        <item>B형 Rh-</item>
+        <item>O형 Rh+</item>
+        <item>O형 Rh-</item>
+        <item>AB형 Rh+</item>
+        <item>AB형 Rh-</item>
+    </string-array>
 </resources>

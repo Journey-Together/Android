@@ -9,10 +9,12 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doOnTextChanged
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentIceModifyBinding
+import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 
 class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
 
@@ -23,6 +25,7 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
 
         initView(binding)
         IceInfoModify(binding)
+        setupErrorHandling(binding)
     }
 
     private fun initView(binding: FragmentIceModifyBinding) {
@@ -93,8 +96,10 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
 
     private fun IceInfoModify(binding: FragmentIceModifyBinding) {
         binding.buttonIceSubmit.setOnClickListener {
-            showSnackbar(binding, "나의 응급 정보가 수정되었습니다.")
-            findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
+            if(isFormValid(binding)) {
+                showSnackbar(binding, "나의 응급 정보가 수정되었습니다.")
+                findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
+            }
         }
     }
 
@@ -102,5 +107,60 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
         Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
             .show()
+    }
+
+    private fun isFormValid(binding: FragmentIceModifyBinding): Boolean {
+        var isValid = true
+
+        val birthday = binding.textFieldIceBirthday.text.toString()
+        if (birthday.isNotBlank()) {
+            val birthdayPattern = "^\\d{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
+            if (!birthday.matches(birthdayPattern.toRegex())) {
+                binding.textFieldIceBirthday.requestFocus()
+                context?.showSoftInput(binding.textFieldIceBirthday)
+                binding.textInputLayoutBirthday.error = "올바른 생년월일 형식을 입력해주세요. 예: 19700101"
+                isValid = false
+            }
+        }
+
+        val phoneNumber1 = binding.textFieldIceContact1.text.toString()
+        if (phoneNumber1.isNotBlank()) {
+            val phonePattern = "^010-\\d{4}-\\d{4}$"
+            if (!phoneNumber1.matches(phonePattern.toRegex())) {
+                binding.textFieldIceContact1.requestFocus()
+                context?.showSoftInput(binding.textFieldIceContact1)
+                binding.textInputLayoutContact1.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                isValid = false
+            }
+        }
+
+        val phoneNumber2 = binding.textFieldIceContact2.text.toString()
+        if (phoneNumber2.isNotBlank()) {
+            val phonePattern = "^010-\\d{4}-\\d{4}$"
+            if (!phoneNumber2.matches(phonePattern.toRegex())) {
+                binding.textFieldIceContact2.requestFocus()
+                context?.showSoftInput(binding.textFieldIceContact2)
+                binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                isValid = false
+            }
+        }
+
+        return isValid
+    }
+
+    private fun setupErrorHandling(binding: FragmentIceModifyBinding) {
+        with(binding) {
+            textFieldIceBirthday.doOnTextChanged { text, start, before, count ->
+                textInputLayoutBirthday.isErrorEnabled = false
+            }
+
+            textFieldIceContact1.doOnTextChanged { text, start, before, count ->
+                textInputLayoutContact1.isErrorEnabled = false
+            }
+
+            textFieldIceContact2.doOnTextChanged { text, start, before, count ->
+                textInputLayoutContact2.isErrorEnabled = false
+            }
+        }
     }
 }

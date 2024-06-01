@@ -43,6 +43,7 @@
                 android:textSize="@dimen/font_big2" />
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayoutBirthday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_basic"
@@ -56,7 +57,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="예시) 19700101"
+                    android:hint="예) 19700101"
                     android:inputType="number"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
@@ -213,6 +214,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutContact1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -226,7 +228,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="예시) 010-1234-5678"
+                        android:hint="예) 010-1234-5678"
                         android:inputType="phone"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />
@@ -262,6 +264,7 @@
 
 
                 <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputLayoutContact2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -275,7 +278,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="예시) 010-1234-5678"
+                        android:hint="예) 010-1234-5678"
                         android:inputType="phone"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />

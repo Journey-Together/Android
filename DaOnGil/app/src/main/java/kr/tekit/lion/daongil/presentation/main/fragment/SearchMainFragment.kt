@@ -69,7 +69,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.areaCode.collect {
                     val areaList = it.map { area -> area.name }.toTypedArray()
                     val adapter = ArrayAdapter(
@@ -81,7 +81,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.villageCode.collect {
                     val villageCodeList = it.map { area -> area.villageName }.toTypedArray()
                     val adapter = ArrayAdapter(
@@ -93,7 +93,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.physicalDisabilityOptions.collect { options ->
                     btnPhysicalDisability.setOnClickListener {
                         showBottomSheet(options, Category.PhysicalDisability)
@@ -114,7 +114,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.visualImpairmentOptions.collect { options ->
                     btnVisualImpairment.setOnClickListener {
                         showBottomSheet(options, Category.VisualImpairment)
@@ -136,7 +136,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.hearingImpairmentOptions.collect { options ->
                     btnHearingImpairment.setOnClickListener {
                         showBottomSheet(options, Category.HearingImpairment)
@@ -157,7 +157,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.infantFamilyOptions.collect { options ->
                     btnInfantFamily.setOnClickListener {
                         showBottomSheet(options, Category.InfantFamily)
@@ -178,7 +178,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnStarted {
+            this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.elderlyPersonOptions.collect { options ->
                     btnElderlyPeople.setOnClickListener {
                         showBottomSheet(options, Category.ElderlyPeople)

@@ -3,27 +3,60 @@ package kr.tekit.lion.daongil.presentation.main.customview
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.chip.Chip
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.CategoryBottomSheetLayoutBinding
+import kr.tekit.lion.daongil.presentation.main.vm.Category
 
 class CategoryBottomSheet(
-    private val selectedCategory: Int,
-    private val itemClick: (List<String>) -> Unit
+    private val selectedOption : List<Int>,
+    private val selectedCategory: Category,
+    private val itemClick: ( List<Int> ) -> Unit
 ) : BottomSheetDialogFragment(R.layout.category_bottom_sheet_layout) {
     private val selectedOptions = ArrayList<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = CategoryBottomSheetLayoutBinding.bind(view)
-        var physicalDisabilityBtnState = ButtonState.UNSELECTED
 
+        initChips(binding)
         setOptions(binding)
     }
+
+    private fun initChips(binding: CategoryBottomSheetLayoutBinding){
+        if(selectedOption.isNotEmpty()){
+            selectedOption.map {
+                when (selectedCategory) {
+                    Category.PhysicalDisability-> {
+                        val chip = binding.chipGroupPhysicalDisability.findViewById<Chip>(it)
+                        chip.isChecked = true
+                    }
+                    Category.HearingImpairment -> {
+                        val chip = binding.chipGroupHearingImpairment.findViewById<Chip>(it)
+                        chip.isChecked = true
+                    }
+                    Category.VisualImpairment -> {
+                        val chip = binding.chipGroupVisualImpairment.findViewById<Chip>(it)
+                        chip.isChecked = true
+                    }
+                    Category.InfantFamily -> {
+                        val chip = binding.chipGroupInfantFamily.findViewById<Chip>(it)
+                        chip.isChecked = true
+                    }
+                    Category.ElderlyPeople -> {
+                        val chip = binding.chipGroupElderlyPerson.findViewById<Chip>(it)
+                        chip.isChecked = true
+                    }
+                }
+            }
+        }
+    }
+
 
     private fun setOptions(binding: CategoryBottomSheetLayoutBinding) {
         with(binding) {
             when (selectedCategory) {
-                Category.PhysicalDisability.type -> {
+                Category.PhysicalDisability-> {
                     chipGroupPhysicalDisability.visibility = View.VISIBLE
                     chipGroupVisualImpairment.visibility = View.GONE
                     chipGroupHearingImpairment.visibility = View.GONE
@@ -31,7 +64,7 @@ class CategoryBottomSheet(
                     chipGroupElderlyPerson.visibility = View.GONE
                 }
 
-                Category.HearingImpairment.type -> {
+                Category.HearingImpairment -> {
                     chipGroupHearingImpairment.visibility = View.VISIBLE
                     chipGroupPhysicalDisability.visibility = View.GONE
                     chipGroupVisualImpairment.visibility = View.GONE
@@ -40,7 +73,7 @@ class CategoryBottomSheet(
 
                 }
 
-                Category.VisualImpairment.type -> {
+                Category.VisualImpairment -> {
                     chipGroupVisualImpairment.visibility = View.VISIBLE
                     chipGroupPhysicalDisability.visibility = View.GONE
                     chipGroupHearingImpairment.visibility = View.GONE
@@ -49,7 +82,7 @@ class CategoryBottomSheet(
 
                 }
 
-                Category.InfantFamily.type -> {
+                Category.InfantFamily -> {
                     chipGroupInfantFamily.visibility = View.VISIBLE
                     chipGroupPhysicalDisability.visibility = View.GONE
                     chipGroupVisualImpairment.visibility = View.GONE
@@ -57,7 +90,7 @@ class CategoryBottomSheet(
                     chipGroupElderlyPerson.visibility = View.GONE
 
                 }
-                Category.ElderlyPeople.type ->{
+                Category.ElderlyPeople ->{
                     chipGroupElderlyPerson.visibility = View.VISIBLE
                     chipGroupPhysicalDisability.visibility = View.GONE
                     chipGroupVisualImpairment.visibility = View.GONE
@@ -70,7 +103,7 @@ class CategoryBottomSheet(
                 selectedOptions.clear()
 
                 when (selectedCategory) {
-                    Category.PhysicalDisability.type -> {
+                    Category.PhysicalDisability -> {
                         if(allChip.isChecked) allChip.isChecked = false
                         chipGroupPhysicalDisability.check(R.id.wheelchair_chip)
                         chipGroupPhysicalDisability.check(R.id.parking_chip)
@@ -86,7 +119,7 @@ class CategoryBottomSheet(
 
                     }
 
-                    Category.VisualImpairment.type -> {
+                    Category.VisualImpairment -> {
                         if(allChip.isChecked) allChip.isChecked = false
                         chipGroupVisualImpairment.check(R.id.braileblock_chip)
                         chipGroupVisualImpairment.check(R.id.help_dog_chip)
@@ -97,19 +130,19 @@ class CategoryBottomSheet(
                         chipGroupVisualImpairment.check(R.id.guide_system_chip)
                     }
 
-                    Category.HearingImpairment.type -> {
+                    Category.HearingImpairment -> {
                         if(allChip.isChecked) allChip.isChecked = false
                         chipGroupHearingImpairment.check(R.id.sign_guide_chip)
                         chipGroupHearingImpairment.check(R.id.video_guide_chip)
                     }
 
-                    Category.InfantFamily.type -> {
+                    Category.InfantFamily -> {
                         if(allChip.isChecked) allChip.isChecked = false
                         chipGroupInfantFamily.check(R.id.stroller_chip)
                         chipGroupInfantFamily.check(R.id.lactation_room_chip)
                         chipGroupInfantFamily.check(R.id.baby_spare_chair_chip)
                     }
-                    Category.ElderlyPeople.type ->{
+                    Category.ElderlyPeople ->{
                         if(allChip.isChecked) allChip.isChecked = false
                         chipGroupInfantFamily.check(R.id.elderly_wheelchair_chip)
                         chipGroupInfantFamily.check(R.id.lend_chip)
@@ -119,23 +152,26 @@ class CategoryBottomSheet(
 
             btnReset.setOnClickListener {
                 when (selectedCategory) {
-                    Category.PhysicalDisability.type,
-                    Category.ElderlyPeople.type -> {
+                    Category.PhysicalDisability-> {
                         allChip.isChecked = false
                         chipGroupPhysicalDisability.clearCheck()
                     }
 
-                    Category.HearingImpairment.type -> {
+                    Category.HearingImpairment -> {
                         allChip.isChecked = false
                         chipGroupHearingImpairment.clearCheck()
                     }
 
-                    Category.VisualImpairment.type -> {
+                    Category.VisualImpairment -> {
                         allChip.isChecked = false
                         chipGroupVisualImpairment.clearCheck()
                     }
 
-                    Category.InfantFamily.type -> {
+                    Category.InfantFamily -> {
+                        allChip.isChecked = false
+                        chipGroupInfantFamily.clearCheck()
+                    }
+                    Category.ElderlyPeople -> {
                         allChip.isChecked = false
                         chipGroupInfantFamily.clearCheck()
                     }
@@ -144,50 +180,40 @@ class CategoryBottomSheet(
 
             btnSubmit.setOnClickListener {
                 val selectedChipIds = when (selectedCategory) {
-                    Category.PhysicalDisability.type,
-                    Category.ElderlyPeople.type -> {
+                    is Category.PhysicalDisability -> {
                         chipGroupPhysicalDisability.checkedChipIds
                     }
 
-                    Category.HearingImpairment.type -> {
+                    is Category.HearingImpairment -> {
                         allChip.isChecked = false
                         chipGroupHearingImpairment.checkedChipIds
                     }
 
-                    Category.VisualImpairment.type -> {
+                    is Category.VisualImpairment -> {
                         allChip.isChecked = false
                         chipGroupVisualImpairment.checkedChipIds
                     }
 
-                    Category.InfantFamily.type -> {
+                    is Category.InfantFamily -> {
                         allChip.isChecked = false
                         chipGroupInfantFamily.checkedChipIds
                     }
-                    else -> emptyList()
+
+                    is Category.ElderlyPeople -> {
+                        allChip.isChecked = false
+                        chipGroupElderlyPerson.checkedChipIds
+                    }
                 }
-                val resourceNames = selectedChipIds.map { n->
-                    resources.getResourceEntryName(n)
+                if (selectedChipIds.isNotEmpty()) {
+                    itemClick.invoke(selectedChipIds)
                 }
-                itemClick.invoke(resourceNames)
                 dismiss()
             }
+
         }
     }
 
     override fun getTheme(): Int {
         return R.style.category_bottom_sheet_dialog_theme
     }
-}
-
-enum class ButtonState{
-    SELECTED,
-    UNSELECTED
-}
-
-sealed class Category(val type: Int) {
-    data object PhysicalDisability : Category(1)
-    data object VisualImpairment : Category(2)
-    data object HearingImpairment : Category(3)
-    data object InfantFamily : Category(4)
-    data object ElderlyPeople : Category(5)
 }

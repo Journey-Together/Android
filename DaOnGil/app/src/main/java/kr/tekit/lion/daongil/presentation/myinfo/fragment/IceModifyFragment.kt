@@ -161,7 +161,7 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
             } else {
                 val phonePattern = "^010-\\d{4}-\\d{4}$"
                 if (!phoneNumber2.matches(phonePattern.toRegex())) {
-                    binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                    binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요.\n예: 010-1234-5678"
                     if (firstInvalidField == null) {
                         firstInvalidField = binding.textFieldIceContact2
                     }

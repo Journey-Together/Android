@@ -114,41 +114,70 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
     private fun isFormValid(binding: FragmentIceModifyBinding): Boolean {
         var isValid = true
 
+        var firstInvalidField: View? = null
+
         val birthday = binding.textFieldIceBirthday.text.toString()
         if (birthday.isNotBlank()) {
             val birthdayPattern = "^\\d{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
             if (!birthday.matches(birthdayPattern.toRegex())) {
-                binding.textFieldIceBirthday.requestFocus()
-                context?.showSoftInput(binding.textFieldIceBirthday)
-                binding.textInputLayoutBirthday.error = "올바른 생년월일 형식을 입력해주세요. 예: 19700101"
+                binding.textInputLayoutBirthday.error = "올바른 생년월일 형식을 입력해주세요.\n예: 19700101"
+                if (firstInvalidField == null) {
+                    firstInvalidField = binding.textFieldIceBirthday
+                }
                 isValid = false
             }
         }
 
         val phoneNumber1 = binding.textFieldIceContact1.text.toString()
-        if (phoneNumber1.isNotBlank()) {
-            val phonePattern = "^010-\\d{4}-\\d{4}$"
-            if (!phoneNumber1.matches(phonePattern.toRegex())) {
-                binding.textFieldIceContact1.requestFocus()
-                context?.showSoftInput(binding.textFieldIceContact1)
-                binding.textInputLayoutContact1.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+        val relation1 = binding.textFieldIceRelation1.text.toString()
+        if (phoneNumber1.isNotBlank() || relation1.isNotBlank()) {
+            if (phoneNumber1.isBlank() || relation1.isBlank()) {
+                binding.textInputLayoutContact1.error = "관계와 연락처를 모두 입력해주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = binding.textFieldIceContact1
+                }
                 isValid = false
+            } else {
+                val phonePattern = "^010-\\d{4}-\\d{4}$"
+                if (!phoneNumber1.matches(phonePattern.toRegex())) {
+                    binding.textInputLayoutContact1.error = "올바른 전화번호 형식을 입력해주세요.\n예: 010-1234-5678"
+                    if (firstInvalidField == null) {
+                        firstInvalidField = binding.textFieldIceContact1
+                    }
+                    isValid = false
+                }
             }
         }
 
         val phoneNumber2 = binding.textFieldIceContact2.text.toString()
-        if (phoneNumber2.isNotBlank()) {
-            val phonePattern = "^010-\\d{4}-\\d{4}$"
-            if (!phoneNumber2.matches(phonePattern.toRegex())) {
-                binding.textFieldIceContact2.requestFocus()
-                context?.showSoftInput(binding.textFieldIceContact2)
-                binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+        val relation2 = binding.textFieldIceRelation2.text.toString()
+        if (phoneNumber2.isNotBlank() || relation2.isNotBlank()) {
+            if (phoneNumber2.isBlank() || relation2.isBlank()) {
+                binding.textInputLayoutContact2.error = "관계와 연락처를 모두 입력해주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = binding.textFieldIceContact2
+                }
                 isValid = false
+            } else {
+                val phonePattern = "^010-\\d{4}-\\d{4}$"
+                if (!phoneNumber2.matches(phonePattern.toRegex())) {
+                    binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요. 예: 010-1234-5678"
+                    if (firstInvalidField == null) {
+                        firstInvalidField = binding.textFieldIceContact2
+                    }
+                    isValid = false
+                }
             }
+        }
+
+        if (!isValid && firstInvalidField != null) {
+            firstInvalidField.requestFocus()
+            context?.showSoftInput(firstInvalidField)
         }
 
         return isValid
     }
+
 
     private fun areAllFieldsEmpty(binding: FragmentIceModifyBinding): Boolean {
         return binding.textFieldIceBirthday.text.isNullOrBlank() &&

@@ -71,21 +71,17 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
                 }
             }
 
-            textFieldIceRelation1.apply {
-                setOnEditorActionListener { v, actionId, event ->
-                    textFieldIceContact1.requestFocus()
-                    true
-                }
+            textFieldIceRelation1.setOnEditorActionListener { v, actionId, event ->
+                textFieldIceContact1.requestFocus()
+                true
             }
 
-            textFieldIceContact1.apply {
-                setOnEditorActionListener { v, actionId, event ->
-                    textFieldIceRelation2.requestFocus()
-                    true
-                }
+            textFieldIceContact1.setOnEditorActionListener { v, actionId, event ->
+                textFieldIceRelation2.requestFocus()
+                true
             }
 
-            textFieldIceRelation2.apply {
+            with(textFieldIceRelation2) {
                 imeOptions = EditorInfo.IME_ACTION_NEXT
                 setOnEditorActionListener { v, actionId, event ->
                     textFieldIceContact2.requestFocus()
@@ -100,7 +96,6 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
             showSnackbar(binding, "나의 응급 정보가 수정되었습니다.")
             findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
         }
-
     }
 
     private fun showSnackbar(binding: FragmentIceModifyBinding, message: String) {

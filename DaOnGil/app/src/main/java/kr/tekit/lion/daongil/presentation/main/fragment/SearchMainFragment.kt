@@ -102,6 +102,15 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     chipPhysicalDisability.setOnClickListener {
                         showBottomSheet(options, Category.PhysicalDisability)
                     }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgPhysicalDisability.setImageResource(R.drawable.sv_selected_physical_disability_icon)
+                        "${getString(R.string.text_physical_disability)}(${options.size})"
+                    } else {
+                        imgPhysicalDisability.setImageResource(R.drawable.sv_unselected_physical_disability_icon)
+                        getString(R.string.text_physical_disability)
+                    }
+                    chipPhysicalDisability.text = text
                 }
             }
 
@@ -114,6 +123,16 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     chipVisualImpairment.setOnClickListener {
                         showBottomSheet(options, Category.VisualImpairment)
                     }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgVisualImpairment.setImageResource(R.drawable.sv_selected_visual_impairment_icon)
+                        "${getString(R.string.text_visual_impairmnet)}(${options.size})"
+                    } else {
+                        imgVisualImpairment.setImageResource(R.drawable.sv_unselected_visual_impairment_icon)
+                        getString(R.string.text_visual_impairmnet)
+                    }
+                    chipVisualImpairment.text = text
+
                 }
             }
 
@@ -126,6 +145,15 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     chipHearingImpairment.setOnClickListener {
                         showBottomSheet(options, Category.HearingImpairment)
                     }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgHearingImpairment.setImageResource(R.drawable.sv_selected_hearing_impairment_icon)
+                        "${getString(R.string.text_hearing_impairment)}(${options.size})"
+                    } else {
+                        imgHearingImpairment.setImageResource(R.drawable.sv_unselected_hearing_impairment_icon)
+                        getString(R.string.text_hearing_impairment)
+                    }
+                    chipHearingImpairment.text = text
                 }
             }
 
@@ -138,6 +166,15 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     chipInfantFamilly.setOnClickListener {
                         showBottomSheet(options, Category.InfantFamily)
                     }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgInfantFamily.setImageResource(R.drawable.sv_selected_infant_family_icon)
+                        "${getString(R.string.text_infant_family)}(${options.size})"
+                    } else {
+                        imgInfantFamily.setImageResource(R.drawable.sv_unselected_infant_family_icon)
+                        getString(R.string.text_infant_family)
+                    }
+                    chipInfantFamilly.text = text
                 }
             }
 
@@ -150,6 +187,15 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     chipElderlyPeople.setOnClickListener {
                         showBottomSheet(options, Category.ElderlyPeople)
                     }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgElderlyPeople.setImageResource(R.drawable.sv_selected_elderly_people_icon)
+                        "${getString(R.string.text_elderly_person)}(${options.size})"
+                    } else {
+                        imgElderlyPeople.setImageResource(R.drawable.sv_unselected_elderly_people_icon)
+                        getString(R.string.text_elderly_person)
+                    }
+                    chipElderlyPeople.text = text
                 }
             }
 
@@ -206,32 +252,27 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
     private fun showBottomSheet(selectedOptions: List<Int>, category: Category) {
         CategoryBottomSheet(selectedOptions, category) { options ->
-            if (options.isNotEmpty()) {
-                when (category) {
-                    is Category.PhysicalDisability -> {
-                        viewModel.onCompleteSelectPhysicalDisabilityOptions(options)
-                    }
+            when (category) {
+                is Category.PhysicalDisability -> {
+                    viewModel.onCompleteSelectPhysicalDisabilityOptions(options)
+                }
 
-                    is Category.HearingImpairment -> {
-                        viewModel.onCompleteSelectHearingImpairmentOptions(options)
-                    }
+                is Category.HearingImpairment -> {
+                    viewModel.onCompleteSelectHearingImpairmentOptions(options)
+                }
 
-                    is Category.VisualImpairment -> {
-                        viewModel.onCompleteSelectVisualImpairmentOptions(options)
-                    }
+                is Category.VisualImpairment -> {
+                    viewModel.onCompleteSelectVisualImpairmentOptions(options)
+                }
 
-                    is Category.InfantFamily -> {
-                        viewModel.onCompleteSelectInfantFamilyOptions(options)
-                    }
+                is Category.InfantFamily -> {
+                    viewModel.onCompleteSelectInfantFamilyOptions(options)
+                }
 
-                    is Category.ElderlyPeople -> {
-                        viewModel.onCompleteElderlyPersonOptions(options)
-                    }
-
+                is Category.ElderlyPeople -> {
+                    viewModel.onCompleteElderlyPersonOptions(options)
                 }
             }
-
-
         }.show(parentFragmentManager, "bottomSheet")
     }
 

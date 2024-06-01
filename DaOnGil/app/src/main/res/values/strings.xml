@@ -33,4 +33,9 @@
     <string name="text_apply">적용하기</string>
     <string name="text_all">전체</string>
     <string name="text_lend">이동 보조도구 대여</string>
+    <string name="text_physical_disability">지체장애</string>
+    <string name="text_visual_impairmnet">시각장애</string>
+    <string name="text_hearing_impairment">청각장애</string>
+    <string name="text_infant_family">영유아동반</string>
+    <string name="text_elderly_person">고령자</string>
 </resources>

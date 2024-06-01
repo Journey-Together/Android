@@ -8,8 +8,8 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
-import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity

@@ -24,9 +24,16 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/all_chip"
-        style="@style/detail_category_chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/detail_category_chip_state_color"
+        android:checkable="true"
+        android:fontFamily="@font/pretendard_semibold"
+        app:chipStrokeWidth="2dp"
+        app:chipStrokeColor="@color/detail_category_chip_state_color"
+        app:chipIconTint="@color/detail_category_chip_state_color"
+        app:chipBackgroundColor="@android:color/transparent"
+        app:chipCornerRadius="20dp"
         android:text="@string/text_all" />
 
     <com.google.android.material.chip.ChipGroup
@@ -210,7 +217,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_video_guide" />
+            android:text="@string/text_video_guide"
+            app:chipIcon="@drawable/chip_cc_icon"/>
 
     </com.google.android.material.chip.ChipGroup>
 
@@ -230,7 +238,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_stroller" />
+            android:text="@string/text_stroller"
+            app:chipIcon="@drawable/chip_stroller_icon" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/lactation_room_chip"
@@ -247,6 +256,33 @@
             android:layout_height="@dimen/category_option_height"
             android:text="@string/text_baby_spare_chair"
             app:chipIcon="@drawable/chip_baby_spare_chair_icon" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_elderly_person"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#c8c8c8" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/elderly_wheelchair_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_wheelchair"
+            app:chipIcon="@drawable/chip_wheelchair_icon"/>
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/lend_chip"
+            style="@style/detail_category_chip"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/category_option_height"
+            android:text="@string/text_lend" />
+
     </com.google.android.material.chip.ChipGroup>
 
     <LinearLayout

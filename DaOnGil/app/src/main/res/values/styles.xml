@@ -50,7 +50,7 @@
 
     <style name="detail_category_chip" parent="ShapeAppearanceOverlay.Material3.Chip">
         <item name="android:textColor">@color/detail_category_chip_state_color</item>
-        <item name="android:padding">15dp</item>
+        <item name="chipStartPadding">8dp</item>
         <item name="android:checkable">true</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="chipStrokeColor">@color/detail_category_chip_state_color</item>

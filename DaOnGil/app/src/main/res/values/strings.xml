@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DaOnGil</string>
+    <string name="toolbar_app_name">다온, 길</string>
     <string name="add_schedule"><u>일정 등록하러가기 ＞</u></string>
     <string name="tourist_spot">관광지</string>
     <string name="restaurant">음식점</string>
@@ -50,4 +51,13 @@
         <item>AB형 Rh+</item>
         <item>AB형 Rh-</item>
     </string-array>
+
+    <string name="text_emergency_main">내 주변 응급 지원 찾기</string>
+    <string name="text_emergency_second">어떤 정보를 찾으시나요?</string>
+    <string name="text_emergency_aed">응급실 제세동기 찾기</string>
+    <string name="text_emergency_aed_first">여행 중 갑자기 아프다면,</string>
+    <string name="text_emergency_aed_second">내 근처 병원을 빠르게 방문해보세요</string>
+    <string name="text_emergency_pharmacy">약국 찾기</string>
+    <string name="text_emergency_pharmacy_first">필요한 상비약을</string>
+    <string name="text_emergency_pharmacy_second">구입해 보세요</string>
 </resources>

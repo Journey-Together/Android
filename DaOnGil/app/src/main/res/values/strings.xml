@@ -1,12 +1,44 @@
 <resources>
     <string name="app_name">DaOnGil</string>
-
     <string name="add_schedule"><u>일정 등록하러가기 ＞</u></string>
     <string name="tourist_spot">관광지</string>
     <string name="restaurant">음식점</string>
     <string name="lodgment">숙박</string>
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
+
+    <string name="text_parking">주차장</string>
+    <string name="text_public_transport">대중교통</string>
+    <string name="text_route">접근로</string>
+    <string name="text_ticket_office">매표소</string>
+    <string name="text_promotion">홍보물</string>
+    <string name="text_wheelchair">휠체어</string>
+    <string name="text_exit">출입통로</string>
+    <string name="text_elevator">엘리베이터</string>
+    <string name="text_restroom">화장실</string>
+    <string name="text_auditorium">관람석</string>
+    <string name="text_room">객실</string>
+    <string name="text_braile_block">점자블럭</string>
+    <string name="text_help_dog">보조견동반</string>
+    <string name="text_guide">안내요원</string>
+    <string name="text_audio_guide">오디오 가이드</string>
+    <string name="text_big_print">큰활자 홍보물</string>
+    <string name="text_braile_promotion">점자 홍보물/점자 표지판</string>
+    <string name="guide_system">유도 안내 설비</string>
+    <string name="text_sign_guide">수화 안내</string>
+    <string name="text_video_guide">자막/비디오가이드</string>
+    <string name="text_stroller">유모차</string>
+    <string name="text_lactation">수유실</string>
+    <string name="text_baby_spare_chair">유아용의자</string>
+    <string name="text_reset">초기화</string>
+    <string name="text_apply">적용하기</string>
+    <string name="text_all">전체</string>
+    <string name="text_lend">이동 보조도구 대여</string>
+    <string name="text_physical_disability">지체장애</string>
+    <string name="text_visual_impairmnet">시각장애</string>
+    <string name="text_hearing_impairment">청각장애</string>
+    <string name="text_infant_family">영유아동반</string>
+    <string name="text_elderly_person">고령자</string>
 
     <string-array name="blood_type">
         <item>A형 Rh+</item>

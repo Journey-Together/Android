@@ -7,19 +7,38 @@ import kr.tekit.lion.daongil.domain.repository.RecentSearchKeywordRepository
 import kr.tekit.lion.daongil.domain.repository.SearchKeywordRepository
 import kr.tekit.lion.daongil.domain.usecase.SearchByKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
-import java.lang.IllegalArgumentException
+import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.GetAllRecentSearchKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.RemoveAllRecentSearchKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.RemoveRecentSearchKeywordUseCase
 
-class SearchViewModelFactory(context: Context) : ViewModelProvider.Factory{
+class SearchViewModelFactory(context: Context) : ViewModelProvider.Factory {
+    private val recentSearchKeywordRepository = RecentSearchKeywordRepository.create(context)
+
+    private val getAllRecentSearchKeywordUseCase = GetAllRecentSearchKeywordUseCase(
+        recentSearchKeywordRepository
+    )
 
     private val searchByKeywordUseCase = SearchByKeywordUseCase(SearchKeywordRepository.create())
 
     private val addRecentSearchKeywordUseCase = AddRecentSearchKeywordUseCase(
-        RecentSearchKeywordRepository.create(context)
+        recentSearchKeywordRepository
+    )
+    private val removeAllRecentSearchKeywordUseCase = RemoveAllRecentSearchKeywordUseCase(
+        recentSearchKeywordRepository
+    )
+    private val removeRecentSearchKeywordUseCase = RemoveRecentSearchKeywordUseCase(
+        recentSearchKeywordRepository
     )
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(SearchViewModel::class.java)){
-            return SearchViewModel(searchByKeywordUseCase, addRecentSearchKeywordUseCase) as T
+        if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
+            return SearchViewModel(
+                getAllRecentSearchKeywordUseCase,
+                searchByKeywordUseCase,
+                addRecentSearchKeywordUseCase,
+                removeAllRecentSearchKeywordUseCase,
+                removeRecentSearchKeywordUseCase
+            ) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")
     }

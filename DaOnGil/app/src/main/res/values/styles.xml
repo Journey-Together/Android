@@ -13,7 +13,7 @@
     <!-- Main Toolbar Title TextApperance 설정 -->
     <style name="Theme.Toolbar.Main.Title" parent="">
         <item name="android:textSize">@dimen/font_big1</item>
-        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:fontFamily">@font/cafe24_oneprettynight</item>
         <item name="android:textColor">@color/toolbar_main_title</item>
     </style>
   

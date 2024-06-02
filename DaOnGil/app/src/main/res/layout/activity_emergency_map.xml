@@ -34,6 +34,53 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/emergencyMapAreaButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardElevation="10dp"
+            app:cardCornerRadius="50dp"
+            app:strokeColor="@color/primary_disabled"
+            android:layout_marginTop="@dimen/margin_big2"
+            android:backgroundTint="@color/item_background"
+            android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/margin_big4"
+                android:paddingBottom="@dimen/margin_big4"
+                android:paddingLeft="@dimen/margin_big4"
+                android:paddingRight="@dimen/margin_small1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/emergency_map_icon"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/emergencyMapArea"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="서울특별시 중구"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3"
+                    android:layout_marginStart="@dimen/margin_small1"
+                    android:layout_gravity="center"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_chevron_right_24px"
+                    android:layout_gravity="center" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:name="com.naver.maps.map.MapFragment"

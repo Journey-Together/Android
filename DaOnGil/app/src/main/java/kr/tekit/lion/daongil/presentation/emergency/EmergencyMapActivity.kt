@@ -16,8 +16,30 @@ class EmergencyMapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        binding.mapText.text = intent.getStringExtra("mapType")
+        val mapType = intent.getStringExtra("mapType").toString()
+        setToolbar(mapType)
 
+
+    }
+
+    private fun setToolbar(type: String){
+        with(binding){
+
+            toolbarEmergencyMap.setNavigationOnClickListener {
+                finish()
+            }
+
+            if(type.equals("Emergency")){
+                titleEmergencyMap.setText(R.string.text_emergency_aed)
+            }
+
+            if(type.equals("Pharmacy")){
+                titleEmergencyMap.setText(R.string.text_emergency_pharmacy)
+            }
+        }
+    }
+
+    /*private fun testDetail(){
         binding.detailButton.setOnClickListener {
             val intent = Intent(this, EmergencyInfoActivity::class.java)
             intent.putExtra("infoType", "Emergency")
@@ -35,5 +57,5 @@ class EmergencyMapActivity : AppCompatActivity() {
             intent.putExtra("infoType", "Pharmacy")
             startActivity(intent)
         }
-    }
+    }*/
 }

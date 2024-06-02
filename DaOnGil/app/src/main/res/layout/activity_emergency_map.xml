@@ -6,21 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".presentation.emergency.EmergencyMapActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarEmergencyMap"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        app:navigationIcon="@drawable/back_icon">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/titleEmergencyMap"
-            style="@style/Theme.Toolbar.Title"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarEmergencyMap"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/text_emergency_aed" />
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back_icon"
+            android:background="@color/background_color">
 
-    </com.google.android.material.appbar.MaterialToolbar>
+            <TextView
+                android:id="@+id/titleEmergencyMap"
+                style="@style/Theme.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/text_emergency_aed" />
 
+        </com.google.android.material.appbar.MaterialToolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:name="com.naver.maps.map.MapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

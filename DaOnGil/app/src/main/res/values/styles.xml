@@ -58,7 +58,7 @@
 
     <style name="detail_category_chip" parent="ShapeAppearanceOverlay.Material3.Chip">
         <item name="android:textColor">@color/detail_category_chip_state_color</item>
-        <item name="android:padding">15dp</item>
+        <item name="chipStartPadding">8dp</item>
         <item name="android:checkable">true</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="chipStrokeColor">@color/detail_category_chip_state_color</item>
@@ -90,6 +90,12 @@
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:screenOrientation">portrait</item>
         <item name="bottomSheetStyle">@style/round_corner_modal</item>
+    </style>
+    
+    <style name="category_option_button" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textColor">@color/category_selected_button</item>
+        <item name="android:backgroundTint">@color/category_unselected_button</item>
     </style>
 
     <style name="round_corner_modal" parent="Widget.Design.BottomSheet.Modal">

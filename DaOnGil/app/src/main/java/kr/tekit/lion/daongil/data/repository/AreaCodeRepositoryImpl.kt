@@ -5,6 +5,7 @@ import kr.tekit.lion.daongil.data.datasource.areacode.RemoteAreaCodeDataSource
 import kr.tekit.lion.daongil.data.dto.local.toDomainModel
 import kr.tekit.lion.daongil.data.dto.local.toEntity
 import kr.tekit.lion.daongil.domain.model.AreaCode
+import kr.tekit.lion.daongil.domain.model.VillageCode
 import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
 
 class AreaCodeRepositoryImpl(
@@ -18,10 +19,6 @@ class AreaCodeRepositoryImpl(
 
     override suspend fun getAllAreaCodes(): List<AreaCode> {
         return local.getAllAreaCodes().map { it.toDomainModel() }
-    }
-
-    override suspend fun getDetailAreaCode(areaCode: String): List<AreaCode> {
-        return remote.getAreaInfoList(areaCode).toDomainModel()
     }
 
     override suspend fun getAreaCodeInfo(): List<AreaCode> {

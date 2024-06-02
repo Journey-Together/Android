@@ -10,8 +10,8 @@ import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
 import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myinfo.MyInfoActivity
 
 class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDialogInterface {

@@ -6,12 +6,15 @@ import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat.getColor
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
+import androidx.fragment.app.viewModels
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.geometry.LatLng
@@ -21,18 +24,28 @@ import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
+import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
+import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
-import kr.tekit.lion.daongil.presentation.main.Category
-import kr.tekit.lion.daongil.presentation.main.CategoryBottomSheet
+import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
+import kr.tekit.lion.daongil.presentation.main.vm.Category
+import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModel
+import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModelFactory
 
 class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCallback {
+    private val viewModel: SearchMainViewModel by viewModels {
+        SearchMainViewModelFactory(
+            requireContext()
+        )
+    }
 
     private lateinit var launcherForPermission: ActivityResultLauncher<Array<String>>
+
     // 내장 위치 추적 기능 사용
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationSource: FusedLocationSource
@@ -44,23 +57,159 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         var uiState = Mode.CATEGORY.mode
 
         with(binding) {
-            viewLifecycleOwner.lifecycleScope.launch {
-                progressBar.setProgressCompat(60, true)
-                delay(700)
-                progressBar.setProgressCompat(100, true)
-                delay(1200)
-                progressBar.visibility = View.INVISIBLE
+
+            selectedArea.doAfterTextChanged {
+                if (it != null) {
+                    detailAreaSelectLayout.visibility = View.VISIBLE
+                    detailSelectedArea.text = null
+                    viewModel.onCompleteSelectArea(it.toString())
+
+                    categoryContainer.post {
+                        categoryContainer.scrollTo(0, rvSearchResult.top)
+                    }
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.areaCode.collect {
+                    val areaList = it.map { area -> area.name }.toTypedArray()
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        areaList
+                    )
+                    binding.selectedArea.setAdapter(adapter)
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.villageCode.collect {
+                    val villageCodeList = it.map { area -> area.villageName }.toTypedArray()
+                    val adapter = ArrayAdapter(
+                        requireContext(),
+                        android.R.layout.simple_list_item_1,
+                        villageCodeList
+                    )
+                    binding.detailSelectedArea.setAdapter(adapter)
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.physicalDisabilityOptions.collect { options ->
+                    btnPhysicalDisability.setOnClickListener {
+                        showBottomSheet(options, Category.PhysicalDisability)
+                    }
+
+                    chipPhysicalDisability.setOnClickListener {
+                        showBottomSheet(options, Category.PhysicalDisability)
+                    }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgPhysicalDisability.setImageResource(R.drawable.sv_selected_physical_disability_icon)
+                        "${getString(R.string.text_physical_disability)}(${options.size})"
+                    } else {
+                        imgPhysicalDisability.setImageResource(R.drawable.sv_unselected_physical_disability_icon)
+                        getString(R.string.text_physical_disability)
+                    }
+                    chipPhysicalDisability.text = text
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.visualImpairmentOptions.collect { options ->
+                    btnVisualImpairment.setOnClickListener {
+                        showBottomSheet(options, Category.VisualImpairment)
+                    }
+
+                    chipVisualImpairment.setOnClickListener {
+                        showBottomSheet(options, Category.VisualImpairment)
+                    }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgVisualImpairment.setImageResource(R.drawable.sv_selected_visual_impairment_icon)
+                        "${getString(R.string.text_visual_impairmnet)}(${options.size})"
+                    } else {
+                        imgVisualImpairment.setImageResource(R.drawable.sv_unselected_visual_impairment_icon)
+                        getString(R.string.text_visual_impairmnet)
+                    }
+                    chipVisualImpairment.text = text
+
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.hearingImpairmentOptions.collect { options ->
+                    btnHearingImpairment.setOnClickListener {
+                        showBottomSheet(options, Category.HearingImpairment)
+                    }
+
+                    chipHearingImpairment.setOnClickListener {
+                        showBottomSheet(options, Category.HearingImpairment)
+                    }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgHearingImpairment.setImageResource(R.drawable.sv_selected_hearing_impairment_icon)
+                        "${getString(R.string.text_hearing_impairment)}(${options.size})"
+                    } else {
+                        imgHearingImpairment.setImageResource(R.drawable.sv_unselected_hearing_impairment_icon)
+                        getString(R.string.text_hearing_impairment)
+                    }
+                    chipHearingImpairment.text = text
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.infantFamilyOptions.collect { options ->
+                    btnInfantFamily.setOnClickListener {
+                        showBottomSheet(options, Category.InfantFamily)
+                    }
+
+                    chipInfantFamilly.setOnClickListener {
+                        showBottomSheet(options, Category.InfantFamily)
+                    }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgInfantFamily.setImageResource(R.drawable.sv_selected_infant_family_icon)
+                        "${getString(R.string.text_infant_family)}(${options.size})"
+                    } else {
+                        imgInfantFamily.setImageResource(R.drawable.sv_unselected_infant_family_icon)
+                        getString(R.string.text_infant_family)
+                    }
+                    chipInfantFamilly.text = text
+                }
+            }
+
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.elderlyPersonOptions.collect { options ->
+                    btnElderlyPeople.setOnClickListener {
+                        showBottomSheet(options, Category.ElderlyPeople)
+                    }
+
+                    chipElderlyPeople.setOnClickListener {
+                        showBottomSheet(options, Category.ElderlyPeople)
+                    }
+
+                    val text = if (options.isNotEmpty()) {
+                        imgElderlyPeople.setImageResource(R.drawable.sv_selected_elderly_people_icon)
+                        "${getString(R.string.text_elderly_person)}(${options.size})"
+                    } else {
+                        imgElderlyPeople.setImageResource(R.drawable.sv_unselected_elderly_people_icon)
+                        getString(R.string.text_elderly_person)
+                    }
+                    chipElderlyPeople.text = text
+                }
             }
 
             modeSwitchBtn.setOnClickListener {
-                when(uiState){
-                    Mode.CATEGORY.mode ->{
+                when (uiState) {
+                    Mode.CATEGORY.mode -> {
                         uiState = Mode.MAP.mode
                         categoryContainer.visibility = View.GONE
                         mapContainer.visibility = View.VISIBLE
                         modeSwitchBtn.setText(R.string.watching_list)
                         modeSwitchBtn.setIconResource(R.drawable.list_icon)
                     }
+
                     Mode.MAP.mode -> {
                         uiState = Mode.CATEGORY.mode
                         categoryContainer.visibility = View.VISIBLE
@@ -71,33 +220,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            btnReset.setOnClickListener {
-
-            }
-
-            chipPhysicalDisability.setOnClickListener {
-                showBottomSheet(Category.PHYSICAL_DISABILITY.type)
-            }
-
-            chipVisualImpairment.setOnClickListener {
-                showBottomSheet(Category.VISUAL_IMPAIRMENT.type)
-            }
-
-            chipHearingImpairment.setOnClickListener {
-                showBottomSheet(Category.HEARING_IMPAIRMENT.type)
-            }
-
-            chipInfantFamilly.setOnClickListener {
-                showBottomSheet(Category.INFANT_FAMILY.type)
-            }
-
-            chipElderlyPeople.setOnClickListener {
-                showBottomSheet(Category.PHYSICAL_DISABILITY.type)
-            }
-
-            btnReset.setOnClickListener {
-                showBottomSheet(Category.CLEAR.type)
-            }
+            btnReset.setOnClickListener { viewModel.onClickResetIcon() }
         }
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
@@ -125,13 +248,32 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             }
         }
 
-
         initMap()
     }
-    private fun showBottomSheet(category: String) {
-        CategoryBottomSheet(category){
-            // ViewModel에 저장하기~
 
+    private fun showBottomSheet(selectedOptions: List<Int>, category: Category) {
+        CategoryBottomSheet(selectedOptions, category) { options ->
+            when (category) {
+                is Category.PhysicalDisability -> {
+                    viewModel.onCompleteSelectPhysicalDisabilityOptions(options)
+                }
+
+                is Category.HearingImpairment -> {
+                    viewModel.onCompleteSelectHearingImpairmentOptions(options)
+                }
+
+                is Category.VisualImpairment -> {
+                    viewModel.onCompleteSelectVisualImpairmentOptions(options)
+                }
+
+                is Category.InfantFamily -> {
+                    viewModel.onCompleteSelectInfantFamilyOptions(options)
+                }
+
+                is Category.ElderlyPeople -> {
+                    viewModel.onCompleteElderlyPersonOptions(options)
+                }
+            }
         }.show(parentFragmentManager, "bottomSheet")
     }
 
@@ -189,7 +331,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 naverMap.moveCamera(cameraUpdate)
             }
         }
-        //addMaker()
+        addMaker()
     }
 
     private fun permissionGrantedMapUiSetting() {
@@ -223,10 +365,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             }
 
             with(naverMap.locationOverlay) {
-                val color = androidx.core.content.ContextCompat.getColor(
-                    requireContext(),
-                    R.color.maker_overlay
-                )
+                val color = getColor(requireContext(), R.color.maker_overlay)
                 circleRadius = 200
                 // setAlphaComponent : 투명도 지정
                 // 0(완전 투명) ~ 255(완전 불투명)
@@ -291,41 +430,39 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         }
     }
 
-    //    private fun addMaker() {
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            repeatOnLifecycle(Lifecycle.State.STARTED) {
-//                viewModel.allStoreData.value?.forEach { store ->
-//                    val marker = Marker()
-//                    with(marker){
-//                        icon = OverlayImage.fromResource(R.drawable.ic_marker)
-//                        position = LatLng(
-//                            store.storeInfo.latitude.toDouble(),
-//                            store.storeInfo.longitude.toDouble()
-//                        )
-//                        map = naverMap
-//                        width = 86
-//                        height = 90
-//
-//                        setOnClickListener {
-//                            true
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
+    private fun addMaker() {
+        this.repeatOnViewStarted {
+
+            val marker = Marker()
+            with(marker) {
+                icon = OverlayImage.fromResource(R.drawable.maker_unselected_restaurant_icon)
+                position = LatLng(
+                    37.2792385,
+                    127.0346949
+                )
+                map = naverMap
+                width = 86
+                height = 90
+
+                setOnClickListener {
+                    true
+                }
+            }
+        }
+    }
 
     private fun isNightMode(): Boolean {
-        val currentNightMode = this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        val currentNightMode =
+            this.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return currentNightMode == Configuration.UI_MODE_NIGHT_YES
     }
 
-    private fun setMapType(naverMap: NaverMap){
+    private fun setMapType(naverMap: NaverMap) {
         if (isNightMode()) {
             // 야간 모드 허용
             naverMap.mapType = NaverMap.MapType.Navi
             naverMap.isNightModeEnabled = true
-        }else{
+        } else {
             naverMap.mapType = NaverMap.MapType.Basic
             naverMap.isNightModeEnabled = false
         }
@@ -341,7 +478,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
     }
 }
 
-enum class Mode(val mode: String){
+enum class Mode(val mode: String) {
     CATEGORY("category"),
     MAP("map")
 }

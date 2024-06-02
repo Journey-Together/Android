@@ -12,8 +12,8 @@ interface VillageCodeDao {
     @Query("SELECT * FROM VILLAGE_CODE_TABLE")
     suspend fun getAllVillageCode(): List<VillageCodeEntity>
 
-    @Query("SELECT * FROM VILLAGE_CODE_TABLE WHERE villageCode = :code")
-    suspend fun getVillageCode(code: String): VillageCodeEntity
+    @Query("SELECT * FROM VILLAGE_CODE_TABLE WHERE areaCode = :code")
+    suspend fun getVillageCode(code: String): List<VillageCodeEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun setVillageCode(villageCodes: List<VillageCodeEntity>)

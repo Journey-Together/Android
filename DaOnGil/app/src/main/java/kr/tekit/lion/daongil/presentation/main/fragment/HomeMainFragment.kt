@@ -5,9 +5,11 @@ import android.os.Handler
 import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
+import kr.tekit.lion.daongil.HighThemeApp
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
 import kr.tekit.lion.daongil.domain.model.Tourist
@@ -18,19 +20,36 @@ import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
-class HomeMainFragment : Fragment(R.layout.fragment_home_main), ModeSettingDialog.ModeSettingDialogInterface {
+class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private val timer = Timer()
     private val handler = Handler(Looper.getMainLooper())
+    private val app = HighThemeApp.getInstance()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        val theme = HighThemeApp.getInstance().getThemePrefs()
+
+        when (theme) {
+            "night" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            "basic" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentHomeMainBinding.bind(view)
 
+        if (app.isFirstLogin()) {
+            settingDialog()
+        }
+
         settingVPAdapter(binding)
         settingRecommendRVAdapter(binding)
         settingLocationRVAdapter(binding)
-        settingDialog()
+        settingHighcontrastBtn(binding)
     }
 
     private fun settingVPAdapter(binding: FragmentHomeMainBinding) {
@@ -89,12 +108,20 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), ModeSettingDialo
     }
 
     private fun settingDialog() {
-        val dialog = ModeSettingDialog(this)
+        val dialog = ModeSettingDialog()
         dialog.isCancelable = false
         dialog.show(activity?.supportFragmentManager!!, "ModeSettingDialog")
     }
 
-    override fun onSettingBtn() {
-        // 고대비모드로 전환
+    private fun settingHighcontrastBtn(binding: FragmentHomeMainBinding) {
+        binding.homeHighcontrastBtn.setOnClickListener {
+            if (app.getThemePrefs() == "basic") {
+                app.setThemePrefs("night")
+                requireActivity().recreate()
+            } else {
+                app.setThemePrefs("basic")
+                requireActivity().recreate()
+            }
+        }
     }
 }

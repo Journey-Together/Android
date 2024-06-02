@@ -35,6 +35,8 @@
     <color name="select_area_text">#474747</color>
     <color name="select_area_box_stroke">#A3A5A9</color>
     <color name="select_area_end_icon">#898989</color>
+    <color name="category_unselected_button">#E8E8E9</color>
+    <color name="category_selected_button">#5F6368</color>
 
     <color name="detail_category_title_text">#FF000000</color>
 

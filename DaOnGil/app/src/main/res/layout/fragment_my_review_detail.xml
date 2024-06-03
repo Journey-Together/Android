@@ -56,7 +56,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="24dp"
+                android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginBottom="@dimen/margin_basic"
                 android:orientation="vertical">
 
@@ -64,52 +64,10 @@
                     android:id="@+id/textViewMyReviewDetailLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_big2"
+                    android:layout_marginBottom="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_semibold"
                     android:textSize="@dimen/font_big2"
                     tools:text="비슬산 군립공원" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="12dp"
-                        android:src="@drawable/star_icon" />
-                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textViewMyReviewDetailDate"
@@ -120,12 +78,54 @@
                     android:textSize="@dimen/font_small1"
                     tools:text="2024.05.24 금 방문" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin_big1"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/myReviewDetailRating1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_big4"
+                        android:src="@drawable/star_icon" />
+
+                    <ImageView
+                        android:id="@+id/myReviewDetailRating2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_big4"
+                        android:src="@drawable/star_icon" />
+
+                    <ImageView
+                        android:id="@+id/myReviewDetailRating3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_big4"
+                        android:src="@drawable/star_icon" />
+
+                    <ImageView
+                        android:id="@+id/myReviewDetailRating4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_big4"
+                        android:src="@drawable/star_icon" />
+
+                    <ImageView
+                        android:id="@+id/myReviewDetailRating5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/star_icon" />
+                </LinearLayout>
+
                 <TextView
-                    android:id="@+id/textViewMyReviewDetailLocationName"
+                    android:id="@+id/textViewMyReviewDetailReviewContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
                     android:textSize="@dimen/font_big3"
+                    android:lineSpacingMultiplier="1.5"
                     tools:text="풍경도 좋고 너무 좋아요!!!!" />
             </LinearLayout>
         </LinearLayout>

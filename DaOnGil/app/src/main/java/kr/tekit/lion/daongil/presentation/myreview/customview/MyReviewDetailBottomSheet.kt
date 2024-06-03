@@ -45,7 +45,7 @@ class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_shee
             R.color.button_tertiary,
             R.color.white)
         dialog.isCancelable = false
-        dialog.show(activity?.supportFragmentManager!!, "MyPageDialog")
+        dialog.show(requireActivity().supportFragmentManager, "MyPageDialog")
     }
 
     override fun onPosBtnClick() {

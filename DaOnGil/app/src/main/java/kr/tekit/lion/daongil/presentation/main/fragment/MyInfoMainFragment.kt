@@ -95,7 +95,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                 R.color.button_tertiary,
                 R.color.white)
             dialog.isCancelable = false
-            dialog.show(activity?.supportFragmentManager!!, "MyPageDialog")
+            dialog.show(requireActivity().supportFragmentManager, "MyPageDialog")
         }
     }
 

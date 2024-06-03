@@ -40,7 +40,7 @@
             android:exported="true" />
         <activity
             android:name=".presentation.search.SearchActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="false" />
@@ -60,7 +60,8 @@
 
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="false" />
+            android:exported="true"/>
+
     </application>
 
 </manifest>

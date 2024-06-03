@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.domain.repository.RecentSearchKeywordRepository
 class GetAllRecentSearchKeywordUseCase(
     private val recentSearchKeywordRepository: RecentSearchKeywordRepository
 ) {
-    suspend operator fun invoke(): Flow<List<RecentSearchKeyword>>{
+    operator fun invoke(): Flow<List<RecentSearchKeyword>>{
         return recentSearchKeywordRepository.getAllRecentSearchKeyword()
     }
 }

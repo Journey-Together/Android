@@ -7,12 +7,12 @@
     android:fillViewport="true"
     tools:context=".presentation.scheduleform.fragment.ScheduleDetailsFormFragment">
 
-<androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/textViewDFTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
@@ -24,22 +24,22 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewDF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big3"
-
             android:nestedScrollingEnabled="false"
             android:overScrollMode="never"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+            app:layout_constraintTop_toBottomOf="@+id/textViewDFTitle" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/buttonDFAddPlace"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_big1"
             android:layout_marginEnd="@dimen/margin_basic"
             android:layout_marginBottom="@dimen/margin_basic"
             android:background="@drawable/background_radius_10"
@@ -48,6 +48,7 @@
             android:textSize="@dimen/font_big2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewDF" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

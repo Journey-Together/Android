@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.databinding.ItemMyReviewDetailVpBinding
 
 class MyReviewDetailVPAdapter(private val reviewImages: List<Drawable>) : RecyclerView.Adapter<MyReviewDetailVPAdapter.MyReviewDetailViewHolder>() {
@@ -21,8 +22,10 @@ class MyReviewDetailVPAdapter(private val reviewImages: List<Drawable>) : Recycl
     }
 
     class MyReviewDetailViewHolder(private val binding: ItemMyReviewDetailVpBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(image: Drawable) {
-            binding.imageViewMyReviewDetail.setImageDrawable(image)
+        fun bind(imageResId: Drawable) {
+            Glide.with(binding.imageViewMyReviewDetail.context)
+                .load(imageResId)
+                .into(binding.imageViewMyReviewDetail)
         }
     }
 }

@@ -17,9 +17,9 @@
         <ImageView
             android:id="@+id/imageViewMyReviewDetail"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="350dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:src="@drawable/empty_view" />
 
     </androidx.cardview.widget.CardView>

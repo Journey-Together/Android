@@ -28,5 +28,20 @@
         <argument
             android:name="title"
             app:argType="string" />
+        <action
+            android:id="@+id/action_scheduleDetailsFormFragment_to_formSearchFragment"
+            app:destination="@id/formSearchFragment" />
+        <action
+            android:id="@+id/action_scheduleDetailsFormFragment_to_nameAndPeriodFormFragment"
+            app:destination="@id/nameAndPeriodFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/formSearchFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.FormSearchFragment"
+        android:label="fragment_form_search"
+        tools:layout="@layout/fragment_form_search" >
+        <action
+            android:id="@+id/action_formSearchFragment_to_scheduleDetailsFormFragment"
+            app:destination="@id/scheduleDetailsFormFragment" />
     </fragment>
 </navigation>

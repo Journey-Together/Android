@@ -42,6 +42,7 @@
     <color name="maker_overlay">#666666</color>
 
     <color name="category_bottom_sheet_background">#262626</color>
+    <color name="search_view">#363635</color>
 
     <!-- 플로팅버튼 배경색 (지도보기, 목록보기, 일정 추가하기)-->
     <color name="fab_background">#BCBAB5</color>

@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
@@ -36,7 +37,7 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
     private fun settingScheduleFormAdapter(
         binding: FragmentScheduleDetailsFormBinding, dailyScheduleList: List<DailySchedule>
     ) {
-        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity())
+        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), findNavController())
         binding.recyclerViewDF.layoutManager = LinearLayoutManager(requireActivity())
     }
 

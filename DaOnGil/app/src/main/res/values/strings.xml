@@ -7,4 +7,7 @@
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
     <string name="picked_dates">%s - %s</string>
+    <string name="bookmarked_places">북마크한 여행지</string>
+    <string name="hint_search">검색어를 입력해주세요</string>
+    <string name="result_empty">검색 결과가 없어요.\n다른 검색어를 입력해주세요.</string>
 </resources>

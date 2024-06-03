@@ -8,13 +8,13 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemMyReviewBinding
 import kr.tekit.lion.daongil.domain.model.MyReview
 
-class MyReviewRVAdapter(private val myReviewList: List<MyReview>) : RecyclerView.Adapter<MyReviewRVAdapter.MyReviewViewHolder>() {
+class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val itemClickListener: (Int) -> Unit) : RecyclerView.Adapter<MyReviewRVAdapter.MyReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewViewHolder {
         val binding : ItemMyReviewBinding = ItemMyReviewBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return MyReviewViewHolder(binding)
+        return MyReviewViewHolder(binding, itemClickListener)
     }
 
     override fun getItemCount(): Int = 3
@@ -23,7 +23,7 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>) : RecyclerView
         holder.bind(myReviewList[position])
     }
 
-    class MyReviewViewHolder(val binding: ItemMyReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyReviewViewHolder(val binding: ItemMyReviewBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         val Ratings = listOf(
             binding.myReviewRating1,
             binding.myReviewRating2,
@@ -31,6 +31,12 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>) : RecyclerView
             binding.myReviewRating4,
             binding.myReviewRating5
         )
+
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(adapterPosition)
+            }
+        }
 
         fun bind(myReview: MyReview) {
             binding.textViewMyReviewLocation.text = myReview.myReviewLocation

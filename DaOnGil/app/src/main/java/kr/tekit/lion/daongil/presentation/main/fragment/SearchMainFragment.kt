@@ -29,7 +29,8 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
-import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
+import kr.tekit.lion.daongil.presentation.ext.Permissions.LOCATION_PERMISSION_REQUEST_CODE
+import kr.tekit.lion.daongil.presentation.ext.Permissions.REQUEST_LOCATION_PERMISSIONS
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
@@ -466,15 +467,6 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             naverMap.mapType = NaverMap.MapType.Basic
             naverMap.isNightModeEnabled = false
         }
-    }
-
-
-    companion object {
-        const val LOCATION_PERMISSION_REQUEST_CODE = 100
-        val REQUEST_LOCATION_PERMISSIONS = arrayOf(
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-        )
     }
 }
 

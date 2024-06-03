@@ -38,7 +38,7 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
     private fun initReviewDetail(binding: FragmentMyReviewDetailBinding) {
         val reviewDetail = mapOf(
             "location" to "망상해변",
-            "rating" to "3.5",
+            "rating" to 3.5,
             "date" to "2024.05.24 금",
             "review" to "풍경도 좋고 너무 좋아요!!!!\n시설도 잘 되어있어서 만족스러웠습니다"
         )
@@ -51,10 +51,10 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
             binding.myReviewDetailRating5
         )
 
-        binding.textViewMyReviewDetailLocation.text = reviewDetail["location"]
+        binding.textViewMyReviewDetailLocation.text = reviewDetail["location"].toString()
         binding.textViewMyReviewDetailDate.text = "${reviewDetail["date"]} 방문"
-        binding.textViewMyReviewDetailReviewContent.text = reviewDetail["review"]
-        settingRating(reviewDetail["rating"]!!.toDouble(), stars)
+        binding.textViewMyReviewDetailReviewContent.text = reviewDetail["review"].toString()
+        settingRating(reviewDetail["rating"] as Double, stars)
     }
 
     private fun settingVPAdapter(binding: FragmentMyReviewDetailBinding) {

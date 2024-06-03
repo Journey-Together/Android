@@ -42,7 +42,7 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val it
             binding.textViewMyReviewLocation.text = myReview.myReviewLocation
             binding.textViewMyReviewLocationName.text = myReview.myReviewLocationName
 
-            settingRating(myReview.rating.toDouble())
+            settingRating(myReview.rating)
         }
 
         private fun settingRating(rating: Double) {

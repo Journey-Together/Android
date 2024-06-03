@@ -4,5 +4,5 @@ data class MyReview(
     val myReviewLocation : String,
     val myReviewLocationName : String,
     val myReviewImage : String?,
-    val rating : String
+    val rating : Double
 )

@@ -13,6 +13,7 @@ import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myinfo.MyInfoActivity
+import kr.tekit.lion.daongil.presentation.myreview.MyReviewActivity
 
 class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDialogInterface {
 
@@ -35,6 +36,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                 moveMyInfo(binding)
                 logoutDialog(binding)
                 moveConcernType(binding)
+                moveMyReview(binding)
             }
         } else {
             with(binding) {
@@ -72,6 +74,13 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun moveConcernType(binding: FragmentMyInfoMainBinding) {
         binding.layoutConcernType.setOnClickListener {
             val intent = Intent(requireActivity(), ConcernTypeActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun moveMyReview(binding: FragmentMyInfoMainBinding) {
+        binding.layoutMyReview.setOnClickListener {
+            val intent = Intent(requireActivity(), MyReviewActivity::class.java)
             startActivity(intent)
         }
     }

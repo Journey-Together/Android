@@ -25,7 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_big2"
-            android:src="@drawable/edit_icon" />
+            android:src="@drawable/edit_icon"
+            android:tint="@color/text_primary" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,7 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_big2"
-            android:src="@drawable/delete_icon" />
+            android:src="@drawable/delete_icon"
+            android:tint="@color/text_primary" />
 
         <TextView
             android:layout_width="wrap_content"

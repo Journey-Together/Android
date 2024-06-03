@@ -27,7 +27,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
         val reviewDeleted = args.reviewDeleted
         if (reviewDeleted) {
-            Snackbar.make(requireView(), "나의 여행지 리뷰가 삭제되었습니다.", Snackbar.LENGTH_LONG)
+            Snackbar.make(requireView(), "나의 여행지 후기가 삭제되었습니다.", Snackbar.LENGTH_LONG)
                 .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
                 .show()
         }

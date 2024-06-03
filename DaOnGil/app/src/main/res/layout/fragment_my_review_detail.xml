@@ -33,25 +33,21 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerMyReviewDetail"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <me.relex.circleindicator.CircleIndicator3
+                android:id="@+id/MyReviewDetailindicator"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_basic"
-                android:layout_marginTop="@dimen/margin_basic"
+                android:layout_gravity="center"
                 android:layout_marginBottom="@dimen/margin_big1"
-                app:cardBackgroundColor="@color/card_background_color"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="3dp"
-                tools:ignore="MissingConstraints">
-
-                <ImageView
-                    android:id="@+id/imageViewMyReviewDetail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/empty_view" />
-
-            </com.google.android.material.card.MaterialCardView>
+                app:ci_animator="@animator/scale_with_alpha"
+                app:ci_drawable="@drawable/indicator_selected"
+                app:ci_drawable_unselected="@drawable/indicator_unselected"
+                app:layout_constraintTop_toBottomOf="@id/home_vp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

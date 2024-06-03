@@ -6,8 +6,10 @@ import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.viewpager2.widget.ViewPager2
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewDetailBinding
+import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewDetailVPAdapter
 
 class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -17,6 +19,7 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
 
         initView(binding)
         initReviewDetail(binding)
+        settingVPAdapter(binding)
     }
 
     private fun initView(binding: FragmentMyReviewDetailBinding) {
@@ -46,6 +49,20 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
         binding.textViewMyReviewDetailDate.text = "${reviewDetail["date"]} 방문"
         binding.textViewMyReviewDetailReviewContent.text = reviewDetail["review"]
         settingRating(reviewDetail["rating"]!!.toDouble(), stars)
+    }
+
+    private fun settingVPAdapter(binding: FragmentMyReviewDetailBinding) {
+        val reviewImages = listOfNotNull(
+            ContextCompat.getDrawable(requireContext(), R.drawable.img_2455),
+            ContextCompat.getDrawable(requireContext(), R.drawable.img_2859),
+            ContextCompat.getDrawable(requireContext(), R.drawable.img_8272)
+        )
+
+        val myReviewDetailVPAdapter = MyReviewDetailVPAdapter(reviewImages)
+        binding.viewPagerMyReviewDetail.adapter = myReviewDetailVPAdapter
+        binding.viewPagerMyReviewDetail.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        binding.MyReviewDetailindicator.setViewPager(binding.viewPagerMyReviewDetail)
     }
 
     private fun settingRating(rating: Double, Ratings: List<ImageView>) {

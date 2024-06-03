@@ -1,19 +1,21 @@
 package kr.tekit.lion.daongil.presentation.emergency
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.ViewTreeObserver
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -26,7 +28,7 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
-import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
+import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 
 class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -41,6 +43,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+
+    lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    // private val bottomSheetLayout by lazy { findViewById<View>(R.id.emergencyBottomSheetLayout) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,6 +80,72 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         initMap()
+
+        initBottomSheet()
+    }
+    private fun initBottomSheet() {
+
+        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet)
+        emergencyBottomSheet.testClick()
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
+
+        val observer = object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                val metrics = resources.displayMetrics
+                val dp = 40f
+                val px = (dp * (metrics.densityDpi / 160f)).toInt()
+
+                val buttonHeight = binding.emergencyMapAreaButton.height
+                val toolbarHeight = binding.toolbarEmergencyMap.height
+                val deviceHeight = metrics.heightPixels - buttonHeight - toolbarHeight - px
+
+                if (deviceHeight > 0) {
+                    bottomSheetBehavior.maxHeight = deviceHeight
+                    Log.d("device", "Calculated deviceHeight: $deviceHeight")
+                } else {
+                    Log.e("device", "Failed to calculate deviceHeight")
+                }
+
+                // 레이아웃 변경을 추적하는 리스너는 더 이상 필요 없으므로 제거
+                binding.emergencyMapAreaButton.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        }
+
+        binding.emergencyMapAreaButton.viewTreeObserver.addOnGlobalLayoutListener(observer)
+
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+                // BottomSheetBehavior state에 따른 이벤트
+                when (newState) {
+                    BottomSheetBehavior.STATE_HIDDEN -> {
+                        Log.d("MainActivity", "state: hidden")
+                    }
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        Log.d("MainActivity", "state: expanded")
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        Log.d("MainActivity", "state: collapsed")
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        Log.d("MainActivity", "state: dragging")
+                    }
+                    BottomSheetBehavior.STATE_SETTLING -> {
+                        Log.d("MainActivity", "state: settling")
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        Log.d("MainActivity", "state: half expanded")
+                    }
+                }
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+
+            }
+
+        })
 
     }
 

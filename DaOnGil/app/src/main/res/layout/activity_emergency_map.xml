@@ -14,9 +14,9 @@
             android:id="@+id/toolbarEmergencyMap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/background_color"
             android:minHeight="?attr/actionBarSize"
-            app:navigationIcon="@drawable/back_icon"
-            android:background="@color/background_color">
+            app:navigationIcon="@drawable/back_icon">
 
             <TextView
                 android:id="@+id/titleEmergencyMap"
@@ -31,51 +31,51 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/emergencyMapAreaButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="10dp"
-            app:cardCornerRadius="50dp"
-            app:strokeColor="@color/primary_disabled"
+            android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_big2"
             android:backgroundTint="@color/item_background"
-            android:layout_gravity="center_horizontal">
+            app:cardCornerRadius="50dp"
+            app:cardElevation="10dp"
+            app:strokeColor="@color/primary_disabled">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="@dimen/margin_big4"
-                android:paddingBottom="@dimen/margin_big4"
+                android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_big4"
+                android:paddingTop="@dimen/margin_big4"
                 android:paddingRight="@dimen/margin_small1"
-                android:orientation="horizontal">
+                android:paddingBottom="@dimen/margin_big4">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/emergency_map_icon"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/emergency_map_icon" />
 
                 <TextView
                     android:id="@+id/emergencyMapArea"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="서울특별시 중구"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="@dimen/font_big3"
+                    android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_small1"
-                    android:layout_gravity="center"/>
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="서울특별시 중구"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    android:layout_gravity="center" />
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_chevron_right_24px" />
 
             </LinearLayout>
 
@@ -88,5 +88,11 @@
             android:layout_height="match_parent" />
 
     </FrameLayout>
+
+    <include
+        android:id="@+id/emergencyBottomSheet"
+        layout="@layout/emergency_bottom_sheet_layout"
+        app:layout_anchor="@+id/emergencyMapAreaButton"
+        app:layout_anchorGravity="bottom"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

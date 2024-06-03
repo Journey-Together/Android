@@ -18,5 +18,15 @@
         android:id="@+id/scheduleDetailsFormFragment"
         android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ScheduleDetailsFormFragment"
         android:label="fragment_schedule_details_form"
-        tools:layout="@layout/fragment_schedule_details_form" />
+        tools:layout="@layout/fragment_schedule_details_form" >
+        <argument
+            android:name="startDate"
+            app:argType="java.util.Date" />
+        <argument
+            android:name="endDate"
+            app:argType="java.util.Date" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 </navigation>

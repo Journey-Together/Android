@@ -23,6 +23,7 @@ class ConfirmDialog(
         val binding = DialogConfirmBinding.bind(view)
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.window?.setDimAmount(0.5f)
 
         binding.textViewDialogTitle.text = title
         binding.textViewDialogSubtitle.text = subtitle

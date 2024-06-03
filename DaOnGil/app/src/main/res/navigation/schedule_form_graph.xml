@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/nameAndPeriodFormFragment"
         android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.NameAndPeriodFormFragment"
-        android:label="fragment_name_and_period_form"
+        android:label="@string/add_new_schedule"
         tools:layout="@layout/fragment_name_and_period_form" >
         <action
             android:id="@+id/action_nameAndPeriodFormFragment_to_scheduleDetailsFormFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/scheduleDetailsFormFragment"
         android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ScheduleDetailsFormFragment"
-        android:label="fragment_schedule_details_form"
+        android:label="@string/add_new_schedule"
         tools:layout="@layout/fragment_schedule_details_form" >
         <argument
             android:name="startDate"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/formSearchFragment"
         android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.FormSearchFragment"
-        android:label="fragment_form_search"
+        android:label="@string/search_places_to_add"
         tools:layout="@layout/fragment_form_search" >
         <action
             android:id="@+id/action_formSearchFragment_to_scheduleDetailsFormFragment"

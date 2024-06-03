@@ -66,6 +66,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_semibold"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/font_big2"
                     tools:text="비슬산 군립공원" />
 
@@ -75,6 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_big2"
                     android:fontFamily="@font/pretendard_medium"
+                    android:textColor="@color/text_primary"
                     android:textSize="@dimen/font_small1"
                     tools:text="2024.05.24 금 방문" />
 
@@ -124,8 +126,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:textSize="@dimen/font_big3"
                     android:lineSpacingMultiplier="1.5"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/font_big3"
                     tools:text="풍경도 좋고 너무 좋아요!!!!" />
             </LinearLayout>
         </LinearLayout>

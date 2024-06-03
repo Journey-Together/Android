@@ -12,18 +12,28 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_form) {
+    var startDate = Date()
+    var endDate = Date()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentNameAndPeriodFormBinding.bind(view)
 
-        binding.buttonNPFNextStep.setOnClickListener {
-            val navController = findNavController()
-            // 전환할 화면의 id (graph에 선언된 id)를 넣어준다.
-            navController.navigate(R.id.scheduleDetailsFormFragment)
-        }
-
         setPeriod(binding)
+        proceedToNext(binding)
+    }
+
+    private fun proceedToNext(binding: FragmentNameAndPeriodFormBinding){
+        binding.apply {
+            buttonNPFNextStep.setOnClickListener {
+                val navController = findNavController()
+
+                val title = editTextNPFName.text.toString()
+
+                val action = NameAndPeriodFormFragmentDirections.actionNameAndPeriodFormFragmentToScheduleDetailsFormFragment(startDate, endDate, title)
+                navController.navigate(action)
+            }
+        }
     }
 
     private fun setPeriod(binding: FragmentNameAndPeriodFormBinding) {
@@ -35,6 +45,9 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
 
             dateRangePicker.show(requireActivity().supportFragmentManager, "ScheduleFormSetPeriod")
             dateRangePicker.addOnPositiveButtonClickListener {
+                startDate = Date(it.first)
+                endDate = Date(it.second)
+
                 showPickedDates(binding, Date(it.first), Date(it.second))
             }
         }

@@ -45,7 +45,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
 
     lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
-    // private val bottomSheetLayout by lazy { findViewById<View>(R.id.emergencyBottomSheetLayout) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

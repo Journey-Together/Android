@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/item_background"
+        app:cardCornerRadius="10dp"
+        app:strokeColor="@color/primary_disabled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            style="@style/Widget.Material3.CardView.Outlined"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageViewFPlaceThumbnail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:contentDescription="대표 사진"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/empty_view" />
+
+            <TextView
+                android:id="@+id/textViewFPlaceAddr"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_big3"
+                android:layout_marginEnd="@dimen/margin_big3"
+                android:text="OO시 OO구"
+                android:textSize="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewFPlaceThumbnail" />
+
+            <TextView
+                android:id="@+id/textViewFPlaceName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_small2"
+                android:layout_marginEnd="@dimen/margin_big3"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="OO 해변 공원"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceAddr" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginEnd="@dimen/margin_big3"
+                android:layout_marginBottom="@dimen/margin_big3"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceName">
+
+                <ImageView
+                    android:id="@+id/iconFPlacePhysicalDisability"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small2"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/physical_disability_radius_icon" />
+
+                <ImageView
+                    android:id="@+id/iconFPlaceVisualImpair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small2"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/visual_impairment_radius_icon" />
+
+                <ImageView
+                    android:id="@+id/iconFPlaceInfantFamily"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small2"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/infant_familly_radius_icon" />
+
+                <ImageView
+                    android:id="@+id/iconFPlaceElderlyPeople"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small2"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/elderly_people_radius_icon" />
+                <!-- contentDescription 추가할 것 -->
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small2"
+                android:layout_marginEnd="@dimen/margin_small2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_close_18px" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_myReviewFragment_to_myReviewDetailFragment"
             app:destination="@id/myReviewDetailFragment" />
+        <argument
+            android:name="reviewDeleted"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
     <fragment
         android:id="@+id/myReviewDetailFragment"

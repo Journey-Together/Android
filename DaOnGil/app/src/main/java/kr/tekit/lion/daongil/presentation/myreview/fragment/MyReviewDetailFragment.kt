@@ -10,6 +10,7 @@ import androidx.viewpager2.widget.ViewPager2
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewDetailBinding
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewDetailVPAdapter
+import kr.tekit.lion.daongil.presentation.myreview.customview.MyReviewDetailBottomSheet
 
 class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,6 +27,11 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
         binding.toolbarMyReviewDetail.setNavigationIcon(R.drawable.back_icon)
         binding.toolbarMyReviewDetail.setNavigationOnClickListener {
             findNavController().navigate(R.id.action_myReviewDetailFragment_to_myReviewFragment, null)
+        }
+        binding.toolbarMyReviewDetail.inflateMenu(R.menu.menu_my_review_detail)
+        binding.toolbarMyReviewDetail.setOnMenuItemClickListener {
+            showBottomSheet()
+            true
         }
     }
 
@@ -83,5 +89,9 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
                 }
             }
         }
+    }
+
+    private fun showBottomSheet() {
+        MyReviewDetailBottomSheet().show(parentFragmentManager, "myReviewDetailBottomSheet")
     }
 }

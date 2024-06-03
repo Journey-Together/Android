@@ -1,0 +1,32 @@
+package kr.tekit.lion.daongil.presentation.myreview.fragment
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
+import kr.tekit.lion.daongil.R
+import kr.tekit.lion.daongil.databinding.FragmentMyReviewBinding
+import kr.tekit.lion.daongil.domain.model.MyReview
+import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewRVAdapter
+
+class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val binding = FragmentMyReviewBinding.bind(view)
+
+        settingMyReviewRVAdapter(binding)
+    }
+
+    private fun settingMyReviewRVAdapter(binding: FragmentMyReviewBinding) {
+        val myReviewList = listOf(
+            MyReview("강원특별자치도 동해시", "망상해변", null, "3.5"),
+            MyReview("대구 달성군", "비슬산 군립공원", null, "3"),
+            MyReview("전라남도 함평군", "함평엑스포공원", null, "4")
+        )
+
+        val myReviewRVAdapter = MyReviewRVAdapter(myReviewList)
+        binding.recyclerViewMyReview.adapter = myReviewRVAdapter
+        binding.recyclerViewMyReview.layoutManager = LinearLayoutManager(context)
+    }
+}

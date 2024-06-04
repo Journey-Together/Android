@@ -65,4 +65,10 @@
 
     <color name="button_tertiary">#C92A2A</color>
 
+    <color name="emergency_green">#008000</color>
+    <color name="emergency_red">#FF0000</color>
+    <color name="emergency_yellow">#FFFF00</color>
+
+    <color name="emergency_color">#F49494</color>
+    <color name="pharmcy_color">#F8B60B</color>
 </resources>

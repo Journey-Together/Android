@@ -28,10 +28,27 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
+import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 
 class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    // 더미 data
+    val emergencyBottomList: List<EmergencyBottom> = listOf(
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" ),
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" ),
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" )
+    )
 
     private val binding: ActivityEmergencyMapBinding by lazy {
         ActivityEmergencyMapBinding.inflate(layoutInflater)
@@ -44,7 +61,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mLocationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
 
-    lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+    private val bottomSheetBehavior by lazy {
+        BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,13 +100,15 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         initMap()
 
         initBottomSheet()
+        actionBottomSheet()
+        setBottomRecylcerView(emergencyBottomList)
+    }
+
+    private fun setBottomRecylcerView(emergencyBottomList: List<EmergencyBottom>){
+        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet, emergencyBottomList)
+        emergencyBottomSheet.setRecyclerView()
     }
     private fun initBottomSheet() {
-
-        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet)
-        emergencyBottomSheet.testClick()
-
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
 
         val observer = object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -112,6 +133,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.emergencyMapAreaButton.viewTreeObserver.addOnGlobalLayoutListener(observer)
+    }
+
+    private fun actionBottomSheet() {
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -140,6 +164,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             }
 
+
+
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
 
             }
@@ -166,7 +192,13 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     // 네이버맵 불러오기가 완료되면 콜백
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
+
         this.naverMap = naverMap
+
+        naverMap.setOnMapClickListener { pointF, latLng ->
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+            setBottomRecylcerView(emergencyBottomList)
+        }
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -302,42 +334,86 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private var selectedMarker: Marker? = null
+
     private fun addMaker(type: String) {
 
         val marker = Marker()
         with(marker) {
-            if (type.equals("Emergency")) {
+            if (type == "Emergency") {
                 icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                position = LatLng(
-                    36.6673002,
-                    127.5010533
-                )
+                position = LatLng(36.6673002, 127.5010533)
                 map = naverMap
                 width = 56
                 height = 60
 
                 setOnClickListener {
+                    // If there is a previously selected marker, restore its icon
+                    selectedMarker?.let {
+                        it.icon =
+                            OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
+                        it.width = 56
+                        it.height = 60
+                    }
+                    // Set the current marker as the selected marker and change its icon
+                    selectedMarker = this
                     icon = OverlayImage.fromResource(R.drawable.marker_selected_emergency_icon)
                     width = 100
                     height = 130
+                    setBottomRecylcerView(
+                        listOf(
+                            EmergencyBottom(
+                                null,
+                                "서울아산병원",
+                                "2.1km",
+                                "서울 송파구 올림픽로43길 88 서울아산병원",
+                                "1588-5647",
+                                "응급실 병상 21 / 25",
+                                "emergency",
+                                "test emergency"
+                            )
+                        )
+                    )
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                     true
                 }
             }
 
-            if (type.equals("Pharmacy")) {
+            if (type == "Pharmacy") {
                 icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
-                position = LatLng(
-                    36.6673002,
-                    127.5010533
-                )
+                position = LatLng(36.6673002, 127.5010533)
                 map = naverMap
                 width = 56
                 height = 60
 
                 setOnClickListener {
+                    // If there is a previously selected marker, restore its icon
+                    selectedMarker?.let {
+                        it.icon =
+                            OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
+                        it.width = 56
+                        it.height = 60
+                    }
+                    // Set the current marker as the selected marker and change its icon
+                    selectedMarker = this
                     icon = OverlayImage.fromResource(R.drawable.marker_selected_pharmacy_icon)
                     width = 100
                     height = 130
+                    setBottomRecylcerView(
+                        listOf(
+                            EmergencyBottom(
+                                null,
+                                "서울아산병원약국",
+                                "2.1km",
+                                "서울 송파구 올림픽로43길 88 서울아산병원",
+                                "1588-5647",
+                                "응급실 병상 21 / 25",
+                                "emergency",
+                                "test pharmacy"
+                            )
+                        )
+                    )
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                     true
                 }
             }
@@ -345,6 +421,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
     }
+
+
 
     private fun isNightMode(): Boolean {
         val currentNightMode =

@@ -4,16 +4,19 @@ package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_form) {
-    var startDate = Date()
-    var endDate = Date()
+    // activity의 뷰모델
+    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -26,11 +29,10 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
     private fun proceedToNext(binding: FragmentNameAndPeriodFormBinding){
         binding.apply {
             buttonNPFNextStep.setOnClickListener {
+                scheduleFormViewModel.setTitle(editTextNPFName.text.toString())
+
                 val navController = findNavController()
-
-                val title = editTextNPFName.text.toString()
-
-                val action = NameAndPeriodFormFragmentDirections.actionNameAndPeriodFormFragmentToScheduleDetailsFormFragment(startDate, endDate, title)
+                val action = NameAndPeriodFormFragmentDirections.actionNameAndPeriodFormFragmentToScheduleDetailsFormFragment()
                 navController.navigate(action)
             }
         }
@@ -45,10 +47,10 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
 
             dateRangePicker.show(requireActivity().supportFragmentManager, "ScheduleFormSetPeriod")
             dateRangePicker.addOnPositiveButtonClickListener {
-                startDate = Date(it.first)
-                endDate = Date(it.second)
-
-                showPickedDates(binding, Date(it.first), Date(it.second))
+                // viewModel에 시작일, 종료일 데이터 전달
+                scheduleFormViewModel.setStartDate(Date(it.first))
+                scheduleFormViewModel.setEndDate(Date(it.second))
+                showPickedDates(binding)
             }
         }
     }
@@ -60,9 +62,15 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
         return formattedDate
     }
 
-    private fun showPickedDates(binding: FragmentNameAndPeriodFormBinding, startDate: Date, endDate: Date) {
-        val startDateFormatted = formatDateValue(startDate)
-        val endDateFormatted = formatDateValue(endDate)
+    private fun showPickedDates(binding: FragmentNameAndPeriodFormBinding) {
+        val startDate = scheduleFormViewModel.startDate.value
+        val endDate = scheduleFormViewModel.endDate.value
+        val startDateFormatted = startDate?.let {
+            formatDateValue(startDate)
+        }
+        val endDateFormatted = endDate?.let {
+            formatDateValue(endDate)
+        }
         binding.buttonNPFSetPeriod.text =
             getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
     }

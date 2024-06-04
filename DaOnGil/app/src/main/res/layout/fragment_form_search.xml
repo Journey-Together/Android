@@ -46,7 +46,8 @@
             android:id="@+id/recyclerViewFSResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/margin_basic"/>
+            android:clipToPadding="false"
+            android:paddingTop="@dimen/margin_small1" />
 
         <TextView
             android:id="@+id/textViewFSResultEmpty"
@@ -57,7 +58,6 @@
             android:text="@string/result_empty"
             android:textSize="@dimen/font_big1"
             android:visibility="gone" />
-
 
     </com.google.android.material.search.SearchView>
 

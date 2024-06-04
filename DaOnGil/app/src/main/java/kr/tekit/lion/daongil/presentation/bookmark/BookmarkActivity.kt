@@ -15,9 +15,13 @@ import kr.tekit.lion.daongil.presentation.bookmark.decoration.GridSpacingItemDec
 
 class BookmarkActivity : AppCompatActivity() {
 
-    val binding: ActivityBookmarkBinding by lazy {
+    private val binding: ActivityBookmarkBinding by lazy {
         ActivityBookmarkBinding.inflate(layoutInflater)
     }
+
+    private val spanCount = 2
+    private val spacing = 16
+    private val includeEdge = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,10 +59,6 @@ class BookmarkActivity : AppCompatActivity() {
     }
 
     private fun settingPlaceBookmarkRVAdapter() {
-        val spanCount = 2
-        val spacing = 16
-        val includeEdge = true
-
         val placeBookmarkList = listOf(
             PlaceBookmark("강원특별자치도 동해시", "망상해변", null, listOf("physical_disability", "visual_impairment", "infant_family", "infant_family")),
             PlaceBookmark("대구 달성군", "비슬산 군립공원", null, listOf("physical_disability", "visual_impairment",)),
@@ -78,10 +78,6 @@ class BookmarkActivity : AppCompatActivity() {
     }
 
     private fun settingScheduleBookmarkRVAdapter() {
-        val spanCount = 2
-        val spacing = 16
-        val includeEdge = true
-
         val scheduleBookmarkList = listOf(
             ScheduleBookmark("서울 탐방 일정",  null, "다온길"),
             ScheduleBookmark("대구는 내가 접수한다", null, "당근"),

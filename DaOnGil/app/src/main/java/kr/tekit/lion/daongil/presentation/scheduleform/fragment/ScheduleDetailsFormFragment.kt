@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -33,8 +34,10 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
         // observe data - 데이터가 변경되면 리사이클러뷰를 갱신시켜준다.
         scheduleFormViewModel.schedule.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            Log.d("test1234", "dfdfdfdfdfdfdfsdgsdfgwretwe vfs")
             binding.recyclerViewDF.adapter?.notifyDataSetChanged()
         })
+
     }
 
     private fun initView(binding:FragmentScheduleDetailsFormBinding){
@@ -55,7 +58,7 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         binding: FragmentScheduleDetailsFormBinding, dailyScheduleList: List<DailySchedule>,
     ) {
         val navController = findNavController()
-        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), navController )
+        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), navController, scheduleFormViewModel)
         binding.recyclerViewDF.layoutManager = LinearLayoutManager(requireActivity())
     }
 

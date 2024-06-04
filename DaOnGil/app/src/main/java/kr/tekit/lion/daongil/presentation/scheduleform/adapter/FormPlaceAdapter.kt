@@ -6,15 +6,19 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemFormPlaceBinding
 import kr.tekit.lion.daongil.domain.model.FormPlace
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
-class FormPlaceAdapter(private val places : MutableList<FormPlace>) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>(){
+class FormPlaceAdapter(
+    private val places : MutableList<FormPlace>,
+    private val scheduleViewModel: ScheduleFormViewModel, private val schedulePosition: Int
+) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormPlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return FormPlaceViewHolder(ItemFormPlaceBinding.inflate(inflater, parent, false))
+        return FormPlaceViewHolder(ItemFormPlaceBinding.inflate(inflater, parent, false), scheduleViewModel, schedulePosition)
     }
 
     override fun onBindViewHolder(holder: FormPlaceViewHolder, position: Int) {
-        holder.bind(places[position])
+        holder.bind(places[position], position)
     }
 
     override fun getItemCount(): Int {
@@ -25,8 +29,11 @@ class FormPlaceAdapter(private val places : MutableList<FormPlace>) : RecyclerVi
         places.add(addedPlace)
     }
 
-    class FormPlaceViewHolder(private val binding: ItemFormPlaceBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(place : FormPlace) {
+    class FormPlaceViewHolder(
+        private val binding: ItemFormPlaceBinding, private val scheduleViewModel: ScheduleFormViewModel,
+        private val schedulePosition: Int
+        ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(place : FormPlace, placePosition: Int) {
             // to do : 이미지 url -> Glide
             // binding.imageViewFPlaceThumbnail
              binding.textViewFPlaceAddr.text = place.placeAddress
@@ -39,6 +46,11 @@ class FormPlaceAdapter(private val places : MutableList<FormPlace>) : RecyclerVi
                     4 -> binding.iconFPlaceInfantFamily.visibility = View.VISIBLE
                     5 -> binding.iconFPlaceElderlyPeople.visibility = View.VISIBLE
                 }
+            }
+            binding.imageButtonFPlaceRemove.setOnClickListener {
+                // viewModel에서 해당 place 제거
+                scheduleViewModel.removePlace(schedulePosition, placePosition)
+
             }
         }
 

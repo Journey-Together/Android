@@ -110,7 +110,7 @@
             </LinearLayout>
 
             <ImageButton
-                android:id="@+id/imageButton"
+                android:id="@+id/imageButtonFPlaceRemove"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small2"

@@ -1,13 +1,17 @@
 package kr.tekit.lion.daongil.presentation.scheduleform
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityScheduleFormBinding
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class ScheduleFormActivity : AppCompatActivity() {
+    private val scheduleFormViewModel : ScheduleFormViewModel by viewModels()
+
     private val binding: ActivityScheduleFormBinding by lazy {
         ActivityScheduleFormBinding.inflate(layoutInflater)
     }

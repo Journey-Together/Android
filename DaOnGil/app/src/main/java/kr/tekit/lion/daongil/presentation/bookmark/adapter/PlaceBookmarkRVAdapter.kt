@@ -31,7 +31,6 @@ class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>,
 
             val bookmarkDisabilityRVAdapter = bookmarkDisabilityRVAdapter(disabilityList)
             binding.recyclerViewLocationBookmark.adapter = bookmarkDisabilityRVAdapter
-            binding.recyclerViewLocationBookmark.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 }

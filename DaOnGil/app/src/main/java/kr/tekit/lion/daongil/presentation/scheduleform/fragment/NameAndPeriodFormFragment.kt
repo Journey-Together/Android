@@ -9,11 +9,13 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_form) {
+class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_form), ConfirmDialogInterface {
     // activity의 뷰모델
     private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
 
@@ -29,11 +31,14 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
     private fun proceedToNext(binding: FragmentNameAndPeriodFormBinding){
         binding.apply {
             buttonNPFNextStep.setOnClickListener {
-                scheduleFormViewModel.setTitle(editTextNPFName.text.toString())
+                val isNameAndPeriodValidate = validateScheduleNameAndPeriod(this)
+                if(isNameAndPeriodValidate){
+                    scheduleFormViewModel.setTitle(editTextNPFName.text.toString())
 
-                val navController = findNavController()
-                val action = NameAndPeriodFormFragmentDirections.actionNameAndPeriodFormFragmentToScheduleDetailsFormFragment()
-                navController.navigate(action)
+                    val navController = findNavController()
+                    val action = NameAndPeriodFormFragmentDirections.actionNameAndPeriodFormFragmentToScheduleDetailsFormFragment()
+                    navController.navigate(action)
+                }
             }
         }
     }
@@ -74,4 +79,38 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
         binding.buttonNPFSetPeriod.text =
             getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
     }
+
+    private fun validateScheduleNameAndPeriod(binding: FragmentNameAndPeriodFormBinding) : Boolean{
+        val tempName = binding.editTextNPFName.text.toString()
+
+        if(tempName.isEmpty()){
+            displayValidationDialog("제목 입력 안내", "최소 1글자 이상 입력해주세요.")
+            return false
+        }
+        if(tempName.length > 15){
+            displayValidationDialog("제목 입력 안내", "제목은 15글자 이하로 입력해주세요.")
+            return false
+        }
+        val tempStartDate = scheduleFormViewModel.startDate.value
+
+        if(tempStartDate == null){
+            displayValidationDialog("여행 기간 안내", "여행 기간 설정하기 버튼을 눌러 여행 기간을 설정해주세요")
+            return false
+        }
+
+        return true
+    }
+    private fun displayValidationDialog(title:String, subTitle:String, ){
+        val dialog = ConfirmDialog(
+            this,
+            title,
+            subTitle,
+            getString(R.string.confirm),
+            R.color.primary,
+            R.color.text_primary)
+        dialog.isCancelable = false
+        dialog.show(activity?.supportFragmentManager!!, "ScheduleLoginDialog")
+    }
+
+    override fun onPosBtnClick() { }
 }

@@ -12,4 +12,5 @@
     <string name="result_empty">검색 결과가 없어요.\n다른 검색어를 입력해주세요.</string>
     <string name="add_new_schedule">새로운 일정추가</string>
     <string name="search_places_to_add">여행지 검색</string>
+    <string name="confirm">확인</string>
 </resources>

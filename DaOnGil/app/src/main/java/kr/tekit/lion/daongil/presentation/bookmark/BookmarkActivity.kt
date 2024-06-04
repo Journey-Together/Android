@@ -67,7 +67,6 @@ class BookmarkActivity : AppCompatActivity() {
 
         val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
             placeBookmarkList,
-            this,
             itemClickListener = { }
         )
         binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter

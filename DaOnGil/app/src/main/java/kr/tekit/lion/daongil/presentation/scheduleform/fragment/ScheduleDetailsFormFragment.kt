@@ -3,41 +3,59 @@ package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleDetailsFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormScheduleAdapter
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 
 class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_form) {
-    val args: ScheduleDetailsFormFragmentArgs by navArgs()
+    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentScheduleDetailsFormBinding.bind(view)
 
-        val title = args.title
-        val startDate = args.startDate
-        val endDate = args.endDate
+        if(scheduleFormViewModel.schedule.value.isNullOrEmpty()){
+            initView(binding)
+        }else{ // 이미 데이터가 존재하는 경우 - smartCast가 되지 않고 있는데, 혹시 !!를 대체할 방법이 있는지?
+            settingScheduleFormAdapter(binding, scheduleFormViewModel.schedule.value!!)
+        }
 
-        val days = getSchedulePeriod(startDate, endDate)
-        val dailyScheduleList = initScheduleList(startDate, days)
+        // observe data - 데이터가 변경되면 리사이클러뷰를 갱신시켜준다.
+        scheduleFormViewModel.schedule.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+            binding.recyclerViewDF.adapter?.notifyDataSetChanged()
+        })
+    }
 
-        settingScheduleFormAdapter(binding, dailyScheduleList)
+    private fun initView(binding:FragmentScheduleDetailsFormBinding){
+        val startDate = scheduleFormViewModel.startDate.value
+        val endDate = scheduleFormViewModel.endDate.value
+        if(startDate!=null && endDate!=null){
+            val days = getSchedulePeriod(startDate, endDate)
+            val dailyScheduleList = initScheduleList(startDate, days)
+            scheduleFormViewModel.setSchedule(dailyScheduleList)
+
+            scheduleFormViewModel.schedule.value?.let {
+                settingScheduleFormAdapter(binding, it )
+            }
+        }
     }
 
     private fun settingScheduleFormAdapter(
-        binding: FragmentScheduleDetailsFormBinding, dailyScheduleList: List<DailySchedule>
+        binding: FragmentScheduleDetailsFormBinding, dailyScheduleList: List<DailySchedule>,
     ) {
-        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), findNavController())
+        val navController = findNavController()
+        binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), navController )
         binding.recyclerViewDF.layoutManager = LinearLayoutManager(requireActivity())
     }
 

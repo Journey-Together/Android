@@ -29,8 +29,8 @@ class FormPlaceAdapter(private val places : MutableList<FormPlace>) : RecyclerVi
         fun bind(place : FormPlace) {
             // to do : 이미지 url -> Glide
             // binding.imageViewFPlaceThumbnail
-            // binding.textViewFPlaceAddr.text = place.placeAddress
-            // binding.textViewFPlaceName.text = place.placeName
+             binding.textViewFPlaceAddr.text = place.placeAddress
+             binding.textViewFPlaceName.text = place.placeName
             place.placeDisability.forEach {
                 when(it){
                     1 -> binding.iconFPlacePhysicalDisability.visibility = View.VISIBLE

@@ -19,6 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.myreview.MyReviewActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.myinfo.DeleteUserActivity"
             android:exported="true" />
         <activity
@@ -62,6 +65,7 @@
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="true" />
+      
     </application>
 
 </manifest>

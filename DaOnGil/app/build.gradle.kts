@@ -88,4 +88,6 @@ dependencies {
 
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
 
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
 }

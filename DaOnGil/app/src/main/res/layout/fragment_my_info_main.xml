@@ -219,7 +219,8 @@
                 android:id="@+id/layoutSetting"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/navi_background">
+                android:background="@color/navi_background"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"

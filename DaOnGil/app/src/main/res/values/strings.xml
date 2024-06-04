@@ -13,4 +13,6 @@
     <string name="add_new_schedule">새로운 일정추가</string>
     <string name="search_places_to_add">여행지 검색</string>
     <string name="confirm">확인</string>
+    <string name="save">저장하기</string>
+    <string name="inform_add_places">여행지를 추가해주세요</string>
 </resources>

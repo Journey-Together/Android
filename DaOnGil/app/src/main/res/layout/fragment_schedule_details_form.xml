@@ -7,9 +7,10 @@
     android:fillViewport="true"
     tools:context=".presentation.scheduleform.fragment.ScheduleDetailsFormFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textViewDFTitle"
@@ -18,25 +19,21 @@
             android:layout_marginStart="@dimen/margin_basic"
             android:layout_marginTop="@dimen/margin_big3"
             android:fontFamily="@font/pretendard_bold"
-            android:text="여행지를 추가해주세요"
-            android:textSize="@dimen/font_big1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="@string/inform_add_places"
+            android:textSize="@dimen/font_big1" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewDF"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big3"
+            android:layout_weight="1"
             android:nestedScrollingEnabled="false"
-            android:overScrollMode="never"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewDFTitle" />
+            android:overScrollMode="never" />
 
         <Button
             android:id="@+id/buttonDFAddPlace"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
             android:layout_marginTop="@dimen/margin_big1"
@@ -44,11 +41,7 @@
             android:layout_marginBottom="@dimen/margin_basic"
             android:background="@drawable/background_radius_10"
             android:fontFamily="@font/pretendard_bold"
-            android:text="저장하기"
-            android:textSize="@dimen/font_big2"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewDF" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:text="@string/save"
+            android:textSize="@dimen/font_big2" />
+    </LinearLayout>
 </androidx.core.widget.NestedScrollView>

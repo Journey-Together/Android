@@ -28,10 +28,27 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
+import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 
 class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
+
+    // 더미 data
+    val emergencyBottomList: List<EmergencyBottom> = listOf(
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" ),
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" ),
+        EmergencyBottom(null, "서울아산병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test1" ),
+        EmergencyBottom(null, "연세세브란스","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test2" ),
+        EmergencyBottom(null, "성모병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test3" ),
+        EmergencyBottom(null, "서울대병원","2.1km", "서울 송파구 올림픽로43길 88 서울아산병원", "1588-5647","응급실 병상 21 / 25", "emergency", "test4" )
+    )
 
     private val binding: ActivityEmergencyMapBinding by lazy {
         ActivityEmergencyMapBinding.inflate(layoutInflater)
@@ -81,13 +98,12 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         initMap()
 
         initBottomSheet()
+        actionBottomSheet()
     }
     private fun initBottomSheet() {
+        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet, emergencyBottomList)
+        emergencyBottomSheet.setRecyclerView()
 
-        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet)
-        emergencyBottomSheet.testClick()
-
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
 
         val observer = object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -112,6 +128,10 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         binding.emergencyMapAreaButton.viewTreeObserver.addOnGlobalLayoutListener(observer)
+    }
+
+    private fun actionBottomSheet() {
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
 
         bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {

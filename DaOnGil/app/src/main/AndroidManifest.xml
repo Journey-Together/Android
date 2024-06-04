@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -20,6 +21,9 @@
         <activity
             android:name=".presentation.myreview.MyReviewActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.myinfo.DeleteUserActivity"
+            android:exported="true" />
         <activity
             android:name=".presentation.concerntype.ConcernTypeActivity"
             android:exported="false" />
@@ -60,8 +64,8 @@
 
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="true"/>
-
+            android:exported="true" />
+      
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
 import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.myinfo.DeleteUserActivity
 import kr.tekit.lion.daongil.presentation.myinfo.MyInfoActivity
 import kr.tekit.lion.daongil.presentation.myreview.MyReviewActivity
 
@@ -27,6 +28,10 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
 
         initView(binding)
         changeStatusBarColor()
+
+        with(binding){
+            layoutDelete.setOnClickListener {  moveDeleteUser(binding)  }
+        }
     }
 
     private fun initView(binding: FragmentMyInfoMainBinding) {
@@ -81,6 +86,13 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun moveMyReview(binding: FragmentMyInfoMainBinding) {
         binding.layoutMyReview.setOnClickListener {
             val intent = Intent(requireActivity(), MyReviewActivity::class.java)
+            startActivity(intent)
+        }
+    }
+    
+    private fun moveDeleteUser(binding: FragmentMyInfoMainBinding) {
+        binding.layoutDelete.setOnClickListener {
+            val intent = Intent(requireActivity(), DeleteUserActivity::class.java)
             startActivity(intent)
         }
     }

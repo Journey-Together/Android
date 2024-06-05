@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.data.network
 import android.util.Log
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
+import kr.tekit.lion.daongil.data.network.service.LoginService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,6 +43,8 @@ object RetrofitInstance {
             .build()
             .create()
     }
+
+
 
     val placeService: PlaceService by lazy {
         Retrofit.Builder()

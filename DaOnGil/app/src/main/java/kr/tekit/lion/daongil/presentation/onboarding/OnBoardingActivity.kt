@@ -23,8 +23,6 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val fragments = listOf(
-            OnBoardingFirstFragment(),
-            OnBoardingSecondFragment(),
             OnBoardingLastFragment()
         )
 

@@ -15,6 +15,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.naver.maps.geometry.LatLng
@@ -32,6 +33,7 @@ import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
 import kr.tekit.lion.daongil.presentation.ext.Permissions.LOCATION_PERMISSION_REQUEST_CODE
 import kr.tekit.lion.daongil.presentation.ext.Permissions.REQUEST_LOCATION_PERMISSIONS
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
+import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
 import kr.tekit.lion.daongil.presentation.main.vm.Category
@@ -97,11 +99,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.physicalDisabilityOptions.collect { options ->
-                    btnPhysicalDisability.setOnClickListener {
+                    btnPhysicalDisability.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.PhysicalDisability)
                     }
 
-                    chipPhysicalDisability.setOnClickListener {
+                    chipPhysicalDisability.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.PhysicalDisability)
                     }
 
@@ -118,11 +120,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.visualImpairmentOptions.collect { options ->
-                    btnVisualImpairment.setOnClickListener {
+                    btnVisualImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.VisualImpairment)
                     }
 
-                    chipVisualImpairment.setOnClickListener {
+                    chipVisualImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.VisualImpairment)
                     }
 
@@ -140,11 +142,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.hearingImpairmentOptions.collect { options ->
-                    btnHearingImpairment.setOnClickListener {
+                    btnHearingImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.HearingImpairment)
                     }
 
-                    chipHearingImpairment.setOnClickListener {
+                    chipHearingImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.HearingImpairment)
                     }
 
@@ -161,11 +163,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.infantFamilyOptions.collect { options ->
-                    btnInfantFamily.setOnClickListener {
+                    btnInfantFamily.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.InfantFamily)
                     }
 
-                    chipInfantFamilly.setOnClickListener {
+                    chipInfantFamilly.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.InfantFamily)
                     }
 
@@ -182,11 +184,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.elderlyPersonOptions.collect { options ->
-                    btnElderlyPeople.setOnClickListener {
+                    btnElderlyPeople.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.ElderlyPeople)
                     }
 
-                    chipElderlyPeople.setOnClickListener {
+                    chipElderlyPeople.setClickEvent(viewLifecycleOwner.lifecycleScope) {
                         showBottomSheet(options, Category.ElderlyPeople)
                     }
 

@@ -9,8 +9,9 @@ import okhttp3.Route
 import java.net.PasswordAuthentication
 import java.net.URL
 
-class TokenRefreshAuthenticator(): Authenticator {
+class TokenRefreshAuthenticator : Authenticator {
     override fun authenticate(route: Route?, response: Response): Request? {
+
         val accessToken = response.request.header("Authorization")
             ?.split(" ")
             ?.getOrNull(1)
@@ -20,15 +21,15 @@ class TokenRefreshAuthenticator(): Authenticator {
 
         val api = RetrofitInstance.placeService
 
-        synchronized(this) {
-            if (accessToken == AuthManager.accessToken) {
-                val authTokenResponse =
-                    api.refreshToken(AuthManager.refreshToken!!).execute().body()!!
-
-                AuthManager.accessToken = authTokenResponse.accessToken
-                AuthManager.refreshToken = authTokenResponse.refreshToken
-            }
-        }
+//        synchronized(this) {
+//            if (accessToken == AuthManager.accessToken) {
+//                val authTokenResponse =
+//                    api.refreshToken(AuthManager.refreshToken!!).execute().body()!!
+//
+//                AuthManager.accessToken = authTokenResponse.accessToken
+//                AuthManager.refreshToken = authTokenResponse.refreshToken
+//            }
+//        }
 
         return response.request.newBuilder()
             .header("Authorization", "Bearer ${AuthManager.accessToken}")

@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,6 +7,12 @@ plugins {
     id ("kotlin-kapt")
     id ("androidx.navigation.safeargs.kotlin")
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
+val kakaoApiKey = properties.getProperty("kakaoApiKey")?:""
+val nativeAppKey = properties.getProperty("nativeAppKey")?:""
+
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -18,6 +26,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // buildConfigField 메서드를 올바르게 호출합니다.
+        buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+
+        //manifest에서 사용
+        manifestPlaceholders["NATIVE_APP_KEY"] = nativeAppKey
     }
 
     kapt {
@@ -44,6 +58,9 @@ android {
     }
     viewBinding {
         enable = true
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -83,4 +100,7 @@ dependencies {
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.7.3")
 
     implementation("com.google.android.gms:play-services-location:21.2.0")
+
+    implementation("com.kakao.sdk:v2-all:2.20.1") // 전체 모듈 설치, 2.11.0 버전부터 지원
+    implementation("com.kakao.sdk:v2-user:2.20.1") // 카카오 로그인 API
 }

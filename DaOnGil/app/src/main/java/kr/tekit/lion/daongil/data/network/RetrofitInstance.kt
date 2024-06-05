@@ -26,6 +26,8 @@ object RetrofitInstance {
                     .build()
                 chain.proceed(request)
             }
+            .authenticator(TokenRefreshAuthenticator())
+            .addInterceptor(AuthInterceptor())
             .addInterceptor(HttpLoggingInterceptor{
                 Log.d("MyOkHttpLog", it)
             }.setLevel(HttpLoggingInterceptor.Level.BODY))

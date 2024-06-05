@@ -9,7 +9,8 @@ interface PlaceService {
     @GET("v1/place/{placeId}")
     suspend fun getPlaceDetailInfo(
         @Path("placeId") placeId: Long,
-        @Header("Authorization") accessToken: String = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ5ZW9uODYyMUBuYXZlci5jb20iLCJyb2xlIjoiR0VORVJBTCIsImlhdCI6MTcxNzQ5ODI4NCwiZXhwIjoxNzE4MTAzMDg0fQ.UuIE8SgYky-PdMZL_quKf0Uk4k6JvLsOQYc08E73UFU"
-
+        @Header("Authorization") authorization: String
     ): DetailPlaceResponse
+
+
 }

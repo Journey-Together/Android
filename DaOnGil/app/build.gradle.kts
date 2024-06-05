@@ -10,8 +10,12 @@ plugins {
 
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
-val kakaoApiKey = properties.getProperty("kakaoApiKey")?:""
-val nativeAppKey = properties.getProperty("nativeAppKey")?:""
+val baseUrl = properties.getProperty("base_url")?:""
+val kakaoApiKey = properties.getProperty("kakao_api_key")?:""
+val kakaoNativeKey = properties.getProperty("kakao_native_key")?:""
+val naverMapBase = properties.getProperty("naver_map_base")?:""
+val naverMapId = properties.getProperty("naver_map_id")?:""
+val naverMapSecret = properties.getProperty("naver_map_secret")?:""
 
 
 android {
@@ -28,10 +32,24 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // buildConfigField 메서드를 올바르게 호출합니다.
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
         buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+        buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
+        buildConfigField("String", "NAVER_MAP_BASE", "\"$naverMapBase\"")
+        buildConfigField("String", "NAVER_MAP_ID", "\"$naverMapId\"")
+        buildConfigField("String", "NAVER_MAP_SECRET", "\"$naverMapSecret\"")
 
         //manifest에서 사용
-        manifestPlaceholders["NATIVE_APP_KEY"] = nativeAppKey
+        /*manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""
+        manifestPlaceholders["NAVER_MAP_ID"] =  "\"$naverMapId\""
+        manifestPlaceholders.put("NAVER_MAP_ID", naverMapId)
+        manifestPlaceholders.put("KAKAO_NATIVE_KEY",  kakaoNativeKey)*/
+
+        manifestPlaceholders.apply {
+            put("KAKAO_NATIVE_KEY", kakaoNativeKey)
+            put("NAVER_MAP_ID", naverMapId)
+        }
+
     }
 
     kapt {
@@ -41,8 +59,16 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            isMinifyEnabled = false
+            /*manifestPlaceholders["NAVER_MAP_ID"] = "\"$naverMapId\""
+            manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""*/
+        }
         release {
             isMinifyEnabled = false
+            /*manifestPlaceholders["NAVER_MAP_ID"] = "\"$naverMapId\""
+            manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""*/
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

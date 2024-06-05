@@ -60,4 +60,19 @@
     <string name="text_emergency_pharmacy">약국 찾기</string>
     <string name="text_emergency_pharmacy_first">필요한 상비약을</string>
     <string name="text_emergency_pharmacy_second">구입해 보세요</string>
+
+
+    <string name="text_my_schedule">나의 일정</string>
+    <string name="text_public_schedule">공개 일정</string>
+    <string name="text_leave_schedule_review"><u>후기/만족도 남기기 ＞</u></string>
+    <string name="text_schedule_review">후기</string>
+    <string name="text_schedule_satisfaction">일정 만족도</string>
+    <string name="text_schedule_report_review">신고하기</string>
+    <string name="text_schedule_weather">예상 날씨</string>
+    <string name="text_schedule_full">전체 일정</string>
+    <string name="text_schedule_d_day">D-%d</string>
+    <string name="text_schedule_period">%s - %s</string>
+
+
+
 </resources>

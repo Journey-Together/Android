@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
+import kr.tekit.lion.daongil.presentation.bookmark.BookmarkActivity
 import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.myinfo.DeleteUserActivity
 import kr.tekit.lion.daongil.presentation.myinfo.MyInfoActivity
+import kr.tekit.lion.daongil.presentation.myreview.MyReviewActivity
 
 class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDialogInterface {
 
@@ -35,6 +38,9 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                 moveMyInfo(binding)
                 logoutDialog(binding)
                 moveConcernType(binding)
+                moveBookmark(binding)
+                moveMyReview(binding)
+                moveDeleteUser(binding)
             }
         } else {
             with(binding) {
@@ -76,6 +82,27 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         }
     }
 
+    private fun moveBookmark(binding: FragmentMyInfoMainBinding) {
+        binding.layoutBookmark.setOnClickListener {
+            val intent = Intent(requireActivity(), BookmarkActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun moveMyReview(binding: FragmentMyInfoMainBinding) {
+        binding.layoutMyReview.setOnClickListener {
+            val intent = Intent(requireActivity(), MyReviewActivity::class.java)
+            startActivity(intent)
+        }
+    }
+    
+    private fun moveDeleteUser(binding: FragmentMyInfoMainBinding) {
+        binding.layoutDelete.setOnClickListener {
+            val intent = Intent(requireActivity(), DeleteUserActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
     private fun logoutDialog(binding: FragmentMyInfoMainBinding) {
         binding.layoutLogout.setOnClickListener {
             val dialog = ConfirmDialog(
@@ -86,7 +113,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                 R.color.button_tertiary,
                 R.color.white)
             dialog.isCancelable = false
-            dialog.show(activity?.supportFragmentManager!!, "MyPageDialog")
+            dialog.show(requireActivity().supportFragmentManager, "MyPageDialog")
         }
     }
 

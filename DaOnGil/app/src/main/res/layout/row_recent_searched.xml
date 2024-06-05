@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:src="@drawable/search_icon"
         />
 
     <TextView
@@ -22,7 +23,7 @@
         android:layout_gravity="center"
         android:textSize="18sp"
         android:layout_weight="10"
-        android:layout_marginStart="8dp" />
+        android:layout_marginStart="@dimen/margin_small1" />
 
     <ImageButton
         android:id="@+id/image_button_delete"
@@ -31,6 +32,6 @@
         android:backgroundTint="@android:color/transparent"
         android:layout_weight="1"
         android:layout_gravity="end"
-        android:src="@drawable/ic_close_18px" />
+        android:src="@drawable/x_button_icon" />
 
 </LinearLayout>

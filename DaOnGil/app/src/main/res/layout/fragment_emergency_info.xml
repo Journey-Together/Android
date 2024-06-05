@@ -169,7 +169,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="#008000" />
+                    android:backgroundTint="@color/emergency_green" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -187,7 +187,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="#FFFF00" />
+                    android:backgroundTint="@color/emergency_yellow" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -205,7 +205,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="#FF0000" />
+                    android:backgroundTint="@color/emergency_red" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -245,7 +245,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="180dp"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="#FFFF00"
+                    android:backgroundTint="@color/emergency_yellow"
                     android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -295,7 +295,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="180dp"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="#008000"
+                    android:backgroundTint="@color/emergency_green"
                     android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

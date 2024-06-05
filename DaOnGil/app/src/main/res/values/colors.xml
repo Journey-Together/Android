@@ -46,6 +46,7 @@
     <color name="total_cnt">#FF4949</color>
     <color name="maker_overlay">#FFF0B1</color>
 
+    <color name="search_view">#E8E8E8</color>
 
     <color name="category_bottom_sheet_background">#F5F5F5</color>
 
@@ -64,4 +65,10 @@
 
     <color name="button_tertiary">#C92A2A</color>
 
+    <color name="emergency_green">#008000</color>
+    <color name="emergency_red">#FF0000</color>
+    <color name="emergency_yellow">#FFFF00</color>
+
+    <color name="emergency_color">#F49494</color>
+    <color name="pharmcy_color">#F8B60B</color>
 </resources>

@@ -42,6 +42,7 @@
     <color name="maker_overlay">#666666</color>
 
     <color name="category_bottom_sheet_background">#262626</color>
+    <color name="search_view">#363635</color>
 
     <!-- 플로팅버튼 배경색 (지도보기, 목록보기, 일정 추가하기)-->
     <color name="fab_background">#BCBAB5</color>
@@ -57,4 +58,7 @@
     <color name="profile_background_endColor">#FFE216</color>
 
     <color name="button_tertiary">#C92A2A</color>
+
+    <color name="emergency_color">#26A6A6</color>
+    <color name="pharmcy_color">#2B59D1</color>
 </resources>

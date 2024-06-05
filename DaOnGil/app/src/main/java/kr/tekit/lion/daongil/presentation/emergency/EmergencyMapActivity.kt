@@ -29,8 +29,10 @@ import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyAreaDialog
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
+import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 
 class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -102,6 +104,16 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         initBottomSheet()
         actionBottomSheet()
         setBottomRecylcerView(emergencyBottomList)
+        settingDialog()
+    }
+
+    private fun settingDialog() {
+        val dialog = EmergencyAreaDialog()
+
+        binding.emergencyMapAreaButton.setOnClickListener {
+            dialog.show(this.supportFragmentManager, "EmergencyAreaDialog")
+        }
+
     }
 
     private fun setBottomRecylcerView(emergencyBottomList: List<EmergencyBottom>){

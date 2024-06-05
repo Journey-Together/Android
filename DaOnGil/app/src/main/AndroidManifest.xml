@@ -58,10 +58,6 @@
             android:name=".presentation.login.LoginActivity"
             android:exported="false" />
 
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="s1kt0zadqe" />
-
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="true">
@@ -82,13 +78,14 @@
 
                 <data
                     android:host="oauth"
-                    android:scheme="kakao775fd03d3abd4e0e83b3df4d7ea313bc" />
+                    android:scheme="${KAKAO_NATIVE_KEY}" />
+
             </intent-filter>
         </activity>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="s1kt0zadqe" />
+            android:value="${NAVER_MAP_ID}" />
 
     </application>
 

@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -13,6 +14,7 @@ import kr.tekit.lion.daongil.HighThemeApp
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
 import kr.tekit.lion.daongil.domain.model.Tourist
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeRecommendRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeVPAdapter
@@ -20,7 +22,7 @@ import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
-class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
+class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVAdapter.OnRecommendClickListener {
     private val timer = Timer()
     private val handler = Handler(Looper.getMainLooper())
     private val app = HighThemeApp.getInstance()
@@ -90,7 +92,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
             Tourist("서울 종로구", "세종문화회관", null, listOf("physical_disability", "visual_impairment", "infant_family"))
             )
 
-        val homeRecommendRVAdapter = HomeRecommendRVAdapter(touristList, requireContext())
+        val homeRecommendRVAdapter = HomeRecommendRVAdapter(touristList, requireContext(), this)
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
         binding.homeRecommendRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
@@ -123,5 +125,10 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
                 requireActivity().recreate()
             }
         }
+    }
+
+    override fun onRecommendClicked(tourist: Tourist) {
+        val intent = Intent(context, DetailActivity::class.java)
+        startActivity(intent)
     }
 }

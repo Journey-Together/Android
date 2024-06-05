@@ -6,6 +6,7 @@ plugins {
     id ("kotlin-parcelize")
     id ("kotlin-kapt")
     id ("androidx.navigation.safeargs.kotlin")
+    id ("kotlinx-serialization")
 }
 
 val properties = Properties()
@@ -102,7 +103,7 @@ dependencies {
 
     implementation ("me.relex:circleindicator:2.1.6")
 
-    implementation("com.google.android.gms:play-services-location:21.2.0")
+    implementation("com.google.android.gms:play-services-location:21.3.0")
 
     implementation("com.kakao.sdk:v2-all:2.20.1") // 전체 모듈 설치, 2.11.0 버전부터 지원
     implementation("com.kakao.sdk:v2-user:2.20.1") // 카카오 로그인 API
@@ -110,5 +111,9 @@ dependencies {
     implementation ("com.github.ome450901:SimpleRatingBar:1.5.1")
     implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.28")
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
+
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 }

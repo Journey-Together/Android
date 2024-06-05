@@ -44,9 +44,7 @@ object RetrofitInstance {
             .create()
     }
 
-
-
-    val placeService: PlaceService by lazy {
+    val DaOnGilService: PlaceService by lazy {
         Retrofit.Builder()
             .baseUrl("http://13.124.100.238/")
             .addConverterFactory(MoshiConverterFactory.create().asLenient())

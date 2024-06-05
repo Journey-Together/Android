@@ -105,10 +105,11 @@
                         android:textSize="@dimen/font_big2" />
 
                     <TextView
+                        android:id="@+id/textViewAddSchedule"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/margin_small1"
+                        android:padding="@dimen/margin_small1"
                         android:text="@string/add_schedule"
                         android:textColor="@color/text_quaternary"
                         android:textSize="@dimen/font_small2" />

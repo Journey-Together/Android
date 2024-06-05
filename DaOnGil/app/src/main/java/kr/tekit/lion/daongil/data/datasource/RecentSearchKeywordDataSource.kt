@@ -11,8 +11,8 @@ class RecentSearchKeywordDataSource(
         return recentSearchKeywordDao.readAllKeyword()
     }
 
-    suspend fun addRecentSearchKeyword(keywordEntity: RecentSearchKeywordEntity){
-        recentSearchKeywordDao.insertKeyword(keywordEntity)
+    suspend fun addRecentSearchKeyword(keyword: String){
+        recentSearchKeywordDao.insertKeyword(RecentSearchKeywordEntity(keyword))
     }
 
     suspend fun removeAllRecentSearchKeyword(){

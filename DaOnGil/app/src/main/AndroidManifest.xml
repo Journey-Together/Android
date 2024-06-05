@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".HighThemeApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,6 +19,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.home.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.bookmark.BookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myreview.MyReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myinfo.DeleteUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.concerntype.ConcernTypeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myinfo.MyInfoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.scheduleform.ScheduleFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.emergency.EmergencyInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.emergency.EmergencyMapActivity"
             android:exported="false" />
         <activity
@@ -24,7 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.search.SearchActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="false" />
@@ -59,6 +85,14 @@
                     android:scheme="kakao775fd03d3abd4e0e83b3df4d7ea313bc" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="s1kt0zadqe" />
+
+        <activity
+            android:name=".presentation.main.MainActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

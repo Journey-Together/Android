@@ -22,7 +22,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small1"
-            android:text="다온, 길"
             style="@style/Theme.Toolbar.Main.Title"/>
 
     </com.google.android.material.appbar.MaterialToolbar>
@@ -38,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pretendard_bold"
-            android:text="내 주변 응급 지원 찾기"
+            android:text="@string/text_emergency_main"
             android:paddingStart="17dp"
             android:layout_marginTop="29dp"
             android:textColor="@color/text_secondary"
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big4"
             android:fontFamily="@font/pretendard_regular"
-            android:text="어떤 정보를 찾으시나요?"
+            android:text="@string/text_emergency_second"
             android:paddingStart="17dp"
             android:textColor="@color/text_secondary"
             android:textSize="@dimen/font_big3" />
@@ -81,7 +80,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="응급실 / 제세동기 찾기"
+                    android:text="@string/text_emergency_aed"
                     android:layout_gravity="center"
                     android:textColor="@color/text_secondary"
                     android:fontFamily="@font/pretendard_medium"
@@ -90,7 +89,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="여행 중 갑자기 아프다면,"
+                    android:text="@string/text_emergency_aed_first"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small1"
                     android:textColor="@color/text_tertiary"
@@ -100,7 +99,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="내 근처 병원을 빠르게 방문해보세요"
+                    android:text="@string/text_emergency_aed_second"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small2"
                     android:layout_marginBottom="@dimen/margin_basic"
@@ -139,7 +138,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="근처 약국 찾기"
+                    android:text="@string/text_emergency_pharmacy"
                     android:layout_gravity="center"
                     android:textColor="@color/text_secondary"
                     android:fontFamily="@font/pretendard_medium"
@@ -148,7 +147,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="필요한 상비약을"
+                    android:text="@string/text_emergency_pharmacy_first"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small1"
                     android:textColor="@color/text_tertiary"
@@ -158,7 +157,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="구입해 보세요"
+                    android:text="@string/text_emergency_pharmacy_second"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/margin_small2"
                     android:layout_marginBottom="@dimen/margin_basic"

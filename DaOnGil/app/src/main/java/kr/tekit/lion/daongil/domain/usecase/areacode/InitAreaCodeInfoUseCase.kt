@@ -16,9 +16,6 @@ class InitAreaCodeInfoUseCase(
 
         val detailCodes = areaCodes.map { getAllDetailAreaCodeUseCase(it.code) }
 
-        detailCodes.mapIndexed { idx, detailCode ->
-            addVillageCodeUseCase(areaCodes[idx].code, detailCode)
-        }
-
+        detailCodes.map { addVillageCodeUseCase(it) }
     }
 }

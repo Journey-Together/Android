@@ -20,10 +20,6 @@ class AreaCodeRepositoryImpl(
         return local.getAllAreaCodes().map { it.toDomainModel() }
     }
 
-    override suspend fun getDetailAreaCode(areaCode: String): List<AreaCode> {
-        return remote.getAreaInfoList(areaCode).toDomainModel()
-    }
-
     override suspend fun getAreaCodeInfo(): List<AreaCode> {
         return remote.getAreaInfoList().toDomainModel()
     }

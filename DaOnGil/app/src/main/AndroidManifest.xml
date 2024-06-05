@@ -90,9 +90,6 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="s1kt0zadqe" />
 
-        <activity
-            android:name=".presentation.main.MainActivity"
-            android:exported="true" />
     </application>
 
 </manifest>

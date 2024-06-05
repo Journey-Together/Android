@@ -57,7 +57,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
                     navigateToSelectInterestFragment()
                 }
 
@@ -85,7 +84,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
                 } else if (token != null) {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
                         navigateToSelectInterestFragment()
                     }
 

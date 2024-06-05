@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+
 class HighThemeApp : Application() {
     init {
         instance = this
@@ -10,7 +11,6 @@ class HighThemeApp : Application() {
 
     companion object {
         private var instance : HighThemeApp? = null
-        lateinit var prefs: TokenManager
 
         fun context(): Context {
             return instance!!.applicationContext
@@ -48,34 +48,27 @@ class HighThemeApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        prefs = TokenManager(applicationContext)
+        AuthManager.init(this)
     }
 }
 
-class TokenManager(context: Context) {
-    private val accessToken = context.getSharedPreferences("accessToken", Context.MODE_PRIVATE)
-    private val refreshToken = context.getSharedPreferences("refreshToken", Context.MODE_PRIVATE)
+object AuthManager {
+    const val ACCESS_TOKEN = "access_token"
+    const val REFRESH_TOKEN = "refresh_token"
 
-    private val prefs = context.getSharedPreferences("user_token", Context.MODE_PRIVATE)
+    lateinit var prefs: SharedPreferences
 
-    fun setAccessToken(token: String) {
-        accessToken.edit().putString("token", token).apply()
+    fun init(context: Context){
+        prefs = context.getSharedPreferences("auth", Context.MODE_PRIVATE)
     }
 
-    fun setRefreshToken(token: String) {
-        refreshToken.edit().putString("refreshToken", token).apply()
-    }
+    var accessToken: String?
+        get() = prefs.getString(ACCESS_TOKEN, null)
+        set(value) = prefs.edit().putString(ACCESS_TOKEN, value).apply()
 
-    fun getToken(): Pair<String, String>{
-        val accessToken = prefs.getString("accessToken", "") ?: ""
-        val refreshToken = prefs.getString("refreshToken", "") ?: ""
-        return Pair(accessToken, refreshToken)
-    }
+    var refreshToken: String?
+        get() = prefs.getString(REFRESH_TOKEN, null)
+        set(value) = prefs.edit().putString(REFRESH_TOKEN, value).apply()
 
-    fun setToken(accessToken: String, refreshToken: String){
-        val editor = prefs.edit()
-        editor.putString(accessToken, accessToken).apply()
-        editor.putString(refreshToken, refreshToken).apply()
-        editor.apply()
-    }
+    fun clear() = prefs.edit().clear().apply()
 }

@@ -66,9 +66,10 @@
                     android:layout_marginStart="@dimen/margin_big3"
                     android:layout_marginBottom="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="@string/text_schedule_period"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toTopOf="@+id/indicatorScheduleImages"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="@string/text_schedule_period" />
 
                 <TextView
                     android:id="@+id/textViewScheduleName"
@@ -77,6 +78,7 @@
                     android:layout_marginStart="@dimen/margin_big3"
                     android:layout_marginBottom="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_bold"
+                    android:textColor="@color/white"
                     android:textSize="@dimen/font_big1"
                     app:layout_constraintBottom_toTopOf="@+id/textViewSchedulePeriod"
                     app:layout_constraintStart_toStartOf="parent"
@@ -90,6 +92,7 @@
                     android:layout_marginEnd="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_medium"
                     android:gravity="end"
+                    android:textColor="@color/white"
                     app:layout_constraintBottom_toBottomOf="@+id/textViewSchedulePeriod"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/textViewSchedulePeriod"
@@ -102,9 +105,10 @@
                     android:layout_marginTop="@dimen/margin_big3"
                     android:layout_marginEnd="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="@string/text_schedule_d_day"
+                    android:textColor="@color/white"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="@string/text_schedule_d_day" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -114,7 +118,7 @@
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big3"
                 android:text="@string/text_schedule_weather"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvScheduleWeather"
@@ -122,20 +126,23 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_big3"
                 android:layout_marginBottom="@dimen/margin_big2"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big3"
-                android:text="@string/text_schedule_full" />
+                android:text="@string/text_schedule_full"
+                android:textColor="@color/text_secondary" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvScheduleFullList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/margin_big3" />
+                android:layout_marginTop="@dimen/margin_big3"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewScheduleReview"
@@ -145,6 +152,7 @@
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginVertical="@dimen/margin_big1"
                 android:backgroundTint="@color/item_background"
+                android:visibility="visible"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="3dp">
 
@@ -157,9 +165,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_basic"
-                        android:layout_marginTop="@dimen/margin_big1"
+                        android:layout_marginTop="@dimen/margin_basic"
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/text_schedule_review"
+                        android:textColor="@color/text_secondary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -170,6 +179,7 @@
                         android:layout_marginHorizontal="@dimen/margin_basic"
                         android:layout_marginTop="@dimen/margin_big3"
                         android:fontFamily="@font/pretendard_regular"
+                        android:textColor="@color/text_primary"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewScheduleReview"
@@ -183,16 +193,18 @@
                         android:layout_marginTop="@dimen/margin_big1"
                         android:fontFamily="@font/pretendard_bold"
                         android:text="@string/text_schedule_satisfaction"
+                        android:textColor="@color/text_secondary"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textViewScheduleReviewContent" />
 
+                    <!--UI 통일 필요한 부분-->
                     <RatingBar
                         android:id="@+id/ratingBarScheduleSatisfaction"
                         style="@android:style/Widget.DeviceDefault.RatingBar.Indicator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_big3"
-                        android:layout_marginBottom="@dimen/margin_big1"
+                        android:layout_marginBottom="@dimen/margin_basic"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -204,6 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_basic"
                         android:background="@null"
+                        android:contentDescription="@string/text_manage_review"
                         android:paddingHorizontal="@dimen/margin_small1"
                         android:paddingVertical="@dimen/margin_small2"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewScheduleReview"
@@ -222,14 +235,14 @@
                         android:minWidth="0dip"
                         android:minHeight="0dip"
                         android:text="@string/text_schedule_report_review"
+                        android:textColor="@color/text_secondary"
                         android:textSize="@dimen/font_small3"
-                        android:visibility="gone"
+                        android:visibility="visible"
                         app:icon="@android:drawable/ic_dialog_alert"
                         app:iconGravity="textStart"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewScheduleReview"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/textViewScheduleReview"
-                        tools:textColor="@color/text_primary" />
+                        app:layout_constraintTop_toTopOf="@+id/textViewScheduleReview" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 

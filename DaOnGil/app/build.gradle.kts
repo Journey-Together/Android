@@ -14,6 +14,9 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 val kakaoApiKey = properties.getProperty("kakao_api_key") ?: ""
 val kakaoNativeKey = properties.getProperty("kakao_native_key") ?: ""
 val baseUrl = properties.getProperty("base_url") ?: ""
+val naverMapBase = properties.getProperty("naver_map_base")?:""
+val naverMapId = properties.getProperty("naver_map_id")?:""
+val naverMapSecret = properties.getProperty("naver_map_secret")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -29,12 +32,16 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         // buildConfigField 메서드를 올바르게 호출합니다.
+        buildConfigField("String", "NAVER_MAP_BASE", "\"$naverMapBase\"")
+        buildConfigField("String", "NAVER_MAP_ID", "\"$naverMapId\"")
+        buildConfigField("String", "NAVER_MAP_SECRET", "\"$naverMapSecret\"")
         buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
 
         //manifest에서 사용
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
+        manifestPlaceholders["NAVER_MAP_ID"] =  naverMapId
     }
 
     kapt {
@@ -44,6 +51,10 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            isMinifyEnabled = false
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
@@ -82,6 +93,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-moshi:2.11.0")
 
     implementation ("com.squareup.moshi:moshi:1.15.1")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
     kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
 

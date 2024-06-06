@@ -23,8 +23,6 @@ import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
 class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVAdapter.OnRecommendClickListener {
-    private val timer = Timer()
-    private val handler = Handler(Looper.getMainLooper())
     private val app = HighThemeApp.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,8 +68,11 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
     }
 
     private fun startAutoSlide(adpater : HomeVPAdapter, binding: FragmentHomeMainBinding) {
-        // 일정 간격으로 슬라이드 변경 (3초마다)
-        timer.scheduleAtFixedRate(5000, 5000) {
+        val timer = Timer()
+        val handler = Handler(Looper.getMainLooper())
+
+        // 일정 간격으로 슬라이드 변경 (4초마다)
+        timer.scheduleAtFixedRate(3000, 4000) {
             handler.post {
                 val nextItem = binding.homeVp.currentItem + 1
                 if (nextItem < adpater.itemCount) {

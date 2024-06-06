@@ -13,6 +13,7 @@
     <color name="text_tertiary">#949494</color>
     <color name="text_quaternary">#6E6E6E</color>
     <color name="text_quinary">#969390</color>
+    <color name="text_primary_reverse">#FFFFFF</color>
 
     <color name="button_secondary">#999999</color>
     <color name="toolbar_main_title">#969390</color>

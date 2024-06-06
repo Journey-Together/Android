@@ -76,5 +76,7 @@
     <string name="text_schedule_place_empty">해당 일자에 추가된 여행지가 없습니다</string>
     <string name="text_view_detail">상세보기</string>
     <string name="text_manage_review">후기 관리</string>
+    <string name="text_schedule_public">공개</string>
+    <string name="text_schedule_private">비공개</string>
 
 </resources>

@@ -106,6 +106,7 @@
                     android:layout_marginEnd="@dimen/margin_big3"
                     android:fontFamily="@font/pretendard_semibold"
                     android:textColor="@color/white"
+                    android:visibility="invisible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="@string/text_schedule_d_day" />
@@ -152,7 +153,7 @@
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginVertical="@dimen/margin_big1"
                 android:backgroundTint="@color/item_background"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:cardCornerRadius="5dp"
                 app:cardElevation="3dp">
 
@@ -219,6 +220,7 @@
                         android:contentDescription="@string/text_manage_review"
                         android:paddingHorizontal="@dimen/margin_small1"
                         android:paddingVertical="@dimen/margin_small2"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewScheduleReview"
                         app:layout_constraintEnd_toStartOf="@+id/buttonScheduleReportReview"
                         app:layout_constraintTop_toTopOf="@+id/textViewScheduleReview"
@@ -237,7 +239,7 @@
                         android:text="@string/text_schedule_report_review"
                         android:textColor="@color/text_secondary"
                         android:textSize="@dimen/font_small3"
-                        android:visibility="visible"
+                        android:visibility="gone"
                         app:icon="@android:drawable/ic_dialog_alert"
                         app:iconGravity="textStart"
                         app:layout_constraintBottom_toBottomOf="@+id/textViewScheduleReview"

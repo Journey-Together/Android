@@ -8,14 +8,14 @@ import retrofit2.http.Query
 import retrofit2.http.Tag
 
 interface AuthService {
-    @POST("sign-in")
+    @POST("auth/sign-in")
     suspend fun signIn(
         @Query("type") type: String,
         @Header("Authorization") token: String,
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): SignInResponse
 
-    @POST("sign-in")
+    @POST("auth/sign-in")
     suspend fun login(
         @Query("type") type: String,
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN

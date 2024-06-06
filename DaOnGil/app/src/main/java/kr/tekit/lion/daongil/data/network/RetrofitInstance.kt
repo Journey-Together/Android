@@ -1,8 +1,7 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
-import kr.tekit.lion.daongil.data.network.service.AuthService
-import kr.tekit.lion.daongil.data.network.service.PlaceService
+import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -37,21 +36,13 @@ object RetrofitInstance {
             .create()
     }
 
-    val placeService: PlaceService by lazy {
-        Retrofit.Builder()
-            .baseUrl("http://13.124.100.238/v1/place/")
-            .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(authClient)
-            .build()
-            .create()
-    }
+    private fun retrofitProvider(): Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(authClient)
+        .build()
 
-    val authService: AuthService by lazy {
-        Retrofit.Builder()
-            .baseUrl("http://13.124.100.238/v1/auth/")
-            .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(authClient)
-            .build()
-            .create()
+    fun <T> serviceProvider(apiService: Class<T>): T {
+        return retrofitProvider().create(apiService)
     }
 }

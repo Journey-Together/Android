@@ -40,8 +40,8 @@ android {
         buildConfigField("String", "NAVER_MAP_SECRET", "\"$naverMapSecret\"")
 
         //manifest에서 사용
-        /*manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""
-        manifestPlaceholders["NAVER_MAP_ID"] =  "\"$naverMapId\""
+        /*manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
+        manifestPlaceholders["NAVER_MAP_ID"] =  naverMapId
         manifestPlaceholders.put("NAVER_MAP_ID", naverMapId)
         manifestPlaceholders.put("KAKAO_NATIVE_KEY",  kakaoNativeKey)*/
 
@@ -62,13 +62,13 @@ android {
 
         debug {
             isMinifyEnabled = false
-            /*manifestPlaceholders["NAVER_MAP_ID"] = "\"$naverMapId\""
-            manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""*/
+            /*manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
+            manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey*/
         }
         release {
             isMinifyEnabled = false
-            /*manifestPlaceholders["NAVER_MAP_ID"] = "\"$naverMapId\""
-            manifestPlaceholders["KAKAO_NATIVE_KEY"] = "\"$kakaoNativeKey\""*/
+            /*manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
+            manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey*/
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -105,6 +105,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-moshi:2.11.0")
 
     implementation ("com.squareup.moshi:moshi:1.15.1")
+    implementation ("com.squareup.moshi:moshi-kotlin:1.15.1")
     kapt ("com.squareup.moshi:moshi-kotlin-codegen:1.15.1")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.10.0")
 

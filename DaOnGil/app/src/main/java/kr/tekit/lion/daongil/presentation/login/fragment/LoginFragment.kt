@@ -45,9 +45,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun kakaoLogin() {
         val TAG = "test2345"
-        val apiKey = BuildConfig.KAKAO_API_KEY
-
-        KakaoSdk.init(requireContext(), apiKey)
 
         // 카카오계정으로 로그인 공통 callback 구성
         // 카카오톡으로 로그인 할 수 없어 카카오계정으로 로그인할 경우 사용됨

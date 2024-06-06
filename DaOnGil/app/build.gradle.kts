@@ -11,9 +11,9 @@ plugins {
 
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
-val kakaoApiKey = properties.getProperty("kakaoApiKey")?:""
-val nativeAppKey = properties.getProperty("nativeAppKey")?:""
-
+val kakaoApiKey = properties.getProperty("kakao_api_key") ?: ""
+val kakaoNativeKey = properties.getProperty("kakao_native_key") ?: ""
+val baseUrl = properties.getProperty("base_url") ?: ""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -30,9 +30,11 @@ android {
 
         // buildConfigField 메서드를 올바르게 호출합니다.
         buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+        buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
 
         //manifest에서 사용
-        manifestPlaceholders["NATIVE_APP_KEY"] = nativeAppKey
+        manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
     }
 
     kapt {
@@ -115,5 +117,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
     implementation("androidx.datastore:datastore-preferences:1.1.1")
+
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
 }

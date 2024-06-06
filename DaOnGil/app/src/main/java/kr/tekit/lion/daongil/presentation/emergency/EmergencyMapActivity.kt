@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.emergency
 
 import android.Manifest
+import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
@@ -14,7 +15,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
-import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -28,9 +28,7 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyAreaDialog
@@ -38,7 +36,6 @@ import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomShee
 import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModel
 import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModelFactory
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
-import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 
 class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -213,7 +210,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
-        mapFragment.getMapAsync(this)
+       mapFragment.getMapAsync(this)
     }
 
     // 네이버맵 불러오기가 완료되면 콜백
@@ -238,40 +235,10 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
         } else {
             permissionGrantedMapUiSetting()
-
-            // 사용자 현재 위치 받아오기
-            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                val latitude = location?.latitude ?: 35.1798159
-                val longitude = location?.longitude ?: 129.0750222
-                val coords = "$longitude" + "," + "$latitude"
-
-                viewModel.getuserLocationRegion(coords)
-
-                /*lifecycleScope.launch {
-                    viewModel.getuserLocationRegion(coords)
-                }*/
-
-                // 위치 오버레이의 가시성은 기본적으로 false로 지정되어 있습니다. 가시성을 true로 변경하면 지도에 위치 오버레이가 나타납니다.
-                // 파랑색 점, 현재 위치 표시
-                with(naverMap.locationOverlay) {
-                    isVisible = true
-                    position = LatLng(latitude, longitude)
-                }
-
-                // 카메라 현재 위치로 이동
-                val cameraUpdate = CameraUpdate.scrollTo(
-                    LatLng(
-                        latitude,
-                        longitude
-                    )
-                )
-                naverMap.moveCamera(cameraUpdate)
-            }
         }
         val mapType = intent.getStringExtra("mapType").toString()
         addMaker(mapType)
     }
-
     private fun permissionGrantedMapUiSetting() {
         with(naverMap) {
             setMapType(this)
@@ -286,6 +253,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (mode) {
                     "None" -> locationTrackingMode = LocationTrackingMode.Follow
                     "Follow", "NoFollow" -> {
+
+                        setUserLocation()
+
                         // 현재 위치 버튼을 눌렀을 때 카메라가 줌이 너무 작아지는걸 방지
                         if (currentLocation != null) {
                             val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
@@ -344,6 +314,49 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 // 현위치 버튼
                 isLocationButtonEnabled = true
+            }
+        }
+    }
+
+    private fun setUserLocation(){
+        if (ActivityCompat.checkSelfPermission(
+                this@EmergencyMapActivity,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this@EmergencyMapActivity,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
+        } else {
+
+            // 사용자 현재 위치 받아오기
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                val latitude = location?.latitude ?: 35.1798159
+                val longitude = location?.longitude ?: 129.0750222
+                val coords = "$longitude" + "," + "$latitude"
+
+                viewModel.getuserLocationRegion(coords)
+
+                /*lifecycleScope.launch {
+                    viewModel.getuserLocationRegion(coords)
+                }*/
+
+                // 위치 오버레이의 가시성은 기본적으로 false로 지정되어 있습니다. 가시성을 true로 변경하면 지도에 위치 오버레이가 나타납니다.
+                // 파랑색 점, 현재 위치 표시
+                with(naverMap.locationOverlay) {
+                    isVisible = true
+                    position = LatLng(latitude, longitude)
+                }
+
+                // 카메라 현재 위치로 이동
+                val cameraUpdate = CameraUpdate.scrollTo(
+                    LatLng(
+                        latitude,
+                        longitude
+                    )
+                )
+                naverMap.moveCamera(cameraUpdate)
             }
         }
     }

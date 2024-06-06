@@ -78,7 +78,7 @@
 
                 <data
                     android:host="oauth"
-                    android:scheme="${KAKAO_NATIVE_KEY}" />
+                    android:scheme="kakao775fd03d3abd4e0e83b3df4d7ea313bc" />
 
             </intent-filter>
         </activity>

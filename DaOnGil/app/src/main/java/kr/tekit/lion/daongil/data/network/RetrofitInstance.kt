@@ -68,7 +68,7 @@ object RetrofitInstance {
 
     val placeService: PlaceService by lazy {
         Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("http://13.124.100.238/")
             .addConverterFactory(MoshiConverterFactory.create().asLenient())
             .client(headerClient)
             .build()

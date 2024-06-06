@@ -24,16 +24,6 @@ class EmergencyMapViewModel(
         addSource(areaDetail) { value = combineAreaAndDetail(area.value, areaDetail.value) }
     }
 
-    /*fun getuserLocationRegion(coords: String){
-        viewModelScope.launch {
-            getUserLocationRegionUseCase(coords).onSuccess {
-                if(it.code == 0){
-                    setArea(it.results[0].area, it.results[0].areaDetail)
-                }
-            }
-        }
-    }*/
-
     fun getuserLocationRegion(coords: String) =
         viewModelScope.launch {
             getUserLocationRegionUseCase(coords).onSuccess {

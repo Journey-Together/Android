@@ -50,7 +50,6 @@ class HighThemeApp : Application() {
         super.onCreate()
         instance = this
         AuthManager.init(this)
-        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
     }
 }
 

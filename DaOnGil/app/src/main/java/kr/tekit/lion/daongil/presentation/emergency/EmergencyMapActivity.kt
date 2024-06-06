@@ -28,7 +28,9 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
+import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyAreaDialog
@@ -241,6 +243,13 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 val latitude = location?.latitude ?: 35.1798159
                 val longitude = location?.longitude ?: 129.0750222
+                val coords = "$longitude" + "," + "$latitude"
+
+                viewModel.getuserLocationRegion(coords)
+
+                /*lifecycleScope.launch {
+                    viewModel.getuserLocationRegion(coords)
+                }*/
 
                 // 위치 오버레이의 가시성은 기본적으로 false로 지정되어 있습니다. 가시성을 true로 변경하면 지도에 위치 오버레이가 나타납니다.
                 // 파랑색 점, 현재 위치 표시

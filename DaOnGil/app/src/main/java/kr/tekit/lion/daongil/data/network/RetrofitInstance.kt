@@ -14,7 +14,6 @@ import retrofit2.create
 
 
 object RetrofitInstance {
-
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor ()
@@ -22,15 +21,9 @@ object RetrofitInstance {
             .build()
     }
 
-    private val headerClient: OkHttpClient by lazy {
+    private val authClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Content-Type", "application/json")
-                    .build()
-                chain.proceed(request)
-            }
-            .authenticator(TokenRefreshAuthenticator())
+            //.authenticator(AuthAuthenticator())
             .addInterceptor(AuthInterceptor())
             .addInterceptor(HttpLoggingInterceptor{
                 Log.d("MyOkHttpLog", it)
@@ -62,15 +55,14 @@ object RetrofitInstance {
             .create()
     }
 
+    private fun retrofitProvider(): Retrofit = Retrofit.Builder()
+        .baseUrl(BuildConfig.BASE_URL)
+        .addConverterFactory(MoshiConverterFactory.create())
+        .client(authClient)
+        .build()
 
-
-    val placeService: PlaceService by lazy {
-        Retrofit.Builder()
-            .baseUrl("http://13.124.100.238/")
-            .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(headerClient)
-            .build()
-            .create()
+    fun <T> serviceProvider(apiService: Class<T>): T {
+        return retrofitProvider().create(apiService)
     }
 
 

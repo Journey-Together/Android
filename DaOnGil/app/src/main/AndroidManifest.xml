@@ -56,7 +56,7 @@
             android:exported="false" />
         <activity
             android:name=".presentation.login.LoginActivity"
-            android:exported="false" />
+            android:exported="true" />
 
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
@@ -64,10 +64,8 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -78,7 +76,7 @@
 
                 <data
                     android:host="oauth"
-                    android:scheme="kakao775fd03d3abd4e0e83b3df4d7ea313bc" />
+                    android:scheme="${KAKAO_NATIVE_KEY}" />
 
             </intent-filter>
         </activity>
@@ -86,7 +84,6 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="${NAVER_MAP_ID}" />
-
     </application>
 
 </manifest>

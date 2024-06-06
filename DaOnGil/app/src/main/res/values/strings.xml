@@ -78,5 +78,7 @@
     <string name="text_manage_review">후기 관리</string>
     <string name="text_schedule_public">공개</string>
     <string name="text_schedule_private">비공개</string>
+    <string name="text_schedule_menu">메뉴</string>
+    <string name="text_schedule_bookmark">북마크</string>
 
 </resources>

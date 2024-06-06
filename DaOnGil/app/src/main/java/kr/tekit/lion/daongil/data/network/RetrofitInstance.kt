@@ -1,9 +1,9 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
+import kr.tekit.lion.daongil.data.network.service.AuthService
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
-import kr.tekit.lion.daongil.data.network.service.LoginService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +11,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
 
 object RetrofitInstance {
-
     private val okHttpClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor ()
@@ -19,15 +18,9 @@ object RetrofitInstance {
             .build()
     }
 
-    private val headerClient: OkHttpClient by lazy {
+    private val authClient: OkHttpClient by lazy {
         OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                val request = chain.request().newBuilder()
-                    .addHeader("Content-Type", "application/json")
-                    .build()
-                chain.proceed(request)
-            }
-            .authenticator(TokenRefreshAuthenticator())
+            //.authenticator(AuthAuthenticator())
             .addInterceptor(AuthInterceptor())
             .addInterceptor(HttpLoggingInterceptor{
                 Log.d("MyOkHttpLog", it)
@@ -44,11 +37,20 @@ object RetrofitInstance {
             .create()
     }
 
-    val DaOnGilService: PlaceService by lazy {
+    val placeService: PlaceService by lazy {
         Retrofit.Builder()
-            .baseUrl("http://13.124.100.238/")
+            .baseUrl("http://13.124.100.238/v1/place/")
             .addConverterFactory(MoshiConverterFactory.create().asLenient())
-            .client(headerClient)
+            .client(authClient)
+            .build()
+            .create()
+    }
+
+    val authService: AuthService by lazy {
+        Retrofit.Builder()
+            .baseUrl("http://13.124.100.238/v1/auth/")
+            .addConverterFactory(MoshiConverterFactory.create().asLenient())
+            .client(authClient)
             .build()
             .create()
     }

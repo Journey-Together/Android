@@ -1,36 +1,36 @@
 package kr.tekit.lion.daongil.presentation.login.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.databinding.FragmentLoginBinding
-import kr.tekit.lion.daongil.presentation.login.LoginActivity
+import kr.tekit.lion.daongil.presentation.login.vm.LoginViewModel
+import kr.tekit.lion.daongil.presentation.login.vm.LoginViewModelFactory
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
+    private val viewModel: LoginViewModel by viewModels{ LoginViewModelFactory(requireContext()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentLoginBinding.bind(view)
+
+        viewModel.myInfo.observe(viewLifecycleOwner){
+            Log.d("MyInfoData", it.toString())
+        }
+
         initView(binding)
     }
 
@@ -40,13 +40,26 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             kakaoLoginButton.setOnClickListener {
                 kakaoLogin()
             }
+
+            naverLoginButton.setOnClickListener {
+                UserApiClient.instance.unlink { error->
+                    if (error != null) {
+                        Toast.makeText(requireActivity(), "회원 탈퇴 실패 $error", Toast.LENGTH_SHORT).show()
+                    }else {
+                        Toast.makeText(requireActivity(), "회원 탈퇴 성공", Toast.LENGTH_SHORT).show()
+
+                    }
+                }
+            }
         }
     }
 
     private fun kakaoLogin() {
-        val TAG = "test2345"
-        val apiKey = BuildConfig.KAKAO_API_KEY
+        val TAG = "test12345"
+        //val apiKey = BuildConfig.KAKAO_API_KEY
+        val apiKey = "775fd03d3abd4e0e83b3df4d7ea313bc"
 
+        Log.d(TAG, apiKey)
         KakaoSdk.init(requireContext(), apiKey)
 
         // 카카오계정으로 로그인 공통 callback 구성
@@ -57,8 +70,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
-                    navigateToSelectInterestFragment()
+                    viewModel.onCompleteSignIn("KAKAO", "Bearer ${token.accessToken}")
+                    //navigateToSelectInterestFragment()
                 }
 
                 Log.i(TAG, "카카오계정으로 로그인 성공 ${token.accessToken}")
@@ -77,7 +90,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
                         return@loginWithKakaoTalk
                     }
-
                     // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
                     UserApiClient.instance.loginWithKakaoAccount(
                         requireContext(),
@@ -85,21 +97,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
                 } else if (token != null) {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
-                        navigateToSelectInterestFragment()
+                        viewModel.onCompleteSignIn("KAKAO", "Bearer ${token.accessToken}")
+                        //navigateToSelectInterestFragment()
                     }
-
                     Log.i(TAG, "카카오톡으로 로그인 성공 ${token.accessToken}")
-
-                    // 로그인한 사용자 정보를 가져온다.
-                    // 이 때 accessToken 을 카카오 서버로 전달해야하는데 알아서 전달해준다.
-                    UserApiClient.instance.me { user, error ->
-                        if (error != null) {
-                            Log.e(TAG, "사용자 정보를 가져오는데 실패하였습니다", error)
-                        } else if (user != null) {
-
-                        }
-                    }
                 }
             }
         } else {

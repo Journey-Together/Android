@@ -45,6 +45,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun kakaoLogin() {
         val TAG = "test2345"
+
         val apiKey = BuildConfig.KAKAO_API_KEY
 
         KakaoSdk.init(requireContext(), apiKey)

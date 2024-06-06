@@ -1,14 +1,17 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
+import com.squareup.moshi.Moshi
+import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
-import kr.tekit.lion.daongil.data.network.service.LoginService
+import kr.tekit.lion.daongil.data.network.service.NaverMapService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+
 
 object RetrofitInstance {
 
@@ -35,6 +38,21 @@ object RetrofitInstance {
             .build()
     }
 
+    private val naverMapClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("X-NCP-APIGW-API-KEY-ID", BuildConfig.NAVER_MAP_ID)
+                    .addHeader("X-NCP-APIGW-API-KEY", BuildConfig.NAVER_MAP_SECRET)
+                    .build()
+                chain.proceed(request)
+            }
+            .addInterceptor(HttpLoggingInterceptor{
+                Log.d("MyOkHttpLog", it)
+            }.setLevel(HttpLoggingInterceptor.Level.BODY))
+            .build()
+    }
+
     val korWithService: KorWithService by lazy {
         Retrofit.Builder()
             .baseUrl("https://apis.data.go.kr/B551011/KorWithService1/")
@@ -54,4 +72,18 @@ object RetrofitInstance {
             .build()
             .create()
     }
+
+
+
+    val naverMapService: NaverMapService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.NAVER_MAP_BASE)
+            .addConverterFactory(MoshiConverterFactory.create(
+                Moshi.Builder()
+                .build()))
+            .client(naverMapClient)
+            .build()
+            .create(NaverMapService::class.java)
+    }
+
 }

@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="@+id/item_detail_review_profile_iv" />
 
     <com.willy.ratingbar.BaseRatingBar
-        android:id="@+id/RatingBarTrade"
+        android:id="@+id/item_detail_review_ratingbar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small1"

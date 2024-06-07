@@ -1,8 +1,8 @@
 package kr.tekit.lion.daongil.domain.model
 
 data class ReviewDetail (
-    var nickname: String,
-    var content : String,
-    var date : String,
-    var imageList : List<String>
+    val nickname: String,
+    val content : String,
+    val date : String,
+    val imageList : List<String>
 )

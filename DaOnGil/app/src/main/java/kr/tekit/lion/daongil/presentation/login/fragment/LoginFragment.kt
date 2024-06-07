@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.presentation.login.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -133,7 +134,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
             override fun onSuccess(result: NidProfileResponse) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    navigateToSelectInterestFragment()
                     Log.d(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
                 }
             }

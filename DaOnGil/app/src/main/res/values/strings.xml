@@ -97,5 +97,6 @@
     <string name="text_report_privacy_exposure">개인정보 노출</string>
     <string name="text_report_other">기타</string>
     <string name="text_report_cancel">취소</string>
+    <string name="text_report_submitted">신고가 접수되었습니다.</string>
 
 </resources>

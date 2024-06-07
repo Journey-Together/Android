@@ -44,7 +44,7 @@ class ReviewReportDialog(private val onReviewReportReasonListener: (Int) -> Unit
                     Snackbar.make(
                         binding.root,
                         "신고 사유를 선택해주세요 ",
-                        Snackbar.LENGTH_LONG
+                        Snackbar.LENGTH_SHORT
                     )
                         .setBackgroundTint(
                             ContextCompat.getColor(

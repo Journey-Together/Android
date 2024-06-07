@@ -98,8 +98,8 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
         setContentView(binding.root)
 
-        initView(schedule)
-        settingScheduleAdapter(schedule)
+        initView(schedule2)
+        settingScheduleAdapter(schedule2)
     }
 
     private fun initView(scheduleDetail: ScheduleDetail) {
@@ -224,6 +224,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
                         val reviewReportDialog = ReviewReportDialog { reasonType ->
                             // TO DO -> 서버에 신고 내용 접수
                             // 리뷰 idx : scheduleDetail.reviewIdx. 신고 사유: reasonType (Int/String)
+                            showSnackBar(binding.toolbarViewSchedule, R.string.text_report_submitted)
                         }
                         reviewReportDialog.isCancelable = false
                         reviewReportDialog.show(supportFragmentManager, "ModeSettingDialog")
@@ -261,15 +262,13 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
     }
 
     private fun showScheduleManageBottomSheet(isPublic: Boolean) {
-        Log.d("test1234", "showScheduleManageBottomSheet : $isPublic")
         ScheduleManageBottomSheet(isPublic) {
             // 공개/비공개 상태 Toggle Listener
             // 공개 -> 비공개
-            Log.d("test1234", "ScheduleManageBottomSheet : $isPublic")
             if (isPublic) {
-                Log.d("test1234", "showSnackBar : $isPublic")
                 // TO DO - 서버에 비공개 상태로 변경 요청
                 // TO DO - isPublic 값 업데이트 (이건 어떤 식으로 관리하면 좋을지.. 데이터 연결 후 살펴볼 것)
+                binding.textViewScheduleType.text = getString(R.string.text_schedule_private)
                 showSnackBar(
                     binding.cardViewScheduleReview,
                     R.string.text_schedule_changed_to_private
@@ -279,6 +278,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
             else {
                 // TO DO - 서버에 공개 상태로 변경 요청
                 // TO DO - isPublic 값 업데이트 (이건 어떤 식으로 관리하면 좋을지.. 데이터 연결 후 살펴볼 것)
+                binding.textViewScheduleType.text = getString(R.string.text_schedule_public)
                 showSnackBar(
                     binding.cardViewScheduleReview,
                     R.string.text_schedule_changed_to_public

@@ -21,11 +21,13 @@ class OnBoardingLastFragment : Fragment(R.layout.fragment_on_boarding_last) {
         binding.onBoardingStartButton.setOnClickListener {
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
 
         binding.onBoardingLoginTextView.setOnClickListener {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 }

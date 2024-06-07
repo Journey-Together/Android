@@ -61,6 +61,7 @@ class SelectInterestFragment : Fragment(R.layout.fragment_select_interest) {
                 putExtra("selectedInterest", ArrayList(selectedInterests))
             }
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 

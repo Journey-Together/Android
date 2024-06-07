@@ -21,7 +21,7 @@
             style="@style/Theme.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="후기 모아보기" />
+            android:text="후기" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 

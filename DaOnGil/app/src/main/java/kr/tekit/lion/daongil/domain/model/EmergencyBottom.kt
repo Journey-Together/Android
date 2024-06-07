@@ -1,12 +1,8 @@
 package kr.tekit.lion.daongil.domain.model
 
 data class EmergencyBottom(
-    val emergencyImage: String?,
-    val emergencyName: String,
-    val emergencyDistance: String?,
-    val emergencyAddress: String,
-    val emergencyCall: String,
-    val emergencyBed: String?,
+    val emergencyList: EmergencyMapInfo,
     val emergencyType: String,
     val emergencyId: String,
+    // 약국이랑 aed list도 추가
 )

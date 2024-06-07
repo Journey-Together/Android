@@ -12,7 +12,7 @@ class EmergencyBottomSheet(
 
    private val emergencyBottomadapter: EmergencyBottomAdapter by lazy {
       EmergencyBottomAdapter(emergencyBottomList,
-         itemClickListener = { id ->
+         itemClickListener = { id, item ->
             Log.d("testId", id)
          }
       )
@@ -21,6 +21,7 @@ class EmergencyBottomSheet(
    fun setRecyclerView(){
       with(binding){
          emergencyBottomRv.adapter = emergencyBottomadapter
+         emergencyBottomadapter.notifyDataSetChanged()
       }
    }
 

@@ -1,8 +1,11 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
+import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kr.tekit.lion.daongil.BuildConfig
+import kr.tekit.lion.daongil.data.dto.remote.response.emergency.realtime.EmergencyRealtimeJsonAdapter
+import kr.tekit.lion.daongil.data.network.service.EmergencyService
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import kr.tekit.lion.daongil.data.network.service.NaverMapService
@@ -77,5 +80,20 @@ object RetrofitInstance {
             .build()
             .create(NaverMapService::class.java)
     }
+
+    private val emergencyMoshi = Moshi.Builder()
+        .add(EmergencyRealtimeJsonAdapter())
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    val emergencyService: EmergencyService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.EMERGENCY_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(emergencyMoshi))
+            .client(okHttpClient)
+            .build()
+            .create(EmergencyService::class.java)
+    }
+
 
 }

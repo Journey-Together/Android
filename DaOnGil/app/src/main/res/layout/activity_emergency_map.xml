@@ -27,12 +27,21 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/emergencyMapProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/primary"
+            android:progress="20"
+            app:trackColor="@color/background_color"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/emergencyMapAreaButton"
@@ -67,7 +76,6 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="서울특별시 중구"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 

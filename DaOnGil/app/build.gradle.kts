@@ -20,6 +20,8 @@ val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
 val naverClientId = properties.getProperty("naverClientId") ?: ""
 val naverClientSecret = properties.getProperty("naverClientSecret") ?: ""
 val naverClientName = properties.getProperty("naverClientName") ?: ""
+val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
+val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -39,6 +41,8 @@ android {
         buildConfigField("String", "NAVER_MAP_ID", "\"$naverMapId\"")
         buildConfigField("String", "NAVER_MAP_SECRET", "\"$naverMapSecret\"")
         buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+        buildConfigField("String", "EMERGENCY_BASE_URL", "\"$emergencyBaseUrl\"")
+        buildConfigField("String", "EMERGENCY_API_KEY", "\"$emergencyApiKey\"")
         buildConfigField("String", "NAVER_CLIENT_ID", "\"$naverClientId\"")
         buildConfigField("String", "NAVER_CLIENT_SECRET", "\"$naverClientSecret\"")
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")

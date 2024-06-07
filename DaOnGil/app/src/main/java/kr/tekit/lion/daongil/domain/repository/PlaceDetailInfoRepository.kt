@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.domain.repository
 
 import kr.tekit.lion.daongil.data.datasource.PlaceDetailInfoDataSource
 import kr.tekit.lion.daongil.data.network.RetrofitInstance
+import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.repository.PlaceDetailInfoRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
 
@@ -12,7 +13,7 @@ interface PlaceDetailInfoRepository {
         fun crate(): PlaceDetailInfoRepositoryImpl{
             return PlaceDetailInfoRepositoryImpl(
                 PlaceDetailInfoDataSource(
-                    RetrofitInstance.placeService
+                    RetrofitInstance.serviceProvider(PlaceService::class.java)
                 )
             )
         }

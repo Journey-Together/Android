@@ -57,5 +57,10 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, ReviewListActivity::class.java)
             startActivity(intent)
         }
+
+        binding.detailReviewBtn.setOnClickListener {
+            val intent = Intent(this, WriteReviewActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

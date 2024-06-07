@@ -18,14 +18,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginHorizontal="@dimen/margin_basic">
+        android:orientation="vertical" >
 
         <TextView
             android:id="@+id/loginTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="90dp"
+            android:layout_marginStart="@dimen/margin_basic"
             android:fontFamily="@font/cafe24_oneprettynight"
             android:textStyle="bold"
             android:textSize="28dp"
@@ -34,6 +34,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_basic"
             android:orientation="horizontal">
 
             <TextView
@@ -51,38 +52,41 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:src="@drawable/login_yellow_line" />
+                android:src="@drawable/login_yellow_line2" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageView
             android:id="@+id/kakaoLoginButton"
             android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="55dp"
-            android:layout_marginTop="270dp"
-            android:background="@drawable/image_button_login_kakao" />
+            android:layout_marginTop="300dp"
+            android:src="@drawable/kakao_login" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageView
             android:id="@+id/naverLoginButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center"
             android:layout_height="55dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/image_button_login_naver"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:src="@drawable/naver_login"
             android:fontFamily="@font/pretendard_semibold"
             android:textSize="@dimen/font_big2"
-            android:text="      네이버로 시작하기"
             android:textColor="@color/white"/>
 
         <TextView
             android:id="@+id/loginTextView3"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:fontFamily="@font/pretendard_medium"
             android:text="로그인에 문제가 있나요?"
             android:textAlignment="center"
             android:textSize="@dimen/font_big3"
             android:textColor="@color/text_tertiary"/>
-
 
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
@@ -17,6 +18,12 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import com.navercorp.nid.NaverIdLoginSDK
+import com.navercorp.nid.oauth.NidOAuthLogin
+import com.navercorp.nid.oauth.OAuthLoginCallback
+import com.navercorp.nid.profile.NidProfileCallback
+import com.navercorp.nid.profile.data.NidProfile
+import com.navercorp.nid.profile.data.NidProfileResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.BuildConfig
@@ -40,6 +47,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             kakaoLoginButton.setOnClickListener {
                 kakaoLogin()
             }
+
+            naverLoginButton.setOnClickListener {
+                naverInitialize()
+                naverLogin()
+            }
         }
     }
 
@@ -57,7 +69,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 Log.e(TAG, "카카오계정으로 로그인 실패", error)
             } else if (token != null) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
                     navigateToSelectInterestFragment()
                 }
 
@@ -85,7 +96,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
                 } else if (token != null) {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        RetrofitInstance.loginService.getUserInfo(token = "Bearer ${token.accessToken}", type = "KAKAO")
                         navigateToSelectInterestFragment()
                     }
 
@@ -107,9 +117,71 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         }
     }
 
+    private fun naverInitialize(){
+        val naverClientId = BuildConfig.NAVER_CLIENT_ID
+        val naverClientSecret = BuildConfig.NAVER_CLIENT_SECRET
+        val naverClientName = BuildConfig.NAVER_CLIENT_NAME
+        NaverIdLoginSDK.initialize(requireActivity(), naverClientId, naverClientSecret, naverClientName)
+    }
+
+    private fun naverLogin() {
+
+        val TAG = "test12345"
+
+        var naverToken: String? = ""
+
+
+        val profileCallback = object : NidProfileCallback<NidProfileResponse> {
+
+            override fun onSuccess(result: NidProfileResponse) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    navigateToSelectInterestFragment()
+                    Log.d(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
+                }
+            }
+
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+
+            override fun onFailure(httpStatus: Int, message: String) {
+                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                Log.d(TAG, "네이버 로그인 실패 : \"에러코드 : ${errorCode}\" + \"에러 이유 : ${errorDescription}\"")
+            }
+        }
+
+        val oauthLoginCallback = object : OAuthLoginCallback {
+
+            override fun onSuccess() {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    //로그인 유저 정보 가져오기
+                    NidOAuthLogin().callProfileApi(profileCallback)
+                    Log.d(
+                        TAG,
+                        "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}, ${NaverIdLoginSDK.getRefreshToken()}, ${
+                            NidOAuthLogin().callProfileApi(profileCallback)}"
+                    )
+                }
+            }
+
+            override fun onError(errorCode: Int, message: String) {
+                onFailure(errorCode, message)
+            }
+
+            override fun onFailure(httpStatus: Int, message: String) {
+                val errorCode = NaverIdLoginSDK.getLastErrorCode().code
+                val errorDescription = NaverIdLoginSDK.getLastErrorDescription()
+                Log.d(TAG, "네이버 로그인 실패 : \"에러코드 : ${errorCode}\" + \"에러 이유 : ${errorDescription}\"")
+            }
+        }
+        NaverIdLoginSDK.authenticate(requireActivity(), oauthLoginCallback)
+    }
+
     private fun navigateToSelectInterestFragment() {
         val navController = findNavController()
         val action = LoginFragmentDirections.actionLoginFragmentToSelectInterestFragment()
         navController.navigate(action)
     }
+
 }

@@ -3,80 +3,57 @@ package kr.tekit.lion.daongil.presentation.myinfo.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoBinding
+import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
+import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
+import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModelFactory
 
 class MyInfoFragment : Fragment(R.layout.fragment_my_info) {
-
-    private val isExistUserNumber = false
-    private val isExistIceInfo = false
+    private val viewModel: MyInfoViewModel by activityViewModels { MyInfoViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val binding = FragmentMyInfoBinding.bind(view)
 
-        initView(binding)
+        with(binding) {
+            toolbarMyInfo.setNavigationOnClickListener { requireActivity().finish() }
+
+            repeatOnViewStarted {
+                viewModel.myInfo.collect{
+                    tvName.text = it.name
+                    tvPhone.text = it.phone ?: "전화번호를 입력해주세요"
+                    tvBirth.text = it.birth ?: "생년월일을 입력해주세요"
+                    tvBloodType.text = it.bloodType ?: "혈액형을 입력해주세요"
+                    tvDisease.text = it.disease ?: "가지고 계신 질환을 입력해주세요"
+                    tvAllergy.text = it.allergy ?: "가지고 계신 알레르기 또는 질환을 입력해주세요"
+                    tvMedicine.text = it.medication ?: "투약중이신 약을 입력해주세요."
+                    tvRelation1.text = it.part1Rel ?: "관계"
+                    tvContact1.text = it.part1Phone ?: "긴급 연락처를 입력해주세요"
+                    tvRelation2.text = it.part2Rel ?: "관계"
+                    tvContact2.text = it.part2Phone ?: "긴급 연락처를 입력해주세요"
+                }
+            }
+        }
         movePersonalInfoModify(binding)
         moveIceModify(binding)
     }
 
-    private fun initView(binding: FragmentMyInfoBinding) {
-        with(binding) {
-            toolbarMyInfo.apply {
-                setNavigationIcon(R.drawable.back_icon)
-                setNavigationOnClickListener {
-                    requireActivity().finish()
-                }
-            }
-
-            if (isExistUserNumber) {
-                textViewMyInfoUserName.text = "김사자"
-                textViewMyInfoUserPhoneNumber.text = "010-1234-5678"
-                textViewMyInfoUserNickname.text = "다온길"
-            } else {
-                textViewMyInfoUserName.text = "김사자"
-                textViewMyInfoUserPhoneNumber.text = "전화번호를 입력해주세요"
-                textViewMyInfoUserNickname.text = "다온길"
-            }
-
-            if(isExistIceInfo) {
-                textViewMyInfoBirthday.text = "1999.12.31"
-                textViewMyInfoBloodType.text = "O+"
-                textViewMyInfoDisease.text = "없음"
-                textViewMyInfoAllergy.text = "없음"
-                textViewMyInfoMedicine.text = "없음"
-                textViewMyInfoRelation1.text = "엄마"
-                textViewMyInfoContact1.text = "010-4321-9876"
-                textViewMyInfoRelation2.text = "아빠"
-                textViewMyInfoContact2.text = "010-8520-3698"
-            } else {
-                textViewMyInfoBirthday.text = "생년월일을 입력해주세요"
-                textViewMyInfoBloodType.text = "혈액형을 입력해주세요"
-                textViewMyInfoDisease.text = "질환을 입력해주세요"
-                textViewMyInfoAllergy.text = "알레르기 및 부작용을 입력해주세요"
-                textViewMyInfoMedicine.text = "투여약을 입력해주세요"
-                textViewMyInfoRelation1.text = "긴급 연락처를 입력해주세요"
-                textViewMyInfoContact1.isVisible = false
-                layoutMyInfoRelation2.isVisible = false
-            }
-        }
-    }
 
     private fun movePersonalInfoModify(binding: FragmentMyInfoBinding) {
         with(binding) {
-            buttonPersonalInfoModify.setOnClickListener {
-                findNavController().navigate(R.id.action_myInfoFragment_to_personalInfoModifyFragment, null)
+            btnPersonalInfoModify.setOnClickListener {
+                findNavController().navigate(R.id.action_myInfoFragment_to_personalInfoModifyFragment)
             }
         }
     }
 
     private fun moveIceModify(binding: FragmentMyInfoBinding) {
         with(binding) {
-            buttonIceModify.setOnClickListener {
-                findNavController().navigate(R.id.action_myInfoFragment_to_iceModifyFragment, null)
+            bntIceModify.setOnClickListener {
+                findNavController().navigate(R.id.action_myInfoFragment_to_iceModifyFragment)
             }
         }
     }

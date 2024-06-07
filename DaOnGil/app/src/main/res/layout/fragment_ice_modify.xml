@@ -11,6 +11,7 @@
         android:id="@+id/toolbarIceModify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_icon"
         android:minHeight="?attr/actionBarSize"  >
 
         <TextView
@@ -53,7 +54,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldIceBirthday"
+                    android:id="@+id/tv_birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -81,7 +82,7 @@
                 app:hintEnabled="false">
 
                 <AutoCompleteTextView
-                    android:id="@+id/textFieldIceBloodType"
+                    android:id="@+id/tv_bloodType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -112,7 +113,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldIceDisease"
+                    android:id="@+id/tv_disease"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -140,7 +141,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldIceAllergy"
+                    android:id="@+id/tv_allergy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -168,7 +169,7 @@
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldIceMedicine"
+                    android:id="@+id/tv_medicine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -203,7 +204,7 @@
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldIceRelation1"
+                        android:id="@+id/tv_relation1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
@@ -214,7 +215,7 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/textInputLayoutContact1"
+                    android:id="@+id/tv_contact1_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -224,7 +225,7 @@
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldIceContact1"
+                        android:id="@+id/tv_contact1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
@@ -252,7 +253,7 @@
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldIceRelation2"
+                        android:id="@+id/tv_relation2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
@@ -274,7 +275,7 @@
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/textFieldIceContact2"
+                        android:id="@+id/tv_contact2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"

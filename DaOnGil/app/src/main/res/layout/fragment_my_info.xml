@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.myinfo.fragment.MyInfoFragment" >
+    tools:context=".presentation.myinfo.fragment.MyInfoFragment">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarMyInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize" >
+        app:navigationIcon="@drawable/back_icon"
+        android:minHeight="?attr/actionBarSize">
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +60,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/buttonPersonalInfoModify"
+                        android:id="@+id/btn_personal_info_modify"
                         android:layout_width="wrap_content"
                         android:layout_height="45dp"
                         android:background="@drawable/background_radius_50"
@@ -104,14 +105,6 @@
                             android:textColor="@color/text_secondary"
                             android:textSize="@dimen/font_big3" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/pretendard_semibold"
-                            android:text="닉네임"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/font_big3" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -121,33 +114,22 @@
                         android:orientation="vertical">
 
                         <TextView
-                            android:id="@+id/textViewMyInfoUserName"
+                            android:id="@+id/tv_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/margin_big4"
                             android:fontFamily="@font/pretendard_medium"
-                            android:text="이름"
                             android:textColor="@color/text_secondary"
                             android:textSize="@dimen/font_big3" />
 
                         <TextView
-                            android:id="@+id/textViewMyInfoUserPhoneNumber"
+                            android:id="@+id/tv_phone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/margin_big4"
                             android:fontFamily="@font/pretendard_medium"
-                            android:text="전화번호"
                             android:textColor="@color/text_secondary"
                             android:textSize="@dimen/font_big3" />
 
-                        <TextView
-                            android:id="@+id/textViewMyInfoUserNickname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/pretendard_medium"
-                            android:text="닉네임"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="@dimen/font_big3" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -185,9 +167,9 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/buttonIceModify"
+                        android:id="@+id/bnt_ice_modify"
                         android:layout_width="wrap_content"
-                        android:layout_height="45dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/background_radius_50"
                         android:fontFamily="@font/pretendard_semibold"
                         android:text="수정하기"
@@ -208,12 +190,11 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewMyInfoBirthday"
+                    android:id="@+id/tv_birth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="생년월일"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 
@@ -227,12 +208,11 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewMyInfoBloodType"
+                    android:id="@+id/tv_blood_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="혈액형"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 
@@ -246,12 +226,11 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewMyInfoDisease"
+                    android:id="@+id/tv_disease"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="질환"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 
@@ -265,12 +244,11 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewMyInfoAllergy"
+                    android:id="@+id/tv_allergy"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="알레르기 및 부작용"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 
@@ -284,12 +262,11 @@
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewMyInfoMedicine"
+                    android:id="@+id/tv_medicine"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="투여약"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 
@@ -309,7 +286,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewMyInfoRelation1"
+                        android:id="@+id/tv_relation1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -319,12 +296,11 @@
                         android:textSize="@dimen/font_big3" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoContact1"
+                        android:id="@+id/tv_contact1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_medium"
-                        android:text="연락처"
                         android:textColor="@color/text_secondary"
                         android:textSize="@dimen/font_small1" />
 
@@ -337,7 +313,7 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/textViewMyInfoRelation2"
+                        android:id="@+id/tv_relation2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
@@ -347,18 +323,15 @@
                         android:textSize="@dimen/font_big3" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoContact2"
+                        android:id="@+id/tv_contact2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:fontFamily="@font/pretendard_medium"
-                        android:text="연락처"
                         android:textColor="@color/text_secondary"
                         android:textSize="@dimen/font_small1" />
                 </LinearLayout>
-
             </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

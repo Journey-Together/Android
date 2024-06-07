@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
-import kr.tekit.lion.daongil.presentation.login.UiState
+import kr.tekit.lion.daongil.presentation.login.LogInState
 import kr.tekit.lion.daongil.presentation.login.vm.SplashViewModel
 import kr.tekit.lion.daongil.presentation.login.vm.SplashViewModelFactory
 import kr.tekit.lion.daongil.presentation.main.MainActivity
@@ -22,13 +22,13 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         repeatOnViewStarted {
             viewModel.uiState.collect{ state->
                 when(state){
-                    is UiState.LoggedIn ->{
+                    is LogInState.LoggedIn ->{
                         startActivity(Intent(requireContext(), MainActivity::class.java))
                     }
-                    is UiState.LoginRequired -> {
+                    is LogInState.LoginRequired -> {
                         Navigation.findNavController(view).navigate(R.id.to_loginFragment)
                     }
-                    is UiState.Checking -> {
+                    is LogInState.Checking -> {
                         return@collect
                     }
                 }

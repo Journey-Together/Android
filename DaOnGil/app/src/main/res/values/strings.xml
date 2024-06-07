@@ -80,5 +80,14 @@
     <string name="text_schedule_private">비공개</string>
     <string name="text_schedule_menu">메뉴</string>
     <string name="text_schedule_bookmark">북마크</string>
+    <string name="text_schedule_manage">여행 일정</string>
+    <string name="text_schedule_edit">수정하기</string>
+    <string name="text_schedule_delete">삭제하기</string>
+    <string name="text_schedule_make_public">일정 공개</string>
+    <string name="text_schedule_make_private">일정 비공개</string>
+    <string name="text_schedule_review_manage">여행 일정 후기</string>
+    <string name="text_schedule_changed_to_private">여행 일정이 비공개되었습니다.</string>
+    <string name="text_schedule_changed_to_public">여행 일정이 공개되었습니다.</string>
+    <string name="text_schedule_review_deleted">여행 일정 후기가 삭제되었습니다.</string>
 
 </resources>

@@ -51,31 +51,33 @@
         android:id="@+id/onBoardingThirdTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/cafe24_oneprettynight"
         android:text="누구든 떠날 자유 모두가 누릴 행복"
-        android:textSize="@dimen/font_big3"
         android:textColor="@color/text_primary"
-        app:layout_constraintBottom_toTopOf="@+id/onBoardingStartButton"
+        android:textSize="@dimen/font_big3"
         app:layout_constraintEnd_toEndOf="@+id/onBoardingSecondTextView"
         app:layout_constraintStart_toStartOf="@+id/onBoardingSecondTextView"
-        app:layout_constraintTop_toBottomOf="@+id/onBoardingSecondTextView"
-        app:layout_constraintVertical_bias="0.078" />
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingSecondTextView" />
 
     <Button
         android:id="@+id/onBoardingStartButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="140dp"
+        android:layout_height="52dp"
         android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginTop="@dimen/margin_basic"
         android:layout_marginEnd="@dimen/margin_basic"
+        android:layout_marginBottom="180dp"
         android:fontFamily="@font/pretendard_bold"
         android:text="시작하기"
-        android:textSize="@dimen/font_big2"
         android:textColor="@color/text_primary"
+        android:textSize="@dimen/font_big2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/onBoardingThirdTextView"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="@+id/onBoardingThirdTextView" />
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="@+id/onBoardingThirdTextView"
+        app:layout_constraintTop_toBottomOf="@+id/onBoardingThirdTextView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/onBoardingLoginTextView"

@@ -62,4 +62,7 @@
 
     <color name="emergency_color">#26A6A6</color>
     <color name="pharmcy_color">#2B59D1</color>
+
+    <color name="transparent">#00000000</color>
+
 </resources>

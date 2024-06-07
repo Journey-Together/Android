@@ -28,5 +28,4 @@
         android:name="kr.tekit.lion.daongil.presentation.login.fragment.SelectInterestFragment"
         android:label="fragment_select_interest"
         tools:layout="@layout/fragment_select_interest" />
-
 </navigation>

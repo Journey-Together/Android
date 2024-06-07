@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.emergency
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
@@ -15,10 +14,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
@@ -30,7 +32,9 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
+import kr.tekit.lion.daongil.databinding.FragmentConcernTypeModifyBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyAreaDialog
 import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
 import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModel
@@ -219,6 +223,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         this.naverMap = naverMap
 
+        naverMap.minZoom = 10.0
+        naverMap.maxZoom = 15.0
+
         naverMap.setOnMapClickListener { pointF, latLng ->
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
             setBottomRecylcerView(emergencyBottomList)
@@ -236,8 +243,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         } else {
             permissionGrantedMapUiSetting()
         }
-        val mapType = intent.getStringExtra("mapType").toString()
-        addMaker(mapType)
     }
     private fun permissionGrantedMapUiSetting() {
         with(naverMap) {
@@ -248,25 +253,14 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             naverMap.addOnOptionChangeListener {
                 val mode = naverMap.locationTrackingMode.name
-                val currentLocation = mLocationSource.lastLocation
 
                 when (mode) {
                     "None" -> locationTrackingMode = LocationTrackingMode.Follow
                     "Follow", "NoFollow" -> {
-
-                        setUserLocation()
-
-                        // 현재 위치 버튼을 눌렀을 때 카메라가 줌이 너무 작아지는걸 방지
-                        if (currentLocation != null) {
-                            val latLng = LatLng(currentLocation.latitude, currentLocation.longitude)
-                            val cameraPosition = CameraPosition(latLng, 14.0)
-
-                            naverMap.moveCamera(
-                                CameraUpdate.toCameraPosition(cameraPosition)
-                                    .animate(
-                                        com.naver.maps.map.CameraAnimation.Easing
-                                    )
-                            )
+                        val mapType = intent.getStringExtra("mapType").toString()
+                        if(mapType.equals("Emergency")){
+                            getEmergencyMapInfo()
+                            setEmergencyLocation()
                         }
                     }
                 }
@@ -274,12 +268,11 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             with(naverMap.locationOverlay) {
                 val color = getColor(R.color.maker_overlay)
-                circleRadius = 200
+                circleRadius = 100
                 // setAlphaComponent : 투명도 지정
                 // 0(완전 투명) ~ 255(완전 불투명)
                 circleColor = androidx.core.graphics.ColorUtils.setAlphaComponent(color, 90)
             }
-
 
             /**
              * 사용자의 위치를 지도에서 추적하는 모드
@@ -318,7 +311,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setUserLocation(){
+    private fun setEmergencyLocation() {
         if (ActivityCompat.checkSelfPermission(
                 this@EmergencyMapActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -334,29 +327,44 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
                 val latitude = location?.latitude ?: 35.1798159
                 val longitude = location?.longitude ?: 129.0750222
+
                 val coords = "$longitude" + "," + "$latitude"
 
                 viewModel.getuserLocationRegion(coords)
 
-                /*lifecycleScope.launch {
-                    viewModel.getuserLocationRegion(coords)
-                }*/
+                viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
+                    // 카메라 현재 위치로 검색한 병원 중 제일 첫번째로 이동
+                    if (emergencyMapInfo.isNotEmpty()) {
 
-                // 위치 오버레이의 가시성은 기본적으로 false로 지정되어 있습니다. 가시성을 true로 변경하면 지도에 위치 오버레이가 나타납니다.
-                // 파랑색 점, 현재 위치 표시
-                with(naverMap.locationOverlay) {
-                    isVisible = true
-                    position = LatLng(latitude, longitude)
+                        emergencyMapInfo.map {
+                            addEmergencyMaker(it, latitude, longitude)
+                        }
+
+                        val boundsBuilder = LatLngBounds.Builder()
+
+                        // 모든 병원 위치 추가
+                        emergencyMapInfo.forEach {
+                            boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
+                        }
+
+
+                        // LatLngBounds 객체 생성
+                        val bounds = boundsBuilder.build()
+
+
+                        // 카메라 업데이트
+                        val cameraUpdate = CameraUpdate.fitBounds(bounds, 100) // 패딩 값으로 100을 사용
+
+                        naverMap.moveCamera(cameraUpdate)
+
+                        // 위치 오버레이 설정
+                        with(naverMap.locationOverlay) {
+                            isVisible = true
+                            position = LatLng(latitude, longitude)
+                        }
+                    }
                 }
 
-                // 카메라 현재 위치로 이동
-                val cameraUpdate = CameraUpdate.scrollTo(
-                    LatLng(
-                        latitude,
-                        longitude
-                    )
-                )
-                naverMap.moveCamera(cameraUpdate)
             }
         }
     }
@@ -381,95 +389,68 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private var selectedMarker: Marker? = null
+    private fun getEmergencyMapInfo(){
 
-    private fun addMaker(type: String) {
+        viewModel.combinedArea.observe(this@EmergencyMapActivity) { combinedArea ->
+            val parts = combinedArea.split(" ")
+            if (parts.size >= 2) {
+                val (STAGE1, STAGE2) = parts
+                viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
+            } else {
+                viewModel.getEmergencyMapInfo(combinedArea, null)
+            }
+        }
+    }
+
+    private fun addEmergencyMaker(
+        emergencyMapInfo: EmergencyMapInfo,
+        latitude: Double,
+        longitude: Double
+    ) {
 
         val marker = Marker()
         with(marker) {
-            if (type == "Emergency") {
-                icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                position = LatLng(36.6673002, 127.5010533)
-                map = naverMap
-                width = 56
-                height = 60
+            icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
+            position = LatLng(
+                emergencyMapInfo.hospitalLat ?: latitude,
+                emergencyMapInfo.hospitalLon ?: longitude)
+            map = naverMap
+            width = 56
+            height = 60
 
-                setOnClickListener {
-                    // If there is a previously selected marker, restore its icon
-                    selectedMarker?.let {
-                        it.icon =
-                            OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                        it.width = 56
-                        it.height = 60
-                    }
-                    // Set the current marker as the selected marker and change its icon
-                    selectedMarker = this
-                    icon = OverlayImage.fromResource(R.drawable.marker_selected_emergency_icon)
-                    width = 100
-                    height = 130
-                    setBottomRecylcerView(
-                        listOf(
-                            EmergencyBottom(
-                                null,
-                                "서울아산병원",
-                                "2.1km",
-                                "서울 송파구 올림픽로43길 88 서울아산병원",
-                                "1588-5647",
-                                "응급실 병상 21 / 25",
-                                "emergency",
-                                "test emergency"
-                            )
+            setOnClickListener {
+                /*// If there is a previously selected marker, restore its icon
+                selectedMarker?.let {
+                    it.icon =
+                        OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
+                    it.width = 56
+                    it.height = 60
+                }
+                // Set the current marker as the selected marker and change its icon
+                selectedMarker = this
+                icon = OverlayImage.fromResource(R.drawable.marker_selected_emergency_icon)
+                width = 100
+                height = 130
+                setBottomRecylcerView(
+                    listOf(
+                        EmergencyBottom(
+                            null,
+                            "서울아산병원",
+                            "2.1km",
+                            "서울 송파구 올림픽로43길 88 서울아산병원",
+                            "1588-5647",
+                            "응급실 병상 21 / 25",
+                            "emergency",
+                            "test emergency"
                         )
                     )
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                    true
-                }
+                )
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED*/
+                true
             }
-
-            if (type == "Pharmacy") {
-                icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
-                position = LatLng(36.6673002, 127.5010533)
-                map = naverMap
-                width = 56
-                height = 60
-
-                setOnClickListener {
-                    // If there is a previously selected marker, restore its icon
-                    selectedMarker?.let {
-                        it.icon =
-                            OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
-                        it.width = 56
-                        it.height = 60
-                    }
-                    // Set the current marker as the selected marker and change its icon
-                    selectedMarker = this
-                    icon = OverlayImage.fromResource(R.drawable.marker_selected_pharmacy_icon)
-                    width = 100
-                    height = 130
-                    setBottomRecylcerView(
-                        listOf(
-                            EmergencyBottom(
-                                null,
-                                "서울아산병원약국",
-                                "2.1km",
-                                "서울 송파구 올림픽로43길 88 서울아산병원",
-                                "1588-5647",
-                                "응급실 병상 21 / 25",
-                                "emergency",
-                                "test pharmacy"
-                            )
-                        )
-                    )
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                    true
-                }
-            }
-
         }
 
     }
-
-
 
     private fun isNightMode(): Boolean {
         val currentNightMode =

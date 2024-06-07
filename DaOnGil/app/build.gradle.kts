@@ -14,7 +14,8 @@ val kakaoApiKey = properties.getProperty("kakao_api_key")?:""
 val naverMapBase = properties.getProperty("naver_map_base")?:""
 val naverMapId = properties.getProperty("naver_map_id")?:""
 val naverMapSecret = properties.getProperty("naver_map_secret")?:""
-
+val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
+val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -34,6 +35,8 @@ android {
         buildConfigField("String", "NAVER_MAP_ID", "\"$naverMapId\"")
         buildConfigField("String", "NAVER_MAP_SECRET", "\"$naverMapSecret\"")
         buildConfigField("String", "KAKAO_API_KEY", "\"$kakaoApiKey\"")
+        buildConfigField("String", "EMERGENCY_BASE_URL", "\"$emergencyBaseUrl\"")
+        buildConfigField("String", "EMERGENCY_API_KEY", "\"$emergencyApiKey\"")
 
         //manifest에서 사용
         manifestPlaceholders["NAVER_MAP_ID"] =  naverMapId

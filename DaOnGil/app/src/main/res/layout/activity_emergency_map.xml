@@ -67,7 +67,6 @@
                     android:layout_gravity="center"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_medium"
-                    android:text="서울특별시 중구"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_big3" />
 

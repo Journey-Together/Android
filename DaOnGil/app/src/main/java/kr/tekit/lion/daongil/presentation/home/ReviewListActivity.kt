@@ -51,7 +51,7 @@ class ReviewListActivity : AppCompatActivity() {
             ),
         )
 
-        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, applicationContext)
+        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, applicationContext, this)
         binding.reviewListRv.adapter = reviewListRVAdapter
         binding.reviewListRv.layoutManager = LinearLayoutManager(applicationContext)
     }

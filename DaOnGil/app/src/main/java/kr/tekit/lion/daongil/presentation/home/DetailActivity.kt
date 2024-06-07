@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.home
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,6 +21,7 @@ class DetailActivity : AppCompatActivity() {
         settingDetailInfoRVAdapter()
         settingReviewRVAdapter()
         settingToolbar()
+        settingReviewBtn()
     }
 
     private fun settingDetailInfoRVAdapter() {
@@ -47,6 +49,18 @@ class DetailActivity : AppCompatActivity() {
     private fun settingToolbar() {
         binding.detailToolbar.setNavigationOnClickListener {
             finish()
+        }
+    }
+
+    private fun settingReviewBtn() {
+        binding.detailMoreReviewBtn.setOnClickListener {
+            val intent = Intent(this, ReviewListActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.detailReviewBtn.setOnClickListener {
+            val intent = Intent(this, WriteReviewActivity::class.java)
+            startActivity(intent)
         }
     }
 }

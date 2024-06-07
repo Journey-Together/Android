@@ -30,6 +30,16 @@ class GetEmergencyMapInfoUseCase(
             emergencyKidCount = realtimeInfo.emergencyKidCount,
             emergencyAllCount = realtimeInfo.emergencyAllCount,
             emergencyKidAllCount = realtimeInfo.emergencyKidAllCount,
+            emergencyBed = realtimeInfo.emergencyCount?.let { count ->
+                realtimeInfo.emergencyAllCount?.let { allCount ->
+                    ((count.toFloat() / allCount) * 100).toInt()
+                }
+            },
+            emergencyKidBed =  realtimeInfo.emergencyKidCount?.let { kidCount ->
+                realtimeInfo.emergencyKidAllCount?.let { kidAllCount ->
+                    ((kidCount.toFloat() / kidAllCount) * 100).toInt()
+                }
+            },
             lastUpdateDate = realtimeInfo.lastUpdateDate,
             hospitalName = basicInfo.hospitalName,
             hospitalAddress = basicInfo.hospitalAddress,

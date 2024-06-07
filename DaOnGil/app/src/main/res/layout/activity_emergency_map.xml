@@ -27,12 +27,20 @@
 
         </com.google.android.material.appbar.MaterialToolbar>
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:indicatorColor="@color/primary"
+            android:progress="20"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/emergencyMapAreaButton"

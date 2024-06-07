@@ -7,6 +7,8 @@ data class EmergencyMapInfo(
     val emergencyKidCount: Int?,
     val emergencyAllCount: Int?,
     val emergencyKidAllCount: Int?,
+    val emergencyBed: Int?,
+    val emergencyKidBed: Int?,
     val lastUpdateDate: String?,
     val hospitalName: String?,
     val hospitalAddress: String?,

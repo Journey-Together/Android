@@ -18,13 +18,5 @@
         android:id="@+id/selectInterestFragment"
         android:name="kr.tekit.lion.daongil.presentation.login.fragment.SelectInterestFragment"
         android:label="fragment_select_interest"
-        tools:layout="@layout/fragment_select_interest" >
-        <action
-            android:id="@+id/action_selectInterestFragment_to_mainActivity"
-            app:destination="@id/mainActivity" />
-    </fragment>
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="kr.tekit.lion.daongil.presentation.main.MainActivity"
-        android:label="MainActivity" />
+        tools:layout="@layout/fragment_select_interest" />
 </navigation>

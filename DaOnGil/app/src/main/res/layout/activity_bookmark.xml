@@ -42,8 +42,10 @@
         android:id="@+id/recyclerViewBookmark"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/margin_big2"
-        android:paddingTop="@dimen/margin_big3"
-        android:paddingBottom="@dimen/margin_big2" />
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/margin_big3"
+        android:paddingTop="@dimen/margin_big4"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2" />
 
 </LinearLayout>

@@ -37,7 +37,7 @@
         app:layout_constraintTop_toTopOf="@+id/item_detail_review_big_nickname"
         app:srb_drawableEmpty="@drawable/star_icon"
         app:srb_drawableFilled="@drawable/star_filled_icon"
-        app:srb_isIndicator="false"
+        app:srb_isIndicator="true"
         app:srb_minimumStars="0"
         app:srb_numStars="5"
         app:srb_rating="3.5"

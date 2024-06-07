@@ -57,13 +57,11 @@ class SelectInterestFragment : Fragment(R.layout.fragment_select_interest) {
         binding.selectInterestCompleteButton.setOnClickListener {
             val selectedInterests = getSelectedInterests()
 
-            val action = SelectInterestFragmentDirections.actionSelectInterestFragmentToMainActivity()
-            navController.navigate(action)
-
             val intent = Intent(requireActivity(), MainActivity::class.java).apply {
                 putExtra("selectedInterest", ArrayList(selectedInterests))
             }
             startActivity(intent)
+            requireActivity().finish()
         }
     }
 

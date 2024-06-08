@@ -4,9 +4,10 @@ import android.util.Log
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kr.tekit.lion.daongil.BuildConfig
+import kr.tekit.lion.daongil.data.dto.remote.response.emergency.aed.AedJsonAdapter
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.realtime.EmergencyRealtimeJsonAdapter
+import kr.tekit.lion.daongil.data.network.service.AedService
 import kr.tekit.lion.daongil.data.network.service.EmergencyService
-import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import kr.tekit.lion.daongil.data.network.service.NaverMapService
 import okhttp3.OkHttpClient
@@ -75,7 +76,7 @@ object RetrofitInstance {
             .baseUrl(BuildConfig.NAVER_MAP_BASE)
             .addConverterFactory(MoshiConverterFactory.create(
                 Moshi.Builder()
-                .build()))
+                .build()).asLenient())
             .client(naverMapClient)
             .build()
             .create(NaverMapService::class.java)
@@ -95,5 +96,18 @@ object RetrofitInstance {
             .create(EmergencyService::class.java)
     }
 
+    private val aedMoshi = Moshi.Builder()
+        .add(AedJsonAdapter())
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
+    val aedService: AedService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.AED_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(aedMoshi))
+            .client(okHttpClient)
+            .build()
+            .create(AedService::class.java)
+    }
 
 }

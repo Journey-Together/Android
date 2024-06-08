@@ -12,9 +12,12 @@ import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 
-class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
+class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface,
+    ScheduleMyAdapter.OnScheduleMainItemClickListener {
+
     private var isUser = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +43,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     private fun settingRecyclerView(binding : FragmentScheduleMainBinding, context: Context){
         binding.apply {
             recyclerViewMySchedule.apply {
-                adapter = ScheduleMyAdapter()
+                adapter = ScheduleMyAdapter(this@ScheduleMainFragment)
                 layoutManager = LinearLayoutManager(context)
             }
 
@@ -92,5 +95,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     override fun onPosBtnClick() {
         // login 화면으로 이동
+    }
+
+    override fun onScheduleMainItemClick(scheduleIdx: Int) {
+        val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+        // to do - 여행 일정 idx 전달
+//        intent.putExtra("placeId", 1)
+        startActivity(intent)
     }
 }

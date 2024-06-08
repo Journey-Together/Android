@@ -54,13 +54,12 @@
 
     <string name="text_emergency_main">내 주변 응급 지원 찾기</string>
     <string name="text_emergency_second">어떤 정보를 찾으시나요?</string>
-    <string name="text_emergency_aed">응급실 제세동기 찾기</string>
+    <string name="text_emergency_aed">응급실 / 제세동기 찾기</string>
     <string name="text_emergency_aed_first">여행 중 갑자기 아프다면,</string>
     <string name="text_emergency_aed_second">내 근처 병원을 빠르게 방문해보세요</string>
     <string name="text_emergency_pharmacy">약국 찾기</string>
     <string name="text_emergency_pharmacy_first">필요한 상비약을</string>
     <string name="text_emergency_pharmacy_second">구입해 보세요</string>
-
 
     <string name="text_my_schedule">나의 일정</string>
     <string name="text_public_schedule">공개 일정</string>
@@ -98,5 +97,8 @@
     <string name="text_report_other">기타</string>
     <string name="text_report_cancel">취소</string>
     <string name="text_report_submitted">신고가 접수되었습니다.</string>
+
+    <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
+    <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>
 
 </resources>

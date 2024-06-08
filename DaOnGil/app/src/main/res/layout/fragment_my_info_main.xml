@@ -68,11 +68,11 @@
                         android:layout_marginLeft="@dimen/margin_big3"
                         android:layout_marginBottom="32dp"
                         android:fontFamily="@font/pretendard_bold"
-                        android:text="다온길"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/font_big2"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/materialCardView" />
+                        app:layout_constraintStart_toEndOf="@+id/materialCardView"
+                        tools:text="다온길" />
 
                     <TextView
                         android:id="@+id/textViewMyInfoMainUserTitle"
@@ -109,11 +109,33 @@
                         android:layout_marginTop="6dp"
                         android:layout_marginBottom="10dp"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:text="2"
                         android:textColor="@color/text_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainReview"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewMyInfoMainUserNickname" />
+                        app:layout_constraintTop_toBottomOf="@+id/textViewMyInfoMainUserNickname"
+                        tools:text="2" />
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoMainRegister"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_big4"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="가입"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewMyInfoMainReviewCnt"
+                        app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainReviewCnt"
+                        app:layout_constraintTop_toTopOf="@+id/textViewMyInfoMainReviewCnt" />
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoMainRegisterCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_small2"
+                        android:fontFamily="@font/pretendard_semibold"
+                        app:layout_constraintBottom_toBottomOf="@+id/textViewMyInfoMainRegister"
+                        app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainRegister"
+                        app:layout_constraintTop_toTopOf="@+id/textViewMyInfoMainRegister"
+                        tools:text="5일째" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -219,7 +241,8 @@
                 android:id="@+id/layoutSetting"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@color/navi_background">
+                android:background="@color/navi_background"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -310,6 +333,12 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:tint="@color/text_tertiary" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:dividerColor="@color/background_color"
+                app:dividerThickness="@dimen/margin_small1" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

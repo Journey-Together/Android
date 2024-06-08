@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.kakao.sdk.common.KakaoSdk
 
 class HighThemeApp : Application() {
     init {
@@ -48,5 +49,6 @@ class HighThemeApp : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
     }
 }

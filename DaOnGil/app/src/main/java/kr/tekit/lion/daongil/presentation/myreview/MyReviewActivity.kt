@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.databinding.ActivityMyReviewBinding
 
 class MyReviewActivity : AppCompatActivity() {
 
-    val binding: ActivityMyReviewBinding by lazy {
+    private val binding: ActivityMyReviewBinding by lazy {
         ActivityMyReviewBinding.inflate(layoutInflater)
     }
 

@@ -23,6 +23,7 @@ class EmergencyBottomAdapter(
             fun bind(item: EmergencyBottom){
                 with(binding){
                     if(item.emergencyType == "emergency"){
+                        binding.emergencyBottomImage.setImageResource(R.drawable.emergency_bottom_img)
                         binding.emergencyBedLayout.visibility = View.VISIBLE
                         binding.emergencyName.text = item.emergencyList?.hospitalName
                         binding.emergencyAddress.text = item.emergencyList?.hospitalAddress
@@ -46,6 +47,7 @@ class EmergencyBottomAdapter(
                     }
 
                     if(item.emergencyType == "aed"){
+                        binding.emergencyBottomImage.setImageResource(R.drawable.aed_bottom_img)
                         binding.emergencyBedLayout.visibility = View.GONE
                         binding.emergencyName.text = item.aedList?.aedName
                         binding.emergencyAddress.text = item.aedList?.aedAdress

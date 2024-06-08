@@ -93,12 +93,17 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         initMap()
-
         initBottomSheet()
         settingDialog()
         setAreaButton()
+        setToolbar()
     }
 
+    private fun setToolbar(){
+        binding.toolbarEmergencyMap.setNavigationOnClickListener {
+            finish()
+        }
+    }
     private fun setAreaButton(){
         viewModel.area.observe(this@EmergencyMapActivity) { area ->
             binding.emergencyMapArea.text = area

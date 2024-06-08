@@ -21,6 +21,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.myschedule.MyScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.home.WriteReviewActivity"
             android:exported="false" />
         <activity
@@ -65,7 +68,6 @@
         <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="true" />
-
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="true">
@@ -87,7 +89,6 @@
                 <data
                     android:host="oauth"
                     android:scheme="${KAKAO_NATIVE_KEY}" />
-
             </intent-filter>
         </activity>
 

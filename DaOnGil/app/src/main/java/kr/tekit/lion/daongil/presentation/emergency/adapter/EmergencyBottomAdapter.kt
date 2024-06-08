@@ -12,25 +12,25 @@ import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 
 class EmergencyBottomAdapter(
     private val emergencyBottomList: List<EmergencyBottom>,
-    private val itemClickListener: (String, EmergencyBottom) -> Unit
+    private val itemClickListener: (String?, EmergencyBottom) -> Unit
 ):
     RecyclerView.Adapter<EmergencyBottomAdapter.EmergencyBottomViewHolder>(){
     class EmergencyBottomViewHolder(
         private val binding: ItemEmergencyBottomBinding,
-        private val itemClickListener: (String, EmergencyBottom) -> Unit
+        private val itemClickListener: (String?, EmergencyBottom) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
             fun bind(item: EmergencyBottom){
                 with(binding){
                     if(item.emergencyType == "emergency"){
-                        binding.emergencyBed.visibility = View.VISIBLE
-                        binding.emergencyName.text = item.emergencyList.hospitalName
-                        binding.emergencyAddress.text = item.emergencyList.hospitalAddress
-                        binding.emergencyCall.text = item.emergencyList.emergencyTel
+                        binding.emergencyBedLayout.visibility = View.VISIBLE
+                        binding.emergencyName.text = item.emergencyList?.hospitalName
+                        binding.emergencyAddress.text = item.emergencyList?.hospitalAddress
+                        binding.emergencyCall.text = item.emergencyList?.emergencyTel
                         binding.emergencyBed.text =
-                            item.emergencyList.emergencyCount.toString() + " / " + item.emergencyList.emergencyAllCount.toString()
+                            item.emergencyList?.emergencyCount.toString() + " / " + item.emergencyList?.emergencyAllCount.toString()
 
-                        item.emergencyList.emergencyBed?.let { it ->
+                        item.emergencyList?.emergencyBed?.let { it ->
                             val emergencyBedIcon = binding.emergencyBedIcon
 
                             val drawable = emergencyBedIcon.drawable
@@ -43,7 +43,13 @@ class EmergencyBottomAdapter(
                                 drawable.setTint(color)
                             }
                         }
+                    }
 
+                    if(item.emergencyType == "aed"){
+                        binding.emergencyBedLayout.visibility = View.GONE
+                        binding.emergencyName.text = item.aedList?.aedName
+                        binding.emergencyAddress.text = item.aedList?.aedAdress
+                        binding.emergencyCall.text = item.aedList?.aedTel
                     }
 
                     root.setOnClickListener {

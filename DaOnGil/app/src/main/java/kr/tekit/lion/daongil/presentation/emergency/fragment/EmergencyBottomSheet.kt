@@ -13,7 +13,7 @@ class EmergencyBottomSheet(
    private val emergencyBottomadapter: EmergencyBottomAdapter by lazy {
       EmergencyBottomAdapter(emergencyBottomList,
          itemClickListener = { id, item ->
-            Log.d("testId", id)
+            Log.d("testId", id.toString())
          }
       )
    }

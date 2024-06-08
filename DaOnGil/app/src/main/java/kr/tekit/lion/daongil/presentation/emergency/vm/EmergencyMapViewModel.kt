@@ -23,26 +23,8 @@ class EmergencyMapViewModel(
     private val _area = MutableLiveData<String?>()
     val area : LiveData<String?> = _area
 
-    private val _areaDetail = MutableLiveData<String?>()
-    val areaDetail: LiveData<String?> = _areaDetail
-
-    private var areaSet = false
-    private var areaDetailSet = false
-
-    val combinedArea: MediatorLiveData<String> = MediatorLiveData<String>().apply {
-        addSource(area) { newArea ->
-            areaSet = true
-            if (areaDetailSet) {  // 두 값이 모두 한 번 이상 설정된 경우에만 업데이트
-                value = combineAreaAndDetail(newArea, areaDetail.value)
-            }
-        }
-        addSource(areaDetail) { newAreaDetail ->
-            areaDetailSet = true
-            if (areaSet) {  // 두 값이 모두 한 번 이상 설정된 경우에만 업데이트
-                value = combineAreaAndDetail(area.value, newAreaDetail)
-            }
-        }
-    }
+    private val _areaUpdate = MutableLiveData<Unit>()
+    val areaUpdate : LiveData<Unit> = _areaUpdate
 
     private val _emergencyMapInfo = MutableLiveData<List<EmergencyMapInfo>>()
     val emergencyMapInfo : LiveData<List<EmergencyMapInfo>> = _emergencyMapInfo
@@ -50,14 +32,43 @@ class EmergencyMapViewModel(
     private val _aedMapInfo = MutableLiveData<List<AedMapInfo>>()
     val aedMapInfo : LiveData<List<AedMapInfo>> = _aedMapInfo
 
-    fun getuserLocationRegion(coords: String) =
+    // 두 개의 LiveData<Boolean>을 사용
+    private val _aedMapInfoUpdate = MutableLiveData<Boolean>()
+    val aedMapInfoUpdate: LiveData<Boolean> = _aedMapInfoUpdate
+
+    private val _emergencyMapInfoUpdate = MutableLiveData<Boolean>()
+    val emergencyMapInfoUpdate: LiveData<Boolean> = _emergencyMapInfoUpdate
+
+    // 두 개의 LiveData가 모두 업데이트된 후 관찰할 MediatorLiveData
+    private val _combinedUpdate = MediatorLiveData<Unit>()
+    val mapInfoUpdate: LiveData<Unit> = _combinedUpdate
+
+    init {
+        _combinedUpdate.addSource(_aedMapInfoUpdate) { it ->
+            if (it == true && _emergencyMapInfoUpdate.value == true) {
+                _combinedUpdate.value = Unit
+                _aedMapInfoUpdate.value = false
+                _emergencyMapInfoUpdate.value = false
+            }
+        }
+
+        _combinedUpdate.addSource(_emergencyMapInfoUpdate) { it ->
+            if (it == true && _aedMapInfoUpdate.value == true) {
+                _combinedUpdate.value = Unit
+                _aedMapInfoUpdate.value = false
+                _emergencyMapInfoUpdate.value = false
+            }
+        }
+    }
+
+    fun getUserLocationRegion(coords: String) =
         viewModelScope.launch {
             getUserLocationRegionUseCase(coords).onSuccess {
                 if (it.code == 0) {
+                    _area.value = "${it.results[0].area} ${it.results[0].areaDetail}"
                     /*val regex = Regex(".*?(시|구|군)")
                     val matchResult = regex.find(it.results[0].areaDetail.toString())
                     val detailArea = matchResult?.value*/
-                    setArea(it.results[0].area, it.results[0].areaDetail,)
                 }
             }
         }
@@ -66,6 +77,8 @@ class EmergencyMapViewModel(
         viewModelScope.launch {
             getEmergencyMapInfoUseCase(STAGE1, STAGE2).onSuccess {
                 _emergencyMapInfo.value = it
+                Log.d("test1234", it.toString())
+                _emergencyMapInfoUpdate.value = true
             }
         }
 
@@ -74,22 +87,17 @@ class EmergencyMapViewModel(
             var area = ""
             if(Q0 == "전북특별자치도"){
                 area = "전라북도"
-            } else {
-                area = _area.value.toString()
             }
             getAedMapInfoUseCase(area, Q1).onSuccess {
                 _aedMapInfo.value = it
+
             }
+
+            _aedMapInfoUpdate.value = true
         }
 
-
-
-    private fun combineAreaAndDetail(area: String?, areaDetail: String?): String {
-        return "${area ?: ""} ${areaDetail ?: ""}".trim()
-    }
-
     fun setArea(area: String?, areaDetail: String?) {
-        _area.value = area
-        _areaDetail.value = areaDetail
+        _area.value = "$area $areaDetail"
+        _areaUpdate.value = Unit
     }
 }

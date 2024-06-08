@@ -8,7 +8,7 @@
     android:orientation="vertical"
     android:background="@drawable/bottom_sheet_background"
     tools:context=".presentation.emergency.fragment.EmergencyBottomSheet"
-    app:behavior_peekHeight="55dp"
+    app:behavior_peekHeight="40dp"
     android:clickable="true"
     android:focusable="true"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">

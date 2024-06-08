@@ -7,7 +7,6 @@ import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.view.ViewTreeObserver
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -103,8 +102,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun setAreaButton(){
-        viewModel.combinedArea.observe(this@EmergencyMapActivity) { combinedArea ->
-            binding.emergencyMapArea.text = combinedArea
+        viewModel.area.observe(this@EmergencyMapActivity) { area ->
+            binding.emergencyMapArea.text = area
         }
     }
 
@@ -177,33 +176,33 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.setOnMapClickListener { _, _ ->
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-            val emergencyList = mutableListOf<EmergencyBottom>()
-
-            viewModel.emergencyMapInfo.value?.map {
-                emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString()))
+            viewModel.emergencyMapInfo.value?.let { emergencyMapInfoList ->
+                setBottomRecylcerView(
+                    emergencyMapInfoList.map {
+                        EmergencyBottom(it, "emergency", it.hospitalId.toString(), null)
+                    }
+                )
             }
 
-            setBottomRecylcerView(emergencyList.toList())
-
             // 선택된 마커가 있는 경우 unselected 상태로 변경
-            emergencySelectedMarker?.let { marker ->
+            this.emergencySelectedMarker?.let { marker ->
                 marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
                 marker.isHideCollidedMarkers = true
                 marker.isForceShowIcon = false
                 marker.width = 56
                 marker.height = 60
                 marker.zIndex = 15
-                emergencySelectedMarker = null
+                this.emergencySelectedMarker = null
             }
 
-            aedSelectedMarker?.let { marker ->
+            this.aedSelectedMarker?.let { marker ->
                 marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
                 marker.isHideCollidedMarkers = true
                 marker.isForceShowIcon = false
                 marker.width = 56
                 marker.height = 60
                 marker.zIndex = 0
-                aedSelectedMarker = null
+                this.emergencySelectedMarker = null
             }
         }
 
@@ -236,8 +235,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         val mapType = intent.getStringExtra("mapType").toString()
                         if(mapType.equals("Emergency")){
                             getEmergencyMapInfo()
-                            setEmergencyLocation()
                             getAedMapInfo()
+                            setEmergencyMap()
                         }
                     }
                 }
@@ -245,7 +244,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             with(naverMap.locationOverlay) {
                 val color = getColor(R.color.maker_overlay)
-                circleRadius = 150
+                circleRadius = 200
                 // setAlphaComponent : 투명도 지정
                 // 0(완전 투명) ~ 255(완전 불투명)
                 circleColor = androidx.core.graphics.ColorUtils.setAlphaComponent(color, 90)
@@ -288,7 +287,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setEmergencyLocation() {
+    private fun setEmergencyMap() {
         if (ActivityCompat.checkSelfPermission(
                 this@EmergencyMapActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -305,55 +304,35 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val latitude = location?.latitude ?: 35.1798159
                 val longitude = location?.longitude ?: 129.0750222
 
-                val coords = "$longitude" + "," + "$latitude"
+                val coords = "$longitude,$latitude"
 
-                viewModel.getuserLocationRegion(coords)
+                viewModel.getUserLocationRegion(coords)
 
-                val boundsBuilder = LatLngBounds.Builder()
-                val emergencyList = mutableListOf<EmergencyBottom>()
-
+                // 비동기 데이터 관찰
                 viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
 
-                    lifecycleScope.launch {
-                        with(binding){
-                            emergencyMapProgressBar.setProgressCompat(20, false)
-                            delay(700)
-                            emergencyMapProgressBar.setProgressCompat(100, true)
-                        }
+                    val boundsBuilder = LatLngBounds.Builder()
+                    val emergencyList = mutableListOf<EmergencyBottom>()
+                    emergencyMapInfo.map {
+                        addEmergencyMarker(it, latitude, longitude)
+                        emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString(), null))
+                        boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
                     }
 
-                    if (emergencyMapInfo.isNotEmpty()) {
+                    setBottomRecylcerView(emergencyList.toList())
+                    val bounds = boundsBuilder.build()
+                    val cameraUpdate = CameraUpdate.scrollTo(bounds.center)
+                    naverMap.moveCamera(cameraUpdate)
+                    naverMap.moveCamera(CameraUpdate.zoomTo(12.0))
 
-                        emergencyMapInfo.map {
-                            addEmergencyMarker(it, latitude, longitude)
-                            emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString()))
-                            boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
-                        }
-
-                        setBottomRecylcerView(emergencyList.toList())
-
-                        // LatLngBounds 객체 생성
-                        val bounds = boundsBuilder.build()
-
-                        val cameraUpdate = CameraUpdate.scrollTo(bounds.center)
-                        naverMap.moveCamera(cameraUpdate)
-                        naverMap.moveCamera(CameraUpdate.zoomTo(12.0))
-                    }
                 }
 
+                // AED 마커 추가
                 viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
-                    if(aedMapInfo.isNotEmpty()){
-
-                        aedMapInfo.map {
-                            addAedMarker(it, latitude, longitude)
-                            Log.d("test","lat: ${it.aedLat} long: ${it.aedLon}")
-                            // boundsBuilder.include(LatLng((it.aedLat) ?: latitude, it.aedLat ?: longitude))
-                            // emergencyList.add()
-                        }
+                    aedMapInfo.map {
+                        addAedMarker(it, latitude, longitude)
                     }
                 }
-
-                setBottomRecylcerView(emergencyList.toList())
 
                 // 위치 오버레이 설정
                 with(naverMap.locationOverlay) {
@@ -361,6 +340,18 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     position = LatLng(latitude, longitude)
                 }
 
+                viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
+                    binding.emergencyMapProgressBar.setProgressCompat(20, true)
+                }
+
+                viewModel.mapInfoUpdate.observe(this@EmergencyMapActivity) {
+                    lifecycleScope.launch {
+                        with(binding) {
+                            delay(500)
+                            emergencyMapProgressBar.setProgressCompat(100, true)
+                        }
+                    }
+                }
             }
         }
     }
@@ -386,34 +377,46 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun getEmergencyMapInfo(){
-
-        viewModel.combinedArea.observe(this@EmergencyMapActivity) { combinedArea ->
-            val parts = combinedArea.split(" ")
-            if(parts.size > 2){
-                val (STAGE1, STAGE2, STAGE3) = parts
-                viewModel.getEmergencyMapInfo(STAGE1, STAGE2 +" " + STAGE3)
-            }
-            else if (parts.size == 2) {
-                val (STAGE1, STAGE2) = parts
-                viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
-            } else {
-                viewModel.getEmergencyMapInfo(combinedArea, null)
+        viewModel.area.observe(this@EmergencyMapActivity) { area ->
+            area?.split(" ")?.let { parts ->
+                if (parts.isNotEmpty()) {
+                    when {
+                        parts.size > 2 -> {
+                            val (STAGE1, STAGE2, STAGE3) = parts
+                            viewModel.getEmergencyMapInfo(STAGE1, "$STAGE2 $STAGE3")
+                        }
+                        parts.size == 2 -> {
+                            val (STAGE1, STAGE2) = parts
+                            viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
+                        }
+                        else -> {
+                            viewModel.getEmergencyMapInfo(area, null)
+                        }
+                    }
+                }
             }
         }
     }
 
     private fun getAedMapInfo(){
-        viewModel.combinedArea.observe(this@EmergencyMapActivity) { combinedArea ->
-            val parts = combinedArea.split(" ")
-            if(parts.size > 2){
-                val (STAGE1, STAGE2, STAGE3) = parts
-                viewModel.getAedMapInfo(STAGE1, STAGE2 +" " + STAGE3)
-            }
-            else if (parts.size == 2) {
-                val (STAGE1, STAGE2) = parts
-                viewModel.getAedMapInfo(STAGE1, STAGE2)
-            } else {
-                viewModel.getAedMapInfo(combinedArea, null)
+
+        viewModel.area.observe(this@EmergencyMapActivity) { area ->
+            area?.split(" ")?.let { parts ->
+                if (parts.isNotEmpty()) {
+                    when {
+                        parts.size > 2 -> {
+                            val (STAGE1, STAGE2, STAGE3) = parts
+                            viewModel.getAedMapInfo(STAGE1, "$STAGE2 $STAGE3")
+                        }
+                        parts.size == 2 -> {
+                            val (STAGE1, STAGE2) = parts
+                            viewModel.getAedMapInfo(STAGE1, STAGE2)
+                        }
+                        else -> {
+                            viewModel.getAedMapInfo(area, null)
+                        }
+                    }
+                }
             }
         }
     }
@@ -438,7 +441,16 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             setOnClickListener {
                 // 이전에 선택된 마커가 있다면 초기 상태로 되돌림
-                aedSelectedMarker?.let { previousMarker ->
+                this@EmergencyMapActivity.emergencySelectedMarker?.let { previousMarker ->
+                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 56
+                    previousMarker.height = 60
+                    previousMarker.zIndex = 15
+                }
+
+                this@EmergencyMapActivity.aedSelectedMarker?.let { previousMarker ->
                     previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
                     previousMarker.isHideCollidedMarkers = true
                     previousMarker.isForceShowIcon = false
@@ -448,26 +460,27 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
 
                 // 현재 선택된 마커 업데이트
-                aedSelectedMarker = this
+                this@EmergencyMapActivity.aedSelectedMarker = this
 
                 // 클릭된 마커를 선택 상태로 변경
                 this.icon = OverlayImage.fromResource(R.drawable.marker_selected_aed_icon)
                 this.isHideCollidedMarkers = true
-                this.isForceShowIcon = false
+                this.isForceShowIcon = true
                 this.width = 100
                 this.height = 130
                 this.zIndex = 10
 
-                /*setBottomRecylcerView(
+                setBottomRecylcerView(
                     listOf(
                         EmergencyBottom(
-                            emergencyMapInfo,
-                            "emergency",
-                            emergencyMapInfo.hospitalId.toString()
+                            null,
+                            "aed",
+                            null,
+                            aedMapInfo
                         )
                     )
-                )*/
-                // bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                )
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }
         }
@@ -490,10 +503,12 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             width = 56
             height = 60
             zIndex = 15
+            isHideCollidedMarkers = true
+            isForceShowIcon = false
 
             setOnClickListener {
                 // 이전에 선택된 마커가 있다면 초기 상태로 되돌림
-                emergencySelectedMarker?.let { previousMarker ->
+                this@EmergencyMapActivity.emergencySelectedMarker?.let { previousMarker ->
                     previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
                     previousMarker.isHideCollidedMarkers = true
                     previousMarker.isForceShowIcon = false
@@ -502,8 +517,17 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     previousMarker.zIndex = 15
                 }
 
+                this@EmergencyMapActivity.aedSelectedMarker?.let { previousMarker ->
+                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 56
+                    previousMarker.height = 60
+                    previousMarker.zIndex = 0
+                }
+
                 // 현재 선택된 마커 업데이트
-                emergencySelectedMarker = this
+                this@EmergencyMapActivity.emergencySelectedMarker = this
 
                 // 클릭된 마커를 선택 상태로 변경
                 this.icon = OverlayImage.fromResource(R.drawable.marker_selected_emergency_icon)
@@ -518,7 +542,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         EmergencyBottom(
                             emergencyMapInfo,
                             "emergency",
-                            emergencyMapInfo.hospitalId.toString()
+                            emergencyMapInfo.hospitalId.toString(),
+                            null
                         )
                     )
                 )

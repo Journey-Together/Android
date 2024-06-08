@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -65,9 +66,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        val mapType = intent.getStringExtra("mapType").toString()
-        setToolbar(mapType)
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
         launcherForPermission = registerForActivityResult(contracts) { permissions ->
@@ -170,7 +168,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         this.naverMap = naverMap
 
-        naverMap.minZoom = 10.0
+        // naverMap.minZoom = 10.0
         naverMap.maxZoom = 15.0
 
         naverMap.setOnMapClickListener { _, _ ->
@@ -232,12 +230,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (mode) {
                     "None" -> locationTrackingMode = LocationTrackingMode.Follow
                     "Follow", "NoFollow" -> {
-                        val mapType = intent.getStringExtra("mapType").toString()
-                        if(mapType.equals("Emergency")){
-                            getEmergencyMapInfo()
-                            getAedMapInfo()
-                            setEmergencyMap()
-                        }
+                        getEmergencyMap()
+                        setEmergencyMap()
                     }
                 }
             }
@@ -313,6 +307,17 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     val boundsBuilder = LatLngBounds.Builder()
                     val emergencyList = mutableListOf<EmergencyBottom>()
+
+                    // AED 마커 추가
+                    viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
+                        aedMapInfo.map {
+                            addAedMarker(it, latitude, longitude)
+                            if(emergencyMapInfo.isEmpty()){
+                                boundsBuilder.include(LatLng(it.aedLat ?: latitude, it.aedLon ?: longitude))
+                            }
+                        }
+                    }
+
                     emergencyMapInfo.map {
                         addEmergencyMarker(it, latitude, longitude)
                         emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString(), null))
@@ -321,17 +326,14 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     setBottomRecylcerView(emergencyList.toList())
                     val bounds = boundsBuilder.build()
-                    val cameraUpdate = CameraUpdate.scrollTo(bounds.center)
+                    val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
+                        .finishCallback {
+                            lifecycleScope.launch {
+                                delay(500)
+                                binding.emergencyMapProgressBar.setProgressCompat(100, true)
+                            }
+                        }
                     naverMap.moveCamera(cameraUpdate)
-                    naverMap.moveCamera(CameraUpdate.zoomTo(12.0))
-
-                }
-
-                // AED 마커 추가
-                viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
-                    aedMapInfo.map {
-                        addAedMarker(it, latitude, longitude)
-                    }
                 }
 
                 // 위치 오버레이 설정
@@ -342,15 +344,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
                     binding.emergencyMapProgressBar.setProgressCompat(20, true)
-                }
-
-                viewModel.mapInfoUpdate.observe(this@EmergencyMapActivity) {
-                    lifecycleScope.launch {
-                        with(binding) {
-                            delay(500)
-                            emergencyMapProgressBar.setProgressCompat(100, true)
-                        }
-                    }
                 }
             }
         }
@@ -376,7 +369,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun getEmergencyMapInfo(){
+    private fun getEmergencyMap(){
         viewModel.area.observe(this@EmergencyMapActivity) { area ->
             area?.split(" ")?.let { parts ->
                 if (parts.isNotEmpty()) {
@@ -384,40 +377,22 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         parts.size > 2 -> {
                             val (STAGE1, STAGE2, STAGE3) = parts
                             viewModel.getEmergencyMapInfo(STAGE1, "$STAGE2 $STAGE3")
-                        }
-                        parts.size == 2 -> {
-                            val (STAGE1, STAGE2) = parts
-                            viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
-                        }
-                        else -> {
-                            viewModel.getEmergencyMapInfo(area, null)
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private fun getAedMapInfo(){
-
-        viewModel.area.observe(this@EmergencyMapActivity) { area ->
-            area?.split(" ")?.let { parts ->
-                if (parts.isNotEmpty()) {
-                    when {
-                        parts.size > 2 -> {
-                            val (STAGE1, STAGE2, STAGE3) = parts
                             viewModel.getAedMapInfo(STAGE1, "$STAGE2 $STAGE3")
                         }
                         parts.size == 2 -> {
                             val (STAGE1, STAGE2) = parts
+                            viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
                             viewModel.getAedMapInfo(STAGE1, STAGE2)
                         }
                         else -> {
+                            viewModel.getEmergencyMapInfo(area, null)
                             viewModel.getAedMapInfo(area, null)
                         }
                     }
                 }
             }
+
+
         }
     }
 
@@ -465,7 +440,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 // 클릭된 마커를 선택 상태로 변경
                 this.icon = OverlayImage.fromResource(R.drawable.marker_selected_aed_icon)
                 this.isHideCollidedMarkers = true
-                this.isForceShowIcon = true
+                this.isForceShowIcon = false
                 this.width = 100
                 this.height = 130
                 this.zIndex = 10
@@ -584,23 +559,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION,
         )
-    }
-
-    private fun setToolbar(type: String) {
-        with(binding) {
-
-            toolbarEmergencyMap.setNavigationOnClickListener {
-                finish()
-            }
-
-            if (type.equals("Emergency")) {
-                titleEmergencyMap.setText(R.string.text_emergency_aed)
-            }
-
-            if (type.equals("Pharmacy")) {
-                titleEmergencyMap.setText(R.string.text_emergency_pharmacy)
-            }
-        }
     }
 
 }

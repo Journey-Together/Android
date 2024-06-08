@@ -15,23 +15,9 @@ class EmergencyMainFragment : Fragment(R.layout.fragment_emergency_main) {
 
         val binding = FragmentEmergencyMainBinding.bind(view)
 
-        moveMap(binding)
-    }
-
-    private fun moveMap(binding: FragmentEmergencyMainBinding){
-
-        with(binding){
-            emrAedCard.setOnClickListener {
-                val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
-                intent.putExtra("mapType", "Emergency")
-                startActivity(intent)
-            }
-
-            pharmacyCard.setOnClickListener {
-                val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
-                intent.putExtra("mapType", "Pharmacy")
-                startActivity(intent)
-            }
+        binding.emrAedCard.setOnClickListener {
+            val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
+            startActivity(intent)
         }
     }
 }

@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.emergency.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -40,21 +39,21 @@ class EmergencyMapViewModel(
     val emergencyMapInfoUpdate: LiveData<Boolean> = _emergencyMapInfoUpdate
 
     // 두 개의 LiveData가 모두 업데이트된 후 관찰할 MediatorLiveData
-    private val _combinedUpdate = MediatorLiveData<Unit>()
-    val mapInfoUpdate: LiveData<Unit> = _combinedUpdate
+    private val _mapInfoUpdate = MediatorLiveData<Unit>()
+    val mapInfoUpdate: LiveData<Unit> = _mapInfoUpdate
 
     init {
-        _combinedUpdate.addSource(_aedMapInfoUpdate) { it ->
+        _mapInfoUpdate.addSource(_aedMapInfoUpdate) { it ->
             if (it == true && _emergencyMapInfoUpdate.value == true) {
-                _combinedUpdate.value = Unit
+                _mapInfoUpdate.value = Unit
                 _aedMapInfoUpdate.value = false
                 _emergencyMapInfoUpdate.value = false
             }
         }
 
-        _combinedUpdate.addSource(_emergencyMapInfoUpdate) { it ->
+        _mapInfoUpdate.addSource(_emergencyMapInfoUpdate) { it ->
             if (it == true && _aedMapInfoUpdate.value == true) {
-                _combinedUpdate.value = Unit
+                _mapInfoUpdate.value = Unit
                 _aedMapInfoUpdate.value = false
                 _emergencyMapInfoUpdate.value = false
             }
@@ -75,25 +74,21 @@ class EmergencyMapViewModel(
 
     fun getEmergencyMapInfo(STAGE1: String?, STAGE2: String?) =
         viewModelScope.launch {
-            getEmergencyMapInfoUseCase(STAGE1, STAGE2).onSuccess {
+            val areaDetail = if (STAGE1 == "세종특별자치시") null else STAGE2
+            getEmergencyMapInfoUseCase(STAGE1, areaDetail).onSuccess {
                 _emergencyMapInfo.value = it
-                Log.d("test1234", it.toString())
                 _emergencyMapInfoUpdate.value = true
             }
         }
 
     fun getAedMapInfo(Q0: String?, Q1: String?)=
         viewModelScope.launch {
-            var area = ""
-            if(Q0 == "전북특별자치도"){
-                area = "전라북도"
-            }
-            getAedMapInfoUseCase(area, Q1).onSuccess {
+            val area = if (Q0 == "전북특별자치도") "전라북도" else Q0
+            val areaDetail = if (Q0 == "세종특별자치시") null else Q1
+            getAedMapInfoUseCase(area, areaDetail).onSuccess {
                 _aedMapInfo.value = it
-
+                _aedMapInfoUpdate.value = true
             }
-
-            _aedMapInfoUpdate.value = true
         }
 
     fun setArea(area: String?, areaDetail: String?) {

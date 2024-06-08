@@ -124,7 +124,7 @@
 
     <!-- 세종특별자치시 상세 지역 (세종은 특별자치시라 상세 지역이 한 개일 수 있음) -->
     <string-array name="area_details_sejong">
-        <item></item>
+        <item>세종특별자치시</item>
     </string-array>
 
     <!-- 경기도 상세 지역 -->

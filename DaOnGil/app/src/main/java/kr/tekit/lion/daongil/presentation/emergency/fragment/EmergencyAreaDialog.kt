@@ -34,7 +34,8 @@ class EmergencyAreaDialog(
             }
 
             emergencyAreaPositive.setOnClickListener {
-                viewmodel.setArea(emergencyAreaSelected.text.toString(), emergencyDetailAreaSelected.text.toString())
+                val areaDetail = if (emergencyDetailAreaSelected.text.toString() == "세종특별자치시") null else emergencyDetailAreaSelected.text.toString()
+                viewmodel.setArea(emergencyAreaSelected.text.toString(), areaDetail)
                 emergencyAreaSelected.setText("")
                 emergencyDetailAreaSelected.setText("")
                 dismiss()
@@ -71,9 +72,12 @@ class EmergencyAreaDialog(
                 )
                 emergencyDetailAreaSelected.setAdapter(areaDetailAdapter)
                 emergencyDetailAreaSelected.setText("")
+                emergencyAreaPositive.isEnabled = false
                 emergencyDetailAreaLayout.visibility = View.VISIBLE
-                emergencyAreaPositive.isEnabled = true
+            }
 
+            emergencyDetailAreaSelected.setOnItemClickListener { adapterView, view, i, l ->
+                emergencyAreaPositive.isEnabled = true
             }
 
         }

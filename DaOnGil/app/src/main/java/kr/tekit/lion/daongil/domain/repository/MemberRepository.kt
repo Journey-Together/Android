@@ -5,11 +5,17 @@ import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.data.network.service.MemberService
 import kr.tekit.lion.daongil.data.repository.MemberRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.MyDefaultInfo
+import kr.tekit.lion.daongil.domain.model.MyIceInfo
 import kr.tekit.lion.daongil.domain.model.MyInfo
+import kr.tekit.lion.daongil.domain.model.MyPersonalInfo
+import java.io.File
 
 interface MemberRepository {
     suspend fun getMyIfo(): MyInfo
     suspend fun getMyDefaultInfo(): MyDefaultInfo
+    suspend fun modifyMyPersonalInfo(modifiedData: MyPersonalInfo)
+    suspend fun modifyMyProfileImg(profileImage: File)
+    suspend fun modifyMyIceInfo(modifiedData: MyIceInfo)
 
     companion object{
         fun create(): MemberRepositoryImpl{

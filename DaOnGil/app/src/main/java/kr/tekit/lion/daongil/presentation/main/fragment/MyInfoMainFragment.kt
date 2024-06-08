@@ -2,12 +2,14 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
+import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
 import kr.tekit.lion.daongil.presentation.bookmark.BookmarkActivity
@@ -68,7 +70,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                     tvReviewCnt.text = it.reviewNum.toString()
 
                     Glide.with(requireContext())
-                        .load(it.profileImg)
+                        .load("${BuildConfig.AWS_BASE_URL}${it.profileImg}")
                         .fallback(R.drawable.default_profile)
                         .into(imgProfile)
                 }
@@ -107,7 +109,9 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
 
     private fun moveMyInfo(binding: FragmentMyInfoMainBinding) {
         binding.btnLoginOrUpdate.setOnClickListener {
-            startActivity(Intent(requireActivity(), MyInfoActivity::class.java))
+            val intent = Intent(requireActivity(), MyInfoActivity::class.java)
+            intent.putExtra("name", binding.tvNameOrLogin.text.toString())
+            startActivity(intent)
         }
     }
 

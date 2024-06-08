@@ -22,18 +22,29 @@ class MyInfoFragment : Fragment(R.layout.fragment_my_info) {
             toolbarMyInfo.setNavigationOnClickListener { requireActivity().finish() }
 
             repeatOnViewStarted {
-                viewModel.myInfo.collect{
-                    tvName.text = it.name
-                    tvPhone.text = it.phone ?: "전화번호를 입력해주세요"
-                    tvBirth.text = it.birth ?: "생년월일을 입력해주세요"
-                    tvBloodType.text = it.bloodType ?: "혈액형을 입력해주세요"
-                    tvDisease.text = it.disease ?: "가지고 계신 질환을 입력해주세요"
-                    tvAllergy.text = it.allergy ?: "가지고 계신 알레르기 또는 질환을 입력해주세요"
-                    tvMedicine.text = it.medication ?: "투약중이신 약을 입력해주세요."
-                    tvRelation1.text = it.part1Rel ?: "관계"
-                    tvContact1.text = it.part1Phone ?: "긴급 연락처를 입력해주세요"
-                    tvRelation2.text = it.part2Rel ?: "관계"
-                    tvContact2.text = it.part2Phone ?: "긴급 연락처를 입력해주세요"
+                viewModel.name.collect {
+                    tvName.text = it
+                }
+            }
+
+            repeatOnViewStarted {
+                viewModel.myPersonalInfo.collect{
+                    tvNickname.text = it.nickname
+                    tvPhone.text = it.phone
+                }
+            }
+
+            repeatOnViewStarted {
+                viewModel.myIceInfo.collect{
+                    tvBirth.text = it.birth
+                    tvBloodType.text = it.bloodType
+                    tvDisease.text = it.disease
+                    tvAllergy.text = it.allergy
+                    tvMedicine.text = it.medication
+                    tvRelation1.text = it.part1Rel
+                    tvContact1.text = it.part1Phone
+                    tvRelation2.text = it.part2Rel
+                    tvContact2.text = it.part2Phone
                 }
             }
         }

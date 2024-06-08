@@ -14,6 +14,7 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 val kakaoApiKey = properties.getProperty("kakao_api_key") ?: ""
 val kakaoNativeKey = properties.getProperty("kakao_native_key") ?: ""
 val baseUrl = properties.getProperty("base_url") ?: ""
+val awsBaseUrl = properties.getProperty("aws_base_url") ?: ""
 val naverMapBase = properties.getProperty("naver_map_base") ?: ""
 val naverMapId = properties.getProperty("naver_map_id") ?: ""
 val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
@@ -44,6 +45,8 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "AWS_BASE_URL", "\"$awsBaseUrl\"")
+
 
         //manifest에서 사용
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey

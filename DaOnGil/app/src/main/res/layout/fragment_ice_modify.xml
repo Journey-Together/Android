@@ -58,8 +58,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="예) 19700101"
+                    android:hint="@string/text_birth_ex"
                     android:inputType="number"
+                    android:maxLength="8"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -86,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="혈액형을 입력해주세요."
+                    android:hint="@string/text_plz_enter_blood_type"
                     android:inputType="none"
                     android:paddingStart="@dimen/margin_small2"
                     android:paddingTop="@dimen/margin_big3"
@@ -100,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="의학적 질환"
+                android:text="@string/text_disease"
                 android:textSize="@dimen/font_big2" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -117,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="질환을 입력해주세요."
+                    android:hint="@string/text_plz_enter_disease"
                     android:inputType="text"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
@@ -128,7 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="알레르기 및 부작용"
+                android:text="@string/text_allergy"
                 android:textSize="@dimen/font_big2" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -145,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="알레르기 및 부작용을 입력해주세요."
+                    android:hint="@string/text_plz_enter_allergy"
                     android:inputType="text"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
@@ -156,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="투여약"
+                android:text="@string/text_medicine"
                 android:textSize="@dimen/font_big2" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -173,7 +174,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="투여약을 입력해주세요."
+                    android:hint="@string/text_plz_enter_medicine"
                     android:inputType="text"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
@@ -184,7 +185,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="긴급 연락처"
+                android:text="@string/text_emergency_contact"
                 android:textSize="@dimen/font_big2" />
 
             <LinearLayout
@@ -200,7 +201,6 @@
                     android:layout_weight="3"
                     app:boxBackgroundColor="@color/background_color"
                     app:boxBackgroundMode="filled"
-                    app:endIconMode="clear_text"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -208,7 +208,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="관계"
+                        android:hint="@string/text_relation"
                         android:inputType="text"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />
@@ -221,7 +221,6 @@
                     android:layout_weight="1"
                     app:boxBackgroundColor="@color/background_color"
                     app:boxBackgroundMode="filled"
-                    app:endIconMode="clear_text"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -229,8 +228,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="예) 010-1234-5678"
                         android:inputType="phone"
+                        android:hint="@string/text_contact_ex"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -249,7 +248,6 @@
                     android:layout_weight="3"
                     app:boxBackgroundColor="@color/background_color"
                     app:boxBackgroundMode="filled"
-                    app:endIconMode="clear_text"
                     app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
@@ -257,7 +255,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="관계"
+                        android:hint="@string/text_relation"
                         android:inputType="text"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />
@@ -279,8 +277,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:hint="예) 010-1234-5678"
                         android:inputType="phone"
+                        android:hint="@string/text_contact_ex"
                         android:paddingStart="@dimen/margin_small2"
                         android:textSize="@dimen/font_big3" />
                 </com.google.android.material.textfield.TextInputLayout>

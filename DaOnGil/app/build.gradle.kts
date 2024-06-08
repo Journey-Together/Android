@@ -22,6 +22,7 @@ val naverClientSecret = properties.getProperty("naverClientSecret") ?: ""
 val naverClientName = properties.getProperty("naverClientName") ?: ""
 val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
 val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
+val aedBaseUrl = properties.getProperty("aed_base_url")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -48,6 +49,7 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
 
         //manifest에서 사용
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey

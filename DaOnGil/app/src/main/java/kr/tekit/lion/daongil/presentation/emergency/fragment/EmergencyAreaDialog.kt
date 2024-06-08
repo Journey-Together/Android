@@ -93,7 +93,7 @@ class EmergencyAreaDialog(
             "강원도" -> "gangwon"
             "충청북도" -> "chungbuk"
             "충청남도" -> "chungnam"
-            "전라북도" -> "jeonbuk"
+            "전북특별자치도" -> "jeonbuk"
             "전라남도" -> "jeonnam"
             "경상북도" -> "gyeongbuk"
             "경상남도" -> "gyeongnam"

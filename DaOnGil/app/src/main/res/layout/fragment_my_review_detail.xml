@@ -76,46 +76,21 @@
                     android:textSize="@dimen/font_small1"
                     tools:text="2024.05.24 금 방문" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/margin_big1"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_big4"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_big4"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_big4"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_big4"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewDetailRating5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star_icon" />
-                </LinearLayout>
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/ratingbarMyReviewDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    app:srb_drawableEmpty="@drawable/star_icon"
+                    app:srb_drawableFilled="@drawable/star_filled_icon"
+                    app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
+                    app:srb_numStars="5"
+                    app:srb_rating="3.5"
+                    app:srb_starHeight="25dp"
+                    app:srb_starPadding="7dp"
+                    app:srb_starWidth="25dp"
+                    app:srb_stepSize="0.5" />
 
                 <TextView
                     android:id="@+id/textViewMyReviewDetailReviewContent"

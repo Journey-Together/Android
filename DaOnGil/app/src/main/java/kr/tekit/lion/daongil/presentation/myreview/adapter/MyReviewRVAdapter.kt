@@ -24,14 +24,6 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val it
     }
 
     class MyReviewViewHolder(val binding: ItemMyReviewBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
-        val Ratings = listOf(
-            binding.myReviewRating1,
-            binding.myReviewRating2,
-            binding.myReviewRating3,
-            binding.myReviewRating4,
-            binding.myReviewRating5
-        )
-
         init {
             binding.root.setOnClickListener {
                 itemClickListener.invoke(adapterPosition)
@@ -41,28 +33,6 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val it
         fun bind(myReview: MyReview) {
             binding.textViewMyReviewLocation.text = myReview.myReviewLocation
             binding.textViewMyReviewLocationName.text = myReview.myReviewLocationName
-
-            settingRating(myReview.rating)
-        }
-
-        private fun settingRating(rating: Double) {
-            for (i in 0 until 5) {
-                val imageView = Ratings[i]
-                when {
-                    rating >= (i + 1) -> {
-                        imageView.setImageResource(R.drawable.star_filled_icon)
-                        imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary))
-                    }
-                    rating >= (i + 0.5) -> {
-                        imageView.setImageResource(R.drawable.star_half_filled_icon)
-                        imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary))
-                    }
-                    else -> {
-                        imageView.setImageResource(R.drawable.star_icon)
-                        imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary_disabled))
-                    }
-                }
-            }
         }
     }
 }

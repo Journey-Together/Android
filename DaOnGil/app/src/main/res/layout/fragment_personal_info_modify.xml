@@ -11,7 +11,8 @@
         android:id="@+id/toolbarPersonalInfoModify"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize" >
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/back_icon" >
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,6 +40,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:cardCornerRadius="50dp"
+                app:strokeWidth="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +56,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/iconButtonMedia"
+                android:id="@+id/iconButtonPersonalInfoModify"
                 style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

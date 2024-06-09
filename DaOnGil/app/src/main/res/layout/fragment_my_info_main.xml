@@ -48,6 +48,7 @@
                         android:layout_height="65dp"
                         android:layout_marginLeft="@dimen/margin_basic"
                         app:cardCornerRadius="50dp"
+                        app:strokeWidth="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         tools:ignore="MissingConstraints">

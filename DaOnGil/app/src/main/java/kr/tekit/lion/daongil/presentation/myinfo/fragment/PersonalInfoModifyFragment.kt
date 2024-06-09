@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.myinfo.fragment
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,13 +24,17 @@ import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentPersonalInfoModifyBinding
 import kr.tekit.lion.daongil.domain.model.MyPersonalInfo
-import kr.tekit.lion.daongil.presentation.ext.compressImage
+import kr.tekit.lion.daongil.presentation.ext.compressBitmap
 import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.myinfo.ModifyState
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModelFactory
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
 
 class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modify) {
     private val viewModel: MyInfoViewModel by activityViewModels { MyInfoViewModelFactory() }
@@ -106,17 +111,20 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             btnSubmit.setOnClickListener {
                 if (isFormValid(binding)) {
                     val state = viewModel.modifyState.value
-                    val modifiedData = MyPersonalInfo(
-                        nickname = tvNickname.text.toString(),
-                        phone = tvPhone.text.toString()
-                    )
+                    val nickname = tvNickname.text.toString()
+                    val phone = tvPhone.text.toString()
+
                     when (state) {
                         ModifyState.ImgSelected -> {
-                            viewModel.onCompleteModifyPersonalWithImg(modifiedData)
+                            val file = File(viewModel.profileImg.value)
+                            val compressedImage = BitmapFactory.decodeFile(file.path).compressBitmap(80)
+                            val requestImage = RequestBody.create("image/jpeg".toMediaTypeOrNull(), compressedImage)
+                            val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestImage)
+                            //viewModel.onCompleteModifyPersonalWithImg(modifiedData, multipartBody)
                         }
 
                         ModifyState.ImgUnSelected -> {
-                            viewModel.onCompleteModifyPersonal(modifiedData)
+                            viewModel.onCompleteModifyPersonal(nickname, phone)
                         }
                     }
 
@@ -131,7 +139,6 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
                     findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment)
                 }
             }
-
         }
     }
 
@@ -173,10 +180,12 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             .fallback(R.drawable.default_profile)
             .into(view)
         val path = requireContext().toAbsolutePath(imgUrl)
-        val compressedImg = requireContext().compressImage(Uri.parse(path))
-        //viewModel.onSelectProfileImage(compressedImg)
+        val bitmap = BitmapFactory.decodeFile(path).compressBitmap(80)
+        viewModel.onSelectProfileImage(path)
         viewModel.modifyStateChange()
     }
+
+
 
     private fun isFormValid(binding: FragmentPersonalInfoModifyBinding): Boolean {
         val phoneNumber = binding.tvPhone.text.toString()

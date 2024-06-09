@@ -5,6 +5,7 @@ import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
 import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.aed.AedJsonAdapter
+import kr.tekit.lion.daongil.data.dto.remote.response.emergency.message.EmergencyMessageJsonAdapter
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.realtime.EmergencyRealtimeJsonAdapter
 import kr.tekit.lion.daongil.data.network.service.AedService
 import kr.tekit.lion.daongil.data.network.service.EmergencyService
@@ -84,6 +85,7 @@ object RetrofitInstance {
 
     private val emergencyMoshi = Moshi.Builder()
         .add(EmergencyRealtimeJsonAdapter())
+        .add(EmergencyMessageJsonAdapter())
         .add(KotlinJsonAdapterFactory())
         .build()
 

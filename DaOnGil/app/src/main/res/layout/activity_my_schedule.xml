@@ -25,7 +25,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,13 +47,11 @@
                 app:tabTextColor="@color/text_tertiary">
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItemMyScheduleUpcoming"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="다가오는 일정" />
 
                 <com.google.android.material.tabs.TabItem
-                    android:id="@+id/tabItemMyScheduleElapsed"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="다녀온 일정" />
@@ -64,7 +63,38 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingTop="@dimen/margin_big3"
-                android:paddingBottom="@dimen/margin_big2" />
+                android:paddingBottom="@dimen/margin_big2"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+            <LinearLayout
+                android:id="@+id/layoutMyScheduleEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="아직 등록된 일정이 없어요"
+                    android:textColor="@color/text_quaternary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyScheduleAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/margin_small1"
+                    android:text="@string/add_schedule"
+                    android:textColor="@color/text_quaternary"
+                    android:textSize="@dimen/font_small2" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -39,13 +39,15 @@
                 android:layout_marginStart="@dimen/margin_big3"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:layout_marginEnd="16dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="경주여행"
+                android:maxLines="1"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big2"
                 app:layout_constraintEnd_toStartOf="@+id/imageViewMyScheduleElapsed"
                 app:layout_constraintStart_toEndOf="@+id/viewMyScheduleElapsedDeco"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="경주여행" />
 
             <TextView
                 android:id="@+id/textViewMyScheduleElapsedPeriod"
@@ -54,11 +56,11 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="@dimen/margin_big4"
                 android:fontFamily="@font/pretendard_light"
-                android:text="2024.04.01 - 04.05"
                 android:textColor="@color/text_secondary"
                 app:layout_constraintBottom_toTopOf="@+id/buttonMyScheduleElapsedReview"
                 app:layout_constraintStart_toStartOf="@+id/textViewMyScheduleElapsedName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyScheduleElapsedName" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewMyScheduleElapsedName"
+                tools:text="2024.04.01 - 04.05" />
 
             <ImageView
                 android:id="@+id/imageViewMyScheduleElapsed"
@@ -72,7 +74,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/buttonMyScheduleElapsedReview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_view" />
+                app:srcCompat="@drawable/empty_view_small" />
 
             <Button
                 android:id="@+id/buttonMyScheduleElapsedReview"

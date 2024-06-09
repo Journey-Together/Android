@@ -24,7 +24,7 @@
             android:layout_height="match_parent">
 
             <View
-                android:id="@+id/viewRowScheduleRemainingDeco"
+                android:id="@+id/viewMyScheduleUpcomingDeco"
                 android:layout_width="5dp"
                 android:layout_height="0dp"
                 android:background="@color/primary"
@@ -33,88 +33,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/viewRowScheduleElapsedDeco"
-                android:layout_width="5dp"
-                android:layout_height="0dp"
-                android:background="@color/days_elapsed"
-                android:visibility="invisible"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
-                android:id="@+id/textViewRowScheduleName"
+                android:id="@+id/textViewMyScheduleUpcomingName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big3"
                 android:layout_marginTop="@dimen/margin_big4"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
+                android:maxLength="15"
+                android:maxLines="1"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco"
+                app:layout_constraintStart_toEndOf="@+id/viewMyScheduleUpcomingDeco"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="wrap"
                 tools:text="경주여행" />
 
             <TextView
-                android:id="@+id/textViewRowScheduleDDay"
+                android:id="@+id/textViewMyScheduleUpcomingDDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
                 android:enabled="true"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/color_schedule_d_day"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewRowScheduleName"
-                app:layout_constraintStart_toEndOf="@+id/textViewRowScheduleName"
-                app:layout_constraintTop_toTopOf="@+id/textViewRowScheduleName"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewMyScheduleUpcomingName"
+                app:layout_constraintStart_toEndOf="@+id/textViewMyScheduleUpcomingName"
+                app:layout_constraintTop_toTopOf="@+id/textViewMyScheduleUpcomingName"
                 tools:text="D-1" />
 
             <TextView
-                android:id="@+id/textViewRowSchedulePeriod"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="@dimen/margin_big4"
-                android:fontFamily="@font/pretendard_light"
-                android:textColor="@color/text_secondary"
-                app:layout_constraintBottom_toTopOf="@+id/buttonRowScheduleReview"
-                app:layout_constraintStart_toStartOf="@+id/textViewRowScheduleName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRowScheduleName"
-                tools:text="2024.04.01 - 2024.04.05" />
-
-            <ImageView
-                android:id="@+id/imageViewRowSchedule"
-                android:layout_width="@dimen/search_bar_height"
-                android:layout_height="@dimen/search_bar_height"
-                android:layout_marginTop="@dimen/margin_small1"
-                android:layout_marginEnd="@dimen/margin_small1"
-                android:layout_marginBottom="@dimen/margin_small1"
-                android:contentDescription="대표 사진"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toTopOf="@+id/buttonRowScheduleReview"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_view_small" />
-
-            <Button
-                android:id="@+id/buttonRowScheduleReview"
+                android:id="@+id/textViewMyScheduleUpcomingPeriod"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_small2"
+                android:layout_marginEnd="@dimen/margin_big3"
+                android:layout_marginBottom="@dimen/margin_big4"
+                android:fontFamily="@font/pretendard_light"
+                android:textColor="@color/text_secondary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewMyScheduleUpcoming"
+                app:layout_constraintStart_toEndOf="@+id/viewMyScheduleUpcomingDeco"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMyScheduleUpcomingName"
+                tools:text="2024.04.01 - 04.05" />
+
+            <ImageView
+                android:id="@+id/imageViewMyScheduleUpcoming"
+                android:layout_width="@dimen/search_bar_height"
+                android:layout_height="@dimen/search_bar_height"
                 android:layout_marginEnd="@dimen/margin_small1"
-                android:layout_marginBottom="@dimen/margin_small1"
-                android:background="@drawable/background_radius_5"
-                android:minHeight="0dp"
-                android:textColor="@color/text_quinary"
-                android:visibility="gone"
-                app:backgroundTint="@color/button_quaternary"
-                app:icon="@drawable/edit_icon"
-                app:iconGravity="textStart"
-                app:iconTint="@color/text_quinary"
+                android:contentDescription="대표 사진"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco"
-                tools:text="리뷰 쓰러가기" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/empty_view_small" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

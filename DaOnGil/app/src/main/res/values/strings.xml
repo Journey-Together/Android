@@ -101,6 +101,7 @@
     <string name="text_schedule_upcoming">다가오는 일정</string>
     <string name="text_schedule_elapsed">다녀온 일정</string>
     <string name="text_view_more">더보기</string>
+    <string name="text_browse_public_schedule">공개 일정 둘러보기</string>
 
     <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
     <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>

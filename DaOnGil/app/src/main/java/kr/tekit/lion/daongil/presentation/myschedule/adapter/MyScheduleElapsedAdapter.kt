@@ -47,8 +47,8 @@ class MyScheduleElapsedAdapter(
                 }
                 Glide.with(itemView.context)
                     .load(mySchedule.imageUrl)
-                    .placeholder(R.drawable.empty_view)
-                    .error(R.drawable.empty_view)
+                    .placeholder(R.drawable.empty_view_small)
+                    .error(R.drawable.empty_view_small)
                     .override(50, 50)
                     .into(binding.imageViewMyScheduleElapsed)
                 textViewMyScheduleElapsedName.text = mySchedule.title

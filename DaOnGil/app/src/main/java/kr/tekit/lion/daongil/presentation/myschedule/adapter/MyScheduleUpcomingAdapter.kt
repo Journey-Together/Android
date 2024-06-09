@@ -33,8 +33,8 @@ class MyScheduleUpcomingAdapter(private val mySchedules: List<MySchedule>, priva
                 textViewMyScheduleUpcomingPeriod.text =  "${mySchedule.startDate} - ${mySchedule.endDate}"
                 Glide.with(itemView.context)
                     .load(mySchedule.imageUrl)
-                    .placeholder(R.drawable.empty_view)
-                    .error(R.drawable.empty_view)
+                    .placeholder(R.drawable.empty_view_small)
+                    .error(R.drawable.empty_view_small)
                     .override(50, 50)
                     .into(binding.imageViewMyScheduleUpcoming)
                 root.setOnClickListener {

@@ -92,7 +92,7 @@ class PharmacyAreaDialog(
             "울산광역시" -> "ulsan"
             "세종특별자치시" -> "sejong"
             "경기도" -> "gyeonggi"
-            "강원도" -> "gangwon"
+            "강원특별자치도" -> "gangwon"
             "충청북도" -> "chungbuk"
             "충청남도" -> "chungnam"
             "전북특별자치도" -> "jeonbuk"

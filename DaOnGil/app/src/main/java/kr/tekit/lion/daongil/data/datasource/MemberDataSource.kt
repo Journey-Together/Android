@@ -34,6 +34,7 @@ class MemberDataSource(
     }
 
     suspend fun modifyMyIceInfo(request: MyIceInfoRequest){
+    suspend fun modifyMyIceInfo(request: RequestBody) {
         memberService.modifyMyIceInfo(request)
     }
 }

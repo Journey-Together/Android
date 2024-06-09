@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentIceModifyBinding
-import kr.tekit.lion.daongil.domain.model.MyIceInfo
+import kr.tekit.lion.daongil.domain.model.IceInfo
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
@@ -34,12 +34,10 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
             }
 
             buttonIceSubmit.setOnClickListener {
-                if (areAllFieldsEmpty(binding)) {
-                    showSnackbar(binding, "입력된 정보가 없습니다. 정보를 입력해주세요!")
-                } else if (isFormValid(binding)) {
+                if (isFormValid(binding)) {
                     showSnackbar(binding, "나의 응급 정보가 수정 되었습니다.")
                     viewModel.onCompleteModifyIce(
-                        MyIceInfo(
+                        IceInfo(
                             bloodType = tvBloodType.text.toString(),
                             birth = tvBirthday.text.toString(),
                             disease = tvDisease.text.toString(),
@@ -167,7 +165,7 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
                     firstInvalidField = tvContact1
                 }
                 isValid = false
-            }else {
+            }else if((relation1.isNotEmpty()) and (phoneNumber1.isNotEmpty())){
                 val phonePattern = "^010\\d{4}\\d{4}$"
                 if (!phoneNumber1.matches(phonePattern.toRegex())) {
                     tvContact2.requestFocus()
@@ -180,19 +178,19 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
             val phoneNumber2 = tvContact2.text.toString()
             val relation2 = tvRelation2.text.toString()
 
-            if ((relation2.isBlank() and phoneNumber2.isNotBlank())) {
+            if ((relation2.isEmpty() and phoneNumber2.isNotEmpty())) {
                 tvContact1.error = "관계를 입력해 주세요."
                 if (firstInvalidField == null) {
                     firstInvalidField = tvRelation2
                 }
                 isValid = false
-            } else if ((relation2.isNotBlank() and phoneNumber2.isBlank())) {
+            } else if ((relation2.isNotEmpty() and phoneNumber2.isEmpty())) {
                 tvContact1.error = "연락처를 입력해 주세요."
                 if (firstInvalidField == null) {
                     firstInvalidField = tvRelation2
                 }
                 isValid = false
-            } else {
+            } else if((relation2.isBlank()) and (phoneNumber2.isNotBlank())) {
                 val phonePattern = "^010\\d{4}\\d{4}$"
                 if (!phoneNumber2.matches(phonePattern.toRegex())) {
                     tvContact2.requestFocus()
@@ -209,15 +207,5 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
             }
             return isValid
         }
-    }
-
-
-    private fun areAllFieldsEmpty(binding: FragmentIceModifyBinding): Boolean {
-        return binding.tvBirthday.text.isNullOrBlank() and
-                binding.tvRelation1.text.isNullOrBlank() and
-                binding.tvContact1.text.isNullOrBlank() and
-                binding.tvRelation2.text.isNullOrBlank() and
-                binding.tvContact2.text.isNullOrBlank() and
-                binding.tvBloodType.text.isNullOrBlank()
     }
 }

@@ -30,7 +30,7 @@ class MemberRepositoryImpl(
         memberDataSource.modifyMyProfileImage(profileImage.toMultipartBody())
     }
 
-    override suspend fun modifyMyIceInfo(modifiedData: MyIceInfo) {
-        memberDataSource.modifyMyIceInfo(modifiedData.toRequestModel())
+    override suspend fun modifyMyIceInfo(request: IceInfo) {
+        memberDataSource.modifyMyIceInfo(request.toRequestBody())
     }
 }

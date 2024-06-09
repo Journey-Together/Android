@@ -1,9 +1,11 @@
 package kr.tekit.lion.daongil.data.dto.remote.request
 
-import com.squareup.moshi.JsonClass
-import kr.tekit.lion.daongil.domain.model.MyIceInfo
+import kr.tekit.lion.daongil.data.dto.remote.base.AdapterProvider.Companion.JsonAdapter
+import kr.tekit.lion.daongil.domain.model.IceInfo
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 
-@JsonClass(generateAdapter = true)
 data class MyIceInfoRequest (
     val bloodType: String,
     val birth: String,
@@ -16,14 +18,19 @@ data class MyIceInfoRequest (
     val part2_phone: String
 )
 
-fun MyIceInfo.toRequestModel() = MyIceInfoRequest(
-    bloodType = bloodType,
-    birth = birth,
-    disease = disease,
-    allergy = disease,
-    medication = medication,
-    part1_rel = part1Rel,
-    part1_phone = part1Phone,
-    part2_rel = part2Rel,
-    part2_phone = part2Phone
-)
+fun IceInfo.toRequestBody(): RequestBody {
+    return JsonAdapter(MyIceInfoRequest::class.java).toJson(
+        MyIceInfoRequest(
+            this.bloodType,
+            this.birth,
+            this.disease,
+            this.allergy,
+            this.medication,
+            this.part1Rel,
+            this.part1Phone,
+            this.part2Rel,
+            this.part2Phone
+        )
+    ).toRequestBody("application/json".toMediaTypeOrNull())
+}
+

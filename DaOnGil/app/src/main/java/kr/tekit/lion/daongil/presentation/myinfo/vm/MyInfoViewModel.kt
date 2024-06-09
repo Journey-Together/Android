@@ -6,8 +6,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.domain.model.MyIceInfo
+import kr.tekit.lion.daongil.domain.model.IceInfo
 import kr.tekit.lion.daongil.domain.model.MyPersonalInfo
+import kr.tekit.lion.daongil.domain.model.PersonalInfo
 import kr.tekit.lion.daongil.domain.usecase.GetMyInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.ModifyMyIceInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.ModifyMyPersonalInfoUseCase
@@ -15,7 +16,7 @@ import kr.tekit.lion.daongil.domain.usecase.ModifyMyProfileImageUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.presentation.myinfo.ModifyState
-import java.io.File
+import okhttp3.MultipartBody
 
 class MyInfoViewModel(
     private val getMyInfoUseCase: GetMyInfoUseCase,
@@ -36,15 +37,17 @@ class MyInfoViewModel(
     private val _name = MutableStateFlow("")
     val name = _name.asStateFlow()
 
-    private val _myIceInfo = MutableStateFlow(MyIceInfo())
-    val myIceInfo = _myIceInfo.asStateFlow()
+    private val _IceInfo = MutableStateFlow(IceInfo())
+    val myIceInfo = _IceInfo.asStateFlow()
 
     init {
-        initViewData()
+        initUiData()
     }
 
-    private fun initViewData() = viewModelScope.launch {
+    private fun initUiData() = viewModelScope.launch {
         getMyInfoUseCase().onSuccess {
+            _name.value = it.name ?: ""
+
             _myPersonalInfo.value = MyPersonalInfo(
                 nickname = it.nickname ?: "",
                 phone = it.phone ?: ""
@@ -52,7 +55,7 @@ class MyInfoViewModel(
 
             _profileImg.value = it.profileImage ?: ""
 
-            _myIceInfo.value = MyIceInfo(
+            _IceInfo.value = IceInfo(
                 bloodType = it.bloodType ?: "",
                 birth = it.birth ?: "",
                 disease = it.disease ?: "",
@@ -68,36 +71,36 @@ class MyInfoViewModel(
         }
     }
 
-    fun onSelectProfileImage(imgUrl: String?) {
-        Log.d("dasdas", imgUrl.toString())
-        imgUrl?.let { _profileImg.value = it }
-    }
-
-    fun onCompleteModifyPersonal(myPersonalInfo: MyPersonalInfo) {
-        _myPersonalInfo.value = myPersonalInfo
+    fun onCompleteModifyPersonal(nickname: String, phone: String) {
+        _myPersonalInfo.value = myPersonalInfo.value.copy(
+            nickname = nickname,
+            phone = phone
+        )
         viewModelScope.launch {
-            modifyMyPersonalInfoUseCase(myPersonalInfo)
+            modifyMyPersonalInfoUseCase(PersonalInfo(nickname, phone))
         }
     }
 
-    fun onCompleteModifyPersonalWithImg(myPersonalInfo: MyPersonalInfo) {
+    fun onCompleteModifyPersonalWithImg(
+        myPersonalInfo: MyPersonalInfo,
+        requestImg: MultipartBody.Part
+    ) {
         _myPersonalInfo.value = myPersonalInfo
 
         viewModelScope.launch {
-            modifyMyPersonalInfoUseCase(myPersonalInfo)
-            modifyMyProfileImageUseCase(profileImg.value).onSuccess {
+            //modifyMyPersonalInfoUseCase(myPersonalInfo)
+            modifyMyProfileImageUseCase(requestImg).onSuccess {
                 Log.d("MyOkHttpResult", it.toString())
-
             }.onError {
                 Log.d("MyOkHttpResult", it.toString())
             }
         }
     }
 
-    fun onCompleteModifyIce(myIceInfo: MyIceInfo) {
-        _myIceInfo.value = myIceInfo
+    fun onCompleteModifyIce(iceInfo: IceInfo) {
+        _IceInfo.value = iceInfo
         viewModelScope.launch {
-            modifyMyIceInfoUseCase(myIceInfo).onSuccess {
+            modifyMyIceInfoUseCase(iceInfo).onSuccess {
                 Log.d("MyOkHttpResult", "ModifyIce Complete")
             }.onError {
                 Log.d("MyOkHttpResult", "ModifyIce Failed $it")
@@ -105,11 +108,11 @@ class MyInfoViewModel(
         }
     }
 
-    fun modifyStateChange() {
-        _modifyState.value = ModifyState.ImgSelected
+    fun onSelectProfileImage(imgUrl: String?) {
+        imgUrl?.let { _profileImg.value = it }
     }
 
-    fun whenGetStringExtra(name: String) {
-        _name.value = name
+    fun modifyStateChange() {
+        _modifyState.value = ModifyState.ImgSelected
     }
 }

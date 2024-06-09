@@ -1,6 +1,6 @@
 package kr.tekit.lion.daongil.domain.model
 
-data class MyIceInfo(
+data class IceInfo(
     val bloodType: String = "",
     val birth: String = "",
     val disease: String = "",

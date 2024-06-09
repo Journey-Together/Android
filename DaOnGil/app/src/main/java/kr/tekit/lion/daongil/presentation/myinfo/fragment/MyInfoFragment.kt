@@ -47,22 +47,11 @@ class MyInfoFragment : Fragment(R.layout.fragment_my_info) {
                     tvContact2.text = it.part2Phone
                 }
             }
-        }
-        movePersonalInfoModify(binding)
-        moveIceModify(binding)
-    }
 
-
-    private fun movePersonalInfoModify(binding: FragmentMyInfoBinding) {
-        with(binding) {
             btnPersonalInfoModify.setOnClickListener {
                 findNavController().navigate(R.id.action_myInfoFragment_to_personalInfoModifyFragment)
             }
-        }
-    }
 
-    private fun moveIceModify(binding: FragmentMyInfoBinding) {
-        with(binding) {
             bntIceModify.setOnClickListener {
                 findNavController().navigate(R.id.action_myInfoFragment_to_iceModifyFragment)
             }

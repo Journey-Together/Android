@@ -19,6 +19,7 @@ interface MemberRepository {
 
     suspend fun modifyMyPersonalInfo(request: PersonalInfo)
 
+    suspend fun modifyMyIceInfo(request: IceInfo)
 
     companion object{
         fun create(): MemberRepositoryImpl{

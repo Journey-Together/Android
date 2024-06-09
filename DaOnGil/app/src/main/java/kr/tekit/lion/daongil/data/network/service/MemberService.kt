@@ -34,9 +34,10 @@ interface MemberService {
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     )
 
+    @Multipart
     @PATCH("member")
     suspend fun modifyMyIceInfo(
-        @Body request: MyIceInfoRequest,
+        @Part("memberReq") memberReq: RequestBody,
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     )
 

@@ -39,12 +39,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big3"
                 android:layout_marginTop="@dimen/margin_big4"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
-                tools:text="경주여행"
+                android:maxLength="15"
+                android:maxLines="1"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big2"
                 app:layout_constraintStart_toEndOf="@+id/viewMyScheduleUpcomingDeco"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="wrap"
+                tools:text="경주여행" />
 
             <TextView
                 android:id="@+id/textViewMyScheduleUpcomingDDay"
@@ -53,24 +57,27 @@
                 android:layout_marginStart="@dimen/margin_small1"
                 android:enabled="true"
                 android:fontFamily="@font/pretendard_semibold"
-                tools:text="D-1"
                 android:textColor="@color/color_schedule_d_day"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewMyScheduleUpcomingName"
                 app:layout_constraintStart_toEndOf="@+id/textViewMyScheduleUpcomingName"
-                app:layout_constraintTop_toTopOf="@+id/textViewMyScheduleUpcomingName" />
+                app:layout_constraintTop_toTopOf="@+id/textViewMyScheduleUpcomingName"
+                tools:text="D-1" />
 
             <TextView
                 android:id="@+id/textViewMyScheduleUpcomingPeriod"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginStart="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_small2"
+                android:layout_marginEnd="@dimen/margin_big3"
+                android:layout_marginBottom="@dimen/margin_big4"
                 android:fontFamily="@font/pretendard_light"
-                tools:text="2024.04.01 - 04.05"
                 android:textColor="@color/text_secondary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewMyScheduleUpcomingName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyScheduleUpcomingName" />
+                app:layout_constraintEnd_toStartOf="@+id/imageViewMyScheduleUpcoming"
+                app:layout_constraintStart_toEndOf="@+id/viewMyScheduleUpcomingDeco"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMyScheduleUpcomingName"
+                tools:text="2024.04.01 - 04.05" />
 
             <ImageView
                 android:id="@+id/imageViewMyScheduleUpcoming"
@@ -82,7 +89,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_view" />
+                app:srcCompat="@drawable/empty_view_small" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

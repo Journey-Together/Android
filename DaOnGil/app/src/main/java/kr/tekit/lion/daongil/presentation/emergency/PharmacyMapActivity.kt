@@ -33,6 +33,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityPharmacyMapBinding
 import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
 import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyAreaDialog
+import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyBottomSheet
 import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModel
 import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModelFactory
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
@@ -126,6 +127,11 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    private fun setBottomRecylcerView(pharmacyBottomList: List<PharmacyMapInfo>){
+        val pharmacyBottomSheet = PharmacyBottomSheet(binding.pharamcyBottomSheet, pharmacyBottomList)
+        pharmacyBottomSheet.setRecyclerView()
+    }
+
     private fun initBottomSheet() {
 
         val observer = object : ViewTreeObserver.OnGlobalLayoutListener {
@@ -181,6 +187,8 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         naverMap.setOnMapClickListener { _, _ ->
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+            viewModel.pharmacyMapInfo.value?.let { setBottomRecylcerView(it) }
 
             // 선택된 마커가 있는 경우 unselected 상태로 변경
             this.selectedMarker?.let { marker ->
@@ -295,10 +303,12 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
 
                     val boundsBuilder = LatLngBounds.Builder()
+                    val pharmacyList = mutableListOf<PharmacyMapInfo>()
 
                     pharmacyMapInfo.map {
                         addMarker(it, latitude, longitude)
                         boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+                        pharmacyList.add(it)
                     }
 
                     val bounds = boundsBuilder.build()
@@ -310,6 +320,7 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             }
                         }
                     naverMap.moveCamera(cameraUpdate)
+                    setBottomRecylcerView(pharmacyList)
                 }
 
                 // 위치 오버레이 설정
@@ -354,10 +365,12 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
 
             val boundsBuilder = LatLngBounds.Builder()
+            val pharmacyList = mutableListOf<PharmacyMapInfo>()
 
             pharmacyMapInfo.map {
                 addMarker(it, latitude, longitude)
                 boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+                pharmacyList.add(it)
             }
 
             val bounds = boundsBuilder.build()
@@ -369,6 +382,7 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             naverMap.moveCamera(cameraUpdate)
+            setBottomRecylcerView(pharmacyList)
         }
     }
 
@@ -434,16 +448,7 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 this.height = 130
                 this.zIndex = 10
 
-              /*  setBottomRecylcerView(
-                    listOf(
-                        EmergencyBottom(
-                            null,
-                            "aed",
-                            null,
-                            aedMapInfo
-                        )
-                    )
-                )*/
+                setBottomRecylcerView(listOf(pharmacyMapInfo))
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }

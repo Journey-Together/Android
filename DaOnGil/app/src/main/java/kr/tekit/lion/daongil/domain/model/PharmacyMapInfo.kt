@@ -1,6 +1,6 @@
 package kr.tekit.lion.daongil.domain.model
 
-import com.squareup.moshi.Moshi
+import java.io.Serializable
 
 data class PharmacyMapInfo (
     val pharmacyAddress: String?,
@@ -17,5 +17,5 @@ data class PharmacyMapInfo (
     val holTime: String?,
     val pharmacyLat: Double?,
     val pharmacyLon: Double?
-)
+): Serializable
 

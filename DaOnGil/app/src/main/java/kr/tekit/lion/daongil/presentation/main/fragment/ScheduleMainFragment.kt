@@ -12,6 +12,7 @@ import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
+import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 
 class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
@@ -25,6 +26,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         initView(binding)
         settingRecyclerView(binding, requireContext())
         initNewScheduleButton(binding)
+
+        initMoreViewClickListener(binding)
     }
 
     private fun initView(binding : FragmentScheduleMainBinding){
@@ -92,5 +95,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     override fun onPosBtnClick() {
         // login 화면으로 이동
+    }
+
+    private fun initMoreViewClickListener(binding : FragmentScheduleMainBinding){
+        binding.textViewMyScheduleMore.setOnClickListener {
+            val intent = Intent(requireActivity(), MyScheduleActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

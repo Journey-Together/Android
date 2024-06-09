@@ -134,7 +134,7 @@
 
                 <TextView
                     android:id="@+id/pharmLocationText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
@@ -145,6 +145,7 @@
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/pharmLocationIcon"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 

@@ -16,7 +16,7 @@ data class PharmacyResponse(
                 pharmacyAddress = item.dutyAddr,
                 pharmacyName = item.dutyName,
                 pharmacyTel = item.dutyTel1,
-                pharmacyLocation = item.dutyMapimg,
+                pharmacyLocation = item.dutyMapimg ?: "정보 없음",
                 monTime = convertTimeFormat(item.dutyTime1s.toString() + "-" + item.dutyTime1c.toString()),
                 tueTime = convertTimeFormat(item.dutyTime2s.toString() + "-" + item.dutyTime2c.toString()),
                 wedTime = convertTimeFormat(item.dutyTime3s.toString() + "-" + item.dutyTime3c.toString()),

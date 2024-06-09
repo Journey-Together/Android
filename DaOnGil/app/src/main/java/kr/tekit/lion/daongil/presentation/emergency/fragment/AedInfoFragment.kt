@@ -25,34 +25,37 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
 
         val data = requireActivity().intent.getSerializableExtra("data") as? EmergencyBottom
 
-        binding.aedName.text = data?.aedList?.aedName
-        binding.aedAddress.text = data?.aedList?.aedAdress
-        binding.aedLocationText.text = data?.aedList?.aedLocation
-        binding.aedMonTime.text = data?.aedList?.monTime
-        binding.aedTueTime.text = data?.aedList?.tueTime
-        binding.aedWedTime.text = data?.aedList?.wedTime
-        binding.aedThuTime.text = data?.aedList?.thuTime
-        binding.aedFriTime.text = data?.aedList?.friTime
-        binding.aedSatTime.text = data?.aedList?.satTime
-        binding.aedSunTime.text = data?.aedList?.sunTime
-        binding.aedHolTime.text = data?.aedList?.holTime
+        with(binding) {
+            aedName.text = data?.aedList?.aedName
+            aedAddress.text = data?.aedList?.aedAdress
+            aedLocationText.text = data?.aedList?.aedLocation
+            aedMonTime.text = data?.aedList?.monTime
+            aedTueTime.text = data?.aedList?.tueTime
+            aedWedTime.text = data?.aedList?.wedTime
+            aedThuTime.text = data?.aedList?.thuTime
+            aedFriTime.text = data?.aedList?.friTime
+            aedSatTime.text = data?.aedList?.satTime
+            aedSunTime.text = data?.aedList?.sunTime
+            aedHolTime.text = data?.aedList?.holTime
 
-        binding.aedSunWeekText.text = "일요일은 ${data?.aedList?.sunAvailable}에 사용이 가능합니다."
+            aedSunWeekText.text = "일요일은 ${data?.aedList?.sunAvailable}에 사용이 가능합니다."
 
-        binding.emergencyCall.setOnClickListener {
-            val phoneNumber = data?.aedList?.aedTel
-            if (!phoneNumber.isNullOrBlank()) {
-                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-                startActivity(intent)
+            emergencyCall.setOnClickListener {
+                val phoneNumber = data?.aedList?.aedTel
+                if (!phoneNumber.isNullOrBlank()) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                    startActivity(intent)
+                }
+            }
+
+            mainEmergencyCall.setOnClickListener {
+                val phoneNumber = data?.aedList?.managerTel
+                if (!phoneNumber.isNullOrBlank()) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                    startActivity(intent)
+                }
             }
         }
 
-        binding.mainEmergencyCall.setOnClickListener {
-            val phoneNumber = data?.aedList?.managerTel
-            if (!phoneNumber.isNullOrBlank()) {
-                val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
-                startActivity(intent)
-            }
-        }
     }
 }

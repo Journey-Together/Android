@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemEmergencyMessageBinding
-import kr.tekit.lion.daongil.domain.model.EmergencyMessage
+import kr.tekit.lion.daongil.domain.model.EmergencyMessageInfo
 
-class EmergencyMessageAdapter(private val emergencyMessageList: List<EmergencyMessage>) :
+class EmergencyMessageAdapter(private val emergencyMessageList: List<EmergencyMessageInfo>) :
     RecyclerView.Adapter<EmergencyMessageAdapter.EmergencyMessageViewHolder>() {
 
     override fun onCreateViewHolder(
@@ -35,7 +35,7 @@ class EmergencyMessageAdapter(private val emergencyMessageList: List<EmergencyMe
 
     class EmergencyMessageViewHolder(private val binding: ItemEmergencyMessageBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: EmergencyMessage) {
+        fun bind(item: EmergencyMessageInfo) {
             binding.emergencyMessageText.text = item.emergencyMessage
             binding.emergencyMessageDate.text = item.emergencyDate
         }

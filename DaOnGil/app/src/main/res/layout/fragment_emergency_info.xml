@@ -461,6 +461,55 @@
                 app:dividerColor="@color/primary_disabled"
                 app:dividerThickness="2dp" />
 
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/emrDefaultMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:backgroundTint="@color/item_background"
+                app:cardCornerRadius="10dp"
+                app:strokeColor="@color/text_tertiary"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/margin_big3">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:src="@drawable/emergency_message_img" />
+
+                        <TextView
+                            android:id="@+id/emergency_message_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_big4"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:text="응급실 이용 안내 메세지가 현재 없습니다."
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_small1"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/emergency_message_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="53dp"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_small3"/>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/emergencyMessageRV"
                 android:layout_width="match_parent"
@@ -470,6 +519,7 @@
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_emergency_message"
+                android:visibility="gone"
                 tools:itemCount="10"/>
 
             <TextView

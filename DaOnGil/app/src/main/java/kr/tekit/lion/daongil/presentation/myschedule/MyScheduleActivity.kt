@@ -21,6 +21,7 @@ class MyScheduleActivity : AppCompatActivity() {
 
         settingToolbar()
         settingMyScheduleTab()
+        settingUpcomingScheduleAdapter()
     }
 
     private fun settingToolbar(){

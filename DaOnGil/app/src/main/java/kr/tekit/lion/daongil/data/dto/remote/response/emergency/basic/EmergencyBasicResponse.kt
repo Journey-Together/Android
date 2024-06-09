@@ -26,10 +26,10 @@ data class EmergencyBasicResponse(
 
 
     fun checkAvailability(input: String?): String {
-        if (input == null) return "정보 없음"
+        if (input == null) return "정보가 없습니다."
         return when {
-            'Y' in input -> "진료 가능합니다"
-            'N' in input -> "진료 불가능합니다"
+            'Y' in input -> "진료 가능합니다."
+            'N' in input -> "진료 불가능합니다."
             else -> "정보 없음"
         }
     }

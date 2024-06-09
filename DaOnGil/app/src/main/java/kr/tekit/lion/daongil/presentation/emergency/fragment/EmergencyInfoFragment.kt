@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -46,7 +47,9 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
             emergencyAddress.text = data.emergencyList?.hospitalAddress
             emergencyUpdate.text = data.emergencyList?.lastUpdateDate
             emergency.text = data.emergencyList?.emergencyCount.toString() + " / " + data.emergencyList?.emergencyAllCount.toString()
-            kidEmergency.text = data.emergencyList?.emergencyKidCount.toString() + " / " + data.emergencyList?.emergencyKidAllCount.toString()
+            kidEmergency.text =
+                if (data.emergencyList?.emergencyKid.isNullOrEmpty()) "운영하지 않습니다."
+                else data.emergencyList?.emergencyKidCount.toString() + " / " + data.emergencyList?.emergencyKidAllCount.toString()
             emergencyDialysis.text = data.emergencyList?.dialysis
             emergencyBirth.text = data.emergencyList?.earlyBirth
             emergencyBurns.text = data.emergencyList?.burns

@@ -1,12 +1,16 @@
 package kr.tekit.lion.daongil.presentation.emergency.fragment
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentEmergencyInfoBinding
+import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 import kr.tekit.lion.daongil.domain.model.EmergencyMessage
 import kr.tekit.lion.daongil.presentation.emergency.adapter.EmergencyMessageAdapter
 
@@ -34,7 +38,58 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
         val binding = FragmentEmergencyInfoBinding.bind(view)
 
+        val data = requireActivity().intent.getSerializableExtra("data") as EmergencyBottom
+
         with(binding){
+
+            emergencyName.text = data.emergencyList?.hospitalName
+            emergencyAddress.text = data.emergencyList?.hospitalAddress
+            emergencyUpdate.text = data.emergencyList?.lastUpdateDate
+            emergency.text = data.emergencyList?.emergencyCount.toString() + " / " + data.emergencyList?.emergencyAllCount.toString()
+            kidEmergency.text = data.emergencyList?.emergencyKidCount.toString() + " / " + data.emergencyList?.emergencyKidAllCount.toString()
+            emergencyDialysis.text = data.emergencyList?.dialysis
+            emergencyBirth.text = data.emergencyList?.earlyBirth
+            emergencyBurns.text = data.emergencyList?.burns
+
+            emergencyCall.setOnClickListener {
+                val phoneNumber = data.emergencyList?.emergencyTel
+                if (!phoneNumber.isNullOrBlank()) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                    startActivity(intent)
+                }
+            }
+
+            mainEmergencyCall.setOnClickListener {
+                val phoneNumber = data.emergencyList?.hospitalTel
+                if (!phoneNumber.isNullOrBlank()) {
+                    val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
+                    startActivity(intent)
+                }
+            }
+
+            data.emergencyList?.emergencyBed?.let { it ->
+                val emergencyKidBedIcon = binding.emergencyRadius
+                val colorResId = when {
+                    it >= 80 -> R.color.emergency_green
+                    it >= 50 -> R.color.emergency_yellow
+                    else -> R.color.emergency_red
+                }
+                val colorStateList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colorResId))
+                emergencyKidBedIcon.setBackgroundTintList(colorStateList)
+            }
+
+            data.emergencyList?.emergencyKidBed?.let { it ->
+                val emergencyKidBedIcon = binding.kidEmergencyRadius
+                val colorResId = when {
+                    it >= 80 -> R.color.emergency_green
+                    it >= 50 -> R.color.emergency_yellow
+                    else -> R.color.emergency_red
+                }
+                val colorStateList = ColorStateList.valueOf(ContextCompat.getColor(requireContext(), colorResId))
+                emergencyKidBedIcon.setBackgroundTintList(colorStateList)
+            }
+
+
             emergencyMessageCount.text = emergencyMessageList.size.toString()
             emergencyMessageRV.adapter = emergencyMessageadapter
 

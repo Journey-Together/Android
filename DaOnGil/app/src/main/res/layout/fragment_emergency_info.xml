@@ -39,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="연세대학교의과대학강남세브란스병원"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big1" />
 
@@ -62,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="서울특별시 강남구 언주로 211, 강남세브란스병원 (도곡동)"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1" />
 
@@ -129,12 +127,12 @@
                     android:src="@drawable/update_icon" />
 
                 <TextView
+                    android:id="@+id/emergencyUpdate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small2"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:text="2024.05.24 03:20:37"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small2" />
             </LinearLayout>
@@ -245,8 +243,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="180dp"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="@color/emergency_yellow"
                     android:gravity="center_vertical"
+                    android:backgroundTint="@color/primary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -259,7 +257,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="21 / 28"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -295,8 +292,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginEnd="180dp"
                     android:background="@drawable/emergency_radius"
-                    android:backgroundTint="@color/emergency_green"
                     android:gravity="center_vertical"
+                    android:backgroundTint="@color/primary"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -309,7 +306,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="21 / 28"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -346,7 +342,6 @@
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="진료 가능합니다."
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -383,7 +378,6 @@
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="진료 가능합니다."
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -420,7 +414,6 @@
                     android:layout_marginStart="108dp"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="진료 불가능합니다."
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"

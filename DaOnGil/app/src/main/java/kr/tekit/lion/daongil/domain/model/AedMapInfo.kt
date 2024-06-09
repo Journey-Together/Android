@@ -1,5 +1,7 @@
 package kr.tekit.lion.daongil.domain.model
 
+import java.io.Serializable
+
 data class AedMapInfo (
     val aedName: String?,
     val aedAdress: String?,
@@ -17,4 +19,4 @@ data class AedMapInfo (
     val sunAvailable: String?,
     val aedLon: Double?,
     val aedLat: Double?
-)
+): Serializable

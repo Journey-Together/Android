@@ -29,8 +29,8 @@ class EmergencyInfoActivity : AppCompatActivity() {
         val fragmentManager = supportFragmentManager.beginTransaction()
 
         when(name) {
-            "Emergency" -> fragmentManager.replace(R.id.emergency_info_container, EmergencyInfoFragment())
-            "Aed" -> fragmentManager.replace(R.id.emergency_info_container, AedInfoFragment())
+            "emergency" -> fragmentManager.replace(R.id.emergency_info_container, EmergencyInfoFragment())
+            "aed" -> fragmentManager.replace(R.id.emergency_info_container, AedInfoFragment())
             "Pharmacy" -> fragmentManager.replace(R.id.emergency_info_container, PharmacyInfoFragment())
         }
 

@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemMyScheduleElapsedBinding
 import kr.tekit.lion.daongil.domain.model.MySchedule
@@ -42,6 +41,10 @@ class MyScheduleElapsedAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(mySchedule: MySchedule) {
             binding.apply {
+                val hasReview = mySchedule.hasReview
+                if(hasReview != null){
+                    buttonMyScheduleElapsedReview.text = if(hasReview) "리뷰 작성 완료" else "리뷰 쓰러가기"
+                }
                 Glide.with(itemView.context)
                     .load(mySchedule.imageUrl)
                     .placeholder(R.drawable.empty_view)

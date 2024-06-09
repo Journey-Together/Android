@@ -37,11 +37,11 @@ data class AedResponse(
     fun convertTimeFormat(timeRange: String): String {
         val times = timeRange.split("-")
         if (times.size != 2) {
-            return "-"
+            return "정보 없음"
         }
 
         if (times.any { it.length != 4 || !it.all { char -> char.isDigit() } }) {
-            return "-"
+            return "정보 없음"
         }
 
         val startTime = times[0].padStart(4, '0')

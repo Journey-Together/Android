@@ -80,7 +80,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/buttonRowScheduleReview"
                 app:layout_constraintStart_toStartOf="@+id/textViewRowScheduleName"
                 app:layout_constraintTop_toBottomOf="@+id/textViewRowScheduleName"
-                tools:text="2024.04.01 - 04.05" />
+                tools:text="2024.04.01 - 2024.04.05" />
 
             <ImageView
                 android:id="@+id/imageViewRowSchedule"
@@ -94,7 +94,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/buttonRowScheduleReview"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_view" />
+                app:srcCompat="@drawable/empty_view_small" />
 
             <Button
                 android:id="@+id/buttonRowScheduleReview"
@@ -105,7 +105,6 @@
                 android:layout_marginBottom="@dimen/margin_small1"
                 android:background="@drawable/background_radius_5"
                 android:minHeight="0dp"
-                android:text="리뷰 쓰러가기"
                 android:textColor="@color/text_quinary"
                 android:visibility="gone"
                 app:backgroundTint="@color/button_quaternary"
@@ -114,7 +113,8 @@
                 app:iconTint="@color/text_quinary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco" />
+                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco"
+                tools:text="리뷰 쓰러가기" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

@@ -4,11 +4,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
+import kr.tekit.lion.daongil.databinding.ItemBookmarkDisabiltiyTypeBinding
 import kr.tekit.lion.daongil.databinding.ItemDisabilityTypeBinding
 
 class bookmarkDisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Adapter<bookmarkDisabilityRVAdapter.bookmarkDisabilityViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): bookmarkDisabilityViewHolder {
-        val binding : ItemDisabilityTypeBinding = ItemDisabilityTypeBinding.inflate(
+        val binding : ItemBookmarkDisabiltiyTypeBinding = ItemBookmarkDisabiltiyTypeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
         return bookmarkDisabilityViewHolder(binding)
@@ -20,7 +21,7 @@ class bookmarkDisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Ad
         holder.bind(typeList[position])
     }
 
-    class bookmarkDisabilityViewHolder(val binding: ItemDisabilityTypeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class bookmarkDisabilityViewHolder(val binding: ItemBookmarkDisabiltiyTypeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : String) {
             val typeId = when(item) {
                 "physical_disability" -> R.drawable.physical_disability_radius_icon

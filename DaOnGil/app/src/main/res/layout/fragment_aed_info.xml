@@ -162,7 +162,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="대회의실(3층)"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -212,7 +211,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -262,7 +260,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -312,7 +309,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -362,7 +358,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -412,7 +407,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -462,7 +456,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -512,7 +505,6 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -528,7 +520,7 @@
                 android:layout_marginTop="@dimen/margin_big4">
 
                 <TextView
-                    android:id="@+id/aedOffTitle"
+                    android:id="@+id/aedHolTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -542,7 +534,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/aedOffIcon"
+                    android:id="@+id/aedHolIcon"
                     android:layout_width="15dp"
                     android:layout_height="15dp"
                     android:layout_gravity="center_vertical"
@@ -555,18 +547,17 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/aedOffTime"
+                    android:id="@+id/aedHolTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_semibold"
                     android:gravity="center_vertical"
-                    android:text="9:00-18:00"
                     android:textColor="@color/text_secondary"
                     android:textSize="@dimen/font_small1"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/aedOffIcon"
+                    app:layout_constraintStart_toEndOf="@+id/aedHolIcon"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -621,7 +612,6 @@
                             android:layout_marginStart="@dimen/margin_big4"
                             android:fontFamily="@font/pretendard_semibold"
                             android:layout_gravity="center_vertical"
-                            android:text="일요일은 둘째주, 넷째주에만 사용이 가능합니다."
                             android:textColor="@color/text_secondary"
                             android:textSize="@dimen/font_small1"/>
                     </LinearLayout>

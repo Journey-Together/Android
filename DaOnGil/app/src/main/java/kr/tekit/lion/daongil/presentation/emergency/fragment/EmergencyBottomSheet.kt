@@ -1,8 +1,10 @@
 package kr.tekit.lion.daongil.presentation.emergency.fragment
 
-import android.util.Log
+import android.content.Context
+import android.content.Intent
 import kr.tekit.lion.daongil.databinding.EmergencyBottomSheetLayoutBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.presentation.emergency.EmergencyInfoActivity
 import kr.tekit.lion.daongil.presentation.emergency.adapter.EmergencyBottomAdapter
 
 class EmergencyBottomSheet(
@@ -13,7 +15,12 @@ class EmergencyBottomSheet(
    private val emergencyBottomadapter: EmergencyBottomAdapter by lazy {
       EmergencyBottomAdapter(emergencyBottomList,
          itemClickListener = { id, item ->
-            Log.d("testId", id)
+            val context: Context = binding.root.context
+            val intent = Intent(context, EmergencyInfoActivity::class.java)
+            intent.putExtra("infoType", item.emergencyType)
+            intent.putExtra("data", item)
+            intent.putExtra("id", id)
+            context.startActivity(intent)
          }
       )
    }

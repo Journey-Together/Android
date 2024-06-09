@@ -1,8 +1,11 @@
 package kr.tekit.lion.daongil.domain.model
 
+import java.io.Serializable
+
+
 data class EmergencyBottom(
-    val emergencyList: EmergencyMapInfo,
+    val emergencyList: EmergencyMapInfo?,
     val emergencyType: String,
-    val emergencyId: String,
-    // 약국이랑 aed list도 추가
-)
+    val emergencyId: String?,
+    val aedList: AedMapInfo?
+): Serializable

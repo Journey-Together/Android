@@ -24,6 +24,9 @@
             android:name=".presentation.myschedule.MyScheduleActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.schedule.ScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.home.WriteReviewActivity"
             android:exported="false" />
         <activity

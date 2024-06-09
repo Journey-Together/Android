@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -66,6 +65,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        getEmergencyMap()
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
         launcherForPermission = registerForActivityResult(contracts) { permissions ->
@@ -79,12 +79,15 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             if (!shouldShowRequestPermissionRationale(permission)) {
                                 permissionDeniedMapUiSetting()
                                 showPermissionSnackBar(binding.root)
+
+                                permissionDeniedMapSetting()
                             }
                         }
 
                         else -> {
                             permissionDeniedMapUiSetting()
                             showPermissionSnackBar(binding.root)
+                            permissionDeniedMapSetting()
                         }
                     }
                 }
@@ -235,8 +238,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 when (mode) {
                     "None" -> locationTrackingMode = LocationTrackingMode.Follow
                     "Follow", "NoFollow" -> {
-                        getEmergencyMap()
-                        setEmergencyMap()
+                        permissionGrantedMapSetting()
                     }
                 }
             }
@@ -286,7 +288,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setEmergencyMap() {
+    private fun permissionGrantedMapSetting() {
         if (ActivityCompat.checkSelfPermission(
                 this@EmergencyMapActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
@@ -300,8 +302,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             // 사용자 현재 위치 받아오기
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
-                val latitude = location?.latitude ?: 35.1798159
-                val longitude = location?.longitude ?: 129.0750222
+                val latitude = location?.latitude ?: 37.5670135
+                val longitude = location?.longitude ?: 126.9783740
 
                 val coords = "$longitude,$latitude"
 
@@ -371,6 +373,59 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 // 축적바
                 isScaleBarEnabled = true
             }
+        }
+    }
+
+    private fun permissionDeniedMapSetting() {
+        val latitude = 37.5670135
+        val longitude = 126.9783740
+
+        val coords = "$longitude,$latitude"
+
+        viewModel.getUserLocationRegion(coords)
+
+        // 비동기 데이터 관찰
+        viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
+
+            val boundsBuilder = LatLngBounds.Builder()
+            val emergencyList = mutableListOf<EmergencyBottom>()
+
+            // AED 마커 추가
+            viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
+                aedMapInfo.map {
+                    addAedMarker(it, latitude, longitude)
+                    if(emergencyMapInfo.isEmpty()){
+                        boundsBuilder.include(LatLng(it.aedLat ?: latitude, it.aedLon ?: longitude))
+                    }
+                }
+            }
+
+            emergencyMapInfo.map {
+                addEmergencyMarker(it, latitude, longitude)
+                emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString(), null))
+                boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
+            }
+
+            setBottomRecylcerView(emergencyList.toList())
+            val bounds = boundsBuilder.build()
+            val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
+                .finishCallback {
+                    lifecycleScope.launch {
+                        delay(500)
+                        binding.emergencyMapProgressBar.setProgressCompat(100, true)
+                    }
+                }
+            naverMap.moveCamera(cameraUpdate)
+        }
+
+        // 위치 오버레이 설정
+        with(naverMap.locationOverlay) {
+            isVisible = true
+            position = LatLng(latitude, longitude)
+        }
+
+        viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
+            binding.emergencyMapProgressBar.setProgressCompat(20, true)
         }
     }
 
@@ -534,11 +589,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         marker.map = naverMap
     }
-
-
-
-
-
 
     private fun isNightMode(): Boolean {
         val currentNightMode =

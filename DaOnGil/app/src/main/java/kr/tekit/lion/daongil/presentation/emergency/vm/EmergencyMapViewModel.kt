@@ -92,7 +92,11 @@ class EmergencyMapViewModel(
         }
 
     fun setArea(area: String?, areaDetail: String?) {
-        _area.value = "$area $areaDetail"
+        if(areaDetail.isNullOrEmpty()){
+            _area.value = "$area"
+        } else {
+            _area.value = "$area $areaDetail"
+        }
         _areaUpdate.value = Unit
     }
 }

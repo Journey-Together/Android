@@ -24,12 +24,14 @@ import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityPharmacyMapBinding
-import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
 import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyAreaDialog
 import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModel
 import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModelFactory
@@ -52,7 +54,10 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         BottomSheetBehavior.from(binding.pharamcyBottomSheet.emergencyBottomSheetLayout)
     }
 
-    private val viewModel: PharmacyMapViewModel by viewModels{PharmacyMapViewModelFactory()}
+    private val viewModel: PharmacyMapViewModel by viewModels{ PharmacyMapViewModelFactory() }
+
+    private var selectedMarker: Marker? = null
+    private val markers = mutableListOf<Marker>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,8 +66,9 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         setToolbar()
         initBottomSheet()
         initMap()
-        setAreaButton()
+        setAreaUi()
         settingDialog()
+        getPharmacyMap()
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
         launcherForPermission = registerForActivityResult(contracts) { permissions ->
@@ -98,9 +104,15 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun setAreaButton(){
+    private fun setAreaUi(){
         viewModel.area.observe(this@PharmacyMapActivity) { area ->
             binding.pharamcyMapArea.text = area
+            binding.pharmacyMapProgressBar.setProgressCompat(20, true)
+
+            markers.map {
+                it.map = null
+            }
+            markers.clear()
         }
     }
 
@@ -169,6 +181,17 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         naverMap.setOnMapClickListener { _, _ ->
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+
+            // 선택된 마커가 있는 경우 unselected 상태로 변경
+            this.selectedMarker?.let { marker ->
+                marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
+                marker.isHideCollidedMarkers = true
+                marker.isForceShowIcon = false
+                marker.width = 56
+                marker.height = 60
+                marker.zIndex = 0
+                this.selectedMarker = null
+            }
         }
 
         if (ActivityCompat.checkSelfPermission(
@@ -269,6 +292,26 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 viewModel.getUserLocationRegion(coords)
 
+                viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
+
+                    val boundsBuilder = LatLngBounds.Builder()
+
+                    pharmacyMapInfo.map {
+                        addMarker(it, latitude, longitude)
+                        boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+                    }
+
+                    val bounds = boundsBuilder.build()
+                    val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
+                        .finishCallback {
+                            lifecycleScope.launch {
+                                delay(500)
+                                binding.pharmacyMapProgressBar.setProgressCompat(100, true)
+                            }
+                        }
+                    naverMap.moveCamera(cameraUpdate)
+                }
+
                 // 위치 오버레이 설정
                 with(naverMap.locationOverlay) {
                     isVisible = true
@@ -307,11 +350,107 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         viewModel.getUserLocationRegion(coords)
 
-        // 위치 오버레이 설정
-        with(naverMap.locationOverlay) {
-            isVisible = true
-            position = LatLng(latitude, longitude)
+
+        viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
+
+            val boundsBuilder = LatLngBounds.Builder()
+
+            pharmacyMapInfo.map {
+                addMarker(it, latitude, longitude)
+                boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+            }
+
+            val bounds = boundsBuilder.build()
+            val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
+                .finishCallback {
+                    lifecycleScope.launch {
+                        delay(500)
+                        binding.pharmacyMapProgressBar.setProgressCompat(100, true)
+                    }
+                }
+            naverMap.moveCamera(cameraUpdate)
         }
+    }
+
+    private fun getPharmacyMap(){
+        viewModel.area.observe(this@PharmacyMapActivity) { area ->
+            area?.split(" ")?.let { parts ->
+                if (parts.isNotEmpty()) {
+                    when {
+                        parts.size > 2 -> {
+                            val (STAGE1, STAGE2, STAGE3) = parts
+                            viewModel.getPharmacyMapInfo(STAGE2, STAGE3)
+                        }
+                        parts.size == 2 -> {
+                            val (STAGE1, STAGE2) = parts
+                            viewModel.getPharmacyMapInfo(STAGE1, STAGE2)
+                        }
+                        else -> {
+                            viewModel.getPharmacyMapInfo(area, null)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun addMarker(
+        pharmacyMapInfo: PharmacyMapInfo,
+        latitude: Double,
+        longitude: Double
+    ) {
+        val marker = Marker().apply {
+            icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
+            position = LatLng(
+                pharmacyMapInfo.pharmacyLat ?: latitude,
+                pharmacyMapInfo.pharmacyLon ?: longitude
+            )
+            zIndex = 0
+            map = naverMap
+            width = 56
+            height = 60
+            this.isHideCollidedMarkers = true
+            this.isForceShowIcon = false
+
+            setOnClickListener {
+                // 이전에 선택된 마커가 있다면 초기 상태로 되돌림
+                this@PharmacyMapActivity.selectedMarker?.let { previousMarker ->
+                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 56
+                    previousMarker.height = 60
+                    previousMarker.zIndex = 0
+                }
+
+                // 현재 선택된 마커 업데이트
+                this@PharmacyMapActivity.selectedMarker = this
+
+                // 클릭된 마커를 선택 상태로 변경
+                this.icon = OverlayImage.fromResource(R.drawable.marker_selected_pharmacy_icon)
+                this.isHideCollidedMarkers = true
+                this.isForceShowIcon = true
+                this.width = 100
+                this.height = 130
+                this.zIndex = 10
+
+              /*  setBottomRecylcerView(
+                    listOf(
+                        EmergencyBottom(
+                            null,
+                            "aed",
+                            null,
+                            aedMapInfo
+                        )
+                    )
+                )*/
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                true
+            }
+        }
+
+        marker.map = naverMap
+        markers.add(marker)
     }
 
     private fun isNightMode(): Boolean {

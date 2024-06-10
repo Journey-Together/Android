@@ -33,13 +33,14 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <ImageView
+                        android:id="@+id/btn_login_or_update"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginRight="@dimen/margin_basic"
-                        android:layout_marginBottom="@dimen/margin_big4"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/text_primary" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -54,7 +55,7 @@
                         tools:ignore="MissingConstraints">
 
                         <ImageView
-                            android:id="@+id/imageViewMyInfoProfile"
+                            android:id="@+id/img_profile"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -63,7 +64,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
-                        android:id="@+id/textViewMyInfoMainUserNickname"
+                        android:id="@+id/tv_name_or_login"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_big3"
@@ -76,7 +77,7 @@
                         tools:text="다온길" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoMainUserTitle"
+                        android:id="@+id/tv_user_name_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small2"
@@ -86,10 +87,10 @@
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/font_big2"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainUserNickname" />
+                        app:layout_constraintStart_toEndOf="@+id/tv_name_or_login" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoMainReview"
+                        android:id="@+id/tv_review"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_big3"
@@ -100,10 +101,10 @@
                         android:textColor="@color/text_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/materialCardView"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewMyInfoMainUserNickname" />
+                        app:layout_constraintTop_toBottomOf="@+id/tv_name_or_login" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoMainReviewCnt"
+                        android:id="@+id/tv_review_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small2"
@@ -112,6 +113,8 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:textColor="@color/text_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/tv_review"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_name_or_login" />
                         app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainReview"
                         app:layout_constraintTop_toBottomOf="@+id/textViewMyInfoMainUserNickname"
                         tools:text="2" />
@@ -148,185 +151,199 @@
                 app:dividerColor="@color/background_color"
                 app:dividerThickness="@dimen/margin_small1" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutConcernType"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="관심 유형"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutBookmark"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="북마크"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutMyReview"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="나의 여행지 후기"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutSetting"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background"
-                android:visibility="gone">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="설정"
-                    android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/user_container"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:dividerColor="@color/background_color"
-                app:dividerThickness="@dimen/margin_small1" />
+                android:orientation="vertical">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutLogout"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutConcernType"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="로그아웃"
-                    android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="관심 유형"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutBookmark"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="북마크"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutMyReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="나의 여행지 후기"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutSetting"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="설정"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    app:dividerColor="@color/background_color"
+                    app:dividerThickness="@dimen/margin_small1" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutDelete"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@color/navi_background">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/margin_basic"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:gravity="center_vertical"
-                    android:text="회원탈퇴"
-                    android:textColor="@color/text_tertiary"
-                    android:textSize="@dimen/font_big3"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="로그아웃"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutDelete"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/navi_background">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/margin_basic"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:gravity="center_vertical"
+                        android:text="회원탈퇴"
+                        android:textColor="@color/text_tertiary"
+                        android:textSize="@dimen/font_big3"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_basic"
+                        android:src="@drawable/ic_chevron_right_24px"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="@color/text_tertiary" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
                     android:layout_marginRight="@dimen/margin_basic"
                     android:src="@drawable/ic_chevron_right_24px"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -340,6 +357,7 @@
                 android:layout_height="80dp"
                 app:dividerColor="@color/background_color"
                 app:dividerThickness="@dimen/margin_small1" />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

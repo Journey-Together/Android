@@ -116,10 +116,29 @@
 
     <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
     <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>
+    <string name="text_relation">관계</string>
+    <string name="text_birth">생년월일</string>
+    <string name="text_plz_enter_nickname">닉네임을 입력해주세요</string>
+    <string name="text_plz_enter_birth">생년월일을 입력해주세요</string>
+    <string name="text_blood_type">혈액형</string>
+    <string name="text_plz_enter_blood_type">혈액형을 입력해주세요</string>
+    <string name="text_disease">의학적 질환</string>
+    <string name="text_plz_enter_disease">보유하신 질환을 입력해주세요</string>
+    <string name="text_allergy">알레르기 및 부작용</string>
+    <string name="text_plz_enter_allergy">보유하신 알레르기를 입력해주세요</string>
+    <string name="text_medicine">투여약</string>
+    <string name="text_plz_enter_medicine">투여중인 약을 입력해주세요</string>
+    <string name="text_emergency_contact">긴급 연락처</string>
+    <string name="text_plz_enter_emergency_contact">비상 연락처를 입력해주세요</string>
+    <string name="text_plz_enter_phone">전화번호를 입력해주세요</string>
+    <string name="text_birth_ex">예) 19700101</string>
+    <string name="text_contact_ex">예) 01012345678</string>
+
 
     <string name="text_write_schedule_review">여행 후기 남기기</string>
     <string name="text_schedule_review_photo">여행 사진</string>
     <string name="text_save_schedule_review">저장하기</string>
 
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
+
 </resources>

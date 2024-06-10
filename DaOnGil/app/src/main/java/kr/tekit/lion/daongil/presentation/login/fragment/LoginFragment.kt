@@ -4,8 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,9 +16,7 @@ import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
-import com.navercorp.nid.profile.data.NidProfile
 import com.navercorp.nid.profile.data.NidProfileResponse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.BuildConfig
 import kotlinx.coroutines.flow.collectLatest
@@ -48,7 +44,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             naverLoginButton.setOnClickListener {
-                naverInitialize()
                 naverLogin()
             }
         }
@@ -114,13 +109,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
         } else {
             resumeWithException(RuntimeException("Can't Receive Kakao Access Token"))
         }
-    }
-    
-    private fun naverInitialize(){
-        val naverClientId = BuildConfig.NAVER_CLIENT_ID
-        val naverClientSecret = BuildConfig.NAVER_CLIENT_SECRET
-        val naverClientName = BuildConfig.NAVER_CLIENT_NAME
-        NaverIdLoginSDK.initialize(requireActivity(), naverClientId, naverClientSecret, naverClientName)
     }
 
     private fun naverLogin() {

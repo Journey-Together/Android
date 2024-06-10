@@ -14,6 +14,7 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 val kakaoApiKey = properties.getProperty("kakao_api_key") ?: ""
 val kakaoNativeKey = properties.getProperty("kakao_native_key") ?: ""
 val baseUrl = properties.getProperty("base_url") ?: ""
+val awsBaseUrl = properties.getProperty("aws_base_url") ?: ""
 val naverMapBase = properties.getProperty("naver_map_base") ?: ""
 val naverMapId = properties.getProperty("naver_map_id") ?: ""
 val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
@@ -50,10 +51,9 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+        buildConfigField("String", "AWS_BASE_URL", "\"$awsBaseUrl\"")
         buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
         buildConfigField("String", "PHARMACY_BASE_URL", "\"$pharmacyBaseUrl\"")
-
-        //manifest에서 사용
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
         manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
     }
@@ -143,4 +143,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 }

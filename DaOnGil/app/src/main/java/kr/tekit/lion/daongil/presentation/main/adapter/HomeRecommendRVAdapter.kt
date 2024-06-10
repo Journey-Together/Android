@@ -38,7 +38,7 @@ class HomeRecommendRVAdapter(private val recommendPlaceList: List<RecommendPlace
 
             Glide.with(binding.touristSmallIv.context)
                 .load(recommendPlace.image)
-                .error(R.drawable.empty_view)
+                .error(R.drawable.empty_view_small)
                 .into(binding.touristSmallIv)
 
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)

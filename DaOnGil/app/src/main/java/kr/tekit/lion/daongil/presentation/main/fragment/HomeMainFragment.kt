@@ -142,10 +142,10 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         binding.homeHighcontrastBtn.setOnClickListener {
             if (app.getThemePrefs() == "basic") {
                 app.setThemePrefs("night")
-                requireActivity().recreate()
+                startActivity(Intent.makeRestartActivityTask(activity?.intent?.component))
             } else {
                 app.setThemePrefs("basic")
-                requireActivity().recreate()
+                startActivity(Intent.makeRestartActivityTask(activity?.intent?.component))
             }
         }
     }

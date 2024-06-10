@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.main.dialog
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -9,7 +10,7 @@ import kr.tekit.lion.daongil.HighThemeApp
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogModeSettingBinding
 
-class ModeSettingDialog() : DialogFragment(R.layout.dialog_mode_setting) {
+class ModeSettingDialog : DialogFragment(R.layout.dialog_mode_setting) {
     private val app = HighThemeApp.getInstance()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -22,14 +23,14 @@ class ModeSettingDialog() : DialogFragment(R.layout.dialog_mode_setting) {
             app.setThemePrefs("basic")
             app.setFirstLogin(false)
             dismiss()
-            requireActivity().recreate()
+            startActivity(Intent.makeRestartActivityTask(activity?.intent?.component))
         }
 
         binding.dialogModePositiveBtn.setOnClickListener {
             app.setThemePrefs("night")
             app.setFirstLogin(false)
             dismiss()
-            requireActivity().recreate()
+            startActivity(Intent.makeRestartActivityTask(activity?.intent?.component))
         }
     }
 }

@@ -139,4 +139,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation ("com.google.android.gms:play-services-location:17.1.0") // Fused Location Provider
 }

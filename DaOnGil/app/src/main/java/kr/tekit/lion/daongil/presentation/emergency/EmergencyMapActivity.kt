@@ -299,9 +299,9 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     lifecycleScope.launch {
                         with(binding){
-                            progressBar.setProgressCompat(20, false)
+                            emergencyMapProgressBar.setProgressCompat(20, false)
                             delay(700)
-                            progressBar.setProgressCompat(100, true)
+                            emergencyMapProgressBar.setProgressCompat(100, true)
                         }
                     }
 

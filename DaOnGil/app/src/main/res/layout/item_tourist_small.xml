@@ -3,16 +3,19 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingEnd="@dimen/margin_big3">
+    android:paddingEnd="11dp">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/tourist_small_card"
-        android:layout_width="168dp"
-        android:layout_height="232dp"
-        android:paddingHorizontal="10dp"
+        android:layout_width="170dp"
+        android:layout_height="240dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginHorizontal="5dp"
         app:cardBackgroundColor="@color/card_background_color"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
+        app:strokeColor="#00FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -33,26 +36,30 @@
 
             <TextView
                 android:id="@+id/tourist_small_location_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big3"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="@dimen/margin_big3"
                 android:fontFamily="@font/pretendard_regular"
                 android:text="여행지 위치"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small3"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tourist_small_iv" />
 
             <TextView
                 android:id="@+id/tourist_small_title_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small2"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="여행지 이름"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small1"
+                android:layout_marginEnd="@dimen/margin_big3"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tourist_small_location_tv"
                 app:layout_constraintTop_toBottomOf="@+id/tourist_small_location_tv" />
 

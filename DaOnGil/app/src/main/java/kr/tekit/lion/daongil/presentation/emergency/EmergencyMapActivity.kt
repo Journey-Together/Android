@@ -312,6 +312,16 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 // 비동기 데이터 관찰
                 viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
 
+                    lifecycleScope.launch {
+                        with(binding){
+                            emergencyMapProgressBar.setProgressCompat(20, false)
+                            delay(700)
+                            emergencyMapProgressBar.setProgressCompat(100, true)
+                        }
+                    }
+
+                    if (emergencyMapInfo.isNotEmpty()) {
+
                     val boundsBuilder = LatLngBounds.Builder()
                     val emergencyList = mutableListOf<EmergencyBottom>()
 

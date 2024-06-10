@@ -13,13 +13,12 @@
         android:layout_height="wrap_content"
         app:title="새로운 일정 추가"
         app:titleCentered="true"
-        app:navigationIcon="@drawable/back_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragmentScheduleFrom"
+        android:id="@+id/fragmentScheduleForm"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"

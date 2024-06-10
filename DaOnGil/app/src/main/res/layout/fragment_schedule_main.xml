@@ -161,20 +161,18 @@
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/buttonAddSchedule"
+        style="@style/RoundedExtendedFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_basic"
-        android:layout_marginBottom="@dimen/margin_basic"
-        android:backgroundTint="@color/fab_background"
+        android:layout_margin="15dp"
+        android:backgroundTint="@color/floating_action_button"
         android:contentDescription="추가하기"
-        android:fontFamily="@font/pretendard_semibold"
+        android:fontFamily="@font/pretendard_bold"
         android:text="추가하기"
-        android:textColor="@color/navi_background"
-        android:textSize="@dimen/font_small1"
+        android:textColor="@color/floating_action_button_title"
         app:icon="@drawable/ic_add_24px"
-        app:iconTint="@color/navi_background"
+        app:iconTint="@color/floating_action_button_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-    <!-- 찬호님 둥근 모서리 스타일 style 적용할 것 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,6 +6,24 @@
     android:layout_height="match_parent"
     tools:context=".presentation.scheduleform.fragment.NameAndPeriodFormFragment">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarNPF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_icon">
+
+        <TextView
+            style="@style/Theme.Toolbar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_new_schedule" />
+    </com.google.android.material.appbar.MaterialToolbar>
+
     <TextView
         android:id="@+id/textViewNPFNameTitle"
         android:layout_width="wrap_content"
@@ -13,27 +31,36 @@
         android:layout_marginStart="@dimen/margin_basic"
         android:layout_marginTop="@dimen/margin_big3"
         android:fontFamily="@font/pretendard_bold"
-        android:text="여행 제목"
+        android:text="@string/text_schedule_form_name"
         android:textSize="@dimen/font_big1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarNPF" />
 
-    <EditText
-        android:id="@+id/editTextNPFName"
-        android:layout_width="0dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputNPFName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginHorizontal="@dimen/margin_basic"
         android:layout_marginTop="@dimen/margin_big3"
-        android:layout_marginEnd="@dimen/margin_basic"
-        android:background="@drawable/edittext_background"
-        android:ems="10"
-        android:maxLines="1"
-        android:fontFamily="@font/pretendard_regular"
-        android:hint="15자 이내로 입력해주세요"
-        android:inputType="text"
+        app:boxBackgroundColor="@color/background_color"
+        app:boxBackgroundMode="filled"
+        app:endIconMode="clear_text"
+        app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewNPFNameTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewNPFNameTitle">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextNPFName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:hint="@string/hint_schedule_form_name"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingStart="@dimen/margin_small2"
+            android:textSize="@dimen/font_big3" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/textViewNPFPeriodTitle"
@@ -43,10 +70,10 @@
         android:layout_marginTop="@dimen/margin_big1"
         android:enabled="false"
         android:fontFamily="@font/pretendard_bold"
-        android:text="여행 기간"
+        android:text="@string/text_schedule_form_period"
         android:textSize="@dimen/font_big1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNPFName" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputNPFName" />
 
     <Button
         android:id="@+id/buttonNPFSetPeriod"
@@ -58,7 +85,7 @@
         android:backgroundTint="@color/navi_background"
         android:drawableTint="@color/black"
         android:fontFamily="@font/pretendard_regular"
-        android:hint="여행 기간 설정하기"
+        android:hint="@string/hint_schedule_form_period"
         android:padding="@dimen/margin_big2"
         android:textSize="@dimen/font_big2"
         app:cornerRadius="10dp"
@@ -77,9 +104,12 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/background_radius_10"
         android:fontFamily="@font/pretendard_bold"
-        android:text="다음으로"
+        android:text="@string/text_schedule_form_next"
         android:textSize="@dimen/font_big2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonNPFSetPeriod"
+        app:layout_constraintVertical_bias="1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

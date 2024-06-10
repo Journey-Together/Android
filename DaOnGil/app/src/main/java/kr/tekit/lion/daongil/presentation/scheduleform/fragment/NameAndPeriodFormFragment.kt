@@ -24,8 +24,15 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
 
         val binding = FragmentNameAndPeriodFormBinding.bind(view)
 
+        initToolbar(binding)
         setPeriod(binding)
         proceedToNext(binding)
+    }
+
+    private fun initToolbar(binding: FragmentNameAndPeriodFormBinding){
+        binding.toolbarNPF.setNavigationOnClickListener {
+            requireActivity().finish()
+        }
     }
 
     private fun proceedToNext(binding: FragmentNameAndPeriodFormBinding){

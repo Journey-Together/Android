@@ -121,5 +121,11 @@
     <string name="text_schedule_review_photo">여행 사진</string>
     <string name="text_save_schedule_review">저장하기</string>
 
+    <string name="text_schedule_form_name">여행 제목</string>
+    <string name="hint_schedule_form_name">15자 이내로 입력해주세요</string>
+    <string name="text_schedule_form_period">여행 기간</string>
+    <string name="hint_schedule_form_period"><b>＋</b> 여행 기간 설정하기</string>
+    <string name="text_schedule_form_next">다음으로</string>
+
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
 </resources>

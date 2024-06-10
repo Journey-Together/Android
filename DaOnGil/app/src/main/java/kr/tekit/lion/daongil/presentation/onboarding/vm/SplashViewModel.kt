@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.presentation.login.vm
+package kr.tekit.lion.daongil.presentation.onboarding.vm
 
 import android.util.Log
 import androidx.lifecycle.ViewModel

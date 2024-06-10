@@ -13,11 +13,11 @@ class PharmacyBottomSheet(
 ) {
     private val pharmacyBottomAdapter: PharmacyBottomAdapter by lazy {
         PharmacyBottomAdapter(pharmacyBottomList,
-            itemClickListener = {item ->
+            itemClickListener = { position ->
                 val context: Context = binding.root.context
                 val intent = Intent(context, EmergencyInfoActivity::class.java)
                 intent.putExtra("infoType", "pharmacy")
-                intent.putExtra("data", item)
+                intent.putExtra("data", pharmacyBottomList[position])
                 context.startActivity(intent)
             })
     }

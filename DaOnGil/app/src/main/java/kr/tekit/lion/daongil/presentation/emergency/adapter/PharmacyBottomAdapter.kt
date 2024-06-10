@@ -11,22 +11,25 @@ import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
 
 class PharmacyBottomAdapter(
     private val pharmacyBottomList: List<PharmacyMapInfo>,
-    private val itemClickListener: (PharmacyMapInfo) -> Unit
+    private val itemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<PharmacyBottomAdapter.PharmacyBottomViewHolder>(){
     class PharmacyBottomViewHolder(
         private val binding: ItemEmergencyBottomBinding,
-        private val itemClickListener: (PharmacyMapInfo) -> Unit
+        private val itemClickListener: (Int) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(adapterPosition)
+            }
+        }
+
         fun bind(item: PharmacyMapInfo) {
             with(binding) {
                 binding.emergencyBottomImage.setImageResource(R.drawable.pharmacy_bottom_img)
                 binding.emergencyName.text = item.pharmacyName
                 binding.emergencyAddress.text = item.pharmacyAddress
                 binding.emergencyCall.text = item.pharmacyTel
-                root.setOnClickListener {
-                    itemClickListener.invoke(item)
-                }
             }
         }
     }
@@ -50,7 +53,7 @@ class PharmacyBottomAdapter(
     }
 
     override fun onBindViewHolder(
-        holder:  PharmacyBottomViewHolder, position: Int
+        holder: PharmacyBottomViewHolder, position: Int
     ) {
         holder.bind(pharmacyBottomList[position])
     }

@@ -83,7 +83,7 @@ class MyInfoViewModel(
     fun onCompleteModifyPersonalWithImg(nickname: String, phone: String) {
         viewModelScope.launch {
             onCompleteModifyPersonal(nickname, phone)
-            modifyMyProfileImageUseCase(ProfileImg( profileImg.value))
+            modifyMyProfileImageUseCase(ProfileImg(profileImg.value))
                 .onSuccess {
                     Log.d("MyOkHttpResult", it.toString())
                 }.onError {

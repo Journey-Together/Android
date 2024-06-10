@@ -3,7 +3,6 @@ package kr.tekit.lion.daongil.presentation.myinfo.fragment
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -23,17 +22,12 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentPersonalInfoModifyBinding
-import kr.tekit.lion.daongil.presentation.ext.compressBitmap
 import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.myinfo.ModifyState
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModelFactory
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.File
 
 class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modify) {
     private val viewModel: MyInfoViewModel by activityViewModels { MyInfoViewModelFactory() }
@@ -172,11 +166,15 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
 
 
     private fun drawImage(view: ImageView, imgUrl: Uri) {
+
+        Log.d("ImgRuestResult", imgUrl.toString())
         Glide.with(requireContext())
             .load(imgUrl)
             .fallback(R.drawable.default_profile)
             .into(view)
         val path = requireContext().toAbsolutePath(imgUrl)
+        Log.d("ImgRuestResult", path.toString())
+
         viewModel.onSelectProfileImage(path)
         viewModel.modifyStateChange()
     }

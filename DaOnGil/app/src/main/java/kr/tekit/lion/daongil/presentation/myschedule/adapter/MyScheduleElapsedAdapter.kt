@@ -52,9 +52,7 @@ class MyScheduleElapsedAdapter(
                     .override(50, 50)
                     .into(binding.imageViewMyScheduleElapsed)
                 textViewMyScheduleElapsedName.text = mySchedule.title
-                //머지 후 수정할 부분
-                //textViewMyScheduleElapsedPeriod.text = itemView.context.getString(R.string.)
-                textViewMyScheduleElapsedPeriod.text = "${mySchedule.startDate} - ${mySchedule.endDate}"
+                textViewMyScheduleElapsedPeriod.text = itemView.context.getString(R.string.text_schedule_period, mySchedule.startDate, mySchedule.endDate)
                 buttonMyScheduleElapsedReview.setOnClickListener {
                     onReviewButtonClicked(mySchedule.planId, mySchedule.hasReview)
                 }

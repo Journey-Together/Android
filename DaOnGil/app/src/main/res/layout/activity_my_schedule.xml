@@ -19,7 +19,7 @@
             style="@style/Theme.Toolbar.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내 일정" />
+            android:text="@string/text_my_schedule" />
 
     </com.google.android.material.appbar.MaterialToolbar>
 
@@ -49,12 +49,12 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="다가오는 일정" />
+                    android:text="@string/text_schedule_upcoming" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="다녀온 일정" />
+                    android:text="@string/text_schedule_elapsed" />
             </com.google.android.material.tabs.TabLayout>
 
             <androidx.recyclerview.widget.RecyclerView
@@ -70,7 +70,7 @@
             <LinearLayout
                 android:id="@+id/layoutMyScheduleEmpty"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="0dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:gravity="center"

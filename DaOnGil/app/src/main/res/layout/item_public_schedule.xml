@@ -2,13 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardViewRowSchedulePublic"
+        android:id="@+id/cardViewItemPublicSchedule"
         style="@style/Widget.Material3.CardView.Filled"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_small1"
         android:backgroundTint="@color/navi_background"
@@ -21,22 +21,22 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/imageViewRowSchedulePublicThumb"
-                android:layout_width="wrap_content"
+                android:id="@+id/imageViewItemPublicScheduleThumb"
+                android:layout_width="0dp"
                 android:layout_height="112dp"
-                android:contentDescription="대표 사진"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/empty_view" />
+                app:srcCompat="@drawable/empty_view"
+                tools:contentDescription="대표 사진" />
 
             <TextView
-                android:id="@+id/textViewRowSchedulePublicPeriod"
+                android:id="@+id/textViewItemPublicSchedulePeriod"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -53,7 +53,7 @@
                 tools:text="3일일정" />
 
             <TextView
-                android:id="@+id/textViewRowScheduleName"
+                android:id="@+id/textViewItemPublicScheduleName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big4"
@@ -65,22 +65,22 @@
                 android:textSize="@dimen/font_small1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewRowSchedulePublicThumb"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewItemPublicScheduleThumb"
                 tools:text="즐거운 경주 여행" />
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/cardViewRowSchedulePublicProfile"
+                android:id="@+id/cardViewItemPublicScheduleProfile"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginTop="@dimen/margin_small2"
                 android:layout_marginBottom="@dimen/margin_big4"
                 app:cardCornerRadius="@dimen/search_bar_height"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/textViewRowScheduleName"
-                app:layout_constraintTop_toBottomOf="@+id/textViewRowScheduleName">
+                app:layout_constraintStart_toStartOf="@+id/textViewItemPublicScheduleName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewItemPublicScheduleName">
 
                 <ImageView
-                    android:id="@+id/imageViewRowSchedulePublicProfile"
+                    android:id="@+id/imageViewItemPublicScheduleProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:contentDescription="프로필 사진"
@@ -90,16 +90,17 @@
             </com.google.android.material.card.MaterialCardView>
 
             <TextView
-                android:id="@+id/textViewRowSchedulePublicNickname"
+                android:id="@+id/textViewItemPublicScheduleNickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small2"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_small2"
-                app:layout_constraintBottom_toBottomOf="@+id/cardViewRowSchedulePublicProfile"
-                app:layout_constraintStart_toEndOf="@+id/cardViewRowSchedulePublicProfile"
-                app:layout_constraintTop_toTopOf="@+id/cardViewRowSchedulePublicProfile"
+                app:layout_constraintBottom_toBottomOf="@+id/cardViewItemPublicScheduleProfile"
+                app:layout_constraintStart_toEndOf="@+id/cardViewItemPublicScheduleProfile"
+                app:layout_constraintTop_toTopOf="@+id/cardViewItemPublicScheduleProfile"
                 tools:text="김사자" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

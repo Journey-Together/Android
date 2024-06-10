@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
@@ -12,6 +13,8 @@ import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
+import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModel
+import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
@@ -21,6 +24,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     ScheduleMyAdapter.OnScheduleMainItemClickListener {
 
     private var isUser = true
+
+    private val viewModel: ScheduleMainViewModel by viewModels { ScheduleMainViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,14 +51,19 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
 
     private fun settingRecyclerView(binding : FragmentScheduleMainBinding, context: Context){
-        binding.apply {
+
+        with(binding){
             recyclerViewMySchedule.apply {
                 adapter = ScheduleMyAdapter(this@ScheduleMainFragment)
                 layoutManager = LinearLayoutManager(context)
             }
 
             recyclerViewPublicSchedule.apply {
-                adapter = SchedulePublicAdapter()
+                val schedulePublicAdapter = SchedulePublicAdapter()
+                viewModel.openPlanList.observe(viewLifecycleOwner) {
+                    schedulePublicAdapter.addItems(it)
+                }
+                    adapter = schedulePublicAdapter
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
         }

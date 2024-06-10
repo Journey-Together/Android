@@ -3,16 +3,34 @@ package kr.tekit.lion.daongil.presentation.main.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.databinding.RowSchedulePublicBinding
+import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
+import kr.tekit.lion.daongil.presentation.ext.setImage
 
 class SchedulePublicAdapter :
     RecyclerView.Adapter<SchedulePublicAdapter.SchedulePublicViewHolder>() {
 
+    private var items: MutableList<OpenPlanInfo> = mutableListOf()
+
+    fun addItems(newItems: List<OpenPlanInfo>){
+        items = newItems.toMutableList()
+        notifyDataSetChanged()
+    }
+
     class SchedulePublicViewHolder(private val binding: RowSchedulePublicBinding) :
         RecyclerView.ViewHolder(binding.root) {
-            fun bind(){
-                // data와 view연결
+        fun bind(item: OpenPlanInfo) {
+            with(binding){
+                textViewRowSchedulePublicPeriod.text = item.date
+                textViewRowScheduleName.text = item.title
+                textViewRowSchedulePublicNickname.text = item.memberNickname
+
+                root.context.setImage(imageViewRowSchedulePublicThumb, item.imageUrl)
+                root.context.setImage(imageViewRowSchedulePublicProfile, item.memberImageUrl)
             }
+
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulePublicViewHolder {
@@ -21,10 +39,10 @@ class SchedulePublicAdapter :
     }
 
     override fun onBindViewHolder(holder: SchedulePublicViewHolder, position: Int) {
-        holder.bind()
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return 5
+        return items.size
     }
 }

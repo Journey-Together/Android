@@ -46,7 +46,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -67,7 +67,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big2"
+            android:layout_marginTop="@dimen/margin_big3"
             android:orientation="horizontal">
 
             <ImageView
@@ -88,7 +88,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_big2"
+            android:layout_marginTop="@dimen/margin_big3"
             android:orientation="horizontal">
 
             <ImageView
@@ -111,10 +111,10 @@
             android:id="@+id/selectInterestCompleteButton"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="@font/pretendard_bold"
-            android:textSize="@dimen/font_big1"
-            android:text="완료" />
+            android:text="완료"
+            android:textSize="@dimen/font_big1" />
 
     </LinearLayout>
 

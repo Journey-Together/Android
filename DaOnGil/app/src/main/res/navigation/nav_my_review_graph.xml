@@ -26,5 +26,17 @@
         <action
             android:id="@+id/action_myReviewDetailFragment_to_myReviewFragment"
             app:destination="@id/myReviewFragment" />
+        <action
+            android:id="@+id/action_myReviewDetailFragment_to_myReviewModifyFragment"
+            app:destination="@id/myReviewModifyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myReviewModifyFragment"
+        android:name="kr.tekit.lion.daongil.presentation.myreview.fragment.MyReviewModifyFragment"
+        android:label="fragment_my_review_modify"
+        tools:layout="@layout/fragment_my_review_modify" >
+        <action
+            android:id="@+id/action_myReviewModifyFragment_to_myReviewDetailFragment"
+            app:destination="@id/myReviewDetailFragment" />
     </fragment>
 </navigation>

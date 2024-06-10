@@ -12,14 +12,19 @@ import kr.tekit.lion.daongil.domain.model.EmergencyBottom
 
 class EmergencyBottomAdapter(
     private val emergencyBottomList: List<EmergencyBottom>,
-    private val itemClickListener: (String?, EmergencyBottom) -> Unit
+    private val itemClickListener: (Int) -> Unit
 ):
     RecyclerView.Adapter<EmergencyBottomAdapter.EmergencyBottomViewHolder>(){
     class EmergencyBottomViewHolder(
         private val binding: ItemEmergencyBottomBinding,
-        private val itemClickListener: (String?, EmergencyBottom) -> Unit
+        private val itemClickListener: (Int) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
+        init{
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(adapterPosition)
+            }
+        }
             fun bind(item: EmergencyBottom){
                 with(binding){
                     if(item.emergencyType == "emergency"){
@@ -52,10 +57,6 @@ class EmergencyBottomAdapter(
                         binding.emergencyName.text = item.aedList?.aedName
                         binding.emergencyAddress.text = item.aedList?.aedAdress
                         binding.emergencyCall.text = item.aedList?.aedTel
-                    }
-
-                    root.setOnClickListener {
-                        itemClickListener.invoke(item.emergencyId, item)
                     }
                 }
             }

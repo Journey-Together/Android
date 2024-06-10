@@ -1,57 +1,50 @@
 package kr.tekit.lion.daongil.domain.usecase
 
-import kr.tekit.lion.daongil.domain.model.EmergencyBasicInfo
 import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
-import kr.tekit.lion.daongil.domain.model.EmergencyRealtimeInfo
-import kr.tekit.lion.daongil.domain.repository.EmergencyRepository
 import kr.tekit.lion.daongil.domain.usecase.base.BaseUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.Result
+import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
 class GetEmergencyMapInfoUseCase(
-    private val emergencyRepository: EmergencyRepository
+    private val getHospitalMapInfoUseCase: GetHospitalMapInfoUseCase,
+    private val getAedMapInfoUseCase: GetAedMapInfoUseCase
 ) : BaseUseCase() {
-    suspend operator fun invoke(STAGE1: String?, STAGE2: String?): Result<List<EmergencyMapInfo>> =
+    suspend operator fun invoke(area: String?, areaDetail: String?): Result<List<EmergencyMapInfo>> =
         execute {
-            val emergencyRealtimeList = emergencyRepository.getEmergencyRealtime(STAGE1, STAGE2)
-            val emergencyMapInfoList = emergencyRealtimeList.map {
-                val emergencyBasicInfo = emergencyRepository.getEmergencyBasic(it.hospitalId)
-                setEmergencyMapInfo(it, emergencyBasicInfo)
+            val aedArea = if (area == "전북특별자치도") "전라북도" else area
+            val editAreaDetail = if (area == "세종특별자치시") null else areaDetail
+
+            val hospitalList = getHospitalMapInfoUseCase(area, areaDetail)
+            val aedList = getAedMapInfoUseCase(aedArea, editAreaDetail)
+
+            val emergencyList = mutableListOf<EmergencyMapInfo>()
+
+            hospitalList.onSuccess {
+                it.map {
+                    emergencyList.add(
+                        EmergencyMapInfo(
+                            hospitalList = it,
+                            emergencyType = "hospital",
+                            emergencyId = it.hospitalId,
+                            aedList = null
+                        )
+                    )
+                }
             }
-            emergencyMapInfoList
+
+            aedList.onSuccess {
+                it.map{
+                    emergencyList.add(
+                        EmergencyMapInfo(
+                            hospitalList = null,
+                            emergencyType = "aed",
+                            emergencyId = null,
+                            aedList = it
+                        )
+                    )
+                }
+            }
+
+            emergencyList
         }
-
-
-    private fun setEmergencyMapInfo(
-        realtimeInfo: EmergencyRealtimeInfo,
-        basicInfo: EmergencyBasicInfo
-    ): EmergencyMapInfo{
-        return EmergencyMapInfo(
-            hospitalId = realtimeInfo.hospitalId,
-            emergencyCount = realtimeInfo.emergencyCount,
-            emergencyKid = realtimeInfo.emergencyKid,
-            emergencyKidCount = realtimeInfo.emergencyKidCount,
-            emergencyAllCount = realtimeInfo.emergencyAllCount,
-            emergencyKidAllCount = realtimeInfo.emergencyKidAllCount,
-            emergencyBed = realtimeInfo.emergencyCount?.let { count ->
-                realtimeInfo.emergencyAllCount?.let { allCount ->
-                    ((count.toFloat() / allCount) * 100).toInt()
-                }
-            },
-            emergencyKidBed =  realtimeInfo.emergencyKidCount?.let { kidCount ->
-                realtimeInfo.emergencyKidAllCount?.let { kidAllCount ->
-                    ((kidCount.toFloat() / kidAllCount) * 100).toInt()
-                }
-            },
-            lastUpdateDate = realtimeInfo.lastUpdateDate,
-            hospitalName = basicInfo.hospitalName,
-            hospitalAddress = basicInfo.hospitalAddress,
-            hospitalTel = basicInfo.hospitalTel,
-            emergencyTel = basicInfo.emergencyTel,
-            dialysis = basicInfo.dialysis,
-            earlyBirth = basicInfo.earlyBirth,
-            burns = basicInfo.burns,
-            hospitalLon = basicInfo.hospitalLon,
-            hospitalLat = basicInfo.hospitalLat
-        )
-    }
 }

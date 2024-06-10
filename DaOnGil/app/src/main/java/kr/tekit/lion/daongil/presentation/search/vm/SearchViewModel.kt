@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.RecentSearchKeyword
-import kr.tekit.lion.daongil.domain.usecase.SearchByKeywordUseCase
+import kr.tekit.lion.daongil.domain.usecase.searchkeyword.SearchByKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.GetAllRecentSearchKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.RemoveAllRecentSearchKeywordUseCase

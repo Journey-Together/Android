@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.searchkeyword
 
 import kotlinx.coroutines.flow.Flow
 import kr.tekit.lion.daongil.domain.model.KeywordSearch

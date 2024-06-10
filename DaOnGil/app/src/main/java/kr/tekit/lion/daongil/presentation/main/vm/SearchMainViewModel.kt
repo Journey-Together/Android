@@ -8,19 +8,16 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.AreaCode
 import kr.tekit.lion.daongil.domain.model.VillageCode
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllDetailAreaCodeUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.InitAreaCodeInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllVillageCodeUseCase
 
 class SearchMainViewModel(
-    private val initAreaCodeInfoUseCase: InitAreaCodeInfoUseCase,
     private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
-    private val getAllDetailAreaCodeUseCase: GetAllDetailAreaCodeUseCase
+    private val getAllVillageCodeUseCase: GetAllVillageCodeUseCase
 
 ): ViewModel() {
 
     init {
         viewModelScope.launch {
-            //initAreaCodeInfoUseCase()
             _areaCode.value = getAllAreaCodeUseCase()
         }
     }
@@ -70,7 +67,7 @@ class SearchMainViewModel(
     fun onCompleteSelectArea(areaName: String) = viewModelScope.launch{
         val findAreaCode = areaCode.value.find { it.name == areaName }?.code
         if (findAreaCode != null){
-            _villageCode.value = getAllDetailAreaCodeUseCase(findAreaCode)
+            _villageCode.value = getAllVillageCodeUseCase(findAreaCode)
         }
     }
 

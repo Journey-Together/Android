@@ -1,9 +1,7 @@
 package kr.tekit.lion.daongil.presentation.bookmark.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemLocationBookmarkBinding
 import kr.tekit.lion.daongil.domain.model.PlaceBookmark
@@ -24,10 +22,10 @@ class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>,
 
     class LocationBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(placeBookmarkList: PlaceBookmark) {
-            binding.textViewLocationBookmark.text = placeBookmarkList.bookmarkLocation
-            binding.textViewLocationBookmarkName.text = placeBookmarkList.bookmarkLocationName
+            binding.textViewLocationBookmark.text = placeBookmarkList.address
+            binding.textViewLocationBookmarkName.text = placeBookmarkList.name
 
-            val disabilityList = placeBookmarkList.disabilityType
+            val disabilityList = placeBookmarkList.disability
 
             val bookmarkDisabilityRVAdapter = bookmarkDisabilityRVAdapter(disabilityList)
             binding.recyclerViewLocationBookmark.adapter = bookmarkDisabilityRVAdapter

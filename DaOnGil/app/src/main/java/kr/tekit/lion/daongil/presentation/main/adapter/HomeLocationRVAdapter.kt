@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemTouristBigBinding
-import kr.tekit.lion.daongil.domain.model.Tourist
+import kr.tekit.lion.daongil.domain.model.AroundPlace
 
-class HomeLocationRVAdapter(private val touristList: List<Tourist>, val context: Context) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>(){
+class HomeLocationRVAdapter(private val aroundPlaceList: List<AroundPlace>, val context: Context) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         val binding : ItemTouristBigBinding = ItemTouristBigBinding.inflate(
@@ -20,15 +22,20 @@ class HomeLocationRVAdapter(private val touristList: List<Tourist>, val context:
     override fun getItemCount(): Int = 2
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.bind(touristList[position])
+        holder.bind(aroundPlaceList[position])
     }
 
     class LocationViewHolder(val binding: ItemTouristBigBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(tourist : Tourist) {
-            binding.touristBigLocationTv.text = tourist.touristLocation
-            binding.touristBigTitleTv.text = tourist.touristName
+        fun bind(aroundPlace : AroundPlace) {
+            binding.touristBigLocationTv.text = aroundPlace.address
+            binding.touristBigTitleTv.text = aroundPlace.name
 
-            val disabilityList = tourist.disabilityType
+            Glide.with(binding.touristBigIv.context)
+                .load(aroundPlace.image)
+                .error(R.drawable.empty_view)
+                .into(binding.touristBigIv)
+
+            val disabilityList = aroundPlace.disability
 
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList, context)
             binding.touristBigDisabilityRv.adapter = disabilityRVAdapter

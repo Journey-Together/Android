@@ -30,23 +30,19 @@ import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.ActivityEmergencyMapBinding
-import kr.tekit.lion.daongil.domain.model.AedMapInfo
-import kr.tekit.lion.daongil.domain.model.EmergencyBottom
-import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
-import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyAreaDialog
-import kr.tekit.lion.daongil.presentation.emergency.fragment.EmergencyBottomSheet
-import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModel
-import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModelFactory
+import kr.tekit.lion.daongil.databinding.ActivityPharmacyMapBinding
+import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
+import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyAreaDialog
+import kr.tekit.lion.daongil.presentation.emergency.fragment.PharmacyBottomSheet
+import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModel
+import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModelFactory
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 
-class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
+class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private val binding: ActivityEmergencyMapBinding by lazy {
-        ActivityEmergencyMapBinding.inflate(layoutInflater)
+    private val binding: ActivityPharmacyMapBinding by lazy {
+        ActivityPharmacyMapBinding.inflate(layoutInflater)
     }
-
-    private val viewModel: EmergencyMapViewModel by viewModels{ EmergencyMapViewModelFactory() }
 
     private lateinit var launcherForPermission: ActivityResultLauncher<Array<String>>
 
@@ -56,16 +52,24 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
 
     private val bottomSheetBehavior by lazy {
-        BottomSheetBehavior.from(binding.emergencyBottomSheet.emergencyBottomSheetLayout)
+        BottomSheetBehavior.from(binding.pharamcyBottomSheet.emergencyBottomSheetLayout)
     }
 
-    private var emergencySelectedMarker: Marker? = null
-    private var aedSelectedMarker: Marker? = null
+    private val viewModel: PharmacyMapViewModel by viewModels{ PharmacyMapViewModelFactory() }
+
+    private var selectedMarker: Marker? = null
+    private val markers = mutableListOf<Marker>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        getEmergencyMap()
+
+        setToolbar()
+        initBottomSheet()
+        initMap()
+        setAreaUi()
+        settingDialog()
+        getPharmacyMap()
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
         launcherForPermission = registerForActivityResult(contracts) { permissions ->
@@ -79,7 +83,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                             if (!shouldShowRequestPermissionRationale(permission)) {
                                 permissionDeniedMapUiSetting()
                                 showPermissionSnackBar(binding.root)
-
                                 permissionDeniedMapSetting()
                             }
                         }
@@ -94,39 +97,40 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             }
         }
-
-        initMap()
-        initBottomSheet()
-        settingDialog()
-        setAreaButton()
-        setToolbar()
     }
 
     private fun setToolbar(){
-        binding.toolbarEmergencyMap.setNavigationOnClickListener {
+        binding.toolbarPharmacyMap.setNavigationOnClickListener {
             finish()
         }
     }
-    private fun setAreaButton(){
-        viewModel.area.observe(this@EmergencyMapActivity) { area ->
-            binding.emergencyMapArea.text = area
+
+    private fun setAreaUi(){
+        viewModel.area.observe(this@PharmacyMapActivity) { area ->
+            binding.pharamcyMapArea.text = area
+            binding.pharmacyMapProgressBar.setProgressCompat(20, true)
+
+            markers.map {
+                it.map = null
+            }
+            markers.clear()
         }
     }
 
     private fun settingDialog() {
-        val dialog = EmergencyAreaDialog()
+        val dialog = PharmacyAreaDialog()
 
-        binding.emergencyMapAreaButton.setOnClickListener {
-            dialog.show(this.supportFragmentManager, "EmergencyAreaDialog")
+        binding.pharamcyMapAreaButton.setOnClickListener {
+            dialog.show(this.supportFragmentManager, "PharamcyAreaDialog")
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
         }
 
     }
 
-    private fun setBottomRecylcerView(emergencyBottomList: List<EmergencyBottom>){
-        val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet, emergencyBottomList)
-        emergencyBottomSheet.setRecyclerView()
-    } //
+    private fun setBottomRecylcerView(pharmacyBottomList: List<PharmacyMapInfo>){
+        val pharmacyBottomSheet = PharmacyBottomSheet(binding.pharamcyBottomSheet, pharmacyBottomList)
+        pharmacyBottomSheet.setRecyclerView()
+    }
 
     private fun initBottomSheet() {
 
@@ -136,8 +140,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 val dp = 40f
                 val px = (dp * (metrics.densityDpi / 160f)).toInt()
 
-                val buttonHeight = binding.emergencyMapAreaButton.height
-                val toolbarHeight = binding.toolbarEmergencyMap.height
+                val buttonHeight = binding.pharamcyMapAreaButton.height
+                val toolbarHeight = binding.toolbarPharmacyMap.height
                 val deviceHeight = metrics.heightPixels - buttonHeight - toolbarHeight - px
 
                 if (deviceHeight > 0) {
@@ -148,11 +152,11 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
 
                 // 레이아웃 변경을 추적하는 리스너는 더 이상 필요 없으므로 제거
-                binding.emergencyMapAreaButton.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                binding.pharamcyMapAreaButton.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         }
 
-        binding.emergencyMapAreaButton.viewTreeObserver.addOnGlobalLayoutListener(observer)
+        binding.pharamcyMapAreaButton.viewTreeObserver.addOnGlobalLayoutListener(observer)
     }
 
     private fun initMap() {
@@ -160,14 +164,16 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // LocationSource 구현체를 지정
         // 네이버 지도 SDK에 위치를 제공하는 인터페이스
-        mLocationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        mLocationSource = FusedLocationSource(this,
+            EmergencyMapActivity.LOCATION_PERMISSION_REQUEST_CODE
+        )
         // 네이버맵 동적으로 불러오기
         val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
             ?: MapFragment.newInstance().also {
                 fm.beginTransaction().add(R.id.map, it).commit()
             }
-       mapFragment.getMapAsync(this)
+        mapFragment.getMapAsync(this)
     }
 
     // 네이버맵 불러오기가 완료되면 콜백
@@ -182,33 +188,17 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.setOnMapClickListener { _, _ ->
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
 
-            viewModel.emergencyMapInfo.value?.let { emergencyMapInfoList ->
-                setBottomRecylcerView(
-                    emergencyMapInfoList.map {
-                        EmergencyBottom(it, "emergency", it.hospitalId.toString(), null)
-                    }
-                )
-            }
+            viewModel.pharmacyMapInfo.value?.let { setBottomRecylcerView(it) }
 
             // 선택된 마커가 있는 경우 unselected 상태로 변경
-            this.emergencySelectedMarker?.let { marker ->
-                marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                marker.isHideCollidedMarkers = true
-                marker.isForceShowIcon = false
-                marker.width = 56
-                marker.height = 60
-                marker.zIndex = 15
-                this.emergencySelectedMarker = null
-            }
-
-            this.aedSelectedMarker?.let { marker ->
-                marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
+            this.selectedMarker?.let { marker ->
+                marker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
                 marker.isHideCollidedMarkers = true
                 marker.isForceShowIcon = false
                 marker.width = 56
                 marker.height = 60
                 marker.zIndex = 0
-                this.emergencySelectedMarker = null
+                this.selectedMarker = null
             }
         }
 
@@ -220,11 +210,12 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
+            launcherForPermission.launch(EmergencyMapActivity.REQUEST_LOCATION_PERMISSIONS)
         } else {
             permissionGrantedMapUiSetting()
         }
     }
+
     private fun permissionGrantedMapUiSetting() {
         with(naverMap) {
             setMapType(this)
@@ -290,14 +281,14 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun permissionGrantedMapSetting() {
         if (ActivityCompat.checkSelfPermission(
-                this@EmergencyMapActivity,
+                this@PharmacyMapActivity,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                this@EmergencyMapActivity,
+                this@PharmacyMapActivity,
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
+            launcherForPermission.launch(EmergencyMapActivity.REQUEST_LOCATION_PERMISSIONS)
         } else {
 
             // 사용자 현재 위치 받아오기
@@ -309,38 +300,27 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 viewModel.getUserLocationRegion(coords)
 
-                // 비동기 데이터 관찰
-                viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
+                viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
 
                     val boundsBuilder = LatLngBounds.Builder()
-                    val emergencyList = mutableListOf<EmergencyBottom>()
+                    val pharmacyList = mutableListOf<PharmacyMapInfo>()
 
-                    // AED 마커 추가
-                    viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
-                        aedMapInfo.map {
-                            addAedMarker(it, latitude, longitude)
-                            if(emergencyMapInfo.isEmpty()){
-                                boundsBuilder.include(LatLng(it.aedLat ?: latitude, it.aedLon ?: longitude))
-                            }
-                        }
+                    pharmacyMapInfo.map {
+                        addMarker(it, latitude, longitude)
+                        boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+                        pharmacyList.add(it)
                     }
 
-                    emergencyMapInfo.map {
-                        addEmergencyMarker(it, latitude, longitude)
-                        emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString(), null))
-                        boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
-                    }
-
-                    setBottomRecylcerView(emergencyList.toList())
                     val bounds = boundsBuilder.build()
                     val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
                         .finishCallback {
                             lifecycleScope.launch {
                                 delay(500)
-                                binding.emergencyMapProgressBar.setProgressCompat(100, true)
+                                binding.pharmacyMapProgressBar.setProgressCompat(100, true)
                             }
                         }
                     naverMap.moveCamera(cameraUpdate)
+                    setBottomRecylcerView(pharmacyList)
                 }
 
                 // 위치 오버레이 설정
@@ -349,9 +329,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     position = LatLng(latitude, longitude)
                 }
 
-                viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
-                    binding.emergencyMapProgressBar.setProgressCompat(20, true)
-                }
             }
         }
     }
@@ -384,63 +361,46 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
         viewModel.getUserLocationRegion(coords)
 
-        // 비동기 데이터 관찰
-        viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { emergencyMapInfo ->
+
+        viewModel.pharmacyMapInfo.observe(this@PharmacyMapActivity) { pharmacyMapInfo ->
 
             val boundsBuilder = LatLngBounds.Builder()
-            val emergencyList = mutableListOf<EmergencyBottom>()
+            val pharmacyList = mutableListOf<PharmacyMapInfo>()
 
-            // AED 마커 추가
-            viewModel.aedMapInfo.observe(this@EmergencyMapActivity) { aedMapInfo ->
-                aedMapInfo.map {
-                    addAedMarker(it, latitude, longitude)
-                    if(emergencyMapInfo.isEmpty()){
-                        boundsBuilder.include(LatLng(it.aedLat ?: latitude, it.aedLon ?: longitude))
-                    }
-                }
+            pharmacyMapInfo.map {
+                addMarker(it, latitude, longitude)
+                boundsBuilder.include(LatLng(it.pharmacyLat ?: latitude, it.pharmacyLon ?: longitude))
+                pharmacyList.add(it)
             }
 
-            emergencyMapInfo.map {
-                addEmergencyMarker(it, latitude, longitude)
-                emergencyList.add(EmergencyBottom(it, "emergency", it.hospitalId.toString(), null))
-                boundsBuilder.include(LatLng(it.hospitalLat ?: latitude, it.hospitalLon ?: longitude))
-            }
-
-            setBottomRecylcerView(emergencyList.toList())
             val bounds = boundsBuilder.build()
             val cameraUpdate = CameraUpdate.fitBounds(bounds, 250)
                 .finishCallback {
                     lifecycleScope.launch {
                         delay(500)
-                        binding.emergencyMapProgressBar.setProgressCompat(100, true)
+                        binding.pharmacyMapProgressBar.setProgressCompat(100, true)
                     }
                 }
             naverMap.moveCamera(cameraUpdate)
-        }
-
-        viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
-            binding.emergencyMapProgressBar.setProgressCompat(20, true)
+            setBottomRecylcerView(pharmacyList)
         }
     }
 
-    private fun getEmergencyMap(){
-        viewModel.area.observe(this@EmergencyMapActivity) { area ->
+    private fun getPharmacyMap(){
+        viewModel.area.observe(this@PharmacyMapActivity) { area ->
             area?.split(" ")?.let { parts ->
                 if (parts.isNotEmpty()) {
                     when {
                         parts.size > 2 -> {
                             val (STAGE1, STAGE2, STAGE3) = parts
-                            viewModel.getEmergencyMapInfo(STAGE1, "$STAGE2 $STAGE3")
-                            viewModel.getAedMapInfo(STAGE1, "$STAGE2 $STAGE3")
+                            viewModel.getPharmacyMapInfo(STAGE2, STAGE3)
                         }
                         parts.size == 2 -> {
                             val (STAGE1, STAGE2) = parts
-                            viewModel.getEmergencyMapInfo(STAGE1, STAGE2)
-                            viewModel.getAedMapInfo(STAGE1, STAGE2)
+                            viewModel.getPharmacyMapInfo(STAGE1, STAGE2)
                         }
                         else -> {
-                            viewModel.getEmergencyMapInfo(area, null)
-                            viewModel.getAedMapInfo(area, null)
+                            viewModel.getPharmacyMapInfo(area, null)
                         }
                     }
                 }
@@ -448,16 +408,16 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun addAedMarker(
-        aedMapInfo: AedMapInfo,
+    private fun addMarker(
+        pharmacyMapInfo: PharmacyMapInfo,
         latitude: Double,
         longitude: Double
     ) {
         val marker = Marker().apply {
-            icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
+            icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
             position = LatLng(
-                aedMapInfo.aedLat ?: latitude,
-                aedMapInfo.aedLon ?: longitude
+                pharmacyMapInfo.pharmacyLat ?: latitude,
+                pharmacyMapInfo.pharmacyLon ?: longitude
             )
             zIndex = 0
             map = naverMap
@@ -468,17 +428,8 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
             setOnClickListener {
                 // 이전에 선택된 마커가 있다면 초기 상태로 되돌림
-                this@EmergencyMapActivity.emergencySelectedMarker?.let { previousMarker ->
-                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                    previousMarker.isHideCollidedMarkers = true
-                    previousMarker.isForceShowIcon = false
-                    previousMarker.width = 56
-                    previousMarker.height = 60
-                    previousMarker.zIndex = 15
-                }
-
-                this@EmergencyMapActivity.aedSelectedMarker?.let { previousMarker ->
-                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
+                this@PharmacyMapActivity.selectedMarker?.let { previousMarker ->
+                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_pharmacy_icon)
                     previousMarker.isHideCollidedMarkers = true
                     previousMarker.isForceShowIcon = false
                     previousMarker.width = 56
@@ -487,99 +438,24 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
 
                 // 현재 선택된 마커 업데이트
-                this@EmergencyMapActivity.aedSelectedMarker = this
+                this@PharmacyMapActivity.selectedMarker = this
 
                 // 클릭된 마커를 선택 상태로 변경
-                this.icon = OverlayImage.fromResource(R.drawable.marker_selected_aed_icon)
-                this.isHideCollidedMarkers = true
-                this.isForceShowIcon = false
-                this.width = 100
-                this.height = 130
-                this.zIndex = 10
-
-                setBottomRecylcerView(
-                    listOf(
-                        EmergencyBottom(
-                            null,
-                            "aed",
-                            null,
-                            aedMapInfo
-                        )
-                    )
-                )
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                true
-            }
-        }
-
-        marker.map = naverMap
-    }
-
-    private fun addEmergencyMarker(
-        emergencyMapInfo: EmergencyMapInfo,
-        latitude: Double,
-        longitude: Double
-    ) {
-        val marker = Marker().apply {
-            icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-            position = LatLng(
-                emergencyMapInfo.hospitalLat ?: latitude,
-                emergencyMapInfo.hospitalLon ?: longitude
-            )
-            map = naverMap
-            width = 56
-            height = 60
-            zIndex = 15
-            isHideCollidedMarkers = true
-            isForceShowIcon = false
-
-            setOnClickListener {
-                // 이전에 선택된 마커가 있다면 초기 상태로 되돌림
-                this@EmergencyMapActivity.emergencySelectedMarker?.let { previousMarker ->
-                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_emergency_icon)
-                    previousMarker.isHideCollidedMarkers = true
-                    previousMarker.isForceShowIcon = false
-                    previousMarker.width = 56
-                    previousMarker.height = 60
-                    previousMarker.zIndex = 15
-                }
-
-                this@EmergencyMapActivity.aedSelectedMarker?.let { previousMarker ->
-                    previousMarker.icon = OverlayImage.fromResource(R.drawable.marker_unselected_aed_icon)
-                    previousMarker.isHideCollidedMarkers = true
-                    previousMarker.isForceShowIcon = false
-                    previousMarker.width = 56
-                    previousMarker.height = 60
-                    previousMarker.zIndex = 0
-                }
-
-                // 현재 선택된 마커 업데이트
-                this@EmergencyMapActivity.emergencySelectedMarker = this
-
-                // 클릭된 마커를 선택 상태로 변경
-                this.icon = OverlayImage.fromResource(R.drawable.marker_selected_emergency_icon)
+                this.icon = OverlayImage.fromResource(R.drawable.marker_selected_pharmacy_icon)
                 this.isHideCollidedMarkers = true
                 this.isForceShowIcon = true
                 this.width = 100
                 this.height = 130
-                this.zIndex = 20
+                this.zIndex = 10
 
-                setBottomRecylcerView(
-                    listOf(
-                        EmergencyBottom(
-                            emergencyMapInfo,
-                            "emergency",
-                            emergencyMapInfo.hospitalId.toString(),
-                            null
-                        )
-                    )
-                )
+                setBottomRecylcerView(listOf(pharmacyMapInfo))
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }
         }
 
         marker.map = naverMap
+        markers.add(marker)
     }
 
     private fun isNightMode(): Boolean {
@@ -607,6 +483,4 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             Manifest.permission.ACCESS_COARSE_LOCATION,
         )
     }
-
 }
-

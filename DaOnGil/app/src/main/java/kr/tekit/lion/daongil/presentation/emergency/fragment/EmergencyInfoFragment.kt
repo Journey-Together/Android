@@ -2,14 +2,13 @@ package kr.tekit.lion.daongil.presentation.emergency.fragment
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentEmergencyInfoBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
@@ -66,17 +65,21 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
             emergencyCall.setOnClickListener {
                 val phoneNumber = data.emergencyList?.emergencyTel
-                if (!phoneNumber.isNullOrBlank()) {
+                if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
+                } else {
+                    showSnackbar(this, "전화번호가 존재하지 않습니다.")
                 }
             }
 
             mainEmergencyCall.setOnClickListener {
                 val phoneNumber = data.emergencyList?.hospitalTel
-                if (!phoneNumber.isNullOrBlank()) {
+                if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
+                } else {
+                    showSnackbar(this, "전화번호가 존재하지 않습니다.")
                 }
             }
 
@@ -108,7 +111,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
         }
     }
 
-    fun getCurrentFormattedDateTime(): String {
+    private fun getCurrentFormattedDateTime(): String {
         // 현재 시간 가져오기
         val currentDateTime = LocalDateTime.now()
 
@@ -117,6 +120,12 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
         // 포맷팅된 문자열 반환
         return currentDateTime.format(formatter)
+    }
+
+    private fun showSnackbar(binding: FragmentEmergencyInfoBinding, message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            .show()
     }
 
 }

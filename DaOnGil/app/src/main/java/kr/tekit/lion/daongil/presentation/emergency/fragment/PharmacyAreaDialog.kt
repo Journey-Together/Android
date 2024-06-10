@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.emergency.fragment
 
-
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,13 +10,12 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogEmergencyAreaBinding
-import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyMapViewModel
+import kr.tekit.lion.daongil.presentation.emergency.vm.PharmacyMapViewModel
 
-class EmergencyAreaDialog(
+class PharmacyAreaDialog(
 
-) : DialogFragment(R.layout.dialog_emergency_area) {
-
-    private val viewmodel: EmergencyMapViewModel by activityViewModels()
+): DialogFragment(R.layout.dialog_emergency_area){
+    private val viewmodel: PharmacyMapViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

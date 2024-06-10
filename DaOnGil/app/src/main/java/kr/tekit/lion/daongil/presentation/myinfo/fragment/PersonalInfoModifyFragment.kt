@@ -88,7 +88,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
                 .fallback(R.drawable.default_profile)
                 .into(imgProfile)
 
-            iconButtonMedia.setOnClickListener {
+            btnModify.setOnClickListener {
                 if (isPhotoPickerAvailable()) {
                     this@PersonalInfoModifyFragment.pickMedia.launch(
                         PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)

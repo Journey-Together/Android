@@ -33,14 +33,14 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <ImageView
-                        android:id="@+id/btn_login_or_update"
+                        android:id="@+id/btnLoginOrUpdate"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginRight="@dimen/margin_basic"
+                        android:layout_marginBottom="@dimen/margin_big4"
                         android:src="@drawable/ic_chevron_right_24px"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/text_primary" />
 
                     <com.google.android.material.card.MaterialCardView
@@ -49,13 +49,13 @@
                         android:layout_height="65dp"
                         android:layout_marginLeft="@dimen/margin_basic"
                         app:cardCornerRadius="50dp"
-                        app:strokeWidth="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:strokeWidth="0dp"
                         tools:ignore="MissingConstraints">
 
                         <ImageView
-                            android:id="@+id/img_profile"
+                            android:id="@+id/imgProfile"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerCrop"
@@ -64,7 +64,7 @@
                     </com.google.android.material.card.MaterialCardView>
 
                     <TextView
-                        android:id="@+id/tv_name_or_login"
+                        android:id="@+id/tvNameOrLogin"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_big3"
@@ -77,7 +77,7 @@
                         tools:text="다온길" />
 
                     <TextView
-                        android:id="@+id/tv_user_name_title"
+                        android:id="@+id/tvUserNameTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small2"
@@ -87,10 +87,10 @@
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/font_big2"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tv_name_or_login" />
+                        app:layout_constraintStart_toEndOf="@+id/tvNameOrLogin" />
 
                     <TextView
-                        android:id="@+id/tv_review"
+                        android:id="@+id/tvReview"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_big3"
@@ -101,10 +101,10 @@
                         android:textColor="@color/text_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/materialCardView"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_name_or_login" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvNameOrLogin" />
 
                     <TextView
-                        android:id="@+id/tv_review_cnt"
+                        android:id="@+id/tvReviewCnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small2"
@@ -113,10 +113,8 @@
                         android:fontFamily="@font/pretendard_semibold"
                         android:textColor="@color/text_primary"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/tv_review"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_name_or_login" />
-                        app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainReview"
-                        app:layout_constraintTop_toBottomOf="@+id/textViewMyInfoMainUserNickname"
+                        app:layout_constraintStart_toEndOf="@+id/tvReview"
+                        app:layout_constraintTop_toBottomOf="@+id/tvNameOrLogin"
                         tools:text="2" />
 
                     <TextView
@@ -126,9 +124,9 @@
                         android:layout_marginStart="@dimen/margin_big4"
                         android:fontFamily="@font/pretendard_medium"
                         android:text="가입"
-                        app:layout_constraintBottom_toBottomOf="@+id/textViewMyInfoMainReviewCnt"
-                        app:layout_constraintStart_toEndOf="@+id/textViewMyInfoMainReviewCnt"
-                        app:layout_constraintTop_toTopOf="@+id/textViewMyInfoMainReviewCnt" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvReviewCnt"
+                        app:layout_constraintStart_toEndOf="@+id/tvReviewCnt"
+                        app:layout_constraintTop_toTopOf="@+id/tvReviewCnt" />
 
                     <TextView
                         android:id="@+id/textViewMyInfoMainRegisterCnt"
@@ -152,8 +150,8 @@
                 app:dividerThickness="@dimen/margin_small1" />
 
             <LinearLayout
-                android:id="@+id/user_container"
-                android:layout_width="wrap_content"
+                android:id="@+id/userContainer"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
@@ -343,21 +341,13 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:tint="@color/text_tertiary" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    app:dividerColor="@color/background_color"
+                    app:dividerThickness="@dimen/margin_small1" />
             </LinearLayout>
-                    android:layout_marginRight="@dimen/margin_basic"
-                    android:src="@drawable/ic_chevron_right_24px"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/text_tertiary" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                app:dividerColor="@color/background_color"
-                app:dividerThickness="@dimen/margin_small1" />
-
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

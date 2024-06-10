@@ -59,7 +59,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/iconButtonPersonalInfoModify"
+                android:id="@+id/btn_modify"
                 style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

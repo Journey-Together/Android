@@ -211,6 +211,7 @@
                 app:strokeWidth="1dp">
 
                 <ImageButton
+                    android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@color/background_color"

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/margin_big4">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/item_detail_review_big_profile_iv"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:src="@drawable/default_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/profile_circle" />
+
+    <TextView
+        android:id="@+id/item_detail_review_big_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small1"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="이름"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/font_small2"
+        app:layout_constraintBottom_toBottomOf="@+id/item_detail_review_big_profile_iv"
+        app:layout_constraintStart_toEndOf="@+id/item_detail_review_big_profile_iv"
+        app:layout_constraintTop_toTopOf="@+id/item_detail_review_big_profile_iv" />
+
+    <com.willy.ratingbar.BaseRatingBar
+        android:id="@+id/item_detail_review_big_ratingbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_small1"
+        app:layout_constraintBottom_toBottomOf="@id/item_detail_review_big_nickname"
+        app:layout_constraintStart_toEndOf="@id/item_detail_review_big_nickname"
+        app:layout_constraintTop_toTopOf="@+id/item_detail_review_big_nickname"
+        app:srb_drawableEmpty="@drawable/star_icon"
+        app:srb_drawableFilled="@drawable/star_filled_icon"
+        app:srb_isIndicator="true"
+        app:srb_minimumStars="0"
+        app:srb_numStars="5"
+        app:srb_rating="3.5"
+        app:srb_starHeight="15dp"
+        app:srb_starPadding="2dp"
+        app:srb_starWidth="15dp"
+        app:srb_stepSize="0.5" />
+
+    <TextView
+        android:id="@+id/item_detail_review_big_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="2024.00.00"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/font_small2"
+        app:layout_constraintBottom_toBottomOf="@id/item_detail_review_big_nickname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/item_detail_review_big_nickname" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/item_detail_review_big_rv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_detail_review_big_profile_iv" />
+
+    <TextView
+        android:id="@+id/item_detail_review_big_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big4"
+        android:fontFamily="@font/pretendard_medium"
+        android:text="리뷰 내용입니다"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/font_small2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_detail_review_big_rv" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_detail_review_big_complain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big4"
+        android:layout_marginBottom="@dimen/margin_big4"
+        app:layout_constraintBottom_toBottomOf="@+id/item_detail_review_big_divider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_detail_review_big_content">
+
+        <ImageView
+            android:id="@+id/emergency_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:src="@drawable/emergency_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_small2"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="신고하기"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/font_small2"
+            app:layout_constraintBottom_toBottomOf="@id/emergency_iv"
+            app:layout_constraintStart_toEndOf="@id/emergency_iv"
+            app:layout_constraintTop_toTopOf="@id/emergency_iv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/item_detail_review_big_divider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:dividerColor="@color/box_stroke"
+        app:dividerThickness="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

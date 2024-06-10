@@ -2,10 +2,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".HighThemeApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -17,30 +21,64 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.publicschedule.PublicScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.emergency.PharmacyMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myschedule.MyScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.schedule.ScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.home.WriteReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.home.ReviewListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.home.DetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.bookmark.BookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myreview.MyReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myinfo.DeleteUserActivity"
+            android:exported="true" />
+        <activity
+            android:name=".presentation.concerntype.ConcernTypeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myinfo.MyInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.scheduleform.ScheduleFormActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.emergency.EmergencyInfoActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.emergency.EmergencyMapActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.test.TestActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".presentation.search.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.onboarding.OnBoardingActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.login.LoginActivity"
-            android:exported="false" />
-
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="s1kt0zadqe" />
-
+            android:exported="true" />
         <activity
-            android:name=".presentation.main.MainActivity"
+            android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -48,6 +86,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="oauth"
+                    android:scheme="${KAKAO_NATIVE_KEY}" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="${NAVER_MAP_ID}" />
     </application>
 
 </manifest>

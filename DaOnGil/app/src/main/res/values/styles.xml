@@ -15,6 +15,15 @@
         <item name="android:textSize">@dimen/font_big1</item>
         <item name="android:fontFamily">@font/cafe24_oneprettynight</item>
         <item name="android:textColor">@color/toolbar_main_title</item>
+        <item name="android:text">@string/toolbar_app_name</item>
+    </style>
+  
+    <!-- 상세 Toolbar Title TextApperance 설정 -->
+    <style name="Theme.Toolbar.Title" parent="">
+        <item name="android:textSize">@dimen/font_big2</item>
+        <item name="android:fontFamily">@font/pretendard_medium</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
     <style name="tabLayout_text_appearance" parent="">
@@ -50,7 +59,7 @@
 
     <style name="detail_category_chip" parent="ShapeAppearanceOverlay.Material3.Chip">
         <item name="android:textColor">@color/detail_category_chip_state_color</item>
-        <item name="android:padding">15dp</item>
+        <item name="chipStartPadding">8dp</item>
         <item name="android:checkable">true</item>
         <item name="fontFamily">@font/pretendard_semibold</item>
         <item name="chipStrokeColor">@color/detail_category_chip_state_color</item>
@@ -83,6 +92,12 @@
         <item name="android:screenOrientation">portrait</item>
         <item name="bottomSheetStyle">@style/round_corner_modal</item>
     </style>
+    
+    <style name="category_option_button" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:fontFamily">@font/pretendard_semibold</item>
+        <item name="android:textColor">@color/category_selected_button</item>
+        <item name="android:backgroundTint">@color/category_unselected_button</item>
+    </style>
 
     <style name="round_corner_modal" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_sheet_background</item>
@@ -103,5 +118,11 @@
         <item name="android:textColor">@color/text_primary</item>
         <item name="android:fontFamily">@font/pretendard_semibold</item>
         <item name="iconTint">@color/primary</item>
+
+    <!-- 프로필 사진 동그라미로 cut -->
+    <style name="profile_circle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+
     </style>
 </resources>

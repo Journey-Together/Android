@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/locationBookmarkCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_big4"
+        android:paddingHorizontal="20dp"
+        app:cardBackgroundColor="@color/card_background_color"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/imageViewLocationBookmark"
+                android:layout_width="0dp"
+                android:layout_height="142dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/empty_view_small"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewLocationBookmark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big4"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/pretendard_regular"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageViewLocationBookmark"
+                tools:text="여행지 위치" />
+
+            <TextView
+                android:id="@+id/textViewLocationBookmarkName"
+                android:layout_width="140dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/pretendard_semibold"
+                android:maxLines="1"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintStart_toStartOf="@+id/textViewLocationBookmark"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLocationBookmark"
+                tools:text="여행지 이름" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewLocationBookmark"
+                android:layout_width="160dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginBottom="@dimen/margin_big4"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/textViewLocationBookmarkName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewLocationBookmarkName" />
+
+            <ImageView
+                android:id="@+id/locationBookmarkBtn"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/margin_small1"
+                android:layout_marginRight="@dimen/margin_small1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/bookmark_fill_icon" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

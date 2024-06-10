@@ -4,7 +4,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kr.tekit.lion.daongil.data.datasource.RecentSearchKeywordDataSource
 import kr.tekit.lion.daongil.data.dto.local.toDomainModel
-import kr.tekit.lion.daongil.data.dto.local.toEntity
 import kr.tekit.lion.daongil.domain.model.RecentSearchKeyword
 import kr.tekit.lion.daongil.domain.repository.RecentSearchKeywordRepository
 
@@ -13,12 +12,10 @@ class RecentSearchKeywordRepositoryImpl(
 ) : RecentSearchKeywordRepository {
 
     override suspend fun addRecentSearchKeyword(keyword: String) {
-        recentSearchKeywordDataSource.addRecentSearchKeyword(
-            RecentSearchKeyword(keyword = keyword).toEntity()
-        )
+        recentSearchKeywordDataSource.addRecentSearchKeyword(keyword)
     }
 
-    override suspend fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeyword>> {
+    override fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeyword>> {
         return recentSearchKeywordDataSource.getAllRecentSearchKeyword().map {
             it.map { keyword ->
                 keyword.toDomainModel()

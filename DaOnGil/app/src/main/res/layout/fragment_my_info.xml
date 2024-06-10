@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".presentation.myinfo.fragment.MyInfoFragment" >
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarMyInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/pretendard_medium"
+            android:text="나의 정보"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/font_big2" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_basic"
+                android:paddingTop="@dimen/margin_big2"
+                android:paddingRight="@dimen/margin_basic"
+                android:paddingBottom="@dimen/margin_big1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="개인 정보"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/buttonPersonalInfoModify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_radius_50"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="수정하기"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_small1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_big4"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:text="이름"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_big4"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:text="전화번호"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/pretendard_semibold"
+                            android:text="닉네임"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textViewMyInfoUserName"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_big4"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:text="이름"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+
+                        <TextView
+                            android:id="@+id/textViewMyInfoUserPhoneNumber"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/margin_big4"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:text="전화번호"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+
+                        <TextView
+                            android:id="@+id/textViewMyInfoUserNickname"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/pretendard_medium"
+                            android:text="닉네임"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="@dimen/font_big3" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:dividerColor="@color/text_tertiary"
+                app:dividerThickness="5dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/margin_basic"
+                android:paddingTop="@dimen/margin_big1"
+                android:paddingRight="@dimen/margin_basic"
+                android:paddingBottom="@dimen/margin_big1">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/margin_big2">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="나의 응급 정보"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <Button
+                        android:id="@+id/buttonIceModify"
+                        android:layout_width="wrap_content"
+                        android:layout_height="45dp"
+                        android:background="@drawable/background_radius_50"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:text="수정하기"
+                        android:textColor="@color/text_primary"
+                        android:textSize="@dimen/font_small1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="생년월일"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyInfoBirthday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="생년월일"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="혈액형"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyInfoBloodType"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="혈액형"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="의학적 질환"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyInfoDisease"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="질환"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="알레르기 및 부작용"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyInfoAllergy"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="알레르기 및 부작용"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="투여약"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <TextView
+                    android:id="@+id/textViewMyInfoMedicine"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_basic"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:text="투여약"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big3" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:text="긴급 연락처"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="@dimen/font_big2" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoRelation1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="관계"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_big3" />
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoContact1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="연락처"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_small1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutMyInfoRelation2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoRelation2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="관계"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_big3" />
+
+                    <TextView
+                        android:id="@+id/textViewMyInfoContact2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:text="연락처"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_small1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/margin_basic"
+        android:layout_marginVertical="@dimen/margin_big4"
+        app:cardBackgroundColor="@color/card_background_color"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageViewMyReivew"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/empty_view" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/margin_big3">
+
+                <TextView
+                    android:id="@+id/textViewMyReviewLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small1"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/font_small1"
+                    tools:text="여행지 위치" />
+
+                <TextView
+                    android:id="@+id/textViewMyReviewLocationName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_big4"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:textColor="@color/text_primary"
+                    android:textSize="@dimen/font_big2"
+                    tools:text="여행지 이름" />
+
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/ratingbarItemMyReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srb_drawableEmpty="@drawable/star_icon"
+                    app:srb_drawableFilled="@drawable/star_filled_icon"
+                    app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
+                    app:srb_numStars="5"
+                    app:srb_rating="3.5"
+                    app:srb_starHeight="25dp"
+                    app:srb_starPadding="5dp"
+                    app:srb_starWidth="25dp"
+                    app:srb_stepSize="0.5" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

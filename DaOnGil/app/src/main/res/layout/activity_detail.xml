@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color"
+    tools:context=".presentation.home.DetailActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:navigationIcon="@drawable/back_icon">
+
+                <TextView
+                    style="@style/Theme.Toolbar.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="관광지" />
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+            <ImageView
+                android:id="@+id/detail_thumbnail_iv"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/empty_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_toolbar" />
+
+            <TextView
+                android:id="@+id/detail_route_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="화면 경로"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_thumbnail_iv" />
+
+            <TextView
+                android:id="@+id/detail_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big3"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="관광지명"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_big1"
+                app:layout_constraintStart_toStartOf="@+id/detail_route_tv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_route_tv" />
+
+            <TextView
+                android:id="@+id/detail_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="주소"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintStart_toStartOf="@+id/detail_title_tv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_title_tv" />
+
+            <ImageButton
+                android:id="@+id/detail_bookmark_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_small2"
+                android:background="@color/background_color"
+                android:src="@drawable/bookmark_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_title_tv"
+                app:layout_constraintEnd_toStartOf="@+id/detail_bookmark_count"
+                app:layout_constraintTop_toTopOf="@+id/detail_title_tv" />
+
+            <TextView
+                android:id="@+id/detail_bookmark_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="00"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintBottom_toBottomOf="@id/detail_bookmark_btn"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/detail_bookmark_btn" />
+
+
+            <TextView
+                android:id="@+id/detail_basic_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="기본 정보"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big2"
+                app:layout_constraintStart_toStartOf="@id/detail_address_tv"
+                app:layout_constraintTop_toBottomOf="@id/detail_address_tv" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/detail_basic_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:dividerColor="@color/text_tertiary"
+                app:dividerThickness="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_basic_title_tv" />
+
+            <TextView
+                android:id="@+id/detail_basic_content_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="기본 정보 내용"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_basic_divider" />
+
+            <TextView
+                android:id="@+id/detail_basic_address_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="주소"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintStart_toStartOf="@+id/detail_basic_content_tv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_basic_content_tv" />
+
+            <TextView
+                android:id="@+id/detail_basic_address_content_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="주소입니다"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detail_call_content_tv"
+                app:layout_constraintTop_toTopOf="@+id/detail_basic_address_tv" />
+
+            <TextView
+                android:id="@+id/detail_call_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="문의"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintStart_toStartOf="@+id/detail_basic_address_tv"
+                app:layout_constraintTop_toTopOf="@+id/detail_call_content_tv" />
+
+            <TextView
+                android:id="@+id/detail_call_content_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="010-1111-1111"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detail_homepage_content_tv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_basic_address_content_tv" />
+
+            <TextView
+                android:id="@+id/detail_homepage_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="홈페이지"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintStart_toStartOf="@id/detail_call_tv"
+                app:layout_constraintTop_toTopOf="@+id/detail_homepage_content_tv" />
+
+            <TextView
+                android:id="@+id/detail_homepage_content_tv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_big4"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:fontFamily="@font/pretendard_medium"
+                android:text="홈페이지 주소"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/detail_homepage_tv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_call_content_tv" />
+
+
+            <TextView
+                android:id="@+id/detail_service_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="무장애 편의정보"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big2"
+                app:layout_constraintStart_toStartOf="@id/detail_homepage_tv"
+                app:layout_constraintTop_toBottomOf="@id/detail_homepage_tv" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/detail_service_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:dividerColor="@color/text_tertiary"
+                app:dividerThickness="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_service_title_tv" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/detail_disability_iv_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_big1"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_service_divider">
+
+                <ImageView
+                    android:id="@+id/detail_physical_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sv_unselected_physical_disability_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/detail_visual_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sv_unselected_visual_impairment_icon"
+                    app:layout_constraintEnd_toStartOf="@+id/detail_hearing_iv"
+                    app:layout_constraintStart_toEndOf="@+id/detail_physical_iv"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/detail_hearing_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/sv_unselected_hearing_impairment_icon"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/detail_infant_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_big3"
+                    android:src="@drawable/sv_unselected_infant_family_icon"
+                    app:layout_constraintStart_toStartOf="@+id/detail_physical_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_physical_iv" />
+
+                <ImageView
+                    android:id="@+id/detail_elderly_iv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_big3"
+                    android:src="@drawable/sv_unselected_elderly_people_icon"
+                    app:layout_constraintStart_toStartOf="@+id/detail_visual_iv"
+                    app:layout_constraintTop_toBottomOf="@+id/detail_visual_iv" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detail_disability_info_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_disability_iv_layout" />
+
+            <TextView
+                android:id="@+id/detail_map_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="지도"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big2"
+                app:layout_constraintStart_toStartOf="@id/detail_disability_info_rv"
+                app:layout_constraintTop_toBottomOf="@+id/detail_disability_info_rv" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/detail_map_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:dividerColor="@color/text_tertiary"
+                app:dividerThickness="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_map_tv" />
+
+            <FrameLayout
+                android:id="@+id/detail_map_layout"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_map_divider">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/detail_map"
+                    android:name="com.naver.maps.map.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/detail_review_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="후기"
+                android:textColor="@color/text_secondary"
+                android:textSize="@dimen/font_big2"
+                app:layout_constraintStart_toStartOf="@+id/detail_map_layout"
+                app:layout_constraintTop_toBottomOf="@+id/detail_map_layout" />
+
+            <ImageButton
+                android:id="@+id/detail_review_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_basic"
+                android:background="@color/background_color"
+                android:src="@drawable/review_icon"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_review_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/detail_review_tv" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/detail_review_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big3"
+                app:dividerColor="@color/text_tertiary"
+                app:dividerThickness="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_review_tv" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detail_review_rv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_review_divider" />
+
+            <Button
+                android:id="@+id/detail_more_review_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:layout_marginBottom="@dimen/margin_basic"
+                android:background="@drawable/background_radius_10"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="후기 전체보기"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:backgroundTint="@color/primary_disabled"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_review_rv" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

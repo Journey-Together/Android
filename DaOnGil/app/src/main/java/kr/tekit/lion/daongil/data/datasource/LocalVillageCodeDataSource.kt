@@ -10,7 +10,7 @@ class LocalVillageCodeDataSource(
         villageCodeDao.setVillageCode(villageCodes)
     }
 
-    suspend fun getAllVillageInfoList(): List<VillageCodeEntity> {
-        return villageCodeDao.getAllVillageCode()
+    suspend fun getAllVillageInfoList(code: String): List<VillageCodeEntity> {
+        return villageCodeDao.getVillageCode(code)
     }
 }

@@ -11,7 +11,7 @@ interface RecentSearchKeywordRepository {
 
     suspend fun addRecentSearchKeyword(keyword: String)
 
-    suspend fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeyword>>
+    fun getAllRecentSearchKeyword(): Flow<List<RecentSearchKeyword>>
 
     suspend fun removeAllRecentSearchKeyword()
 

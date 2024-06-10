@@ -9,10 +9,8 @@ import kr.tekit.lion.daongil.domain.model.AreaCode
 import kr.tekit.lion.daongil.domain.model.VillageCode
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllDetailAreaCodeUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.InitAreaCodeInfoUseCase
 
 class SearchMainViewModel(
-    private val initAreaCodeInfoUseCase: InitAreaCodeInfoUseCase,
     private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
     private val getAllDetailAreaCodeUseCase: GetAllDetailAreaCodeUseCase
 
@@ -20,7 +18,6 @@ class SearchMainViewModel(
 
     init {
         viewModelScope.launch {
-            //initAreaCodeInfoUseCase()
             _areaCode.value = getAllAreaCodeUseCase()
         }
     }

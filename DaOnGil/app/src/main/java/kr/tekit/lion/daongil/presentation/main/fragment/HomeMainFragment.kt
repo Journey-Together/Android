@@ -35,15 +35,15 @@ import kr.tekit.lion.daongil.presentation.main.adapter.HomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeRecommendRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeVPAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
-import kr.tekit.lion.daongil.presentation.main.vm.MainViewModel
-import kr.tekit.lion.daongil.presentation.main.vm.MainViewModelFactory
+import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModel
+import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModelFactory
 import java.util.Locale
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
 class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVAdapter.OnRecommendClickListener {
     private val app = HighThemeApp.getInstance()
-    private val viewModel : MainViewModel by viewModels { MainViewModelFactory(requireContext()) }
+    private val viewModel : HomeViewModel by viewModels { HomeViewModelFactory(requireContext()) }
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
@@ -116,13 +116,13 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
     }
 
     private fun settingRecommendRVAdapter(binding: FragmentHomeMainBinding, recommendPlaceList: List<RecommendPlace>) {
-        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList, requireContext(), this)
+        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList, this)
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
         binding.homeRecommendRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun settingLocationRVAdapter(binding: FragmentHomeMainBinding, aroundPlaceList: List<AroundPlace>) {
-        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList, requireContext())
+        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList)
         binding.homeMyLocationRv.adapter = homeLocationRVAdapter
         binding.homeMyLocationRv.layoutManager = LinearLayoutManager(context)
     }

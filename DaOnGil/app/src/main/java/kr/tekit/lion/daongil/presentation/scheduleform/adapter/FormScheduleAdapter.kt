@@ -12,12 +12,19 @@ import kr.tekit.lion.daongil.presentation.scheduleform.fragment.ScheduleDetailsF
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class FormScheduleAdapter(
-    private val dailyScheduleList: List<DailySchedule>, private val context: Context,
-    private val navController: NavController, private val scheduleViewModel: ScheduleFormViewModel
+    private val dailyScheduleList: List<DailySchedule>,
+    private val context: Context,
+    private val navController: NavController,
+    private val scheduleViewModel: ScheduleFormViewModel
 ) : RecyclerView.Adapter<FormScheduleAdapter.FormScheduleViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return FormScheduleViewHolder(ItemFormScheduleBinding.inflate(inflater, parent, false), context, navController, scheduleViewModel)
+        return FormScheduleViewHolder(
+            ItemFormScheduleBinding.inflate(inflater, parent, false),
+            context,
+            navController,
+            scheduleViewModel
+        )
     }
 
     override fun onBindViewHolder(holder: FormScheduleViewHolder, position: Int) {
@@ -29,20 +36,25 @@ class FormScheduleAdapter(
     }
 
     class FormScheduleViewHolder(
-        private val binding: ItemFormScheduleBinding, private val context: Context,
-        private val navController: NavController, private val scheduleViewModel: ScheduleFormViewModel
-    )
-        : RecyclerView.ViewHolder(binding.root){
-        fun bind(dailySchedule: DailySchedule, schedulePosition:Int) {
+        private val binding: ItemFormScheduleBinding,
+        private val context: Context,
+        private val navController: NavController,
+        private val scheduleViewModel: ScheduleFormViewModel
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(dailySchedule: DailySchedule, schedulePosition: Int) {
             binding.textViewFScheduleDate.text = dailySchedule.dailyDate
 
-            val formPlaceAdapter = FormPlaceAdapter(dailySchedule.dailyPlaces, scheduleViewModel, schedulePosition)
+            val formPlaceAdapter =
+                FormPlaceAdapter(dailySchedule.dailyPlaces, scheduleViewModel, schedulePosition)
             binding.recyclerViewFSchedulePlaces.adapter = formPlaceAdapter
             binding.recyclerViewFSchedulePlaces.layoutManager = LinearLayoutManager(context)
 
             binding.buttonFScheduleAddPlace.setOnClickListener {
                 // 몇 번째 일정에 여행지를 추가하는지 파악하기 위해 schedulePosition 을 전달해준다.
-                val action = ScheduleDetailsFormFragmentDirections.actionScheduleDetailsFormFragmentToFormSearchFragment(schedulePosition)
+                val action =
+                    ScheduleDetailsFormFragmentDirections.actionScheduleDetailsFormFragmentToFormSearchFragment(
+                        schedulePosition
+                    )
                 navController.navigate(action)
             }
         }

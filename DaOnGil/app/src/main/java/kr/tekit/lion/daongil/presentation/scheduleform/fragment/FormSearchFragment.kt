@@ -18,7 +18,7 @@ import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 
 class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
-    val args: FormSearchFragmentArgs by navArgs()
+    private val args: FormSearchFragmentArgs by navArgs()
     private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

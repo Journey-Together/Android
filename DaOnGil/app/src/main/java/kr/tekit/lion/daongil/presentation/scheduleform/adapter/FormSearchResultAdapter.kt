@@ -9,13 +9,17 @@ import kr.tekit.lion.daongil.domain.model.FormSearchedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class FormSearchResultAdapter(
-    private val searchResult : MutableList<FormSearchedPlace>, val navController: NavController,
-    val scheduleViewModel: ScheduleFormViewModel, val schedulePosition: Int
-) : RecyclerView.Adapter<FormSearchResultAdapter.FormSearchResultViewHolder>(){
+    private val searchResult: MutableList<FormSearchedPlace>,
+    private val navController: NavController,
+    private val scheduleViewModel: ScheduleFormViewModel,
+    private val schedulePosition: Int
+) : RecyclerView.Adapter<FormSearchResultAdapter.FormSearchResultViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormSearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return FormSearchResultViewHolder(ItemFormSearchResultBinding.inflate(inflater, parent, false),
-            navController, scheduleViewModel, schedulePosition)
+        return FormSearchResultViewHolder(
+            ItemFormSearchResultBinding.inflate(inflater, parent, false),
+            navController, scheduleViewModel, schedulePosition
+        )
     }
 
     override fun onBindViewHolder(holder: FormSearchResultViewHolder, position: Int) {
@@ -27,10 +31,12 @@ class FormSearchResultAdapter(
     }
 
     class FormSearchResultViewHolder(
-        private val binding: ItemFormSearchResultBinding, val navController: NavController,
-        val scheduleViewModel: ScheduleFormViewModel, val schedulePosition: Int
-    ) : RecyclerView.ViewHolder(binding.root){
-        fun bind(searchedPlace : FormSearchedPlace){
+        private val binding: ItemFormSearchResultBinding,
+        private val navController: NavController,
+        private val scheduleViewModel: ScheduleFormViewModel,
+        private val schedulePosition: Int
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(searchedPlace: FormSearchedPlace) {
             binding.textViewSearchResultName.text = searchedPlace.searchedPlaceName
             binding.textViewSearchResultCategory.text = searchedPlace.searchedPlaceCategory
 
@@ -40,7 +46,6 @@ class FormSearchResultAdapter(
                 navController.popBackStack()
             }
         }
-
     }
 
 }

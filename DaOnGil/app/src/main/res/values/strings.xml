@@ -141,4 +141,10 @@
 
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
 
+    <string name="tab_text_place">장소</string>
+    <string name="tab_text_plan">일정</string>
+
+    <string name="text_place_bookmark">북마크한 장소가 없습니다.\n가고 싶은 장소를 추가해보세요!</string>
+    <string name="text_plan_bookmark">북마크한 일정이 없습니다.\n관심 있는 일정을 추가해보세요!</string>
+
 </resources>

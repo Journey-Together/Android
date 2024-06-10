@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.presentation.login.fragment
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
@@ -9,6 +10,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -128,12 +130,10 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         var naverToken: String? = ""
 
-
         val profileCallback = object : NidProfileCallback<NidProfileResponse> {
 
-            override fun onSuccess(result: NidProfileResponse) {
+            override fun onSuccess(result: NidProfileResponse) = repeatOnViewStarted {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    navigateToSelectInterestFragment()
                     Log.d(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
                 }
             }

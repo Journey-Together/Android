@@ -1,6 +1,6 @@
 package kr.tekit.lion.daongil.domain.repository
 
-import kr.tekit.lion.daongil.data.datasource.PlanBookmarkDataSource
+import kr.tekit.lion.daongil.data.datasource.BookmarkDataSource
 import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.data.network.service.BookmarkService
 import kr.tekit.lion.daongil.data.repository.PlanBookmarkRepositoryImpl
@@ -12,7 +12,7 @@ interface PlanBookmarkRepository {
     companion object {
         fun create() : PlanBookmarkRepositoryImpl {
             return PlanBookmarkRepositoryImpl(
-                PlanBookmarkDataSource(
+                BookmarkDataSource(
                     RetrofitInstance.serviceProvider(BookmarkService::class.java)
                 )
             )

@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.domain.model
 
 data class MyInfo(
+    val name: String? = "",
     val nickname: String? = "",
     val phone: String? = "",
     val profileImage: String? = "",

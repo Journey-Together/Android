@@ -23,7 +23,6 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentPersonalInfoModifyBinding
-import kr.tekit.lion.daongil.domain.model.MyPersonalInfo
 import kr.tekit.lion.daongil.presentation.ext.compressBitmap
 import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
@@ -33,7 +32,7 @@ import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
 import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModelFactory
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modify) {
@@ -60,7 +59,8 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             }
         }
 
-        permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
                 if (isGranted) {
                     startAlbumLauncher()
                 } else {
@@ -116,11 +116,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
 
                     when (state) {
                         ModifyState.ImgSelected -> {
-                            val file = File(viewModel.profileImg.value)
-                            val compressedImage = BitmapFactory.decodeFile(file.path).compressBitmap(80)
-                            val requestImage = RequestBody.create("image/jpeg".toMediaTypeOrNull(), compressedImage)
-                            val multipartBody = MultipartBody.Part.createFormData("image", file.name, requestImage)
-                            //viewModel.onCompleteModifyPersonalWithImg(modifiedData, multipartBody)
+                            viewModel.onCompleteModifyPersonalWithImg(nickname, phone)
                         }
 
                         ModifyState.ImgUnSelected -> {
@@ -174,17 +170,16 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
         }
     }
 
+
     private fun drawImage(view: ImageView, imgUrl: Uri) {
         Glide.with(requireContext())
             .load(imgUrl)
             .fallback(R.drawable.default_profile)
             .into(view)
         val path = requireContext().toAbsolutePath(imgUrl)
-        val bitmap = BitmapFactory.decodeFile(path).compressBitmap(80)
         viewModel.onSelectProfileImage(path)
         viewModel.modifyStateChange()
     }
-
 
 
     private fun isFormValid(binding: FragmentPersonalInfoModifyBinding): Boolean {

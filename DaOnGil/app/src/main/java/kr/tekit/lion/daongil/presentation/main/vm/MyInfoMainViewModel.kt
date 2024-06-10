@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kr.tekit.lion.daongil.data.repository.MemberRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.MyDefaultInfo
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
+import kr.tekit.lion.daongil.domain.repository.MemberRepository
 import kr.tekit.lion.daongil.domain.usecase.GetMyDefaultInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
@@ -14,7 +16,7 @@ import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class MyInfoMainViewModel(
     private val authRepository: AuthRepository,
-    private val getMyDefaultInfoUseCase: GetMyDefaultInfoUseCase
+    private val getMyDefaultInfoUseCase: GetMyDefaultInfoUseCase,
 ): ViewModel() {
 
     private val _loginState = MutableStateFlow<LogInState>(LogInState.Checking)

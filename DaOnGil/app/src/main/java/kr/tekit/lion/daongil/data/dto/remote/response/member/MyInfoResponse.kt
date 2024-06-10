@@ -11,7 +11,8 @@ data class MyInfoResponse (
 ){
     fun toDomainModel(): MyInfo{
         return MyInfo(
-            nickname = data.name,
+            name = data.name,
+            nickname = data.nickname,
             phone = data.phone,
             profileImage = data.profileImage,
             bloodType = data.bloodType,

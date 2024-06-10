@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.IceInfo
-import kr.tekit.lion.daongil.domain.model.MyPersonalInfo
 import kr.tekit.lion.daongil.domain.model.PersonalInfo
+import kr.tekit.lion.daongil.domain.model.ProfileImg
 import kr.tekit.lion.daongil.domain.usecase.GetMyInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.ModifyMyIceInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.ModifyMyPersonalInfoUseCase
@@ -16,7 +16,6 @@ import kr.tekit.lion.daongil.domain.usecase.ModifyMyProfileImageUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.presentation.myinfo.ModifyState
-import okhttp3.MultipartBody
 
 class MyInfoViewModel(
     private val getMyInfoUseCase: GetMyInfoUseCase,
@@ -28,7 +27,7 @@ class MyInfoViewModel(
     private val _modifyState = MutableStateFlow<ModifyState>(ModifyState.ImgUnSelected)
     val modifyState = _modifyState.asStateFlow()
 
-    private val _myPersonalInfo = MutableStateFlow(MyPersonalInfo())
+    private val _myPersonalInfo = MutableStateFlow(PersonalInfo())
     val myPersonalInfo = _myPersonalInfo.asStateFlow()
 
     private val _profileImg = MutableStateFlow("")
@@ -48,7 +47,7 @@ class MyInfoViewModel(
         getMyInfoUseCase().onSuccess {
             _name.value = it.name ?: ""
 
-            _myPersonalInfo.value = MyPersonalInfo(
+            _myPersonalInfo.value = PersonalInfo(
                 nickname = it.nickname ?: "",
                 phone = it.phone ?: ""
             )
@@ -81,31 +80,22 @@ class MyInfoViewModel(
         }
     }
 
-    fun onCompleteModifyPersonalWithImg(
-        myPersonalInfo: MyPersonalInfo,
-        requestImg: MultipartBody.Part
-    ) {
-        _myPersonalInfo.value = myPersonalInfo
-
+    fun onCompleteModifyPersonalWithImg(nickname: String, phone: String) {
         viewModelScope.launch {
-            //modifyMyPersonalInfoUseCase(myPersonalInfo)
-            modifyMyProfileImageUseCase(requestImg).onSuccess {
-                Log.d("MyOkHttpResult", it.toString())
-            }.onError {
-                Log.d("MyOkHttpResult", it.toString())
-            }
+            onCompleteModifyPersonal(nickname, phone)
+            modifyMyProfileImageUseCase(ProfileImg( profileImg.value))
+                .onSuccess {
+                    Log.d("MyOkHttpResult", it.toString())
+                }.onError {
+                    Log.d("MyOkHttpResult", it.toString())
+
+                }
         }
     }
 
     fun onCompleteModifyIce(iceInfo: IceInfo) {
         _IceInfo.value = iceInfo
-        viewModelScope.launch {
-            modifyMyIceInfoUseCase(iceInfo).onSuccess {
-                Log.d("MyOkHttpResult", "ModifyIce Complete")
-            }.onError {
-                Log.d("MyOkHttpResult", "ModifyIce Failed $it")
-            }
-        }
+        viewModelScope.launch { modifyMyIceInfoUseCase(iceInfo) }
     }
 
     fun onSelectProfileImage(imgUrl: String?) {

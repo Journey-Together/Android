@@ -9,10 +9,10 @@ import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.data.repository.AreaCodeRepositoryImpl
 
 interface AreaCodeRepository {
-
     suspend fun getAreaCodeInfo(): List<AreaCode>
-    suspend fun getAreaCodeInfo(areaName: String): String?
+    suspend fun getAreaCodeByName(areaName: String): String?
     suspend fun getAllAreaCodes(): List<AreaCode>
+    suspend fun getSigunguCode(areaCode: String): List<AreaCode>
     suspend fun addAreaCodeInfo()
 
     companion object{

@@ -6,6 +6,6 @@ class GetAreaCodeByNameUseCase(
     private val areaCodeRepository: AreaCodeRepository
 ) {
     suspend operator fun invoke(areaName: String): String? {
-        return areaCodeRepository.getAreaCodeInfo(areaName)
+        return areaCodeRepository.getAreaCodeByName(areaName)
     }
 }

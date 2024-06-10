@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.domain.repository.PlaceMainInfoRepository
 import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceMainInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetVillageCodeByNameUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetSigunguCodeByNameUseCase
 
 class HomeViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val areaCodeRepository = AreaCodeRepository.create(context)
@@ -17,7 +17,7 @@ class HomeViewModelFactory(context: Context) : ViewModelProvider.Factory {
 
     private val getAreaCodeByNameUseCase = GetAreaCodeByNameUseCase(areaCodeRepository)
     private val getPlaceMainInfoUseCase = GetPlaceMainInfoUseCase(placeMainInfoRepository)
-    private val getVillageCodeByNameUseCase = GetVillageCodeByNameUseCase(
+    private val getSigunguCodeByNameUseCase = GetSigunguCodeByNameUseCase(
         villageCodeRepository
     )
 
@@ -26,7 +26,7 @@ class HomeViewModelFactory(context: Context) : ViewModelProvider.Factory {
             return HomeViewModel(
                 getAreaCodeByNameUseCase,
                 getPlaceMainInfoUseCase,
-                getVillageCodeByNameUseCase
+                getSigunguCodeByNameUseCase
             ) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")

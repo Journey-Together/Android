@@ -12,16 +12,24 @@ class AreaCodeRepositoryImpl(
     private val local: LocalAreaCodeDataSource,
 ) : AreaCodeRepository {
 
-    override suspend fun getAreaCodeInfo(areaName: String): String? {
+    // 이름으로 지역코드 검색
+    override suspend fun getAreaCodeByName(areaName: String): String? {
         return local.getAreaCodeInfo(areaName)
     }
 
+    // 로컬의 모든 지역코드
     override suspend fun getAllAreaCodes(): List<AreaCode> {
         return local.getAllAreaCodes().map { it.toDomainModel() }
     }
 
+    // API 모든 지역코드 검색
     override suspend fun getAreaCodeInfo(): List<AreaCode> {
         return remote.getAreaInfoList().toDomainModel()
+    }
+
+    // API 모든 시군구 코드 검색
+    override suspend fun getSigunguCode(areaCode: String): List<AreaCode> {
+        return remote.getAreaInfoList(areaCode).toDomainModel()
     }
 
     override suspend fun addAreaCodeInfo() {

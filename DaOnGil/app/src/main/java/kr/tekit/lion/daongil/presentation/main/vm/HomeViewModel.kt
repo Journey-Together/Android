@@ -10,14 +10,14 @@ import kr.tekit.lion.daongil.domain.model.AroundPlace
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceMainInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetVillageCodeByNameUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetSigunguCodeByNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
 class HomeViewModel(
     private val getAreaCodeByNameUseCase: GetAreaCodeByNameUseCase,
     private val getPlaceMainInfoUseCase: GetPlaceMainInfoUseCase,
-    private val getVillageCodeByNameUseCase: GetVillageCodeByNameUseCase
+    private val getSigunguCodeByNameUseCase: GetSigunguCodeByNameUseCase
 ) : ViewModel() {
 
     init {
@@ -37,7 +37,7 @@ class HomeViewModel(
     }
 
     fun getVillageCode(village: String = "중구") = viewModelScope.launch {
-        val result = getVillageCodeByNameUseCase(village)
+        val result = getSigunguCodeByNameUseCase(village)
         Log.d("getAreaCodeResult", result.toString())
     }
 

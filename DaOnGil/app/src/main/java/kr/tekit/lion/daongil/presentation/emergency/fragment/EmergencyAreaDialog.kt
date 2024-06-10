@@ -34,7 +34,8 @@ class EmergencyAreaDialog(
             }
 
             emergencyAreaPositive.setOnClickListener {
-                viewmodel.setArea(emergencyAreaSelected.text.toString(), emergencyDetailAreaSelected.text.toString())
+                val areaDetail = if (emergencyDetailAreaSelected.text.toString() == "세종특별자치시") null else emergencyDetailAreaSelected.text.toString()
+                viewmodel.setArea(emergencyAreaSelected.text.toString(), areaDetail)
                 emergencyAreaSelected.setText("")
                 emergencyDetailAreaSelected.setText("")
                 dismiss()
@@ -71,9 +72,12 @@ class EmergencyAreaDialog(
                 )
                 emergencyDetailAreaSelected.setAdapter(areaDetailAdapter)
                 emergencyDetailAreaSelected.setText("")
+                emergencyAreaPositive.isEnabled = false
                 emergencyDetailAreaLayout.visibility = View.VISIBLE
-                emergencyAreaPositive.isEnabled = true
+            }
 
+            emergencyDetailAreaSelected.setOnItemClickListener { adapterView, view, i, l ->
+                emergencyAreaPositive.isEnabled = true
             }
 
         }
@@ -90,10 +94,10 @@ class EmergencyAreaDialog(
             "울산광역시" -> "ulsan"
             "세종특별자치시" -> "sejong"
             "경기도" -> "gyeonggi"
-            "강원도" -> "gangwon"
+            "강원특별자치도" -> "gangwon"
             "충청북도" -> "chungbuk"
             "충청남도" -> "chungnam"
-            "전라북도" -> "jeonbuk"
+            "전북특별자치도" -> "jeonbuk"
             "전라남도" -> "jeonnam"
             "경상북도" -> "gyeongbuk"
             "경상남도" -> "gyeongnam"

@@ -24,14 +24,14 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         repeatOnViewStarted {
             viewModel.uiState.collect{ state->
                 when(state){
-                    is UiState.LoggedIn ->{
+                    is LogInState.LoggedIn ->{
                         startActivity(Intent(requireContext(), MainActivity::class.java))
                         requireActivity().finish()
                     }
                     is UiState.LoginRequired -> {
                         startActivity(Intent(requireContext(), OnBoardingActivity::class.java))
                     }
-                    is UiState.Checking -> {
+                    is LogInState.Checking -> {
                         return@collect
                     }
                 }

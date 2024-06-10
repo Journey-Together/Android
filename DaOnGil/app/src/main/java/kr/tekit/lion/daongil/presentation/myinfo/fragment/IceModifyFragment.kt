@@ -3,70 +3,105 @@ package kr.tekit.lion.daongil.presentation.myinfo.fragment
 import android.content.Context
 import android.os.Bundle
 import android.view.KeyEvent
-import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import androidx.core.content.ContextCompat
-import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentIceModifyBinding
+import kr.tekit.lion.daongil.domain.model.IceInfo
+import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.showSoftInput
+import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModel
+import kr.tekit.lion.daongil.presentation.myinfo.vm.MyInfoViewModelFactory
 
 class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
+    private val viewModel: MyInfoViewModel by activityViewModels { MyInfoViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentIceModifyBinding.bind(view)
+        with(binding) {
 
-        initView(binding)
-        IceInfoModify(binding)
-        setupErrorHandling(binding)
-    }
-
-    private fun initView(binding: FragmentIceModifyBinding) {
-        binding.toolbarIceModify.apply {
-            setNavigationIcon(R.drawable.back_icon)
-            setNavigationOnClickListener {
-                findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
+            toolbarIceModify.setNavigationOnClickListener {
+                findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment)
             }
-        }
 
-        settingTextField(binding)
-        handleTextFieldEditorActions(binding)
+            buttonIceSubmit.setOnClickListener {
+                if (isFormValid(binding)) {
+                    showSnackbar(binding, "나의 응급 정보가 수정 되었습니다.")
+                    viewModel.onCompleteModifyIce(
+                        IceInfo(
+                            bloodType = tvBloodType.text.toString(),
+                            birth = tvBirthday.text.toString(),
+                            disease = tvDisease.text.toString(),
+                            allergy = tvAllergy.text.toString(),
+                            medication = tvMedicine.text.toString(),
+                            part1Rel = tvRelation1.text.toString(),
+                            part1Phone = tvContact1.text.toString(),
+                            part2Rel = tvRelation2.text.toString(),
+                            part2Phone = tvContact2.text.toString()
+                        )
+                    )
+                    findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment)
+                }
+            }
+
+            initTextField(binding)
+            handleTextFieldEditorActions(binding)
+        }
     }
 
-    private fun settingTextField(binding: FragmentIceModifyBinding) {
+    private fun initTextField(binding: FragmentIceModifyBinding) {
         val bloodType = resources.getStringArray(R.array.blood_type)
-        val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item_blood_type, bloodType)
+        val arrayAdapter =
+            ArrayAdapter(requireContext(), R.layout.dropdown_item_blood_type, bloodType)
 
-        with(binding.textFieldIceBloodType) {
+        with(binding.tvBloodType) {
             setDropDownBackgroundResource(R.color.background_color)
             setAdapter(arrayAdapter)
 
             setOnClickListener {
                 val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.hideSoftInputFromWindow(it.windowToken, 0)
-
                 showDropDown()
+            }
+        }
+
+        repeatOnViewStarted {
+            with(binding) {
+                viewModel.myIceInfo.collect {
+                    tvBirthday.setText(it.birth)
+                    tvBloodType.setText(it.bloodType)
+                    tvDisease.setText(it.disease)
+                    tvAllergy.setText(it.allergy)
+                    tvMedicine.setText(it.medication)
+                    tvRelation1.setText(it.part1Rel)
+                    tvContact1.setText(it.part1Phone)
+                    tvRelation2.setText(it.part2Rel)
+                    tvContact2.setText(it.part2Phone)
+                }
             }
         }
     }
 
     private fun handleTextFieldEditorActions(binding: FragmentIceModifyBinding) {
         with(binding) {
-            textFieldIceBirthday.setOnEditorActionListener { v, actionId, event ->
+            tvBirthday.setOnEditorActionListener { v, actionId, event ->
                 if (actionId == EditorInfo.IME_ACTION_DONE ||
-                    event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN) {
+                    event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN
+                ) {
 
                     val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                     imm.hideSoftInputFromWindow(v.windowToken, 0)
 
-                    textFieldIceBirthday.clearFocus()
+                    tvBirthday.clearFocus()
 
                     true
                 } else {
@@ -74,33 +109,22 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
                 }
             }
 
-            textFieldIceRelation1.setOnEditorActionListener { v, actionId, event ->
-                textFieldIceContact1.requestFocus()
+            tvRelation1.setOnEditorActionListener { v, actionId, event ->
+                tvContact1.requestFocus()
                 true
             }
 
-            textFieldIceContact1.setOnEditorActionListener { v, actionId, event ->
-                textFieldIceRelation2.requestFocus()
+            tvContact1.setOnEditorActionListener { v, actionId, event ->
+                tvContact2.requestFocus()
                 true
             }
 
-            with(textFieldIceRelation2) {
+            with(tvRelation2) {
                 imeOptions = EditorInfo.IME_ACTION_NEXT
                 setOnEditorActionListener { v, actionId, event ->
-                    textFieldIceContact2.requestFocus()
+                    tvContact2.requestFocus()
                     true
                 }
-            }
-        }
-    }
-
-    private fun IceInfoModify(binding: FragmentIceModifyBinding) {
-        binding.buttonIceSubmit.setOnClickListener {
-            if (areAllFieldsEmpty(binding)) {
-                showSnackbar(binding, "입력된 정보가 없습니다. 정보를 입력해주세요!")
-            } else if (isFormValid(binding)) {
-                showSnackbar(binding, "나의 응급 정보가 수정되었습니다.")
-                findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment, null)
             }
         }
     }
@@ -112,95 +136,76 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
     }
 
     private fun isFormValid(binding: FragmentIceModifyBinding): Boolean {
-        var isValid = true
-
-        var firstInvalidField: View? = null
-
-        val birthday = binding.textFieldIceBirthday.text.toString()
-        if (birthday.isNotBlank()) {
-            val birthdayPattern = "^\\d{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
-            if (!birthday.matches(birthdayPattern.toRegex())) {
-                binding.textInputLayoutBirthday.error = "올바른 생년월일 형식을 입력해주세요.\n예: 19700101"
-                if (firstInvalidField == null) {
-                    firstInvalidField = binding.textFieldIceBirthday
-                }
-                isValid = false
-            }
-        }
-
-        val phoneNumber1 = binding.textFieldIceContact1.text.toString()
-        val relation1 = binding.textFieldIceRelation1.text.toString()
-        if (phoneNumber1.isNotBlank() || relation1.isNotBlank()) {
-            if (phoneNumber1.isBlank() || relation1.isBlank()) {
-                binding.textInputLayoutContact1.error = "관계와 연락처를 모두 입력해주세요."
-                if (firstInvalidField == null) {
-                    firstInvalidField = binding.textFieldIceContact1
-                }
-                isValid = false
-            } else {
-                val phonePattern = "^010-\\d{4}-\\d{4}$"
-                if (!phoneNumber1.matches(phonePattern.toRegex())) {
-                    binding.textInputLayoutContact1.error = "올바른 전화번호 형식을 입력해주세요.\n예: 010-1234-5678"
-                    if (firstInvalidField == null) {
-                        firstInvalidField = binding.textFieldIceContact1
-                    }
-                    isValid = false
-                }
-            }
-        }
-
-        val phoneNumber2 = binding.textFieldIceContact2.text.toString()
-        val relation2 = binding.textFieldIceRelation2.text.toString()
-        if (phoneNumber2.isNotBlank() || relation2.isNotBlank()) {
-            if (phoneNumber2.isBlank() || relation2.isBlank()) {
-                binding.textInputLayoutContact2.error = "관계와 연락처를 모두 입력해주세요."
-                if (firstInvalidField == null) {
-                    firstInvalidField = binding.textFieldIceContact2
-                }
-                isValid = false
-            } else {
-                val phonePattern = "^010-\\d{4}-\\d{4}$"
-                if (!phoneNumber2.matches(phonePattern.toRegex())) {
-                    binding.textInputLayoutContact2.error = "올바른 전화번호 형식을 입력해주세요.\n예: 010-1234-5678"
-                    if (firstInvalidField == null) {
-                        firstInvalidField = binding.textFieldIceContact2
-                    }
-                    isValid = false
-                }
-            }
-        }
-
-        if (!isValid && firstInvalidField != null) {
-            firstInvalidField.requestFocus()
-            context?.showSoftInput(firstInvalidField)
-        }
-
-        return isValid
-    }
-
-
-    private fun areAllFieldsEmpty(binding: FragmentIceModifyBinding): Boolean {
-        return binding.textFieldIceBirthday.text.isNullOrBlank() &&
-                binding.textFieldIceRelation1.text.isNullOrBlank() &&
-                binding.textFieldIceContact1.text.isNullOrBlank() &&
-                binding.textFieldIceRelation2.text.isNullOrBlank() &&
-                binding.textFieldIceContact2.text.isNullOrBlank() &&
-                binding.textFieldIceBloodType.text.isNullOrBlank()
-    }
-
-    private fun setupErrorHandling(binding: FragmentIceModifyBinding) {
         with(binding) {
-            textFieldIceBirthday.doOnTextChanged { text, start, before, count ->
-                textInputLayoutBirthday.isErrorEnabled = false
+            var isValid = true
+
+            var firstInvalidField: View? = null
+            val birthday = tvBirthday.text.toString()
+            if (birthday.isNotBlank()) {
+                val birthdayPattern = "^\\d{4}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01])$"
+                if (!birthday.matches(birthdayPattern.toRegex())) {
+                    textInputLayoutBirthday.error = "올바른 생년월일 형식을 입력해주세요.\n예: 19700101"
+                    firstInvalidField = tvBirthday
+                    isValid = false
+                }
             }
 
-            textFieldIceContact1.doOnTextChanged { text, start, before, count ->
-                textInputLayoutContact1.isErrorEnabled = false
+            val phoneNumber1 = tvContact1.text.toString()
+            val relation1 = tvRelation1.text.toString()
+
+            if ((relation1.isEmpty() and phoneNumber1.isNotEmpty())) {
+                tvContact1.error = "관계를 입력해 주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = tvRelation1
+                }
+                isValid = false
+            } else if ((relation1.isNotEmpty() and phoneNumber1.isEmpty())) {
+                tvContact1.error = "연락처를 입력해 주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = tvContact1
+                }
+                isValid = false
+            }else if((relation1.isNotEmpty()) and (phoneNumber1.isNotEmpty())){
+                val phonePattern = "^010\\d{4}\\d{4}$"
+                if (!phoneNumber1.matches(phonePattern.toRegex())) {
+                    tvContact2.requestFocus()
+                    context?.showSoftInput(tvContact2)
+                    tvContact1.error = "올바른 전화번호 형식을 입력해주세요.\n예: 01012345678"
+                    isValid = false
+                }
             }
 
-            textFieldIceContact2.doOnTextChanged { text, start, before, count ->
-                textInputLayoutContact2.isErrorEnabled = false
+            val phoneNumber2 = tvContact2.text.toString()
+            val relation2 = tvRelation2.text.toString()
+
+            if ((relation2.isEmpty() and phoneNumber2.isNotEmpty())) {
+                tvContact1.error = "관계를 입력해 주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = tvRelation2
+                }
+                isValid = false
+            } else if ((relation2.isNotEmpty() and phoneNumber2.isEmpty())) {
+                tvContact1.error = "연락처를 입력해 주세요."
+                if (firstInvalidField == null) {
+                    firstInvalidField = tvRelation2
+                }
+                isValid = false
+            } else if((relation2.isBlank()) and (phoneNumber2.isNotBlank())) {
+                val phonePattern = "^010\\d{4}\\d{4}$"
+                if (!phoneNumber2.matches(phonePattern.toRegex())) {
+                    tvContact2.requestFocus()
+                    context?.showSoftInput(tvContact2)
+                    tvContact1.error =
+                        "올바른 전화번호 형식을 입력해주세요.\n예: 01012345678"
+                    isValid = false
+                }
             }
+
+            if (!isValid && firstInvalidField != null) {
+                firstInvalidField.requestFocus()
+                context?.showSoftInput(firstInvalidField)
+            }
+            return isValid
         }
     }
 }

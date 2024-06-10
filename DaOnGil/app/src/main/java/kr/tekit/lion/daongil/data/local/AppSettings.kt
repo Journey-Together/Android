@@ -9,12 +9,6 @@ import java.io.OutputStream
 
 @Serializable
 data class AppSettings(
-    val email: String? = null,
-    val loginType: String? = null,
-    val memberId: Int? = null,
-    val memberType: String? = null,
-    val name: String? = null,
-    val profileUuid: String? = null,
     val accessToken: String = "",
     val refreshToken: String = "",
 )

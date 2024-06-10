@@ -8,6 +8,17 @@
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
 
+    <string name="picked_dates">%s - %s</string>
+    <string name="bookmarked_places">북마크한 여행지</string>
+    <string name="hint_search">검색어를 입력해주세요</string>
+    <string name="result_empty">검색 결과가 없어요.\n다른 검색어를 입력해주세요.</string>
+    <string name="add_new_schedule">새로운 일정추가</string>
+    <string name="search_places_to_add">여행지 검색</string>
+    <string name="confirm">확인</string>
+    <string name="save">저장하기</string>
+    <string name="inform_add_places">여행지를 추가해주세요</string>
+
+
     <string name="text_parking">주차장</string>
     <string name="text_public_transport">대중교통</string>
     <string name="text_route">접근로</string>
@@ -54,13 +65,80 @@
 
     <string name="text_emergency_main">내 주변 응급 지원 찾기</string>
     <string name="text_emergency_second">어떤 정보를 찾으시나요?</string>
-    <string name="text_emergency_aed">응급실 제세동기 찾기</string>
+    <string name="text_emergency_aed">응급실 / 제세동기 찾기</string>
     <string name="text_emergency_aed_first">여행 중 갑자기 아프다면,</string>
     <string name="text_emergency_aed_second">내 근처 병원을 빠르게 방문해보세요</string>
     <string name="text_emergency_pharmacy">약국 찾기</string>
     <string name="text_emergency_pharmacy_first">필요한 상비약을</string>
     <string name="text_emergency_pharmacy_second">구입해 보세요</string>
 
+    <string name="text_my_schedule">내 일정</string>
+    <string name="text_public_schedule">공개 일정</string>
+    <string name="text_leave_schedule_review"><u>후기/만족도 남기기 ＞</u></string>
+    <string name="text_schedule_review">후기</string>
+    <string name="text_schedule_satisfaction">일정 만족도</string>
+    <string name="text_schedule_report_review">신고하기</string>
+    <string name="text_schedule_weather">예상 날씨</string>
+    <string name="text_schedule_full">전체 일정</string>
+    <string name="text_schedule_d_day">D-%d</string>
+    <string name="text_schedule_period">%s - %s</string>
+    <string name="text_schedule_days">일차</string>
+    <string name="text_schedule_place_empty">해당 일자에 추가된 여행지가 없습니다</string>
+    <string name="text_view_detail">상세보기</string>
+    <string name="text_manage_review">후기 관리</string>
+    <string name="text_schedule_public">공개</string>
+    <string name="text_schedule_private">비공개</string>
+    <string name="text_schedule_menu">메뉴</string>
+    <string name="text_schedule_bookmark">북마크</string>
+    <string name="text_schedule_manage">여행 일정</string>
+    <string name="text_schedule_edit">수정하기</string>
+    <string name="text_schedule_delete">삭제하기</string>
+    <string name="text_schedule_make_public">일정 공개</string>
+    <string name="text_schedule_make_private">일정 비공개</string>
+    <string name="text_schedule_review_manage">여행 일정 후기</string>
+    <string name="text_schedule_changed_to_private">여행 일정이 비공개되었습니다.</string>
+    <string name="text_schedule_changed_to_public">여행 일정이 공개되었습니다.</string>
+    <string name="text_schedule_review_deleted">여행 일정 후기가 삭제되었습니다.</string>
+    <string name="text_report_reason">신고 사유</string>
+    <string name="text_report_commercial_promotion">영리목적/홍보성</string>
+    <string name="text_report_copyright_infringement">저작권 침해</string>
+    <string name="text_report_obscenity">음란성/선정성</string>
+    <string name="text_report_verbal_abuse">욕설/인신공격</string>
+    <string name="text_report_privacy_exposure">개인정보 노출</string>
+    <string name="text_report_other">기타</string>
+    <string name="text_report_cancel">취소</string>
+    <string name="text_report_submitted">신고가 접수되었습니다.</string>
+
+    <string name="text_schedule_upcoming">다가오는 일정</string>
+    <string name="text_schedule_elapsed">다녀온 일정</string>
+    <string name="text_view_more">더보기</string>
+    <string name="text_browse_public_schedule">공개 일정 둘러보기</string>
+
     <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
     <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>
+    <string name="text_relation">관계</string>
+    <string name="text_birth">생년월일</string>
+    <string name="text_plz_enter_nickname">닉네임을 입력해주세요</string>
+    <string name="text_plz_enter_birth">생년월일을 입력해주세요</string>
+    <string name="text_blood_type">혈액형</string>
+    <string name="text_plz_enter_blood_type">혈액형을 입력해주세요</string>
+    <string name="text_disease">의학적 질환</string>
+    <string name="text_plz_enter_disease">보유하신 질환을 입력해주세요</string>
+    <string name="text_allergy">알레르기 및 부작용</string>
+    <string name="text_plz_enter_allergy">보유하신 알레르기를 입력해주세요</string>
+    <string name="text_medicine">투여약</string>
+    <string name="text_plz_enter_medicine">투여중인 약을 입력해주세요</string>
+    <string name="text_emergency_contact">긴급 연락처</string>
+    <string name="text_plz_enter_emergency_contact">비상 연락처를 입력해주세요</string>
+    <string name="text_plz_enter_phone">전화번호를 입력해주세요</string>
+    <string name="text_birth_ex">예) 19700101</string>
+    <string name="text_contact_ex">예) 01012345678</string>
+
+
+    <string name="text_write_schedule_review">여행 후기 남기기</string>
+    <string name="text_schedule_review_photo">여행 사진</string>
+    <string name="text_save_schedule_review">저장하기</string>
+
+    <string name="text_make_public">일정을 공개하시겠습니까?</string>
+
 </resources>

@@ -22,6 +22,21 @@
         tools:targetApi="31">
 
         <activity
+            android:name=".presentation.schedulereview.WriteScheduleReviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.publicschedule.PublicScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.emergency.PharmacyMapActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.myschedule.MyScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.schedule.ScheduleActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.home.WriteReviewActivity"
             android:exported="false" />
         <activity
@@ -62,10 +77,11 @@
             android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="false" />

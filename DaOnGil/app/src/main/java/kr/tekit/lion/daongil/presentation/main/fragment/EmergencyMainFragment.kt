@@ -7,6 +7,7 @@ import android.view.View
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentEmergencyMainBinding
 import kr.tekit.lion.daongil.presentation.emergency.EmergencyMapActivity
+import kr.tekit.lion.daongil.presentation.emergency.PharmacyMapActivity
 
 class EmergencyMainFragment : Fragment(R.layout.fragment_emergency_main) {
 
@@ -15,23 +16,14 @@ class EmergencyMainFragment : Fragment(R.layout.fragment_emergency_main) {
 
         val binding = FragmentEmergencyMainBinding.bind(view)
 
-        moveMap(binding)
-    }
+        binding.emrAedCard.setOnClickListener {
+            val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
+            startActivity(intent)
+        }
 
-    private fun moveMap(binding: FragmentEmergencyMainBinding){
-
-        with(binding){
-            emrAedCard.setOnClickListener {
-                val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
-                intent.putExtra("mapType", "Emergency")
-                startActivity(intent)
-            }
-
-            pharmacyCard.setOnClickListener {
-                val intent = Intent(requireActivity(), EmergencyMapActivity::class.java)
-                intent.putExtra("mapType", "Pharmacy")
-                startActivity(intent)
-            }
+        binding.pharmacyCard.setOnClickListener {
+            val intent = Intent(requireActivity(), PharmacyMapActivity::class.java)
+            startActivity(intent)
         }
     }
 }

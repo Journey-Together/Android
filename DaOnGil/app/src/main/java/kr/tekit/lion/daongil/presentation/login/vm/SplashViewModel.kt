@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.login.vm
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,6 +27,7 @@ class SplashViewModel(
 
     private suspend fun checkLoginStatus(){
         authRepository.loggedIn.collect{ isLoggedIn ->
+            Log.d("dzxcxzcz", isLoggedIn.toString())
             if (isLoggedIn) _logInState.value = LogInState.LoggedIn
             else _logInState.value = LogInState.LoginRequired
         }

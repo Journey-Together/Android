@@ -14,13 +14,12 @@ properties.load(project.rootProject.file("local.properties").inputStream())
 val kakaoApiKey = properties.getProperty("kakao_api_key") ?: ""
 val kakaoNativeKey = properties.getProperty("kakao_native_key") ?: ""
 val baseUrl = properties.getProperty("base_url") ?: ""
-val awsBaseUrl = properties.getProperty("aws_base_url") ?: ""
 val naverMapBase = properties.getProperty("naver_map_base") ?: ""
 val naverMapId = properties.getProperty("naver_map_id") ?: ""
 val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
-val naverClientId = properties.getProperty("naverClientId") ?: ""
-val naverClientSecret = properties.getProperty("naverClientSecret") ?: ""
-val naverClientName = properties.getProperty("naverClientName") ?: ""
+val naverClientId = properties.getProperty("naver_client_id") ?: ""
+val naverClientSecret = properties.getProperty("naver_client_secret") ?: ""
+val naverClientName = properties.getProperty("naver_client_name") ?: ""
 val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
 val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
 val aedBaseUrl = properties.getProperty("aed_base_url")?:""
@@ -51,7 +50,6 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
-        buildConfigField("String", "AWS_BASE_URL", "\"$awsBaseUrl\"")
         buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
         buildConfigField("String", "PHARMACY_BASE_URL", "\"$pharmacyBaseUrl\"")
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey

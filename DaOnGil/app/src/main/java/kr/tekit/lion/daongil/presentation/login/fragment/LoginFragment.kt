@@ -18,7 +18,6 @@ import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
 import com.navercorp.nid.profile.data.NidProfileResponse
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.BuildConfig
 import kotlinx.coroutines.flow.collectLatest
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentLoginBinding
@@ -115,14 +114,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         val TAG = "test12345"
 
-        var naverToken: String? = ""
-
-
         val profileCallback = object : NidProfileCallback<NidProfileResponse> {
 
             override fun onSuccess(result: NidProfileResponse) {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    Log.d(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
+                    viewModel.onCompleteSignIn("NAVER","Bearer ${NaverIdLoginSDK.getAccessToken()}")
                 }
             }
 

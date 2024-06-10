@@ -23,10 +23,12 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             viewModel.uiState.collect{ state->
                 when(state){
                     is LogInState.LoggedIn ->{
-                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                        Navigation.findNavController(view).navigate(R.id.to_loginFragment)
+
                     }
                     is LogInState.LoginRequired -> {
-                        Navigation.findNavController(view).navigate(R.id.to_loginFragment)
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+
                     }
                     is LogInState.Checking -> {
                         return@collect

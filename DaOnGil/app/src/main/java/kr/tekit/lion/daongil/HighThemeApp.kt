@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import com.kakao.sdk.common.KakaoSdk
+import com.navercorp.nid.NaverIdLoginSDK
 
 class HighThemeApp : Application() {
     init {
@@ -50,5 +51,11 @@ class HighThemeApp : Application() {
         super.onCreate()
         instance = this
         KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
+        NaverIdLoginSDK.initialize(
+            this,
+            BuildConfig.NAVER_CLIENT_ID,
+            BuildConfig.NAVER_CLIENT_SECRET,
+            BuildConfig.NAVER_CLIENT_NAME
+        )
     }
 }

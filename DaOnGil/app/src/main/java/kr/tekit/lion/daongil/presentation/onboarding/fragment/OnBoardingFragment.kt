@@ -7,24 +7,24 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.FragmentOnBoardingFirstBinding
+import kr.tekit.lion.daongil.databinding.FragmentOnBoardingBinding
 import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.main.MainActivity
-import kr.tekit.lion.daongil.presentation.onboarding.OnBoardingPage
+import kr.tekit.lion.daongil.domain.model.OnBoardingPage
 import kr.tekit.lion.daongil.presentation.onboarding.adapter.OnBoardingImageVPAdapter
 
-class OnBoardingFirstFragment : Fragment(R.layout.fragment_on_boarding_first) {
+class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val binding = FragmentOnBoardingFirstBinding.bind(view)
+        val binding = FragmentOnBoardingBinding.bind(view)
 
         settingOnBoardingVPAdapter(binding)
         settingOnBoardingLoginButton(binding)
     }
 
-    private fun settingOnBoardingVPAdapter(binding: FragmentOnBoardingFirstBinding) {
+    private fun settingOnBoardingVPAdapter(binding: FragmentOnBoardingBinding) {
         val pages = listOfNotNull(
             OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_first)!!, "여행의 모든 문턱을 낮추다", "다온길에서 무장애 여행 정보를 확인하세요", ""),
             OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_second)!!, "안전한 여행의 첫 걸음", "언제 어디서든 응급 지원정보를 확인하세요", ""),
@@ -39,7 +39,7 @@ class OnBoardingFirstFragment : Fragment(R.layout.fragment_on_boarding_first) {
         binding.onBoardingVpIndicator.setViewPager(binding.onBoardingVp)
     }
 
-    private fun settingOnBoardingLoginButton(binding: FragmentOnBoardingFirstBinding) {
+    private fun settingOnBoardingLoginButton(binding: FragmentOnBoardingBinding) {
         val nextButton = binding.onBoardingFirstNextButton
         val textView = binding.onBoardingFirstTextView3
 

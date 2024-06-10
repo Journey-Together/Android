@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -24,6 +25,9 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.HighThemeApp
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
@@ -46,6 +50,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
     private val viewModel : HomeViewModel by viewModels { HomeViewModelFactory(requireContext()) }
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private val retryDelayMillis = 5000L
 
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (isGranted) {
@@ -175,15 +180,23 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
 
         // 위치 설정이 성공적으로 확인된 경우 위치 업데이트 시작
         task.addOnSuccessListener {
-            fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
-            startLocationUpdates(binding)
-        }
-
-        // 위치 설정 확인 실패 시 로그 기록
-        task.addOnFailureListener {
+            if (isAdded) {
+                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+                startLocationUpdates(binding)
+            }
+        }.addOnFailureListener { // 위치 설정 확인 실패 시 로그 기록
             Log.d(TAG, "location client setting failure")
+            retryLocationPermissionCheck(binding)
         }
     }
+
+    private fun retryLocationPermissionCheck(binding: FragmentHomeMainBinding) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+            delay(retryDelayMillis) // 5초 지연
+            initLocationClient(binding)
+        }
+    }
+
 
     private fun startLocationUpdates(binding: FragmentHomeMainBinding) {
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3600000)

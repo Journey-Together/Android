@@ -26,10 +26,18 @@ class OnBoardingFragment : Fragment(R.layout.fragment_on_boarding) {
 
     private fun settingOnBoardingVPAdapter(binding: FragmentOnBoardingBinding) {
         val pages = listOfNotNull(
-            OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_first)!!, "여행의 모든 문턱을 낮추다", "다온길에서 무장애 여행 정보를 확인하세요", ""),
-            OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_second)!!, "안전한 여행의 첫 걸음", "언제 어디서든 응급 지원정보를 확인하세요", ""),
-            OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_third)!!, "한곳에서 완성되는 여행", "여행 계획부터 후기 공유까지 한번에 관리해요", ""),
-            OnBoardingPage(ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_last)!!, "행복이 다가온 여행길, 다온길 ", "모두를 위한 행운 이정표", "누구든 떠날 자유, 모두가 누릴 행복")
+            ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_first)?.let {
+                OnBoardingPage(it, "여행의 모든 문턱을 낮추다", "다온길에서 무장애 여행 정보를 확인하세요", "")
+            },
+            ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_second)?.let {
+                OnBoardingPage(it, "안전한 여행의 첫 걸음", "언제 어디서든 응급 지원정보를 확인하세요", "")
+            },
+            ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_third)?.let {
+                OnBoardingPage(it, "한곳에서 완성되는 여행", "여행 계획부터 후기 공유까지 한번에 관리해요", "")
+            },
+            ContextCompat.getDrawable(requireContext(), R.drawable.onboarding_last)?.let {
+                OnBoardingPage(it, "행복이 다가온 여행길, 다온길 ", "모두를 위한 행운 이정표", "누구든 떠날 자유, 모두가 누릴 행복")
+            }
         )
 
         val onBoardingVPAdapter = OnBoardingImageVPAdapter(pages)

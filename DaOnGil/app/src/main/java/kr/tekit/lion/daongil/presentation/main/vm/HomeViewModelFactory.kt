@@ -5,21 +5,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceMainInfoRepository
+import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceMainInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetVillageCodeByNameUseCase
 
 class HomeViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val areaCodeRepository = AreaCodeRepository.create(context)
     private val placeMainInfoRepository = PlaceMainInfoRepository.create()
+    private val villageCodeRepository = VillageCodeRepository.create(context)
 
-    private val getAreaCodeInfoUseCase = GetAreaCodeInfoUseCase(areaCodeRepository)
+    private val getAreaCodeByNameUseCase = GetAreaCodeByNameUseCase(areaCodeRepository)
     private val getPlaceMainInfoUseCase = GetPlaceMainInfoUseCase(placeMainInfoRepository)
+    private val getVillageCodeByNameUseCase = GetVillageCodeByNameUseCase(
+        villageCodeRepository
+    )
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
             return HomeViewModel(
-                getAreaCodeInfoUseCase,
-                getPlaceMainInfoUseCase
+                getAreaCodeByNameUseCase,
+                getPlaceMainInfoUseCase,
+                getVillageCodeByNameUseCase
             ) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")

@@ -12,6 +12,21 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarScheduleDetailsForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back_icon">
+
+            <TextView
+                style="@style/Theme.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_new_schedule" />
+        </com.google.android.material.appbar.MaterialToolbar>
+
         <TextView
             android:id="@+id/textViewDFTitle"
             android:layout_width="wrap_content"

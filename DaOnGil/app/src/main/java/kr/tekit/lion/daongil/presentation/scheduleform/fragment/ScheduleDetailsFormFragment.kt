@@ -26,6 +26,8 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
         val binding = FragmentScheduleDetailsFormBinding.bind(view)
 
+        initToolbar(binding)
+
         if(scheduleFormViewModel.schedule.value.isNullOrEmpty()){
             initView(binding)
         }else{ // 이미 데이터가 존재하는 경우 - smartCast가 되지 않고 있는데, 혹시 !!를 대체할 방법이 있는지?
@@ -33,11 +35,18 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         }
 
         // observe data - 데이터가 변경되면 리사이클러뷰를 갱신시켜준다.
-        scheduleFormViewModel.schedule.observe(viewLifecycleOwner, androidx.lifecycle.Observer{
+        scheduleFormViewModel.schedule.observe(viewLifecycleOwner){
             Log.d("test1234", "dfdfdfdfdfdfdfsdgsdfgwretwe vfs")
             binding.recyclerViewDF.adapter?.notifyDataSetChanged()
-        })
+        }
 
+    }
+
+    private fun initToolbar(binding:FragmentScheduleDetailsFormBinding){
+        binding.toolbarScheduleDetailsForm.setNavigationOnClickListener {
+            // 이 때, viewModel에 있는 데이터 초기화?
+            findNavController().popBackStack()
+        }
     }
 
     private fun initView(binding:FragmentScheduleDetailsFormBinding){

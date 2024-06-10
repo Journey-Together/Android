@@ -6,7 +6,6 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleDetailsFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
@@ -68,7 +67,6 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
     ) {
         val navController = findNavController()
         binding.recyclerViewDF.adapter = FormScheduleAdapter(dailyScheduleList, requireActivity(), navController, scheduleFormViewModel)
-        binding.recyclerViewDF.layoutManager = LinearLayoutManager(requireActivity())
     }
 
     private fun getSchedulePeriod(startDate:Date, endDate:Date) : Int{

@@ -101,4 +101,10 @@
     <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
     <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>
 
+    <string name="tab_text_place">장소</string>
+    <string name="tab_text_plan">일정</string>
+
+    <string name="text_place_bookmark">북마크한 장소가 없습니다.\n가고 싶은 장소를 추가해보세요!</string>
+    <string name="text_plan_bookmark">북마크한 일정이 없습니다.\n관심 있는 일정을 추가해보세요!</string>
+
 </resources>

@@ -29,12 +29,19 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
 
         val binding = FragmentFormSearchBinding.bind(view)
 
+        initToolbar(binding)
+
         val navController = findNavController()
 
         settingBookmarkedRV(binding, navController, schedulePosition)
         settingSearchResultRV(binding, navController, schedulePosition)
     }
 
+    private fun initToolbar(binding: FragmentFormSearchBinding){
+        binding.toolbarFormSearch.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
     private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int ){
         val places = listOf(
             BookmarkedPlace(0, "보신각 터"),

@@ -122,6 +122,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun settingDialog() {
         val dialog = EmergencyAreaDialog()
+        dialog.isCancelable = false
 
         binding.emergencyMapAreaButton.setOnClickListener {
             dialog.show(this.supportFragmentManager, "EmergencyAreaDialog")
@@ -134,7 +135,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet, emergencyMapInfoList)
         emergencyBottomSheet.setRecyclerView()
         emergencyBottomSheet.recyclerViewTopButton()
-    } //
+    }
 
     private fun initBottomSheet() {
 

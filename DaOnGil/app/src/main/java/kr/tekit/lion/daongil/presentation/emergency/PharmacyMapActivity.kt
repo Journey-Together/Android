@@ -119,6 +119,7 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun settingDialog() {
         val dialog = PharmacyAreaDialog()
+        dialog.isCancelable = false
 
         binding.pharamcyMapAreaButton.setOnClickListener {
             dialog.show(this.supportFragmentManager, "PharamcyAreaDialog")
@@ -130,6 +131,7 @@ class PharmacyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setBottomRecylcerView(pharmacyBottomList: List<PharmacyMapInfo>){
         val pharmacyBottomSheet = PharmacyBottomSheet(binding.pharamcyBottomSheet, pharmacyBottomList)
         pharmacyBottomSheet.setRecyclerView()
+        pharmacyBottomSheet.recyclerViewTopButton()
     }
 
     private fun initBottomSheet() {

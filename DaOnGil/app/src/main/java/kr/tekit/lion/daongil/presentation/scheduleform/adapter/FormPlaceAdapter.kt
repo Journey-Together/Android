@@ -6,19 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemFormPlaceBinding
 import kr.tekit.lion.daongil.domain.model.FormPlace
-import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class FormPlaceAdapter(
-    private val places: MutableList<FormPlace>,
-    private val scheduleViewModel: ScheduleFormViewModel,
-    private val schedulePosition: Int
+    private val places: List<FormPlace>,
+    private val schedulePosition: Int,
+    private val onRemoveButtonClick: (schedulePosition: Int, placePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormPlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return FormPlaceViewHolder(
             ItemFormPlaceBinding.inflate(inflater, parent, false),
-            scheduleViewModel,
-            schedulePosition
+            schedulePosition,
+            onRemoveItemClick = { schedulePosition, placePosition ->
+                onRemoveButtonClick(schedulePosition,placePosition)
+            }
         )
     }
 
@@ -30,14 +31,10 @@ class FormPlaceAdapter(
         return places.size
     }
 
-    fun addNewPlace(addedPlace: FormPlace) {
-        places.add(addedPlace)
-    }
-
     class FormPlaceViewHolder(
         private val binding: ItemFormPlaceBinding,
-        private val scheduleViewModel: ScheduleFormViewModel,
-        private val schedulePosition: Int
+        private val schedulePosition: Int,
+        private val onRemoveItemClick: (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(place: FormPlace, placePosition: Int) {
             // to do : 이미지 url -> Glide
@@ -54,9 +51,7 @@ class FormPlaceAdapter(
                 }
             }
             binding.imageButtonFPlaceRemove.setOnClickListener {
-                // viewModel에서 해당 place 제거
-                scheduleViewModel.removePlace(schedulePosition, placePosition)
-
+                onRemoveItemClick(schedulePosition, placePosition)
             }
         }
     }

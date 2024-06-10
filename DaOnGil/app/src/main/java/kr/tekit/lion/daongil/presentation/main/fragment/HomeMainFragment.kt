@@ -11,7 +11,6 @@ import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
@@ -30,6 +29,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
+import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeRecommendRVAdapter
@@ -51,7 +51,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         if (isGranted) {
             initLocationClient(FragmentHomeMainBinding.bind(requireView()))
         } else {
-            Toast.makeText(requireContext(), "위치 권한 거부 시 근처 관광지 추천을 받을 수 없습니다", Toast.LENGTH_LONG).show()
+            requireContext().showPermissionSnackBar(FragmentHomeMainBinding.bind(requireView()).root)
             hideLocationRv(FragmentHomeMainBinding.bind(requireView()))
         }
     }

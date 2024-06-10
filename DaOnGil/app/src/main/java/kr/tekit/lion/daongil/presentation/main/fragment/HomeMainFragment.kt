@@ -47,12 +47,12 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
 
-
     private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
         if (isGranted) {
             initLocationClient(FragmentHomeMainBinding.bind(requireView()))
         } else {
             Toast.makeText(requireContext(), "위치 권한 거부 시 근처 관광지 추천을 받을 수 없습니다", Toast.LENGTH_LONG).show()
+            hideLocationRv(FragmentHomeMainBinding.bind(requireView()))
         }
     }
 
@@ -80,6 +80,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         checkLocationPermission(binding)
         settingVPAdapter(binding)
         settingHighcontrastBtn(binding)
+        getRecommendPlaceInfo(binding)
     }
 
     private fun settingVPAdapter(binding: FragmentHomeMainBinding) {
@@ -212,25 +213,9 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
                     val areaCode = "1"
                     val sigunguCode = "1"
 
-                    viewModel.getPlaceMain(areaCode, sigunguCode)
+                    Log.e("areaCode", areaCode)
 
-                    viewModel.aroundPlaceInfo.observe(requireActivity()) { aroundPlaceInfo ->
-                        if (aroundPlaceInfo.isNotEmpty()) {
-                            val aroundPlaceList = aroundPlaceInfo.map {
-                                AroundPlace(it.address, it.disability, it.image, it.name, it.placeId)
-                            }
-                            settingLocationRVAdapter(binding , aroundPlaceList)
-                        }
-                    }
-
-                    viewModel.recommendPlaceInfo.observe(requireActivity()) {recommendPlaceInfo ->
-                        if (recommendPlaceInfo.isNotEmpty()) {
-                            val recommendPlaceList = recommendPlaceInfo.map {
-                                RecommendPlace(it.address, it.disability, it.image, it.name, it.placeId)
-                            }
-                            settingRecommendRVAdapter(binding, recommendPlaceList)
-                        }
-                    }
+                    getAroundPlaceInfo(binding, areaCode, sigunguCode)
                 }
             }
         }
@@ -249,7 +234,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         }
     }
 
-    fun splitAddress(address: String): Pair<String, String> {
+    private fun splitAddress(address: String): Pair<String, String> {
         val parts = address.split(" ")
 
         if (parts.size >= 2) {
@@ -261,4 +246,34 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         }
     }
 
+    private fun hideLocationRv(binding: FragmentHomeMainBinding) {
+        binding.homeMyLocationRv.visibility = View.GONE
+        binding.homeMyLocationTv.text = "위치 권한을 허용해주세요"
+    }
+
+    private fun getAroundPlaceInfo(binding: FragmentHomeMainBinding, areaCode: String, sigunguCode: String) {
+        viewModel.getPlaceMain(areaCode, sigunguCode)
+
+        viewModel.aroundPlaceInfo.observe(requireActivity()) { aroundPlaceInfo ->
+            if (aroundPlaceInfo.isNotEmpty()) {
+                val aroundPlaceList = aroundPlaceInfo.map {
+                    AroundPlace(it.address, it.disability, it.image, it.name, it.placeId)
+                }
+                settingLocationRVAdapter(binding , aroundPlaceList)
+            }
+        }
+    }
+
+    private fun getRecommendPlaceInfo(binding: FragmentHomeMainBinding) {
+        viewModel.getPlaceMain("1", "1")
+
+        viewModel.recommendPlaceInfo.observe(requireActivity()) {recommendPlaceInfo ->
+            if (recommendPlaceInfo.isNotEmpty()) {
+                val recommendPlaceList = recommendPlaceInfo.map {
+                    RecommendPlace(it.address, it.disability, it.image, it.name, it.placeId)
+                }
+                settingRecommendRVAdapter(binding, recommendPlaceList)
+            }
+        }
+    }
 }

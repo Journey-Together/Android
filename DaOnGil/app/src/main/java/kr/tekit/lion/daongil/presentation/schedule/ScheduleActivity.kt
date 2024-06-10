@@ -1,7 +1,7 @@
 package kr.tekit.lion.daongil.presentation.schedule
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +21,7 @@ import kr.tekit.lion.daongil.presentation.schedule.adapter.SchedulePlaceAdapter
 import kr.tekit.lion.daongil.presentation.schedule.customview.ReviewReportDialog
 import kr.tekit.lion.daongil.presentation.schedule.customview.ScheduleManageBottomSheet
 import kr.tekit.lion.daongil.presentation.schedule.customview.ScheduleReviewManageBottomSheet
+import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 // 회원 - 본인 - 다가오는 일정
 // 회원 - 본인 - 지난 일정 - 리뷰 O
@@ -58,7 +59,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         "2024-06-05",
         null,
         true,
-        false,
+        true,
         "멋쟁이",
         listOf("https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210317_54%2F1615960399867iteUS_JPEG%2Fbanner_x.jpg",
             "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_262%2F1441013639801FoVs2_JPEG%2F11663971_2.jpg",
@@ -98,8 +99,8 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
         setContentView(binding.root)
 
-        initView(schedule2)
-        settingScheduleAdapter(schedule2)
+        initView(schedule)
+        settingScheduleAdapter(schedule)
     }
 
     private fun initView(scheduleDetail: ScheduleDetail) {
@@ -194,7 +195,15 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         // daysRemaining 리턴 타입에 맞춰서 코드 수정 필요
         if (scheduleDetail.reviewIdx == null) {
             if (scheduleDetail.isWriter && scheduleDetail.daysRemaining == null) {
-                binding.cardViewScheduleEmptyReview.visibility = View.VISIBLE
+                binding.apply {
+                    cardViewScheduleEmptyReview.visibility = View.VISIBLE
+                    textViewScheduleLeaveReview.setOnClickListener {
+                        val intent = Intent(this@ScheduleActivity, WriteScheduleReviewActivity::class.java)
+                        intent.putExtra("planId", scheduleDetail.scheduleIdx)
+                        startActivity(intent)
+                    }
+                }
+
             }
         } else {
             binding.apply {

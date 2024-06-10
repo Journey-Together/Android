@@ -21,6 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_big4"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFScheduleDate" />
@@ -35,7 +36,7 @@
         android:backgroundTint="@color/primary_disabled"
         android:drawableTint="@color/text_primary"
         android:fontFamily="@font/pretendard_regular"
-        android:text="새로운 장소 추가"
+        android:text="@string/text_schedule_form_add_place"
         android:textColor="@color/text_primary"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_add_24px"

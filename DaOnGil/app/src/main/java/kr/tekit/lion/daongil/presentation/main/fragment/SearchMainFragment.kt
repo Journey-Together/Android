@@ -87,7 +87,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.villageCode.collect {
-                    val villageCodeList = it.map { area -> area.villageName }.toTypedArray()
+                    val villageCodeList = it.map { area -> area.sigunguName }.toTypedArray()
                     val adapter = ArrayAdapter(
                         requireContext(),
                         android.R.layout.simple_list_item_1,

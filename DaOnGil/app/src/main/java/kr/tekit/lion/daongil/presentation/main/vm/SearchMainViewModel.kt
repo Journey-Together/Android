@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.AreaCode
-import kr.tekit.lion.daongil.domain.model.VillageCode
+import kr.tekit.lion.daongil.domain.model.SigunguCode
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllSigunguCodeUseCase
 
@@ -25,8 +25,8 @@ class SearchMainViewModel(
     private val _areaCode = MutableStateFlow<List<AreaCode>>(emptyList())
     val areaCode get() = _areaCode.asStateFlow()
 
-    private val _villageCode = MutableStateFlow<List<VillageCode>>(emptyList())
-    val villageCode get() = _villageCode.asStateFlow()
+    private val _sigunguCode = MutableStateFlow<List<SigunguCode>>(emptyList())
+    val villageCode get() = _sigunguCode.asStateFlow()
 
     // BottomSheet 에서 선택된 항목을 들을 유지하기 위한 데이터
     private val _physicalDisabilityOptions = MutableStateFlow<List<Int>>(emptyList())
@@ -67,7 +67,7 @@ class SearchMainViewModel(
     fun onCompleteSelectArea(areaName: String) = viewModelScope.launch{
         val findAreaCode = areaCode.value.find { it.name == areaName }?.code
         if (findAreaCode != null){
-            _villageCode.value = getAllSigunguCodeUseCase(findAreaCode)
+            _sigunguCode.value = getAllSigunguCodeUseCase(findAreaCode)
         }
     }
 

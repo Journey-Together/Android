@@ -3,7 +3,7 @@ package kr.tekit.lion.daongil.data.local
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import kr.tekit.lion.daongil.data.dto.local.AreaCodeEntity
-import kr.tekit.lion.daongil.data.dto.local.VillageCodeEntity
+import kr.tekit.lion.daongil.data.dto.local.SigunguCodeEntity
 
 class ListConverter {
 
@@ -18,12 +18,12 @@ class ListConverter {
     }
 
     @TypeConverter
-    fun villageCodeListToJson(value: List<VillageCodeEntity>): String{
+    fun villageCodeListToJson(value: List<SigunguCodeEntity>): String{
         return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun jsonToVillageCodeList(value: String): List<VillageCodeEntity> {
-        return Gson().fromJson(value, Array<VillageCodeEntity>::class.java).toList()
+    fun jsonToVillageCodeList(value: String): List<SigunguCodeEntity> {
+        return Gson().fromJson(value, Array<SigunguCodeEntity>::class.java).toList()
     }
 }

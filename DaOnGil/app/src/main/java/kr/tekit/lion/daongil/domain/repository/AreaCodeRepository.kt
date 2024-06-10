@@ -11,7 +11,7 @@ import kr.tekit.lion.daongil.data.repository.AreaCodeRepositoryImpl
 interface AreaCodeRepository {
 
     suspend fun getAreaCodeInfo(): List<AreaCode>
-    suspend fun getAreaCodeInfo(code: String): AreaCode
+    suspend fun getAreaCodeInfo(areaName: String): String?
     suspend fun getAllAreaCodes(): List<AreaCode>
     suspend fun addAreaCodeInfo()
 

@@ -31,7 +31,7 @@ class EmergencyInfoActivity : AppCompatActivity() {
         when(name) {
             "emergency" -> fragmentManager.replace(R.id.emergency_info_container, EmergencyInfoFragment())
             "aed" -> fragmentManager.replace(R.id.emergency_info_container, AedInfoFragment())
-            "Pharmacy" -> fragmentManager.replace(R.id.emergency_info_container, PharmacyInfoFragment())
+            "pharmacy" -> fragmentManager.replace(R.id.emergency_info_container, PharmacyInfoFragment())
         }
 
         fragmentManager.commit()

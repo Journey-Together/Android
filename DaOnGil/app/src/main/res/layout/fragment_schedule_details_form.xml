@@ -1,14 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context=".presentation.scheduleform.fragment.ScheduleDetailsFormFragment">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Detail"
-        android:textSize="100sp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/textViewDFTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_big3"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/inform_add_places"
+            android:textSize="@dimen/font_big1" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewDF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big3"
+            android:layout_weight="1"
+            android:nestedScrollingEnabled="false"
+            android:overScrollMode="never" />
+
+        <Button
+            android:id="@+id/buttonDFAddPlace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_big1"
+            android:layout_marginEnd="@dimen/margin_basic"
+            android:layout_marginBottom="@dimen/margin_basic"
+            android:background="@drawable/background_radius_10"
+            android:fontFamily="@font/pretendard_bold"
+            android:text="@string/save"
+            android:textSize="@dimen/font_big2" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

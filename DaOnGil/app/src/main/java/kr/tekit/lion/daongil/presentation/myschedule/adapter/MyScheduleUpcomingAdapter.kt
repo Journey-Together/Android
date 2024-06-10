@@ -28,9 +28,7 @@ class MyScheduleUpcomingAdapter(private val mySchedules: List<MySchedule>, priva
             binding.apply {
                 textViewMyScheduleUpcomingName.text = mySchedule.title
                 textViewMyScheduleUpcomingDDay.text = mySchedule.remainDate
-                //머지 후 수정할 부분
-                //textViewMyScheduleUpcomingPeriod.text = itemView.context.getString(R.string.)
-                textViewMyScheduleUpcomingPeriod.text =  "${mySchedule.startDate} - ${mySchedule.endDate}"
+                textViewMyScheduleUpcomingPeriod.text = itemView.context.getString(R.string.text_schedule_period, mySchedule.startDate, mySchedule.endDate)
                 Glide.with(itemView.context)
                     .load(mySchedule.imageUrl)
                     .placeholder(R.drawable.empty_view_small)

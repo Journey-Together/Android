@@ -126,7 +126,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setBottomRecylcerView(emergencyBottomList: List<EmergencyBottom>){
         val emergencyBottomSheet = EmergencyBottomSheet(binding.emergencyBottomSheet, emergencyBottomList)
         emergencyBottomSheet.setRecyclerView()
-    }
+    } //
 
     private fun initBottomSheet() {
 
@@ -418,12 +418,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             naverMap.moveCamera(cameraUpdate)
         }
 
-        // 위치 오버레이 설정
-        with(naverMap.locationOverlay) {
-            isVisible = true
-            position = LatLng(latitude, longitude)
-        }
-
         viewModel.areaUpdate.observe(this@EmergencyMapActivity) {
             binding.emergencyMapProgressBar.setProgressCompat(20, true)
         }
@@ -451,8 +445,6 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                     }
                 }
             }
-
-
         }
     }
 

@@ -8,6 +8,17 @@
     <string name="watching_map">지도보기</string>
     <string name="watching_list">목록보기</string>
 
+    <string name="picked_dates">%s - %s</string>
+    <string name="bookmarked_places">북마크한 여행지</string>
+    <string name="hint_search">검색어를 입력해주세요</string>
+    <string name="result_empty">검색 결과가 없어요.\n다른 검색어를 입력해주세요.</string>
+    <string name="add_new_schedule">새로운 일정추가</string>
+    <string name="search_places_to_add">여행지 검색</string>
+    <string name="confirm">확인</string>
+    <string name="save">저장하기</string>
+    <string name="inform_add_places">여행지를 추가해주세요</string>
+
+
     <string name="text_parking">주차장</string>
     <string name="text_public_transport">대중교통</string>
     <string name="text_route">접근로</string>
@@ -61,7 +72,7 @@
     <string name="text_emergency_pharmacy_first">필요한 상비약을</string>
     <string name="text_emergency_pharmacy_second">구입해 보세요</string>
 
-    <string name="text_my_schedule">나의 일정</string>
+    <string name="text_my_schedule">내 일정</string>
     <string name="text_public_schedule">공개 일정</string>
     <string name="text_leave_schedule_review"><u>후기/만족도 남기기 ＞</u></string>
     <string name="text_schedule_review">후기</string>
@@ -97,6 +108,11 @@
     <string name="text_report_other">기타</string>
     <string name="text_report_cancel">취소</string>
     <string name="text_report_submitted">신고가 접수되었습니다.</string>
+
+    <string name="text_schedule_upcoming">다가오는 일정</string>
+    <string name="text_schedule_elapsed">다녀온 일정</string>
+    <string name="text_view_more">더보기</string>
+    <string name="text_browse_public_schedule">공개 일정 둘러보기</string>
 
     <string name="title_emergency_area_dialog">다른 지역 정보가 궁금하신가요?</string>
     <string name="subtitle_emergency_area_dialog">내가 여행하고 싶은 지역으로 설정을 변경해보세요</string>

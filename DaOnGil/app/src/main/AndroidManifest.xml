@@ -24,6 +24,12 @@
             android:name=".presentation.schedulereview.WriteScheduleReviewActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.publicschedule.PublicScheduleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".presentation.emergency.PharmacyMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.myschedule.MyScheduleActivity"
             android:exported="false" />
         <activity

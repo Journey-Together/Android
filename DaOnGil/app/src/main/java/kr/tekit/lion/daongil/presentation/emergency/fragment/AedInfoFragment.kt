@@ -4,9 +4,9 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentAedInfoBinding
 import kr.tekit.lion.daongil.domain.model.EmergencyBottom
@@ -42,7 +42,7 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
 
             emergencyCall.setOnClickListener {
                 val phoneNumber = data?.aedList?.aedTel
-                if (!phoneNumber.isNullOrBlank()) {
+                if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
                 }
@@ -50,12 +50,18 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
 
             mainEmergencyCall.setOnClickListener {
                 val phoneNumber = data?.aedList?.managerTel
-                if (!phoneNumber.isNullOrBlank()) {
+                if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
                 }
             }
         }
 
+    }
+
+    private fun showSnackbar(binding: FragmentAedInfoBinding, message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
+            .show()
     }
 }

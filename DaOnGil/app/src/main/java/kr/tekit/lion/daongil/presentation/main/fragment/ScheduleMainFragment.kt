@@ -13,6 +13,7 @@ import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
+import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 
@@ -38,6 +39,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
             // 회원의 일정 정보를 불러온다
 
         }else{ // 비회원
+            binding.textViewMyScheduleMore.visibility = View.INVISIBLE
             displayAddSchedulePrompt(binding)
         }
     }
@@ -102,9 +104,15 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
 
     private fun initMoreViewClickListener(binding : FragmentScheduleMainBinding){
-        binding.textViewMyScheduleMore.setOnClickListener {
-            val intent = Intent(requireActivity(), MyScheduleActivity::class.java)
-            startActivity(intent)
+        binding.apply {
+            textViewMyScheduleMore.setOnClickListener {
+                val intent = Intent(requireActivity(), MyScheduleActivity::class.java)
+                startActivity(intent)
+            }
+            textViewPublicScheduleMore.setOnClickListener {
+                val intent = Intent(requireActivity(), PublicScheduleActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
     

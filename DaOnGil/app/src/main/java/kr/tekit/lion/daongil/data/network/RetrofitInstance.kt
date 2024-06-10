@@ -11,6 +11,7 @@ import kr.tekit.lion.daongil.data.network.service.AedService
 import kr.tekit.lion.daongil.data.network.service.EmergencyService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import kr.tekit.lion.daongil.data.network.service.NaverMapService
+import kr.tekit.lion.daongil.data.network.service.PharmacyService
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -110,6 +111,17 @@ object RetrofitInstance {
             .client(okHttpClient)
             .build()
             .create(AedService::class.java)
+    }
+
+    val pharmacyService: PharmacyService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.PHARMACY_BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(
+                Moshi.Builder()
+                    .build()).asLenient())
+            .client(okHttpClient)
+            .build()
+            .create(PharmacyService::class.java)
     }
 
 }

@@ -6,21 +6,21 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemLocationBookmarkBinding
 import kr.tekit.lion.daongil.domain.model.PlaceBookmark
 
-class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>, private val itemClickListener: (Int) -> Unit) : RecyclerView.Adapter<PlaceBookmarkRVAdapter.LocationBookmarkViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationBookmarkViewHolder {
+class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>, private val itemClickListener: (Int) -> Unit) : RecyclerView.Adapter<PlaceBookmarkRVAdapter.PlaceBookmarkViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceBookmarkViewHolder {
         val binding : ItemLocationBookmarkBinding = ItemLocationBookmarkBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return LocationBookmarkViewHolder(binding, itemClickListener)
+        return PlaceBookmarkViewHolder(binding, itemClickListener)
     }
 
     override fun getItemCount(): Int = placeBookmarkList.size
 
-    override fun onBindViewHolder(holder: LocationBookmarkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: PlaceBookmarkViewHolder, position: Int) {
         holder.bind(placeBookmarkList[position])
     }
 
-    class LocationBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class PlaceBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(placeBookmarkList: PlaceBookmark) {
             binding.textViewLocationBookmark.text = placeBookmarkList.address
             binding.textViewLocationBookmarkName.text = placeBookmarkList.name

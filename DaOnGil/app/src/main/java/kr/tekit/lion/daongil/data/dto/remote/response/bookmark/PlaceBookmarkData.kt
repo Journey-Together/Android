@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class PlaceBookmarkData(
     val address: String,
-    val disability: List<Int>,
+    val disability: List<String>,
     val image: String,
     val name: String,
     val placeId: Int

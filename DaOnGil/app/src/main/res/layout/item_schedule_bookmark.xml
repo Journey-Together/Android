@@ -3,14 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/margin_small2">
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/scheduleBookmarkCard"
-        android:layout_width="168dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin_small2"
-        android:paddingHorizontal="10dp"
+        android:layout_margin="@dimen/margin_big4"
+        android:paddingHorizontal="20dp"
         app:cardBackgroundColor="@color/card_background_color"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp">
@@ -31,11 +32,13 @@
 
             <TextView
                 android:id="@+id/textViewScheduleBookmarkTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_big3"
+                android:layout_width="120dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_big4"
                 android:layout_marginTop="10dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
+                android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -82,11 +85,11 @@
                 android:id="@+id/scheduleBookmarkBtn"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginTop="@dimen/margin_big3"
-                android:layout_marginRight="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_small1"
+                android:layout_marginRight="@dimen/margin_small1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/bookmark_icon" />
+                app:srcCompat="@drawable/bookmark_fill_icon" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

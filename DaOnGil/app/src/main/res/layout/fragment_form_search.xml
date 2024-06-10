@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.scheduleform.fragment.FormSearchFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:backgroundTint="@color/white">
+
+        <com.google.android.material.search.SearchBar
+            android:id="@+id/searchBarFS"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_search"
+            app:backgroundTint="@color/primary_disabled" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_basic"
+            android:layout_marginTop="@dimen/margin_basic"
+            android:fontFamily="@font/pretendard_semibold"
+            android:text="@string/bookmarked_places"
+            android:textSize="@dimen/font_big3" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewFSBookmark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_big3"
+            android:paddingHorizontal="@dimen/margin_basic" />
+
+    </LinearLayout>
+
+    <com.google.android.material.search.SearchView
+        android:id="@+id/searchViewFSResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:backgroundTint="@color/background_color"
+        app:layout_anchor="@id/searchBarFS">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewFSResult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:backgroundTint="@color/background_color"
+            android:paddingTop="@dimen/margin_small1" />
+
+        <TextView
+            android:id="@+id/textViewFSResultEmpty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/cafe24_oneprettynight"
+            android:text="@string/result_empty"
+            android:textSize="@dimen/font_big1"
+            android:visibility="gone" />
+
+    </com.google.android.material.search.SearchView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

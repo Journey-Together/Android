@@ -1,11 +1,11 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="159dp"
-    android:height="161dp"
+    android:height="159dp"
     android:viewportWidth="159"
-    android:viewportHeight="161">
+    android:viewportHeight="159">
   <path
-      android:pathData="M0,0h159v161h-159z"
+      android:pathData="M0,0h159v159h-159z"
       android:fillColor="#797979"/>
   <path
       android:pathData="M-3023,-1895C-3023,-1896.1 -3022.1,-1897 -3021,-1897H1033C1034.1,-1897 1035,-1896.1 1035,-1895V953C1035,954.1 1034.1,955 1033,955H-3021C-3022.1,955 -3023,954.1 -3023,953V-1895Z"
@@ -20,31 +20,31 @@
       android:pathData="M0,5C0,2.24 1.14,0 2.55,0H156.45C157.86,0 159,2.24 159,5V159H0V5Z"
       android:fillColor="#414141"/>
   <path
-      android:pathData="M79.7,119.4C79.68,124.17 77.86,128.93 74.22,132.57C66.92,139.87 55.08,139.87 47.77,132.57C40.47,125.26 40.47,113.42 47.77,106.12C51.41,102.49 56.16,100.66 60.92,100.64L79.41,99.25C80.37,99.18 81.17,99.97 81.09,100.93L79.7,119.4Z"
+      android:pathData="M79.7,116.4C79.68,121.17 77.86,125.93 74.22,129.57C66.92,136.87 55.08,136.87 47.77,129.57C40.47,122.26 40.47,110.42 47.77,103.12C51.41,99.49 56.16,97.66 60.92,97.64L79.41,96.25C80.37,96.18 81.17,96.97 81.09,97.93L79.7,116.4Z"
       android:strokeAlpha="0.5"
       android:fillColor="#818181"
       android:fillAlpha="0.05"
       android:fillType="evenOdd"/>
   <path
-      android:pathData="M79.67,119.4C79.68,124.17 81.51,128.93 85.14,132.57C92.45,139.87 104.29,139.87 111.59,132.57C118.89,125.26 118.89,113.42 111.59,106.12C107.96,102.49 103.21,100.66 98.44,100.64L79.96,99.25C79,99.18 78.2,99.97 78.27,100.93L79.67,119.4Z"
+      android:pathData="M79.67,116.4C79.68,121.17 81.51,125.93 85.14,129.57C92.45,136.87 104.29,136.87 111.59,129.57C118.89,122.26 118.89,110.42 111.59,103.12C107.96,99.49 103.21,97.66 98.44,97.64L79.96,96.25C79,96.18 78.2,96.97 78.27,97.93L79.67,116.4Z"
       android:strokeAlpha="0.5"
       android:fillColor="#818181"
       android:fillAlpha="0.1"
       android:fillType="evenOdd"/>
   <path
-      android:pathData="M79.67,82.77C79.68,78.01 81.51,73.25 85.14,69.61C92.45,62.31 104.29,62.31 111.59,69.61C118.89,76.91 118.89,88.75 111.59,96.06C107.96,99.69 103.19,101.52 98.43,101.54L79.96,102.93C79,103 78.2,102.2 78.27,101.25L79.67,82.77Z"
+      android:pathData="M79.67,79.77C79.68,75.01 81.51,70.25 85.14,66.61C92.45,59.31 104.29,59.31 111.59,66.61C118.89,73.91 118.89,85.75 111.59,93.06C107.96,96.69 103.19,98.52 98.43,98.54L79.96,99.93C79,100 78.2,99.2 78.27,98.24L79.67,79.77Z"
       android:strokeAlpha="0.5"
       android:fillColor="#818181"
       android:fillAlpha="0.15"
       android:fillType="evenOdd"/>
   <path
-      android:pathData="M79.15,82.87C79.13,78.11 77.31,73.35 73.67,69.71C66.37,62.41 54.53,62.41 47.22,69.71C39.92,77.01 39.92,88.85 47.22,96.16C50.86,99.79 55.62,101.62 60.38,101.64L78.86,103.03C79.82,103.1 80.61,102.3 80.54,101.35L79.15,82.87Z"
+      android:pathData="M79.15,79.87C79.13,75.11 77.31,70.35 73.67,66.71C66.37,59.41 54.53,59.41 47.22,66.71C39.92,74.01 39.92,85.85 47.22,93.16C50.86,96.79 55.62,98.62 60.38,98.63L78.86,100.03C79.82,100.1 80.61,99.3 80.54,98.34L79.15,79.87Z"
       android:strokeAlpha="0.5"
       android:fillColor="#818181"
       android:fillAlpha="0.225"
       android:fillType="evenOdd"/>
   <path
-      android:pathData="M81.71,101.86C78.28,125.24 78.27,147.72 85.14,159.41"
+      android:pathData="M81.71,98.86C78.28,122.24 78.27,144.72 85.14,156.41"
       android:strokeAlpha="0.5"
       android:strokeWidth="5.06778"
       android:fillColor="#00000000"
@@ -52,9 +52,9 @@
     <aapt:attr name="android:strokeColor">
       <gradient 
           android:startX="82.29"
-          android:startY="101.86"
+          android:startY="98.86"
           android:endX="82.29"
-          android:endY="159.41"
+          android:endY="156.41"
           android:type="linear">
         <item android:offset="0" android:color="#00818181"/>
         <item android:offset="1" android:color="#66818181"/>

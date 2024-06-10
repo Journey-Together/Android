@@ -20,6 +20,7 @@
         android:theme="@style/Theme.DaOnGil"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
         <activity
             android:name=".presentation.home.WriteReviewActivity"
             android:exported="false" />
@@ -58,17 +59,19 @@
             android:exported="false" />
         <activity
             android:name=".presentation.search.SearchActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".presentation.main.MainActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.login.LoginActivity"
-            android:exported="true" />
-
+            android:exported="false" />
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
-            android:exported="true">
+            android:exported="false" />
+        <activity
+            android:name=".presentation.onboarding.SplashActivity"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -87,7 +90,6 @@
                 <data
                     android:host="oauth"
                     android:scheme="${KAKAO_NATIVE_KEY}" />
-
             </intent-filter>
         </activity>
 

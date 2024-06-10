@@ -5,14 +5,16 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="@dimen/margin_basic"
-    tools:context=".presentation.onboarding.OnBoardingActivity">
+    tools:context=".presentation.onboarding.SplashActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/onBoardingContainer"
+        android:id="@+id/splashContainer"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:navGraph="@navigation/onboarding_navigation_graph"
+        app:defaultNavHost="true"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

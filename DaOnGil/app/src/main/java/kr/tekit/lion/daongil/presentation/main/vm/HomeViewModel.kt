@@ -13,7 +13,7 @@ import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
-class MainViewModel(
+class HomeViewModel(
     private val getAreaCodeInfoUseCase: GetAreaCodeInfoUseCase,
     private val getPlaceMainInfoUseCase: GetPlaceMainInfoUseCase
 ) : ViewModel() {

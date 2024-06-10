@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.domain.repository.PlaceMainInfoRepository
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceMainInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeInfoUseCase
 
-class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
+class HomeViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val areaCodeRepository = AreaCodeRepository.create(context)
     private val placeMainInfoRepository = PlaceMainInfoRepository.create()
 
@@ -16,8 +16,8 @@ class MainViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val getPlaceMainInfoUseCase = GetPlaceMainInfoUseCase(placeMainInfoRepository)
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(MainViewModel::class.java)) {
-            return MainViewModel(
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(
                 getAreaCodeInfoUseCase,
                 getPlaceMainInfoUseCase
             ) as T

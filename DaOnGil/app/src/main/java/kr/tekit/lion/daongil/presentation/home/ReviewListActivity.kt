@@ -1,14 +1,9 @@
 package kr.tekit.lion.daongil.presentation.home
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
-import kr.tekit.lion.daongil.domain.model.Review
 import kr.tekit.lion.daongil.domain.model.ReviewDetail
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
 
@@ -51,7 +46,7 @@ class ReviewListActivity : AppCompatActivity() {
             ),
         )
 
-        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, applicationContext, this)
+        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, this)
         binding.reviewListRv.adapter = reviewListRVAdapter
         binding.reviewListRv.layoutManager = LinearLayoutManager(applicationContext)
     }

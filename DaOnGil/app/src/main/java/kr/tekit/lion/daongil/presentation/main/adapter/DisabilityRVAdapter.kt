@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.main.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -8,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDisabilityTypeBinding
 
-class DisabilityRVAdapter(var typeList : List<String>, val context: Context) : RecyclerView.Adapter<DisabilityRVAdapter.DisabilityViewHolder>(){
+class DisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Adapter<DisabilityRVAdapter.DisabilityViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DisabilityViewHolder {
         val binding : ItemDisabilityTypeBinding = ItemDisabilityTypeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return DisabilityViewHolder(binding, context)
+        return DisabilityViewHolder(binding)
     }
 
     override fun getItemCount(): Int = typeList.size
@@ -23,7 +22,7 @@ class DisabilityRVAdapter(var typeList : List<String>, val context: Context) : R
         holder.bind(typeList[position])
     }
 
-    class DisabilityViewHolder(val binding: ItemDisabilityTypeBinding, val context: Context) : RecyclerView.ViewHolder(binding.root) {
+    class DisabilityViewHolder(val binding: ItemDisabilityTypeBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item : String) {
             val typeId = when(item) {
                 "1" -> R.drawable.physical_disability_radius_icon
@@ -34,7 +33,7 @@ class DisabilityRVAdapter(var typeList : List<String>, val context: Context) : R
             }
             binding.itemDisabilityTypeIv.setImageDrawable(
                 ContextCompat.getDrawable(
-                    context, typeId
+                    binding.root.context, typeId
                 )
             )
         }

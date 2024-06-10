@@ -10,7 +10,7 @@ class LocalAreaCodeDataSource(
         return areaCodeDao.getAreaCodes()
     }
 
-    suspend fun getAreaCodeInfo(code: String): AreaCodeEntity {
+    suspend fun getAreaCodeInfo(code: String): String? {
         return areaCodeDao.getAreaCode(code)
     }
 

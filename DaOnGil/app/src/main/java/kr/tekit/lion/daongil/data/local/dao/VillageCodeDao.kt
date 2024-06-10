@@ -9,8 +9,8 @@ import kr.tekit.lion.daongil.data.dto.local.VillageCodeEntity
 @Dao
 interface VillageCodeDao {
 
-    @Query("SELECT * FROM VILLAGE_CODE_TABLE")
-    suspend fun getAllVillageCode(): List<VillageCodeEntity>
+    @Query("SELECT villageCode FROM VILLAGE_CODE_TABLE WHERE villageName LIKE :villageName || '%' ")
+    suspend fun getVillageCodeByVillageName(villageName: String): String?
 
     @Query("SELECT * FROM VILLAGE_CODE_TABLE WHERE areaCode = :code")
     suspend fun getVillageCode(code: String): List<VillageCodeEntity>

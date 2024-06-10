@@ -7,8 +7,11 @@ import kr.tekit.lion.daongil.domain.model.VillageCode
 import kr.tekit.lion.daongil.data.repository.VillageCodeRepositoryImpl
 
 interface VillageCodeRepository {
+
+    suspend fun getVillageCodeByVillageName(villageName: String): String?
     suspend fun getAllVillageCode(code: String): List<VillageCode>
     suspend fun addVillageCode(villageCode: List<VillageCode>)
+
 
     companion object{
         fun create(context: Context): VillageCodeRepositoryImpl {

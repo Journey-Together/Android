@@ -107,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:clipToPadding="false"
-                android:paddingStart="@dimen/margin_basic"
+                android:paddingStart="19dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/home_recommend_title_tv" />
@@ -117,7 +117,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_basic"
-                android:layout_marginTop="45dp"
+                android:layout_marginTop="40dp"
                 android:fontFamily="@font/pretendard_semibold"
                 android:text="주변엔 이런 곳이 있어요!"
                 android:textColor="@color/text_secondary"

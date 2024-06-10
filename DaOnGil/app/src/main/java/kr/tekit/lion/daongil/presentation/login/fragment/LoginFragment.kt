@@ -4,12 +4,11 @@ import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
@@ -18,11 +17,8 @@ import com.navercorp.nid.NaverIdLoginSDK
 import com.navercorp.nid.oauth.NidOAuthLogin
 import com.navercorp.nid.oauth.OAuthLoginCallback
 import com.navercorp.nid.profile.NidProfileCallback
-import com.navercorp.nid.profile.data.NidProfile
 import com.navercorp.nid.profile.data.NidProfileResponse
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.BuildConfig
 import kotlinx.coroutines.flow.collectLatest
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentLoginBinding
@@ -48,7 +44,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             }
 
             naverLoginButton.setOnClickListener {
-                naverInitialize()
                 naverLogin()
             }
         }
@@ -115,26 +110,16 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             resumeWithException(RuntimeException("Can't Receive Kakao Access Token"))
         }
     }
-    
-    private fun naverInitialize(){
-        val naverClientId = BuildConfig.NAVER_CLIENT_ID
-        val naverClientSecret = BuildConfig.NAVER_CLIENT_SECRET
-        val naverClientName = BuildConfig.NAVER_CLIENT_NAME
-        NaverIdLoginSDK.initialize(requireActivity(), naverClientId, naverClientSecret, naverClientName)
-    }
 
     private fun naverLogin() {
 
         val TAG = "test12345"
 
-        var naverToken: String? = ""
-
-
         val profileCallback = object : NidProfileCallback<NidProfileResponse> {
 
-            override fun onSuccess(result: NidProfileResponse) {
+            override fun onSuccess(result: NidProfileResponse) = repeatOnViewStarted {
                 viewLifecycleOwner.lifecycleScope.launch {
-                    Log.d(TAG, "네이버 로그인 성공 ${NaverIdLoginSDK.getAccessToken()}")
+                    viewModel.onCompleteSignIn("NAVER","Bearer ${NaverIdLoginSDK.getAccessToken()}")
                 }
             }
 

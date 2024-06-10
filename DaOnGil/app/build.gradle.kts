@@ -17,9 +17,9 @@ val baseUrl = properties.getProperty("base_url") ?: ""
 val naverMapBase = properties.getProperty("naver_map_base") ?: ""
 val naverMapId = properties.getProperty("naver_map_id") ?: ""
 val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
-val naverClientId = properties.getProperty("naverClientId") ?: ""
-val naverClientSecret = properties.getProperty("naverClientSecret") ?: ""
-val naverClientName = properties.getProperty("naverClientName") ?: ""
+val naverClientId = properties.getProperty("naver_client_id") ?: ""
+val naverClientSecret = properties.getProperty("naver_client_secret") ?: ""
+val naverClientName = properties.getProperty("naver_client_name") ?: ""
 val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
 val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
 val aedBaseUrl = properties.getProperty("aed_base_url")?:""
@@ -52,8 +52,6 @@ android {
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
         buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
         buildConfigField("String", "PHARMACY_BASE_URL", "\"$pharmacyBaseUrl\"")
-
-        //manifest에서 사용
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
         manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
     }
@@ -143,4 +141,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
+
+    implementation ("com.google.android.gms:play-services-location:17.1.0") // Fused Location Provider
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
+
 }

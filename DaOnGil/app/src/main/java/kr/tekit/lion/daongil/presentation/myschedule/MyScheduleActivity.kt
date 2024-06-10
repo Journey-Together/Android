@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.myschedule
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
@@ -8,6 +9,7 @@ import kr.tekit.lion.daongil.databinding.ActivityMyScheduleBinding
 import kr.tekit.lion.daongil.domain.model.MySchedule
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleElapsedAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleUpcomingAdapter
+import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 class MyScheduleActivity : AppCompatActivity() {
     private val binding : ActivityMyScheduleBinding by lazy {
@@ -69,7 +71,9 @@ class MyScheduleActivity : AppCompatActivity() {
             elapsedSchedule,
             onReviewButtonClicked = { planId, hasReview ->
                 if (hasReview != null && hasReview == false) {
-                    // TO DO 리뷰 작성화면으로 이동
+                    val intent = Intent(this, WriteScheduleReviewActivity::class.java)
+                    intent.putExtra("planId", planId)
+                    startActivity(intent)
                 } else {
                     // TO DO 일정화면으로 이동
                 }

@@ -321,6 +321,7 @@ class EmergencyMapActivity : AppCompatActivity(), OnMapReadyCallback {
                 viewModel.getUserLocationRegion(coords)
 
                 viewModel.emergencyMapInfo.observe(this@EmergencyMapActivity) { item ->
+                  
                     val boundsBuilder = LatLngBounds.Builder()
                     val emergencyMapList = mutableListOf<EmergencyMapInfo>()
 

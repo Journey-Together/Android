@@ -71,8 +71,6 @@ object RetrofitInstance {
         return retrofitProvider().create(apiService)
     }
 
-
-
     val naverMapService: NaverMapService by lazy {
         Retrofit.Builder()
             .baseUrl(BuildConfig.NAVER_MAP_BASE)

@@ -8,9 +8,11 @@
     tools:context=".presentation.myinfo.fragment.PersonalInfoModifyFragment" >
 
     <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarPersonalInfoModify"
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_icon"
+        android:minHeight="?attr/actionBarSize" >
         android:minHeight="?attr/actionBarSize"
         app:navigationIcon="@drawable/back_icon" >
 
@@ -48,6 +50,7 @@
                 tools:ignore="MissingConstraints">
 
                 <ImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"
@@ -56,7 +59,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <Button
-                android:id="@+id/iconButtonPersonalInfoModify"
+                android:id="@+id/btn_modify"
                 style="?attr/materialIconButtonFilledTonalStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,18 +97,19 @@
                 android:id="@+id/textInputLayoutUserNickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin_basic"
+                android:layout_marginBottom="@dimen/margin_small1"
                 app:boxBackgroundColor="@color/background_color"
                 app:boxBackgroundMode="filled"
                 app:endIconMode="clear_text"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldUserNickname"
+                    android:id="@+id/tv_nickname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
-                    android:hint="닉네임을 입력해주세요."
+                    android:hint="@string/text_plz_enter_nickname"
                     android:inputType="text"
                     android:paddingStart="@dimen/margin_small2"
                     android:textSize="@dimen/font_big3" />
@@ -127,10 +131,11 @@
                 app:boxBackgroundColor="@color/background_color"
                 app:boxBackgroundMode="filled"
                 app:endIconMode="clear_text"
+                app:errorEnabled="true"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/textFieldUserPhoneNumber"
+                    android:id="@+id/tv_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
@@ -151,7 +156,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <Button
-                android:id="@+id/buttonPersonalInfoSubmit"
+                android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/background_radius_10"

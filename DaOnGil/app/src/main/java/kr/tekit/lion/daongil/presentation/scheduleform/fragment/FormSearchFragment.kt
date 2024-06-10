@@ -36,7 +36,7 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     }
 
     private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int ){
-        val places = mutableListOf(
+        val places = listOf(
             BookmarkedPlace(0, "보신각 터"),
             BookmarkedPlace(1, "부산 영화의 전당"),
             BookmarkedPlace(2, "광복로문화패션거리"),

@@ -9,7 +9,7 @@ import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class FormBookmarkedPlacesAdapter(
-    private val bookmarkedPlaces: MutableList<BookmarkedPlace>,
+    private val bookmarkedPlaces: List<BookmarkedPlace>,
     private val navController: NavController,
     private val scheduleViewModel: ScheduleFormViewModel,
     private val schedulePosition: Int

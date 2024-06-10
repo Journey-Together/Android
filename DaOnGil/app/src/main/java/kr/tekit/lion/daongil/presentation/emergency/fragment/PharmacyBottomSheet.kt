@@ -28,4 +28,12 @@ class PharmacyBottomSheet(
             pharmacyBottomAdapter.notifyDataSetChanged()
         }
     }
+
+    fun recyclerViewTopButton() {
+        with(binding){
+            emergencyBottomSheetHead.setOnClickListener {
+                emergencyBottomRv.scrollToPosition(0)
+            }
+        }
+    }
 }

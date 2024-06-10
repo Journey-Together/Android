@@ -14,12 +14,12 @@ class EmergencyBottomSheet(
 
    private val emergencyBottomadapter: EmergencyBottomAdapter by lazy {
       EmergencyBottomAdapter(emergencyBottomList,
-         itemClickListener = { id, item ->
+         itemClickListener = { position ->
             val context: Context = binding.root.context
             val intent = Intent(context, EmergencyInfoActivity::class.java)
-            intent.putExtra("infoType", item.emergencyType)
-            intent.putExtra("data", item)
-            intent.putExtra("id", id)
+            intent.putExtra("infoType", emergencyBottomList[position].emergencyType)
+            intent.putExtra("data", emergencyBottomList[position])
+            intent.putExtra("id", emergencyBottomList[position].emergencyId)
             context.startActivity(intent)
          }
       )

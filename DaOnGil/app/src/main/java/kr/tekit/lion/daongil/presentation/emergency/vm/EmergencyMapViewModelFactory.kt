@@ -7,6 +7,7 @@ import kr.tekit.lion.daongil.domain.repository.EmergencyRepository
 import kr.tekit.lion.daongil.domain.repository.NaverMapRepository
 import kr.tekit.lion.daongil.domain.usecase.GetAedMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetEmergencyMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.GetHospitalMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetUserLocationRegionUseCase
 import java.lang.IllegalArgumentException
 
@@ -16,7 +17,7 @@ class EmergencyMapViewModelFactory(): ViewModelProvider.Factory {
         NaverMapRepository.create()
     )
 
-    private val getEmergencyMapInfoUseCase = GetEmergencyMapInfoUseCase(
+    private val getHospitalMapInfoUseCase = GetHospitalMapInfoUseCase(
         EmergencyRepository.create()
     )
 
@@ -24,9 +25,14 @@ class EmergencyMapViewModelFactory(): ViewModelProvider.Factory {
         AedRepository.create()
     )
 
+    private val getEmergencyMapInfoUseCase = GetEmergencyMapInfoUseCase(
+        getHospitalMapInfoUseCase,
+        getAedMapInfoUseCase
+    )
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EmergencyMapViewModel::class.java)){
-            return EmergencyMapViewModel(getUserLocationRegionUseCase, getEmergencyMapInfoUseCase, getAedMapInfoUseCase) as T
+            return EmergencyMapViewModel(getUserLocationRegionUseCase, getEmergencyMapInfoUseCase) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")
     }

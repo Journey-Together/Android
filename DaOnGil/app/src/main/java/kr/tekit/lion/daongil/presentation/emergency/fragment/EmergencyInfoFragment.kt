@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentEmergencyInfoBinding
-import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
 import kr.tekit.lion.daongil.presentation.emergency.adapter.EmergencyMessageAdapter
 import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyInfoViewModel
 import kr.tekit.lion.daongil.presentation.emergency.vm.EmergencyInfoViewModelFactory
@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter
 class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
     private val hospitalId by lazy {
-        (requireActivity().intent.getSerializableExtra("data") as EmergencyBottom).emergencyId
+        (requireActivity().intent.getSerializableExtra("data") as EmergencyMapInfo).emergencyId
     }
     private val viewModel: EmergencyInfoViewModel by viewModels{ EmergencyInfoViewModelFactory(
         hospitalId.toString()
@@ -32,7 +32,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
         val binding = FragmentEmergencyInfoBinding.bind(view)
 
-        val data = requireActivity().intent.getSerializableExtra("data") as EmergencyBottom
+        val data = requireActivity().intent.getSerializableExtra("data") as EmergencyMapInfo
 
         with(binding){
 
@@ -52,19 +52,19 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
             }
 
-            emergencyName.text = data.emergencyList?.hospitalName
-            emergencyAddress.text = data.emergencyList?.hospitalAddress
-            emergencyUpdate.text = data.emergencyList?.lastUpdateDate
-            emergency.text = data.emergencyList?.emergencyCount.toString() + " / " + data.emergencyList?.emergencyAllCount.toString()
+            emergencyName.text = data.hospitalList?.hospitalName
+            emergencyAddress.text = data.hospitalList?.hospitalAddress
+            emergencyUpdate.text = data.hospitalList?.lastUpdateDate
+            emergency.text = data.hospitalList?.emergencyCount.toString() + " / " + data.hospitalList?.emergencyAllCount.toString()
             kidEmergency.text =
-                if (data.emergencyList?.emergencyKid.isNullOrEmpty()) "운영하지 않습니다."
-                else data.emergencyList?.emergencyKidCount.toString() + " / " + data.emergencyList?.emergencyKidAllCount.toString()
-            emergencyDialysis.text = data.emergencyList?.dialysis
-            emergencyBirth.text = data.emergencyList?.earlyBirth
-            emergencyBurns.text = data.emergencyList?.burns
+                if (data.hospitalList?.emergencyKid.isNullOrEmpty()) "운영하지 않습니다."
+                else data.hospitalList?.emergencyKidCount.toString() + " / " + data.hospitalList?.emergencyKidAllCount.toString()
+            emergencyDialysis.text = data.hospitalList?.dialysis
+            emergencyBirth.text = data.hospitalList?.earlyBirth
+            emergencyBurns.text = data.hospitalList?.burns
 
             emergencyCall.setOnClickListener {
-                val phoneNumber = data.emergencyList?.emergencyTel
+                val phoneNumber = data.hospitalList?.emergencyTel
                 if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
@@ -74,7 +74,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
             }
 
             mainEmergencyCall.setOnClickListener {
-                val phoneNumber = data.emergencyList?.hospitalTel
+                val phoneNumber = data.hospitalList?.hospitalTel
                 if (!phoneNumber.isNullOrBlank() || !phoneNumber.isNullOrEmpty()) {
                     val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phoneNumber"))
                     startActivity(intent)
@@ -83,7 +83,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
                 }
             }
 
-            data.emergencyList?.emergencyBed?.let { it ->
+            data.hospitalList?.emergencyBed?.let { it ->
                 val emergencyKidBedIcon = binding.emergencyRadius
                 val colorResId = when {
                     it >= 80 -> R.color.emergency_green
@@ -94,7 +94,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
                 emergencyKidBedIcon.setBackgroundTintList(colorStateList)
             }
 
-            data.emergencyList?.emergencyKidBed?.let { it ->
+            data.hospitalList?.emergencyKidBed?.let { it ->
                 val emergencyKidBedIcon = binding.kidEmergencyRadius
                 val colorResId = when {
                     it >= 80 -> R.color.emergency_green

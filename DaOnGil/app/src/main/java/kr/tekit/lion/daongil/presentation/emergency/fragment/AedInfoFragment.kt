@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentAedInfoBinding
-import kr.tekit.lion.daongil.domain.model.EmergencyBottom
+import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
 
 
 class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
@@ -23,7 +23,7 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
             requireActivity().finish()
         }
 
-        val data = requireActivity().intent.getSerializableExtra("data") as? EmergencyBottom
+        val data = requireActivity().intent.getSerializableExtra("data") as? EmergencyMapInfo
 
         with(binding) {
             aedName.text = data?.aedList?.aedName

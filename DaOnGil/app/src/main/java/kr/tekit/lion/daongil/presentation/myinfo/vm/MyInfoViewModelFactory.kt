@@ -3,10 +3,10 @@ package kr.tekit.lion.daongil.presentation.myinfo.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.MemberRepository
-import kr.tekit.lion.daongil.domain.usecase.GetMyInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.ModifyMyIceInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.ModifyMyPersonalInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.ModifyMyProfileImageUseCase
+import kr.tekit.lion.daongil.domain.usecase.myinfo.GetMyInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.myinfo.ModifyMyIceInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.myinfo.ModifyMyPersonalInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.myinfo.ModifyMyProfileImageUseCase
 
 class MyInfoViewModelFactory : ViewModelProvider.Factory {
 

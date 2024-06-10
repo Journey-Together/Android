@@ -129,7 +129,7 @@
                         app:layout_constraintTop_toTopOf="@+id/tvReviewCnt" />
 
                     <TextView
-                        android:id="@+id/textViewMyInfoMainRegisterCnt"
+                        android:id="@+id/tv_registered_data"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/margin_small2"

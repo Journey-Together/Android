@@ -2,14 +2,13 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
-import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
 import kr.tekit.lion.daongil.presentation.bookmark.BookmarkActivity
@@ -62,16 +61,19 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         moveBookmark(binding)
         moveMyReview(binding)
         moveDeleteUser(binding)
+        with(binding) {
+            repeatOnViewStarted {
+                viewModel.myInfo.collect {
 
-        repeatOnViewStarted {
-            viewModel.myInfo.collect{
-                with(binding){
                     tvNameOrLogin.text = it.name
                     tvReviewCnt.text = it.reviewNum.toString()
+                    tvRegisteredData.text = "${it.date}일째"
 
-                    Glide.with(requireContext())
+                    Glide.with(binding.imgProfile.context)
                         .load(it.profileImg)
                         .fallback(R.drawable.default_profile)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(imgProfile)
                 }
             }

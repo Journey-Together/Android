@@ -14,11 +14,15 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteReviewBinding
 import kr.tekit.lion.daongil.presentation.home.adapter.WriteReviewImageRVAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
     val binding: ActivityWriteReviewBinding by lazy {
@@ -96,6 +100,10 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         }
 
+        binding.writeReviewDateBtn.setOnClickListener {
+            setDate(binding)
+        }
+
         binding.writeReviewBtn.setOnClickListener {
             finish()
         }
@@ -140,5 +148,36 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    private fun setDate(binding: ActivityWriteReviewBinding) {
+        val datePicker = MaterialDatePicker.Builder.dateRangePicker()
+            .setTheme(R.style.DateRangePickerTheme)
+            .setTitleText("방문 기간을 설정해주세요")
+            .build()
+
+        datePicker.show(supportFragmentManager, "WriteReviewDate")
+        datePicker.addOnPositiveButtonClickListener {
+            showPickedDates(binding)
+        }
+    }
+
+    private fun formatDateValue(date: Date): String {
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+        val formattedDate = dateFormat.format(date)
+
+        return formattedDate
+    }
+
+    private fun showPickedDates(binding: ActivityWriteReviewBinding) {
+//        val startDate = scheduleFormViewModel.startDate.value
+//        val endDate = scheduleFormViewModel.endDate.value
+//        val startDateFormatted = startDate?.let {
+//            formatDateValue(startDate)
+//        }
+//        val endDateFormatted = endDate?.let {
+//            formatDateValue(endDate)
+//        }
+//        binding.writeReviewDateBtn.text = getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
     }
 }

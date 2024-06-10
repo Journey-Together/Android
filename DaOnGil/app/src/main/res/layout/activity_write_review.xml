@@ -84,6 +84,25 @@
                 app:layout_constraintStart_toStartOf="@id/write_review_address_tv"
                 app:layout_constraintTop_toBottomOf="@+id/write_review_address_tv" />
 
+            <Button
+                android:id="@+id/write_review_date_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:backgroundTint="@color/navi_background"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/pretendard_regular"
+                android:hint="방문 날짜 설정하기"
+                android:padding="@dimen/margin_big4"
+                android:textSize="@dimen/font_big3"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/write_review_date_tv"
+                app:strokeColor="@color/text_quaternary"
+                app:strokeWidth="1dp" />
+
             <TextView
                 android:id="@+id/write_review_satisfaction_tv"
                 android:layout_width="wrap_content"
@@ -93,8 +112,8 @@
                 android:text="만족도"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toStartOf="@id/write_review_date_tv"
-                app:layout_constraintTop_toBottomOf="@+id/write_review_date_tv" />
+                app:layout_constraintStart_toStartOf="@id/write_review_date_btn"
+                app:layout_constraintTop_toBottomOf="@+id/write_review_date_btn" />
 
             <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/write_review_ratingbar"

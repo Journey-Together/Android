@@ -1,5 +1,7 @@
 package kr.tekit.lion.daongil.domain.model
 
+import java.io.Serializable
+
 data class EmergencyMapInfo(
     val hospitalId: String?,
     val emergencyCount: Int?,
@@ -19,4 +21,4 @@ data class EmergencyMapInfo(
     val burns: String?,
     val hospitalLon: Double?,
     val hospitalLat: Double?
-)
+): Serializable

@@ -1,15 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.scheduleform.fragment.NameAndPeriodFormFragment">
 
     <TextView
-        android:id="@+id/temButton"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Name Period"
-        android:textSize="96sp" />
+        android:id="@+id/textViewNPFNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginTop="@dimen/margin_big3"
+        android:fontFamily="@font/pretendard_bold"
+        android:text="여행 제목"
+        android:textSize="@dimen/font_big1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/editTextNPFName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginTop="@dimen/margin_big3"
+        android:layout_marginEnd="@dimen/margin_basic"
+        android:background="@drawable/edittext_background"
+        android:ems="10"
+        android:maxLines="1"
+        android:fontFamily="@font/pretendard_regular"
+        android:hint="15자 이내로 입력해주세요"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNPFNameTitle" />
+
+    <TextView
+        android:id="@+id/textViewNPFPeriodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginTop="@dimen/margin_big1"
+        android:enabled="false"
+        android:fontFamily="@font/pretendard_bold"
+        android:text="여행 기간"
+        android:textSize="@dimen/font_big1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNPFName" />
+
+    <Button
+        android:id="@+id/buttonNPFSetPeriod"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginTop="@dimen/margin_big3"
+        android:layout_marginEnd="@dimen/margin_basic"
+        android:backgroundTint="@color/navi_background"
+        android:drawableTint="@color/black"
+        android:fontFamily="@font/pretendard_regular"
+        android:hint="여행 기간 설정하기"
+        android:padding="@dimen/margin_big2"
+        android:textSize="@dimen/font_big2"
+        app:cornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNPFPeriodTitle"
+        app:strokeColor="@color/text_quaternary"
+        app:strokeWidth="1dp" />
+
+    <Button
+        android:id="@+id/buttonNPFNextStep"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/background_radius_10"
+        android:fontFamily="@font/pretendard_bold"
+        android:text="다음으로"
+        android:textSize="@dimen/font_big2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

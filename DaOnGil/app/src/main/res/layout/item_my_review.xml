@@ -54,46 +54,21 @@
                     android:textSize="@dimen/font_big2"
                     tools:text="여행지 이름" />
 
-                <LinearLayout
+                <com.willy.ratingbar.BaseRatingBar
+                    android:id="@+id/ratingbarItemMyReview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    app:srb_drawableEmpty="@drawable/star_icon"
+                    app:srb_drawableFilled="@drawable/star_filled_icon"
+                    app:srb_isIndicator="true"
+                    app:srb_minimumStars="0"
+                    app:srb_numStars="5"
+                    app:srb_rating="3.5"
+                    app:srb_starHeight="25dp"
+                    app:srb_starPadding="5dp"
+                    app:srb_starWidth="25dp"
+                    app:srb_stepSize="0.5" />
 
-                    <ImageView
-                        android:id="@+id/myReviewRating1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_small1"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewRating2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_small1"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewRating3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_small1"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewRating4"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/margin_small1"
-                        android:src="@drawable/star_icon" />
-
-                    <ImageView
-                        android:id="@+id/myReviewRating5"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/star_icon" />
-
-                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 

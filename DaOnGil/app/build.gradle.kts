@@ -17,11 +17,13 @@ val baseUrl = properties.getProperty("base_url") ?: ""
 val naverMapBase = properties.getProperty("naver_map_base") ?: ""
 val naverMapId = properties.getProperty("naver_map_id") ?: ""
 val naverMapSecret = properties.getProperty("naver_map_secret") ?: ""
-val naverClientId = properties.getProperty("naverClientId") ?: ""
-val naverClientSecret = properties.getProperty("naverClientSecret") ?: ""
-val naverClientName = properties.getProperty("naverClientName") ?: ""
+val naverClientId = properties.getProperty("naver_client_id") ?: ""
+val naverClientSecret = properties.getProperty("naver_client_secret") ?: ""
+val naverClientName = properties.getProperty("naver_client_name") ?: ""
 val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
 val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
+val aedBaseUrl = properties.getProperty("aed_base_url")?:""
+val pharmacyBaseUrl = properties.getProperty("pharmacy_base_url")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -48,8 +50,8 @@ android {
         buildConfigField("String", "NAVER_CLIENT_NAME", "\"$naverClientName\"")
         buildConfigField("String", "KAKAO_NATIVE_KEY", "\"$kakaoNativeKey\"")
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
-
-        //manifest에서 사용
+        buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
+        buildConfigField("String", "PHARMACY_BASE_URL", "\"$pharmacyBaseUrl\"")
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
         manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
     }
@@ -141,4 +143,8 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation ("com.google.android.gms:play-services-location:17.1.0") // Fused Location Provider
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
+
 }

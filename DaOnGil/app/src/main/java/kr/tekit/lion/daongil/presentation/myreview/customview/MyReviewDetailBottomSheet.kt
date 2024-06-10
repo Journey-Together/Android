@@ -12,8 +12,7 @@ import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myreview.fragment.MyReviewDetailFragmentDirections
 
-class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_sheet_my_review_detail),
-    ConfirmDialogInterface {
+class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_sheet_my_review_detail), ConfirmDialogInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,6 +33,9 @@ class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_shee
     }
 
     private fun modifyMyReview() {
+        dismiss()
+
+        findNavController().navigate(R.id.action_myReviewDetailFragment_to_myReviewModifyFragment)
     }
 
     private fun showDeleteDialog() {

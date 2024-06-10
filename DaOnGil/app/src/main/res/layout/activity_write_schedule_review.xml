@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.schedulereview.WriteScheduleReviewActivity">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbarWriteScheReview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:minHeight="?attr/actionBarSize"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/back_icon">
+
+        <TextView
+            style="@style/Theme.Toolbar.Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_write_schedule_review" />
+
+    </com.google.android.material.appbar.MaterialToolbar>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarWriteScheReview">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/margin_basic">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewWriteScheReview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:backgroundTint="@color/item_background"
+                app:cardCornerRadius="5dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:strokeColor="@color/text_quaternary"
+                app:strokeWidth="1dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <View
+                        android:id="@+id/viewWriteScheReviewDeco"
+                        android:layout_width="5dp"
+                        android:layout_height="0dp"
+                        android:background="@color/primary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteScheReviewName"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_big4"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:maxLines="1"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="@dimen/font_big2"
+                        app:layout_constraintEnd_toEndOf="@+id/textViewWriteScheReviewPeriod"
+                        app:layout_constraintStart_toStartOf="@+id/textViewWriteScheReviewPeriod"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="경주여행" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteScheReviewPeriod"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_big3"
+                        android:layout_marginTop="@dimen/margin_small2"
+                        android:layout_marginEnd="@dimen/margin_big3"
+                        android:layout_marginBottom="@dimen/margin_big4"
+                        android:fontFamily="@font/pretendard_light"
+                        android:textColor="@color/text_secondary"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageViewWriteScheReviewThumb"
+                        app:layout_constraintStart_toEndOf="@+id/viewWriteScheReviewDeco"
+                        app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewName"
+                        tools:text="2024.04.01 - 04.05" />
+
+                    <ImageView
+                        android:id="@+id/imageViewWriteScheReviewThumb"
+                        android:layout_width="@dimen/search_bar_height"
+                        android:layout_height="@dimen/search_bar_height"
+                        android:layout_marginEnd="@dimen/margin_small1"
+                        android:contentDescription="대표 사진"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:srcCompat="@drawable/empty_view_small" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/textViewWriteScheReviewRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/text_schedule_satisfaction"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewWriteScheReview" />
+
+            <com.willy.ratingbar.BaseRatingBar
+                android:id="@+id/ratingbarWriteScheReview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewRating"
+                app:srb_drawableEmpty="@drawable/star_icon"
+                app:srb_drawableFilled="@drawable/star_filled_icon"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0"
+                app:srb_numStars="5"
+                app:srb_rating="0"
+                app:srb_starHeight="40dp"
+                app:srb_starPadding="7dp"
+                app:srb_starWidth="40dp"
+                app:srb_stepSize="0.5" />
+
+            <TextView
+                android:id="@+id/textViewWriteScheReviewContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/text_schedule_review"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbarWriteScheReview" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/inputLayoutWriteScheReviewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:textColorHint="@color/text_tertiary"
+                app:boxBackgroundColor="@color/item_background"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeColor="@color/text_secondary"
+                app:boxStrokeWidth="1dp"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewContent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/editTextWriteScheReviewContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretendard_medium"
+                    android:gravity="top"
+                    android:hint="후기를 남겨주세요"
+                    android:inputType="textMultiLine"
+                    android:lines="7"
+                    android:maxLines="7"
+                    android:text=""
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="@dimen/font_small1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/textViewWriteScheReviewPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="@string/text_schedule_review_photo"
+                android:textSize="@dimen/font_big3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inputLayoutWriteScheReviewContent" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardViewWriteScheReviewPhotoAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:cardCornerRadius="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewPhoto"
+                app:strokeColor="@color/text_quaternary"
+                app:strokeWidth="1dp">
+
+                <ImageButton
+                    android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@color/background_color"
+                    android:src="@drawable/add_image_icon" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewWriteScheReviewPhotos"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_small1"
+                app:layout_constraintBottom_toBottomOf="@+id/cardViewWriteScheReviewPhotoAdd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/cardViewWriteScheReviewPhotoAdd"
+                app:layout_constraintTop_toTopOf="@+id/cardViewWriteScheReviewPhotoAdd" />
+
+            <Button
+                android:id="@+id/buttonWriteScheReivewSubmit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/background_radius_10"
+                android:fontFamily="@font/pretendard_bold"
+                android:text="@string/text_save_schedule_review"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_small1"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardViewWriteScheReviewPhotoAdd"
+                app:layout_constraintVertical_bias="1" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

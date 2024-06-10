@@ -108,7 +108,7 @@
                 android:textColor="@color/text_quinary"
                 android:visibility="gone"
                 app:backgroundTint="@color/button_quaternary"
-                app:icon="@drawable/ic_edit_24"
+                app:icon="@drawable/edit_icon"
                 app:iconGravity="textStart"
                 app:iconTint="@color/text_quinary"
                 app:layout_constraintBottom_toBottomOf="parent"

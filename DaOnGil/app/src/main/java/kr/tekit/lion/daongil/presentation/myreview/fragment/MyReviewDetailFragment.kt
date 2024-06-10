@@ -44,18 +44,9 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
             "review" to "풍경도 좋고 너무 좋아요!!!!\n시설도 잘 되어있어서 만족스러웠습니다"
         )
 
-        val stars = listOf(
-            binding.myReviewDetailRating1,
-            binding.myReviewDetailRating2,
-            binding.myReviewDetailRating3,
-            binding.myReviewDetailRating4,
-            binding.myReviewDetailRating5
-        )
-
         binding.textViewMyReviewDetailLocation.text = reviewDetail["location"].toString()
         binding.textViewMyReviewDetailDate.text = "${reviewDetail["date"]} 방문"
         binding.textViewMyReviewDetailReviewContent.text = reviewDetail["review"].toString()
-        settingRating(reviewDetail["rating"] as Double, stars)
     }
 
     private fun settingVPAdapter(binding: FragmentMyReviewDetailBinding) {
@@ -70,26 +61,6 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
         binding.viewPagerMyReviewDetail.orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
         binding.MyReviewDetailindicator.setViewPager(binding.viewPagerMyReviewDetail)
-    }
-
-    private fun settingRating(rating: Double, Ratings: List<ImageView>) {
-        for (i in 0 until 5) {
-            val imageView = Ratings[i]
-            when {
-                rating >= (i + 1) -> {
-                    imageView.setImageResource(R.drawable.star_filled_icon)
-                    imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary))
-                }
-                rating >= (i + 0.5) -> {
-                    imageView.setImageResource(R.drawable.star_half_filled_icon)
-                    imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary))
-                }
-                else -> {
-                    imageView.setImageResource(R.drawable.star_icon)
-                    imageView.setColorFilter(ContextCompat.getColor(imageView.context, R.color.primary_disabled))
-                }
-            }
-        }
     }
 
     private fun showBottomSheet() {

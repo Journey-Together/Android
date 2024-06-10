@@ -1,16 +1,11 @@
 package kr.tekit.lion.daongil.presentation.onboarding
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityOnBoardingBinding
-import kr.tekit.lion.daongil.presentation.onboarding.adapter.OnBoardingViewpagerAdapter
-import kr.tekit.lion.daongil.presentation.onboarding.fragment.OnBoardingFirstFragment
-import kr.tekit.lion.daongil.presentation.onboarding.fragment.OnBoardingLastFragment
-import kr.tekit.lion.daongil.presentation.onboarding.fragment.OnBoardingSecondFragment
+import kr.tekit.lion.daongil.presentation.onboarding.fragment.OnBoardingFragment
+import kr.tekit.lion.daongil.presentation.onboarding.fragment.SplashFragment
 
 class OnBoardingActivity : AppCompatActivity() {
 
@@ -22,13 +17,12 @@ class OnBoardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val fragments = listOf(
-            OnBoardingLastFragment()
-        )
-
-        val adapter = OnBoardingViewpagerAdapter(fragments, this)
-        binding.viewpager.adapter = adapter
+        // 프래그먼트 트랜잭션 시작
+        supportFragmentManager.beginTransaction().apply {
+            // OnBoardingFirstFragment를 fragment_container (FrameLayout)에 추가 혹은 교체
+            replace(R.id.onBoardingContainer, OnBoardingFragment())
+            // 트랜잭션 완료 (커밋)
+            commit()
+        }
     }
-
-
 }

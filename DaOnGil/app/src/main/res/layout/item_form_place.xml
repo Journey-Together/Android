@@ -117,7 +117,7 @@
                 android:layout_marginEnd="@dimen/margin_small2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_close_18px" />
+                app:srcCompat="@drawable/cancel_icon" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

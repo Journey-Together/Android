@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
-import kr.tekit.lion.daongil.presentation.main.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import java.text.SimpleDateFormat
 import java.util.*

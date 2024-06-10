@@ -70,7 +70,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
                     tvReviewCnt.text = it.reviewNum.toString()
 
                     Glide.with(requireContext())
-                        .load("${BuildConfig.AWS_BASE_URL}${it.profileImg}")
+                        .load(it.profileImg)
                         .fallback(R.drawable.default_profile)
                         .into(imgProfile)
                 }

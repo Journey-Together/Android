@@ -9,12 +9,17 @@ import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 class FormPlaceAdapter(
-    private val places : MutableList<FormPlace>,
-    private val scheduleViewModel: ScheduleFormViewModel, private val schedulePosition: Int
-) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>(){
+    private val places: MutableList<FormPlace>,
+    private val scheduleViewModel: ScheduleFormViewModel,
+    private val schedulePosition: Int
+) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormPlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return FormPlaceViewHolder(ItemFormPlaceBinding.inflate(inflater, parent, false), scheduleViewModel, schedulePosition)
+        return FormPlaceViewHolder(
+            ItemFormPlaceBinding.inflate(inflater, parent, false),
+            scheduleViewModel,
+            schedulePosition
+        )
     }
 
     override fun onBindViewHolder(holder: FormPlaceViewHolder, position: Int) {
@@ -25,24 +30,25 @@ class FormPlaceAdapter(
         return places.size
     }
 
-    fun addNewPlace(addedPlace : FormPlace){
+    fun addNewPlace(addedPlace: FormPlace) {
         places.add(addedPlace)
     }
 
     class FormPlaceViewHolder(
-        private val binding: ItemFormPlaceBinding, private val scheduleViewModel: ScheduleFormViewModel,
+        private val binding: ItemFormPlaceBinding,
+        private val scheduleViewModel: ScheduleFormViewModel,
         private val schedulePosition: Int
-        ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(place : FormPlace, placePosition: Int) {
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(place: FormPlace, placePosition: Int) {
             // to do : 이미지 url -> Glide
             // binding.imageViewFPlaceThumbnail
-             binding.textViewFPlaceAddr.text = place.placeAddress
-             binding.textViewFPlaceName.text = place.placeName
+            binding.textViewFPlaceAddr.text = place.placeAddress
+            binding.textViewFPlaceName.text = place.placeName
             place.placeDisability.forEach {
-                when(it){
+                when (it) {
                     1 -> binding.iconFPlacePhysicalDisability.visibility = View.VISIBLE
                     2 -> binding.iconFPlaceVisualImpair.visibility = View.VISIBLE
-                    // 3 - 청각 아이콘 추가되면 코드 추가할 예정
+                    3 -> binding.iconFPlaceHearingImpair.visibility = View.VISIBLE
                     4 -> binding.iconFPlaceInfantFamily.visibility = View.VISIBLE
                     5 -> binding.iconFPlaceElderlyPeople.visibility = View.VISIBLE
                 }
@@ -53,7 +59,5 @@ class FormPlaceAdapter(
 
             }
         }
-
     }
-
 }

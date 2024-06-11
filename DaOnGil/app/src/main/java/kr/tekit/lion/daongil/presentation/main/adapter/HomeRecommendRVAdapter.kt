@@ -11,7 +11,7 @@ import kr.tekit.lion.daongil.domain.model.RecommendPlace
 
 class HomeRecommendRVAdapter(
     private val recommendPlaceList: List<RecommendPlace>,
-    private val onClick: (RecommendPlace) -> Unit
+    private val onClick: (Int) -> Unit
 ) : RecyclerView.Adapter<HomeRecommendRVAdapter.RecommendViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendViewHolder {
@@ -30,8 +30,14 @@ class HomeRecommendRVAdapter(
 
     class RecommendViewHolder(
         val binding: ItemTouristSmallBinding,
-        private val onClick: (RecommendPlace) -> Unit
+        private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                onClick.invoke(adapterPosition)
+            }
+        }
         fun bind(recommendPlace: RecommendPlace) {
             binding.touristSmallLocationTv.text = recommendPlace.address
             binding.touristSmallTitleTv.text = recommendPlace.name
@@ -47,10 +53,6 @@ class HomeRecommendRVAdapter(
             binding.touristSmallDisabilityRv.adapter = disabilityRVAdapter
             binding.touristSmallDisabilityRv.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-
-            binding.root.setOnClickListener {
-                onClick(recommendPlace)
-            }
         }
     }
 }

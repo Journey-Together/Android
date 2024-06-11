@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
@@ -48,19 +49,20 @@ import kotlin.concurrent.scheduleAtFixedRate
 
 class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private val app = HighThemeApp.getInstance()
-    private val viewModel : HomeViewModel by viewModels { HomeViewModelFactory(requireContext()) }
+    private val viewModel: HomeViewModel by viewModels { HomeViewModelFactory(requireContext()) }
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private val retryDelayMillis = 5000L
 
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-        if (isGranted) {
-            initLocationClient(FragmentHomeMainBinding.bind(requireView()))
-        } else {
-            requireContext().showPermissionSnackBar(FragmentHomeMainBinding.bind(requireView()).root)
-            hideLocationRv(FragmentHomeMainBinding.bind(requireView()))
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                initLocationClient(FragmentHomeMainBinding.bind(requireView()))
+            } else {
+                requireContext().showPermissionSnackBar(FragmentHomeMainBinding.bind(requireView()).root)
+                hideLocationRv(FragmentHomeMainBinding.bind(requireView()))
+            }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +106,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         startAutoSlide(homeVPAdapter, binding)
     }
 
-    private fun startAutoSlide(adpater : HomeVPAdapter, binding: FragmentHomeMainBinding) {
+    private fun startAutoSlide(adpater: HomeVPAdapter, binding: FragmentHomeMainBinding) {
         val timer = Timer()
         val handler = Handler(Looper.getMainLooper())
 
@@ -121,22 +123,33 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         }
     }
 
-    private fun settingRecommendRVAdapter(binding: FragmentHomeMainBinding, recommendPlaceList: List<RecommendPlace>) {
-        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList) {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("detailPlaceId", it.placeId)
-            startActivity(intent)
-        }
+    private fun settingRecommendRVAdapter(
+        binding: FragmentHomeMainBinding,
+        recommendPlaceList: List<RecommendPlace>
+    ) {
+        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList,
+            onClick = { position ->
+                val context: Context = binding.root.context
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("detailPlaceId", recommendPlaceList[position].placeId)
+                startActivity(intent)
+            })
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
-        binding.homeRecommendRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        binding.homeRecommendRv.layoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun settingLocationRVAdapter(binding: FragmentHomeMainBinding, aroundPlaceList: List<AroundPlace>) {
-        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList) {
-            val intent = Intent(context, DetailActivity::class.java)
-            intent.putExtra("detailPlaceId", it.placeId)
-            startActivity(intent)
-        }
+    private fun settingLocationRVAdapter(
+        binding: FragmentHomeMainBinding,
+        aroundPlaceList: List<AroundPlace>
+    ) {
+        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList,
+            onClick = {position ->
+                val context: Context = binding.root.context
+                val intent = Intent(context, DetailActivity::class.java)
+                intent.putExtra("detailPlaceId", aroundPlaceList[position].placeId)
+                startActivity(intent)
+            })
         binding.homeMyLocationRv.adapter = homeLocationRVAdapter
         binding.homeMyLocationRv.layoutManager = LinearLayoutManager(context)
     }
@@ -160,7 +173,11 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     }
 
     private fun checkLocationPermission(binding: FragmentHomeMainBinding) {
-        if (ContextCompat.checkSelfPermission(requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         } else {
             initLocationClient(binding)
@@ -184,7 +201,8 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         // 위치 설정이 성공적으로 확인된 경우 위치 업데이트 시작
         task.addOnSuccessListener {
             if (isAdded) {
-                fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(requireContext())
+                fusedLocationProviderClient =
+                    LocationServices.getFusedLocationProviderClient(requireContext())
                 startLocationUpdates(binding)
             }
         }.addOnFailureListener { // 위치 설정 확인 실패 시 로그 기록
@@ -212,7 +230,8 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                    val addresses =
+                        geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     val address = addresses?.get(0)?.getAddressLine(0)
 
                     val (area, sigungu) = splitAddress(address!!)
@@ -224,8 +243,16 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         }
 
         // 위치 권한이 부여되었는지 확인 후 위치 업데이트 요청
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationProviderClient.requestLocationUpdates(
+                locationRequest,
+                locationCallback,
+                null
+            )
         }
     }
 
@@ -254,7 +281,11 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         binding.homeMyLocationTv.text = "위치 권한을 허용해주세요"
     }
 
-    private fun getAroundPlaceInfo(binding: FragmentHomeMainBinding, areaCode: String, sigunguCode: String) {
+    private fun getAroundPlaceInfo(
+        binding: FragmentHomeMainBinding,
+        areaCode: String,
+        sigunguCode: String
+    ) {
         viewModel.getPlaceMain(areaCode, sigunguCode)
 
         viewModel.aroundPlaceInfo.observe(requireActivity()) { aroundPlaceInfo ->
@@ -270,7 +301,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private fun getRecommendPlaceInfo(binding: FragmentHomeMainBinding) {
         viewModel.getPlaceMain("1", "1")
 
-        viewModel.recommendPlaceInfo.observe(requireActivity()) {recommendPlaceInfo ->
+        viewModel.recommendPlaceInfo.observe(requireActivity()) { recommendPlaceInfo ->
             if (recommendPlaceInfo.isNotEmpty()) {
                 val recommendPlaceList = recommendPlaceInfo.map {
                     RecommendPlace(it.address, it.disability, it.image, it.name, it.placeId)

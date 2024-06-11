@@ -34,7 +34,7 @@ import kr.tekit.lion.daongil.presentation.home.vm.DetailViewModelFactory
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
-    private val viewModel : DetailViewModel by viewModels { DetailViewModelFactory(applicationContext) }
+    private val viewModel : DetailViewModel by viewModels { DetailViewModelFactory(this) }
     private val binding : ActivityDetailBinding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }

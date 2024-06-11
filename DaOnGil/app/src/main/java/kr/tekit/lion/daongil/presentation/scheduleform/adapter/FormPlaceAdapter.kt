@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemFormPlaceBinding
 import kr.tekit.lion.daongil.domain.model.FormPlace
 
@@ -37,19 +39,28 @@ class FormPlaceAdapter(
         private val onRemoveItemClick: (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(place: FormPlace, placePosition: Int) {
-            // to do : 이미지 url -> Glide
-            // binding.imageViewFPlaceThumbnail
-            binding.textViewFPlaceAddr.text = place.placeAddress
-            binding.textViewFPlaceName.text = place.placeName
-            place.placeDisability.forEach {
-                when (it) {
-                    1 -> binding.iconFPlacePhysicalDisability.visibility = View.VISIBLE
-                    2 -> binding.iconFPlaceVisualImpair.visibility = View.VISIBLE
-                    3 -> binding.iconFPlaceHearingImpair.visibility = View.VISIBLE
-                    4 -> binding.iconFPlaceInfantFamily.visibility = View.VISIBLE
-                    5 -> binding.iconFPlaceElderlyPeople.visibility = View.VISIBLE
+            binding.apply {
+                textViewFPlaceAddr.text = place.placeAddress
+                textViewFPlaceName.text = place.placeName
+                place.placeDisability.forEach {
+                    when (it) {
+                        1 -> iconFPlacePhysicalDisability.visibility = View.VISIBLE
+                        2 -> iconFPlaceVisualImpair.visibility = View.VISIBLE
+                        3 -> iconFPlaceHearingImpair.visibility = View.VISIBLE
+                        4 -> iconFPlaceInfantFamily.visibility = View.VISIBLE
+                        5 -> iconFPlaceElderlyPeople.visibility = View.VISIBLE
+                    }
+                }
+
+                place.placeImage?.let {
+                    Glide.with(imageViewFPlaceThumbnail.context)
+                        .load(it)
+                        .placeholder(R.drawable.empty_view)
+                        .error(R.drawable.empty_view)
+                        .into(imageViewFPlaceThumbnail)
                 }
             }
+
             binding.imageButtonFPlaceRemove.setOnClickListener {
                 onRemoveItemClick(schedulePosition, placePosition)
             }

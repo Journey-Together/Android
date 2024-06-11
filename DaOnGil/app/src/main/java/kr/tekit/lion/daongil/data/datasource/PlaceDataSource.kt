@@ -11,7 +11,7 @@ class PlaceDataSource(
         return placeService.getPlaceDetailInfo(placeId)
     }
 
-    suspend fun searchPlace(request: Map<String, String>): SearchPlaceResponse {
+    suspend fun searchPlace(request: Map<String, String?>): SearchPlaceResponse {
         return placeService.searchPlace(request)
     }
 }

@@ -78,6 +78,10 @@ class SearchMainViewModel(
         _infantFamilyOptions.value = emptyList()
         _elderlyPersonOptions.value = emptyList()
     }
+
+    fun onCompleteSelectOption(){
+
+    }
 }
 
 sealed class Category(val type: Int) {

@@ -1,8 +1,10 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.plan
 
+import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.PlaceSearchInfo
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 
+@JsonClass(generateAdapter = true)
 data class PlaceSearchResultsResponse (
     val code: Int,
     val message: String,

@@ -7,18 +7,16 @@ import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 
 @JsonClass(generateAdapter = true)
 data class OpenPlanListResponse(
-    val last: Boolean,
-    val openPlanResList: List<OpenPlanRes>,
-    val pageNo: Int,
-    val pageSize: Int,
-    val totalPages: Int
+    val code: Int,
+    val data: Data,
+    val message: String
 ) {
     fun toDomainModel() : OpenPlan {
         return OpenPlan(
-            last = this.last,
-            pageNo = this.pageNo,
-            totalPages = this.totalPages,
-            openPlanList = this.openPlanResList.map {
+            last = this.data.last,
+            pageNo = this.data.pageNo,
+            totalPages = this.data.totalPages,
+            openPlanList = this.data.openPlanResList.map {
                 OpenPlanInfo(
                     date = it.date,
                     imageUrl = it.imageUrl,

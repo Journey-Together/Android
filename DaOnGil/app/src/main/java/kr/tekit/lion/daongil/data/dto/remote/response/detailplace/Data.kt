@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.detailplace
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -8,6 +9,7 @@ data class Data(
     val bookmarkNum: Int,
     val category: String,
     val disability: List<Int>,
+    @Json(name = "imgae")
     val image: String?,
     val isMark: Boolean,
     val mapX: String,

@@ -20,7 +20,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <View
                 android:id="@+id/viewSearchResultDeco"
@@ -37,39 +37,42 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
+                android:layout_marginTop="@dimen/margin_small1"
                 android:layout_marginEnd="@dimen/margin_small1"
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
-                android:maxLines="1"
+                android:lineSpacingMultiplier="0.9"
+                android:maxLines="2"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"
                 app:layout_constraintEnd_toStartOf="@+id/imageButtonSearchResultAdd"
                 app:layout_constraintStart_toEndOf="@+id/imageViewSearchResultThumbnail"
-                app:layout_constraintTop_toTopOf="@+id/imageViewSearchResultThumbnail"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="여행지 이름" />
 
             <TextView
                 android:id="@+id/textViewSearchResultCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_small2"
+                android:layout_marginBottom="@dimen/margin_small1"
                 android:fontFamily="@font/pretendard_light"
                 android:textColor="@color/text_secondary"
-                app:layout_constraintBottom_toBottomOf="@+id/imageViewSearchResultThumbnail"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textViewSearchResultName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewSearchResultName"
                 tools:text="관광지" />
 
             <ImageView
                 android:id="@+id/imageViewSearchResultThumbnail"
                 android:layout_width="@dimen/search_bar_height"
-                android:layout_height="@dimen/search_bar_height"
+                android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_small1"
-                android:layout_marginTop="@dimen/margin_small1"
-                android:layout_marginBottom="@dimen/margin_small1"
                 android:contentDescription="대표 사진"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/textViewSearchResultCategory"
                 app:layout_constraintStart_toEndOf="@+id/viewSearchResultDeco"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/textViewSearchResultName"
                 app:srcCompat="@drawable/empty_view" />
 
             <ImageButton

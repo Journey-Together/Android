@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.main.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -10,17 +9,17 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemTouristSmallBinding
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
 
-class HomeRecommendRVAdapter(private val recommendPlaceList: List<RecommendPlace>, private val listener: OnRecommendClickListener) : RecyclerView.Adapter<HomeRecommendRVAdapter.RecommendViewHolder>(){
-
-    interface OnRecommendClickListener {
-        fun onRecommendClicked(recommendPlace: RecommendPlace)
-    }
+class HomeRecommendRVAdapter(
+    private val recommendPlaceList: List<RecommendPlace>,
+    private val onClick: (Int) -> Unit
+) : RecyclerView.Adapter<HomeRecommendRVAdapter.RecommendViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendViewHolder {
-        val binding : ItemTouristSmallBinding = ItemTouristSmallBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemTouristSmallBinding = ItemTouristSmallBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
 
-        return RecommendViewHolder(binding, listener)
+        return RecommendViewHolder(binding, onClick)
     }
 
     override fun getItemCount(): Int = 4
@@ -29,7 +28,16 @@ class HomeRecommendRVAdapter(private val recommendPlaceList: List<RecommendPlace
         holder.bind(recommendPlaceList[position])
     }
 
-    class RecommendViewHolder(val binding: ItemTouristSmallBinding, private val listener : OnRecommendClickListener) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
+    class RecommendViewHolder(
+        val binding: ItemTouristSmallBinding,
+        private val onClick: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.root.setOnClickListener {
+                onClick.invoke(adapterPosition)
+            }
+        }
         fun bind(recommendPlace: RecommendPlace) {
             binding.touristSmallLocationTv.text = recommendPlace.address
             binding.touristSmallTitleTv.text = recommendPlace.name
@@ -43,15 +51,8 @@ class HomeRecommendRVAdapter(private val recommendPlaceList: List<RecommendPlace
 
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
             binding.touristSmallDisabilityRv.adapter = disabilityRVAdapter
-            binding.touristSmallDisabilityRv.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
-
-            binding.root.setOnClickListener {
-                listener.onRecommendClicked(recommendPlace)
-            }
-        }
-
-        override fun onClick(v: View?) {
-            listener
+            binding.touristSmallDisabilityRv.layoutManager =
+                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
         }
     }
 }

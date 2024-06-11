@@ -1,7 +1,10 @@
-package kr.tekit.lion.daongil.domain.model
+package kr.tekit.lion.daongil.data.dto.remote.response.detailplace
+
+import com.squareup.moshi.JsonClass
 import java.time.LocalDateTime
 
-data class Review (
+@JsonClass(generateAdapter = true)
+data class ReviewRes (
     val reviewId: Long,
     val nickname : String,
     val profileImg : String,

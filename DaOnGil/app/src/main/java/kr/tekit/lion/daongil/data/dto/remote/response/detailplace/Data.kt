@@ -8,13 +8,13 @@ data class Data(
     val bookmarkNum: Int,
     val category: String,
     val disability: List<Int>,
-    val image: String,
+    val image: String?,
     val isMark: Boolean,
     val mapX: String,
     val mapY: String,
     val name: String,
     val overview: String,
     val placeId: Int,
-    val reviewList: List<Int>,
-    val subDisability: List<Int>
+    val reviewList: List<ReviewRes>?,
+    val subDisability: List<String>
 )

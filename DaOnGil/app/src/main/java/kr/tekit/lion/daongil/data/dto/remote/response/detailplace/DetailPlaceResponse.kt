@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.data.dto.remote.response.detailplace
 
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
+import kr.tekit.lion.daongil.domain.model.Review
 
 @JsonClass(generateAdapter = true)
 data class DetailPlaceResponse(
@@ -23,7 +24,17 @@ data class DetailPlaceResponse(
             name = data.name,
             overview = data.overview,
             placeId = data.placeId,
-            reviewList = data.reviewList,
+            reviewList = data.reviewList?.map {
+                Review(
+                    reviewImg = it.reviewImg,
+                    nickname = it.nickname,
+                    profileImg = it.profileImg,
+                    content = it.content,
+                    reviewId = it.reviewId,
+                    grade = it.grade,
+                    date = it.date
+                )
+            },
             subDisability = data.subDisability
         )
     }

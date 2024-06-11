@@ -149,4 +149,5 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 
+    implementation("com.squareup.moshi:moshi-adapters:1.15.1")
 }

@@ -55,7 +55,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun settingDetailInfoRVAdapter() {
         val detailInfo = listOf(
             DetailInfo("주차 여부", "장애인 주차장 있음 (관광 안내소 앞)"),
-            DetailInfo("핵심 동선", "출입구까지 경사로가 설치되어 있음 (완만함)")
+            DetailInfo("핵심 동선", "출입구까지 경사로가 설치되어 있음 (완만함)"),
+            DetailInfo("홍보물", "열린관광지 리플렛 있음"),
+            DetailInfo("화장실", "장애인 화장실 및 샤워실 있음")
         )
         val detailInfoRVAdapter = DetailInfoRVAdapter(detailInfo)
         binding.detailDisabilityInfoRv.adapter = detailInfoRVAdapter
@@ -63,6 +65,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun settingReviewRVAdapter(reviewList : List<Review>) {
+//        val reviewList = listOf(
+//            Review(1L, "")
+//        )
         val detailReviewRVAdapter = DetailReviewRVAdapter(reviewList)
         binding.detailReviewRv.adapter = detailReviewRVAdapter
         binding.detailReviewRv.layoutManager = LinearLayoutManager(applicationContext)

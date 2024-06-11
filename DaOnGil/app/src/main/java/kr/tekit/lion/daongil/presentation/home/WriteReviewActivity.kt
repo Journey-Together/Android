@@ -158,7 +158,9 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
         datePicker.show(supportFragmentManager, "WriteReviewDate")
         datePicker.addOnPositiveButtonClickListener {
-            showPickedDates(binding)
+            val startDate = Date(it.first)
+            val endDate = Date(it.second)
+            showPickedDates(binding, startDate, endDate)
         }
     }
 
@@ -169,15 +171,15 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         return formattedDate
     }
 
-    private fun showPickedDates(binding: ActivityWriteReviewBinding) {
+    private fun showPickedDates(binding: ActivityWriteReviewBinding, startDate: Date, endDate: Date) {
 //        val startDate = scheduleFormViewModel.startDate.value
 //        val endDate = scheduleFormViewModel.endDate.value
-//        val startDateFormatted = startDate?.let {
-//            formatDateValue(startDate)
-//        }
-//        val endDateFormatted = endDate?.let {
-//            formatDateValue(endDate)
-//        }
-//        binding.writeReviewDateBtn.text = getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
+        val startDateFormatted = startDate?.let {
+            formatDateValue(startDate)
+        }
+        val endDateFormatted = endDate?.let {
+            formatDateValue(endDate)
+        }
+        binding.writeReviewDateBtn.text = getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
     }
 }

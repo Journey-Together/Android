@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/imageViewScheduleBookmark"
                 android:layout_width="match_parent"
-                android:layout_height="142dp"
+                android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/empty_view_small"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -68,11 +68,13 @@
 
             <TextView
                 android:id="@+id/textViewScheduleBookmarkNickname"
-                android:layout_width="wrap_content"
+                android:layout_width="105dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
                 android:layout_marginBottom="@dimen/margin_big4"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
+                android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -87,6 +89,7 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="@dimen/margin_small1"
                 android:layout_marginRight="@dimen/margin_small1"
+                app:tint="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/bookmark_fill_icon" />

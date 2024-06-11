@@ -15,4 +15,8 @@ class BookmarkRepositoryImpl(
     override suspend fun getPlanBookmark(): List<PlanBookmark> {
         return bookmarkDataSource.getPlanBookmark().toDomainModel()
     }
+
+    override suspend fun updatePlaceBookmark(placeId: Long) {
+        return bookmarkDataSource.updatePlaceBookmark(placeId)
+    }
 }

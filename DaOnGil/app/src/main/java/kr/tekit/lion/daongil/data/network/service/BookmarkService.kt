@@ -4,6 +4,8 @@ import kr.tekit.lion.daongil.data.dto.remote.response.bookmark.PlaceBookmarkResp
 import kr.tekit.lion.daongil.data.dto.remote.response.bookmark.PlanBookmarkResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import retrofit2.http.GET
+import retrofit2.http.PATCH
+import retrofit2.http.Path
 import retrofit2.http.Tag
 
 interface BookmarkService {
@@ -16,4 +18,9 @@ interface BookmarkService {
     suspend fun getPlanBookmark(
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     ) : PlanBookmarkResponse
+
+    @PATCH("bookmark/place/{placeId}")
+    suspend fun updatePlaceBookmark(
+        @Path("placeId") placeId: Long
+    )
 }

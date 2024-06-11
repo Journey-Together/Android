@@ -35,7 +35,7 @@ class HomeLocationRVAdapter(
 
         init {
             binding.root.setOnClickListener {
-                onClick.invoke(adapterPosition)
+                onClick.invoke(absoluteAdapterPosition)
             }
         }
         fun bind(aroundPlace: AroundPlace) {

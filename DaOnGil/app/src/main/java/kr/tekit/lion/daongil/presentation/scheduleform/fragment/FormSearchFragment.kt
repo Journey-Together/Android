@@ -1,13 +1,14 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
@@ -79,7 +80,9 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
                 if(event!=null && event.action == KeyEvent.ACTION_DOWN){
                     val word = editText.text.toString()
                     if(word.isEmpty()){
-                        Log.d("test - FormSearchFragment", "검색어를 입력해주세요")
+                        Snackbar.make(this, "검색어를 입력해주세요", Snackbar.LENGTH_LONG)
+                            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                            .show()
                     }else{
                         binding.recyclerViewFSResult.visibility = View.VISIBLE
                         binding.textViewFSResultEmpty.visibility = View.GONE

@@ -23,6 +23,12 @@ class PlanBookmarkRVAdapter(private val planBookmarkList: List<PlanBookmark>, pr
     }
 
     class PlanBookmarkViewHolder(val binding: ItemScheduleBookmarkBinding, private val itemClickListener: (Int) -> Unit, private val onBookmarkClick: (Long) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(bindingAdapterPosition)
+            }
+        }
+
         fun bind(planBookmark: PlanBookmark) {
             binding.textViewScheduleBookmarkTitle.text = planBookmark.title
             binding.textViewScheduleBookmarkNickname.text = planBookmark.name

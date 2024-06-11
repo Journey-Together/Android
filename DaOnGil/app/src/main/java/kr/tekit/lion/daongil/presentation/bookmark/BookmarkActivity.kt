@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.bookmark
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,6 +14,8 @@ import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlaceBookmarkRVAdapte
 import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlanBookmarkRVAdapter
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModel
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModelFactory
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 
 class BookmarkActivity : AppCompatActivity() {
 
@@ -70,7 +73,12 @@ class BookmarkActivity : AppCompatActivity() {
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
                 val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
                     placeBookmarkList,
-                    itemClickListener = { },
+                    itemClickListener = { position ->
+                        val placeBookmark = placeBookmarkList[position]
+                        val intent = Intent(this, DetailActivity::class.java)
+                        intent.putExtra("placeId", placeBookmark.placeId)
+                        startActivity(intent)
+                    },
                     onBookmarkClick = { placeId ->
                         viewModel.updatePlaceBookmark(placeId)
                     }
@@ -92,7 +100,12 @@ class BookmarkActivity : AppCompatActivity() {
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
-                    itemClickListener = { },
+                    itemClickListener = { position ->
+                        val placeBookmark = planBookmarkList[position]
+                        val intent = Intent(this, ScheduleActivity::class.java)
+                        intent.putExtra("planId", placeBookmark.planId)
+                        startActivity(intent)
+                    },
                     onBookmarkClick = { planId ->
                         viewModel.updatePlanBookmark(planId)
                     }

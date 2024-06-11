@@ -70,7 +70,7 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     }
 
     private fun addNewPlace(schedulePosition:Int, selectedPlaceId :Long){
-        scheduleFormViewModel.addNewPlace(schedulePosition, selectedPlaceId)
+        scheduleFormViewModel.getSearchedPlaceDetailInfo(schedulePosition, selectedPlaceId)
         findNavController().popBackStack()
     }
 

@@ -17,9 +17,5 @@ interface BookmarkService {
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     ) : PlanBookmarkResponse
 
-    // 북마크한 여행지 조회
-    @GET("bookmark/names")
-    suspend fun getBookmarkNames(
-        @Tag authType: AuthType = AuthType.ACCESS_TOKEN
-    ) : BookmarkService
+
 }

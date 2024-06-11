@@ -9,13 +9,13 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemTouristBigBinding
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 
-class HomeLocationRVAdapter(private val aroundPlaceList: List<AroundPlace>) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>(){
+class HomeLocationRVAdapter(private val aroundPlaceList: List<AroundPlace>, private val onClick: (AroundPlace) -> Unit) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
         val binding : ItemTouristBigBinding = ItemTouristBigBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return LocationViewHolder(binding)
+        return LocationViewHolder(binding, onClick)
     }
 
     override fun getItemCount(): Int = 2
@@ -24,7 +24,7 @@ class HomeLocationRVAdapter(private val aroundPlaceList: List<AroundPlace>) : Re
         holder.bind(aroundPlaceList[position])
     }
 
-    class LocationViewHolder(val binding: ItemTouristBigBinding) : RecyclerView.ViewHolder(binding.root) {
+    class LocationViewHolder(val binding: ItemTouristBigBinding, private val onClick: (AroundPlace) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         fun bind(aroundPlace : AroundPlace) {
             binding.touristBigLocationTv.text = aroundPlace.address
             binding.touristBigTitleTv.text = aroundPlace.name
@@ -39,6 +39,10 @@ class HomeLocationRVAdapter(private val aroundPlaceList: List<AroundPlace>) : Re
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
             binding.touristBigDisabilityRv.adapter = disabilityRVAdapter
             binding.touristBigDisabilityRv.layoutManager = LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+
+            binding.root.setOnClickListener {
+                onClick(aroundPlace)
+            }
         }
     }
 }

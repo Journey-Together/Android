@@ -8,20 +8,31 @@ import kr.tekit.lion.daongil.databinding.RowSchedulePublicBinding
 import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 import kr.tekit.lion.daongil.presentation.ext.setImage
 
-class SchedulePublicAdapter :
+class SchedulePublicAdapter(
+    private val itemClickListener: (Int) -> Unit
+) :
     RecyclerView.Adapter<SchedulePublicAdapter.SchedulePublicViewHolder>() {
 
     private var items: MutableList<OpenPlanInfo> = mutableListOf()
 
-    fun addItems(newItems: List<OpenPlanInfo>){
+    fun addItems(newItems: List<OpenPlanInfo>) {
         items = newItems.toMutableList()
         notifyDataSetChanged()
     }
 
-    class SchedulePublicViewHolder(private val binding: RowSchedulePublicBinding) :
+    class SchedulePublicViewHolder(
+        private val binding: RowSchedulePublicBinding,
+        private val itemClickListener: (Int) -> Unit
+    ) :
         RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener(adapterPosition)
+            }
+        }
+
         fun bind(item: OpenPlanInfo) {
-            with(binding){
+            with(binding) {
                 textViewRowSchedulePublicPeriod.text = item.date
                 textViewRowScheduleName.text = item.title
                 textViewRowSchedulePublicNickname.text = item.memberNickname
@@ -35,7 +46,10 @@ class SchedulePublicAdapter :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchedulePublicViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return SchedulePublicViewHolder(RowSchedulePublicBinding.inflate(inflater, parent, false))
+        return SchedulePublicViewHolder(
+            RowSchedulePublicBinding.inflate(inflater, parent, false),
+            itemClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: SchedulePublicViewHolder, position: Int) {

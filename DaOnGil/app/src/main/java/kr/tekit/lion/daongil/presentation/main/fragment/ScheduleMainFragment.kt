@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -59,11 +60,16 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
             }
 
             recyclerViewPublicSchedule.apply {
-                val schedulePublicAdapter = SchedulePublicAdapter()
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
+                    val schedulePublicAdapter = SchedulePublicAdapter(
+                        itemClickListener = {position ->
+                            // 공개 일정 상세보기 페이지로 이동
+                            // onScheduleMainItemClick(it[position].planId)
+                        }
+                    )
                     schedulePublicAdapter.addItems(it)
-                }
                     adapter = schedulePublicAdapter
+                }
                 layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             }
         }

@@ -50,7 +50,7 @@ class ScheduleFormViewModel(
         _schedule.value = schedule
     }
 
-    fun addNewPlace(dayPosition:Int, placeId: Int){
+    fun addNewPlace(dayPosition:Int, placeId: Long){
         // to do - 서버에서 장소 정보를 받아온다.
         val newPlace = FormPlace(placeId, "image", "서울 경기도 부산 등등", "장소이름", listOf(1,2,4,5))
         _schedule.value?.get(dayPosition)?.dailyPlaces?.add(newPlace)

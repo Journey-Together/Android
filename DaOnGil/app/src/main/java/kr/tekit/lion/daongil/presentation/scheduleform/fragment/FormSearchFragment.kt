@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
-import kr.tekit.lion.daongil.domain.model.FormSearchedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
@@ -57,21 +56,19 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     }
 
     private fun settingSearchResultRV(binding: FragmentFormSearchBinding, schedulePosition: Int){
-        val searchResults = mutableListOf(
-            FormSearchedPlace(0, "", "보신각 터", "관광지"),
-            FormSearchedPlace(1, "", "광복로문화패션거리", "관광지"),
-            FormSearchedPlace(2, "", "상록해수욕장", "관광지"),
-            FormSearchedPlace(3, "", "원조 돼지국밥", "식당"),
-            FormSearchedPlace(4, "", "냉채족발", "식당"),
-            FormSearchedPlace(5, "", "부산 OOOOO 호텔", "숙박시설"),
-        )
-
-        binding.recyclerViewFSResult.adapter = FormSearchResultAdapter(searchResults){ selectedPlaceId ->
-            addNewPlace(schedulePosition, selectedPlaceId)
+        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
+            if(it.placeInfoList.isNotEmpty()){
+                binding.recyclerViewFSResult.adapter = FormSearchResultAdapter(it.placeInfoList){ selectedPlaceId ->
+                    addNewPlace(schedulePosition, selectedPlaceId)
+                }
+            }else{
+                binding.recyclerViewFSResult.visibility = View.GONE
+                binding.textViewFSResultEmpty.visibility = View.VISIBLE
+            }
         }
     }
 
-    private fun addNewPlace(schedulePosition:Int, selectedPlaceId :Int){
+    private fun addNewPlace(schedulePosition:Int, selectedPlaceId :Long){
         scheduleFormViewModel.addNewPlace(schedulePosition, selectedPlaceId)
         findNavController().popBackStack()
     }
@@ -84,9 +81,10 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
                     if(word.isEmpty()){
                         Log.d("test - FormSearchFragment", "검색어를 입력해주세요")
                     }else{
-                        scheduleFormViewModel.getPlaceSearchResult(word, 0, 5)
+                        binding.recyclerViewFSResult.visibility = View.VISIBLE
+                        binding.textViewFSResultEmpty.visibility = View.GONE
+                        scheduleFormViewModel.getPlaceSearchResult(word, 0, 10)
                     }
-
                 }
                 false
             }

@@ -7,7 +7,7 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class OpenPlanRes(
     val date: String,
-    val imageUrl: String,
+    val imageUrl: String?,
     val memberId: Int,
     val memberImageUrl: String,
     val memberNickname: String,

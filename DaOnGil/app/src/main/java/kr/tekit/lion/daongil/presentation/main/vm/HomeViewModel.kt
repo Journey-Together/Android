@@ -20,36 +20,26 @@ class HomeViewModel(
     private val getSigunguCodeByNameUseCase: GetSigunguCodeByNameUseCase
 ) : ViewModel() {
 
-    init {
-        getAreaCode()
-        getVillageCode()
-    }
-
     private val _aroundPlaceInfo = MutableLiveData<List<AroundPlace>>()
     val aroundPlaceInfo : LiveData<List<AroundPlace>> = _aroundPlaceInfo
 
     private val _recommendPlaceInfo = MutableLiveData<List<RecommendPlace>>()
     val recommendPlaceInfo : LiveData<List<RecommendPlace>> = _recommendPlaceInfo
 
-    fun getAreaCode(area: String = "대전") = viewModelScope.launch {
-        val result = getAreaCodeByNameUseCase(area)
-        Log.d("getAreaCodeResult", result.toString())
-    }
+    fun getPlaceMain(area: String, sigungu: String) = viewModelScope.launch {
+        val areaCode = getAreaCodeByNameUseCase(area)
+        val sigunguCode = getSigunguCodeByNameUseCase(sigungu)
+        Log.e("area viewModel", areaCode.toString())
+        Log.e("sigungu viewModel", sigunguCode.toString())
+        if (areaCode != null && sigunguCode != null) {
+            getPlaceMainInfoUseCase(areaCode, sigunguCode).onSuccess {
+                Log.d("getPlaceMain", it.toString())
+                _aroundPlaceInfo.value = it.aroundPlaceList
+                _recommendPlaceInfo.value = it.recommendPlaceList
 
-    fun getVillageCode(village: String = "중구") = viewModelScope.launch {
-        val result = getSigunguCodeByNameUseCase(village)
-        Log.d("getAreaCodeResult", result.toString())
-    }
-
-    fun getPlaceMain(areaCode: String, sigunguCode: String) = viewModelScope.launch {
-        getPlaceMainInfoUseCase(areaCode, sigunguCode).onSuccess {
-            Log.d("getPlaceMain", it.toString())
-            _aroundPlaceInfo.value = it.aroundPlaceList
-            _recommendPlaceInfo.value = it.recommendPlaceList
-
-        }.onError {
-            Log.d("getPlaceMain", it.toString())
+            }.onError {
+                Log.d("getPlaceMain", it.toString())
+            }
         }
     }
-
 }

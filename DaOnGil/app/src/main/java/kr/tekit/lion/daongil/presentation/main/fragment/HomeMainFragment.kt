@@ -197,7 +197,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         }
     }
 
-
     private fun startLocationUpdates(binding: FragmentHomeMainBinding) {
         val locationRequest = LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, 3600000)
             .setWaitForAccurateLocation(false)
@@ -208,27 +207,14 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
-                    // 위치 정보 사용
-                    //Toast.makeText(requireContext(), "Lat: ${location.latitude}, Lng: ${location.longitude}", Toast.LENGTH_LONG).show()
-
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
                     val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     val address = addresses?.get(0)?.getAddressLine(0)
-                    //Toast.makeText(requireContext(), "사용자 주소 : $address", Toast.LENGTH_LONG).show()
 
                     binding.homeMyLocationTv.text = address
 
-                    // 주소 분리
                     val (area, sigungu) = splitAddress(address!!)
-                    // val areaCode = viewModel.getAreaCode(area).toString()
-                    // val sigunguCode = viewModel
-
-                    val areaCode = "1"
-                    val sigunguCode = "1"
-
-                    Log.e("areaCode", areaCode)
-
-                    getAroundPlaceInfo(binding, areaCode, sigunguCode)
+                    getAroundPlaceInfo(binding, area, sigungu)
                 }
             }
         }
@@ -251,8 +237,8 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
         val parts = address.split(" ")
 
         if (parts.size >= 2) {
-            val city = parts[0]
-            val district = parts[1]
+            val city = parts[1]
+            val district = parts[2]
             return Pair(city, district)
         } else {
             throw IllegalArgumentException("주소 형식이 잘못되었습니다")

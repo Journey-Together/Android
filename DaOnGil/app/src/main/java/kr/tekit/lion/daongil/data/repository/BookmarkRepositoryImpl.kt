@@ -24,4 +24,8 @@ class BookmarkRepositoryImpl(
     override suspend fun updatePlaceBookmark(placeId: Long) {
         return bookmarkDataSource.updatePlaceBookmark(placeId)
     }
+
+    override suspend fun updatePlanBookmark(planId: Long) {
+        return bookmarkDataSource.updatePlanBookmark(planId)
+    }
 }

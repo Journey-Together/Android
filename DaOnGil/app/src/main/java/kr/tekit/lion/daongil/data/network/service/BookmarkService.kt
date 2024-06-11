@@ -23,4 +23,9 @@ interface BookmarkService {
     suspend fun updatePlaceBookmark(
         @Path("placeId") placeId: Long
     )
+
+    @PATCH("bookmark/plan/{planId}")
+    suspend fun updatePlanBookmark(
+        @Path("planId") planId: Long
+    )
 }

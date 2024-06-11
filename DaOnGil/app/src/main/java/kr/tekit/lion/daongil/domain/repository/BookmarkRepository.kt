@@ -17,6 +17,8 @@ interface BookmarkRepository {
 
     suspend fun updatePlaceBookmark(placeId: Long)
 
+    suspend fun updatePlanBookmark(planId: Long)
+
     companion object {
         fun create(): BookmarkRepositoryImpl {
             return BookmarkRepositoryImpl(

@@ -38,6 +38,7 @@
                 android:layout_marginTop="10dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
+                android:lineSpacingMultiplier="0.9"
                 android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small1"
@@ -58,7 +59,7 @@
                 tools:ignore="MissingConstraints">
 
                 <ImageView
-                    android:id="@+id/imageViewLocationBookmarkUserProfile"
+                    android:id="@+id/imageViewBookmarkUserProfile"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"

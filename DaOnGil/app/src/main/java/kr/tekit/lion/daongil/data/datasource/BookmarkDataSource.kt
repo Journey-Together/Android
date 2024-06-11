@@ -25,4 +25,8 @@ class BookmarkDataSource(
     suspend fun updatePlaceBookmark(placeId: Long) {
         bookmarkService.updatePlaceBookmark(placeId)
     }
+
+    suspend fun updatePlanBookmark(planId: Long) {
+        bookmarkService.updatePlanBookmark(planId)
+    }
 }

@@ -23,6 +23,12 @@ class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>,
     }
 
     class PlaceBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit, private val onBookmarkClick: (Long) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(bindingAdapterPosition)
+            }
+        }
+
         fun bind(placeBookmark: PlaceBookmark) {
             binding.textViewLocationBookmark.text = placeBookmark.address
             binding.textViewLocationBookmarkName.text = placeBookmark.name

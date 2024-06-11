@@ -4,5 +4,5 @@ data class PlaceSearchInfo(
     val placeId: Long,
     val placeName: String,
     val category: String,
-    val imageUrl: String,
+    val imageUrl: String?,
 )

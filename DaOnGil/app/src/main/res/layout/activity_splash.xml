@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <VideoView
+        android:id="@+id/splashVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="스플래시 추가 예정"
-        android:textSize="50dp" />
+        android:layout_gravity="center"/>
 
 </LinearLayout>

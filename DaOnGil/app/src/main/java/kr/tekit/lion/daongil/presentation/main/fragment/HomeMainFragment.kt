@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -45,7 +46,7 @@ import java.util.Locale
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
 
-class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVAdapter.OnRecommendClickListener {
+class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private val app = HighThemeApp.getInstance()
     private val viewModel : HomeViewModel by viewModels { HomeViewModelFactory(requireContext()) }
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -121,13 +122,21 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
     }
 
     private fun settingRecommendRVAdapter(binding: FragmentHomeMainBinding, recommendPlaceList: List<RecommendPlace>) {
-        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList, this)
+        val homeRecommendRVAdapter = HomeRecommendRVAdapter(recommendPlaceList) {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("detailPlaceId", it.placeId)
+            startActivity(intent)
+        }
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
         binding.homeRecommendRv.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun settingLocationRVAdapter(binding: FragmentHomeMainBinding, aroundPlaceList: List<AroundPlace>) {
-        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList)
+        val homeLocationRVAdapter = HomeLocationRVAdapter(aroundPlaceList) {
+            val intent = Intent(context, DetailActivity::class.java)
+            intent.putExtra("detailPlaceId", it.placeId)
+            startActivity(intent)
+        }
         binding.homeMyLocationRv.adapter = homeLocationRVAdapter
         binding.homeMyLocationRv.layoutManager = LinearLayoutManager(context)
     }
@@ -148,12 +157,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
                 startActivity(Intent.makeRestartActivityTask(activity?.intent?.component))
             }
         }
-    }
-
-    override fun onRecommendClicked(recommendPlace: RecommendPlace) {
-        val intent = Intent(context, DetailActivity::class.java)
-        intent.putExtra("recommendPlaceId", recommendPlace.placeId)
-        startActivity(intent)
     }
 
     private fun checkLocationPermission(binding: FragmentHomeMainBinding) {
@@ -205,15 +208,16 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
             .build()
 
         locationCallback = object : LocationCallback() {
+            @SuppressLint("SetTextI18n")
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
                     val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
                     val address = addresses?.get(0)?.getAddressLine(0)
 
-                    binding.homeMyLocationTv.text = address
-
                     val (area, sigungu) = splitAddress(address!!)
+                    binding.homeMyLocationTv.text = "$area $sigungu"
+
                     getAroundPlaceInfo(binding, area, sigungu)
                 }
             }
@@ -258,7 +262,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main), HomeRecommendRVA
                 val aroundPlaceList = aroundPlaceInfo.map {
                     AroundPlace(it.address, it.disability, it.image, it.name, it.placeId)
                 }
-                settingLocationRVAdapter(binding , aroundPlaceList)
+                settingLocationRVAdapter(binding, aroundPlaceList)
             }
         }
     }

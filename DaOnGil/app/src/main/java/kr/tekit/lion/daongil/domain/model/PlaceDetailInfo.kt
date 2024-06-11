@@ -6,13 +6,13 @@ data class PlaceDetailInfo (
     val bookmarkNum: Int,
     val category: String,
     val disability: List<Int>,
-    val image: String,
+    val image: String?,
     val isMark: Boolean,
     val latitude: String,
     val longitude: String,
     val name: String,
     val overview: String,
     val placeId: Int,
-    val reviewList: List<Int>,
-    val subDisability: List<Int>
+    val reviewList: List<Review>?,
+    val subDisability: List<String>
 )

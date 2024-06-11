@@ -41,7 +41,7 @@
                 android:layout_marginEnd="@dimen/margin_small1"
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
-                android:lineSpacingMultiplier="0.9"
+                android:lineSpacingMultiplier="1.1"
                 android:maxLines="2"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"

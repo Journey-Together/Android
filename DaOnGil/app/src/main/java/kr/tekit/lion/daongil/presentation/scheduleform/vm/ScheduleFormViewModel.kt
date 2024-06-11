@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,32 +8,32 @@ import kr.tekit.lion.daongil.domain.model.FormPlace
 import java.util.Date
 
 class ScheduleFormViewModel : ViewModel() {
-    private val _startDate = MutableLiveData<Date>()
-    private val _endDate = MutableLiveData<Date>()
-    private val _title = MutableLiveData<String>()
-    private val _schedule = MutableLiveData<List<DailySchedule>>()
+    private val _startDate = MutableLiveData<Date?>()
+    private val _endDate = MutableLiveData<Date?>()
+    private val _title = MutableLiveData<String?>()
+    private val _schedule = MutableLiveData<List<DailySchedule>?>()
 
-    val startDate: LiveData<Date> get() = _startDate
+    val startDate: LiveData<Date?> get() = _startDate
 
-    fun setStartDate(startDate: Date){
+    fun setStartDate(startDate: Date?){
         _startDate.value = startDate
     }
 
-    val endDate: LiveData<Date> get() = _endDate
+    val endDate: LiveData<Date?> get() = _endDate
 
-    fun setEndDate(endDate : Date){
+    fun setEndDate(endDate : Date?){
         _endDate.value = endDate
     }
 
-    val title: LiveData<String> get() = _title
+    val title: LiveData<String?> get() = _title
 
-    fun setTitle(title: String){
+    fun setTitle(title: String?){
         _title.value = title
     }
 
-    val schedule : LiveData<List<DailySchedule>> get() = _schedule
+    val schedule : LiveData<List<DailySchedule>?> get() = _schedule
 
-    fun setSchedule(schedule : List<DailySchedule>){
+    fun setSchedule(schedule : List<DailySchedule>?){
         _schedule.value = schedule
     }
 

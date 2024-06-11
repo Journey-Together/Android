@@ -7,26 +7,16 @@
     android:layout_height="match_parent"
     tools:context=".presentation.scheduleform.ScheduleFormActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarAddSchedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="새로운 일정 추가"
-        app:titleCentered="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentScheduleForm"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/schedule_form_graph"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarAddSchedule" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:navGraph="@navigation/schedule_form_graph" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

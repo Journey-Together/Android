@@ -4,10 +4,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
@@ -18,7 +16,7 @@ import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 
 
 class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
-    val args: FormSearchFragmentArgs by navArgs()
+    private val args: FormSearchFragmentArgs by navArgs()
     private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,14 +27,19 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
 
         val binding = FragmentFormSearchBinding.bind(view)
 
-        val navController = findNavController()
+        initToolbar(binding)
 
-        settingBookmarkedRV(binding, navController, schedulePosition)
-        settingSearchResultRV(binding, navController, schedulePosition)
+        settingBookmarkedRV(binding, schedulePosition)
+        settingSearchResultRV(binding, schedulePosition)
     }
 
-    private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int ){
-        val places = mutableListOf(
+    private fun initToolbar(binding: FragmentFormSearchBinding){
+        binding.toolbarFormSearch.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+    private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, schedulePosition: Int ){
+        val places = listOf(
             BookmarkedPlace(0, "보신각 터"),
             BookmarkedPlace(1, "부산 영화의 전당"),
             BookmarkedPlace(2, "광복로문화패션거리"),
@@ -44,11 +47,12 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             BookmarkedPlace(4, "고양 어울림누리"),
         )
 
-        binding.recyclerViewFSBookmark.adapter = FormBookmarkedPlacesAdapter(places, navController, scheduleFormViewModel, schedulePosition)
-        binding.recyclerViewFSBookmark.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewFSBookmark.adapter = FormBookmarkedPlacesAdapter(places){ selectedPlaceId ->
+            addNewPlace(schedulePosition, selectedPlaceId)
+        }
     }
 
-    private fun settingSearchResultRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int){
+    private fun settingSearchResultRV(binding: FragmentFormSearchBinding, schedulePosition: Int){
         val searchResults = mutableListOf(
             FormSearchedPlace(0, "", "보신각 터", "관광지"),
             FormSearchedPlace(1, "", "광복로문화패션거리", "관광지"),
@@ -58,8 +62,14 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             FormSearchedPlace(5, "", "부산 OOOOO 호텔", "숙박시설"),
         )
 
-        binding.recyclerViewFSResult.adapter = FormSearchResultAdapter(searchResults, navController, scheduleFormViewModel, schedulePosition)
-        binding.recyclerViewFSResult.layoutManager = LinearLayoutManager(requireActivity())
+        binding.recyclerViewFSResult.adapter = FormSearchResultAdapter(searchResults){ selectedPlaceId ->
+            addNewPlace(schedulePosition, selectedPlaceId)
+        }
+    }
+
+    private fun addNewPlace(schedulePosition:Int, selectedPlaceId :Int){
+        scheduleFormViewModel.addNewPlace(schedulePosition, selectedPlaceId)
+        findNavController().popBackStack()
     }
 
 }

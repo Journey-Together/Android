@@ -2,6 +2,8 @@ package kr.tekit.lion.daongil.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
@@ -23,14 +25,16 @@ import kr.tekit.lion.daongil.databinding.ActivityDetailBinding
 import kr.tekit.lion.daongil.domain.model.DetailInfo
 import kr.tekit.lion.daongil.domain.model.Review
 import kr.tekit.lion.daongil.presentation.emergency.EmergencyMapActivity
+import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.home.adapter.DetailDisabilityRVAdapter
 import kr.tekit.lion.daongil.presentation.home.adapter.DetailInfoRVAdapter
 import kr.tekit.lion.daongil.presentation.home.adapter.DetailReviewRVAdapter
 import kr.tekit.lion.daongil.presentation.home.vm.DetailViewModel
 import kr.tekit.lion.daongil.presentation.home.vm.DetailViewModelFactory
+import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
-    private val viewModel : DetailViewModel by viewModels { DetailViewModelFactory() }
+    private val viewModel : DetailViewModel by viewModels { DetailViewModelFactory(applicationContext) }
     private val binding : ActivityDetailBinding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
@@ -88,43 +92,106 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun handleCommonDetailPlaceInfo(
+        reviewList: List<Review>?,
+        disability: List<Int>,
+        name: String,
+        address: String,
+        overview: String,
+        image: String?,
+        longitude: Double,
+        latitude: Double,
+        category: String,
+        subDisability: List<String>
+    ) {
+        reviewList?.let { settingReviewRVAdapter(it) }
+        settingDisabilityRVAdapter(disability)
+        // settingDetailInfoRVAdapter(detailPlaceInfo.subDisability)
+
+        binding.detailTitleTv.text = name
+        binding.detailAddressTv.text = address
+        binding.detailBasicContentTv.text = overview
+        //binding.detailToolbarTitleTv.text = category
+        //binding.detailToolbarTitleTv.text = category
+
+        if (image != null) {
+            Glide.with(binding.detailThumbnailIv.context)
+                .load(image)
+                .error(R.drawable.empty_view)
+                .into(binding.detailThumbnailIv)
+        }
+
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(longitude, latitude))
+        naverMap.moveCamera(cameraUpdate)
+
+        addMapMarker(longitude, latitude)
+    }
+
     private fun getDetailPlaceInfo(placeId : Long) {
         viewModel.getDetailPlace(placeId)
 
         viewModel.detailPlaceInfo.observe(this@DetailActivity) {detailPlaceInfo ->
-            detailPlaceInfo.reviewList?.let { settingReviewRVAdapter(it) }
-            // settingDetailInfoRVAdapter(detailPlaceInfo.subDisability)
-            settingDisabilityRVAdapter(detailPlaceInfo.disability)
-
-            //binding.detailToolbarTitleTv.text = detailPlaceInfo.category
-            binding.detailTitleTv.text = detailPlaceInfo.name
-            binding.detailAddressTv.text = detailPlaceInfo.address
-            binding.detailBasicContentTv.text = detailPlaceInfo.overview
-            //binding.detailRouteTv.text = detailPlaceInfo.category
-
-            if (detailPlaceInfo.image != null) {
-                Glide.with(binding.detailThumbnailIv.context)
-                    .load(detailPlaceInfo.image)
-                    .error(R.drawable.empty_view_small)
-                    .into(binding.detailThumbnailIv)
-            }
+            handleCommonDetailPlaceInfo(
+                detailPlaceInfo.reviewList,
+                detailPlaceInfo.disability,
+                detailPlaceInfo.name,
+                detailPlaceInfo.address,
+                detailPlaceInfo.overview,
+                detailPlaceInfo.image,
+                detailPlaceInfo.longitude.toDouble(),
+                detailPlaceInfo.latitude.toDouble(),
+                detailPlaceInfo.category,
+                detailPlaceInfo.subDisability
+            )
 
             updateBookmarkState(detailPlaceInfo.isMark)
+            Log.e("bookmarkcheck", detailPlaceInfo.isMark.toString())
+
             binding.detailBookmarkBtn.setOnClickListener {
                 val newMarkState = !detailPlaceInfo.isMark
+
+                detailPlaceInfo.isMark = newMarkState
+                viewModel.updateDetailPlaceBookmark(placeId)
                 updateBookmarkState(newMarkState)
+
+                // 북마크 상태에 따라 bookmarkNum 업데이트
+                if (newMarkState) {
+                    detailPlaceInfo.bookmarkNum++
+                } else {
+                    detailPlaceInfo.bookmarkNum--
+                }
+                binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
+
+                Log.e("bookmarkcheck", detailPlaceInfo.isMark.toString())
             }
+            binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
+        }
+    }
 
-            val cameraUpdate = CameraUpdate.scrollTo(LatLng(detailPlaceInfo.longitude.toDouble(), detailPlaceInfo.latitude.toDouble()))
-            naverMap.moveCamera(cameraUpdate)
+    private fun getDetailPlaceInfoGuest(placeId : Long) {
+        viewModel.getDetailPlaceGuest(placeId)
 
-            addMapMarker(detailPlaceInfo.longitude.toDouble(), detailPlaceInfo.latitude.toDouble())
+        viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) {detailPlaceInfoGuest ->
+            handleCommonDetailPlaceInfo(
+                detailPlaceInfoGuest.reviewList,
+                detailPlaceInfoGuest.disability,
+                detailPlaceInfoGuest.name,
+                detailPlaceInfoGuest.address,
+                detailPlaceInfoGuest.overview,
+                detailPlaceInfoGuest.image,
+                detailPlaceInfoGuest.longitude.toDouble(),
+                detailPlaceInfoGuest.latitude.toDouble(),
+                detailPlaceInfoGuest.category,
+                detailPlaceInfoGuest.subDisability
+            )
+            binding.detailBookmarkBtn.visibility = View.GONE
+            binding.detailBookmarkCount.visibility = View.GONE
         }
     }
 
     private fun updateBookmarkState(isMark: Boolean) {
         val bookmarkDrawable = if (isMark) {
-            R.drawable.bookmark_filled_icon
+            R.drawable.bookmark_fill_icon
         } else {
             R.drawable.bookmark_icon
         }
@@ -153,7 +220,22 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.maxZoom = 15.0
 
         val recommendPlaceId = intent.getIntExtra("detailPlaceId", -1)
-        getDetailPlaceInfo(recommendPlaceId.toLong())
+
+        repeatOnStarted {
+            viewModel.loginState.collect { uiState ->
+                when (uiState) {
+                    is LogInState.Checking -> {
+                        return@collect
+                    }
+                    is LogInState.LoggedIn -> {
+                        getDetailPlaceInfo(recommendPlaceId.toLong())
+                    }
+                    is LogInState.LoginRequired -> {
+                        getDetailPlaceInfoGuest(recommendPlaceId.toLong())
+                    }
+                }
+            }
+        }
     }
 
     private fun addMapMarker(mapX: Double, mapY: Double) {

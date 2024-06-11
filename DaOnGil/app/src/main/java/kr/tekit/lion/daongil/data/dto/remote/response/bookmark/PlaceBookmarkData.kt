@@ -8,5 +8,5 @@ data class PlaceBookmarkData(
     val disability: List<String>,
     val image: String,
     val name: String,
-    val placeId: Int
+    val placeId: Long
 )

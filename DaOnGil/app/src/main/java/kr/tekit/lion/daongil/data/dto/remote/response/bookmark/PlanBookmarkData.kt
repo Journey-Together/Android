@@ -6,7 +6,7 @@ import com.squareup.moshi.JsonClass
 data class PlanBookmarkData(
     val image: String,
     val name: String,
-    val planId: Int,
+    val planId: Long,
     val profileImg: String,
     val title: String
 )

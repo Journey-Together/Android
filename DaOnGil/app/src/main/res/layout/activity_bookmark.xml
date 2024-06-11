@@ -40,8 +40,8 @@
         app:tabGravity="start"
         app:tabIndicatorFullWidth="true"
         app:tabSelectedTextColor="@color/text_primary"
-        app:tabTextAppearance="@style/tabLayout_text_appearance"
-        app:tabTextColor="@color/text_tertiary" />
+        app:tabTextColor="@color/text_tertiary"
+        app:tabRippleColor="@android:color/transparent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewBookmark"
@@ -49,10 +49,9 @@
         android:layout_height="0dp"
         android:orientation="vertical"
         android:paddingHorizontal="@dimen/margin_big3"
-        android:paddingTop="@dimen/margin_big4"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@+id/notExistBookmarkLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tabLayoutBookmark"
@@ -87,6 +86,7 @@
             android:lineSpacingMultiplier="1.5"
             android:textAlignment="center"
             android:textSize="@dimen/font_big3"
+            app:tabRippleColor="@color/background_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageVIewLogo"

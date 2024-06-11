@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.bookmark
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -58,13 +59,18 @@ class BookmarkActivity : AppCompatActivity() {
     private fun settingPlaceBookmarkRVAdapter() {
         viewModel.placeBookmarkList.observe(this) { placeBookmarkList ->
             if (placeBookmarkList.isNotEmpty()) {
+                binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
                 val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
                     placeBookmarkList,
-                    itemClickListener = { }
+                    itemClickListener = { },
+                    onBookmarkClick = { placeId ->
+                        viewModel.updatePlaceBookmark(placeId)
+                    }
                 )
                 binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
             } else {
+                binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE
                 binding.textViewNotExistBookmark.text = getString(R.string.text_place_bookmark)
             }
@@ -74,6 +80,7 @@ class BookmarkActivity : AppCompatActivity() {
     private fun settingScheduleBookmarkRVAdapter() {
         viewModel.planBookmarkList.observe(this) { planBookmarkList ->
             if (planBookmarkList.isNotEmpty()) {
+                binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
@@ -81,6 +88,7 @@ class BookmarkActivity : AppCompatActivity() {
                 )
                 binding.recyclerViewBookmark.adapter = planBookmarkRVAdapter
             } else {
+                binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE
                 binding.textViewNotExistBookmark.text = getString(R.string.text_plan_bookmark)
             }

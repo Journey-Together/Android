@@ -10,12 +10,14 @@ import kr.tekit.lion.daongil.domain.model.PlaceBookmark
 import kr.tekit.lion.daongil.domain.model.PlanBookmark
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlanBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
 class BookmarkViewModel(
     private val getPlaceBookmarkUseCase: GetPlaceBookmarkUseCase,
-    private val getPlanBookmarkUseCase: GetPlanBookmarkUseCase
+    private val getPlanBookmarkUseCase: GetPlanBookmarkUseCase,
+    private val updateBookmarkUseCase: UpdatePlaceBookmarkUseCase
 ) : ViewModel() {
 
     private val _placeBookmarkList = MutableLiveData<List<PlaceBookmark>>()
@@ -44,9 +46,27 @@ class BookmarkViewModel(
         viewModelScope.launch {
             getPlanBookmarkUseCase().onSuccess {
                 _planBookmarkList.value = it
-                Log.d("getPlaceBookmark", it.toString())
+                Log.d("getPlanBookmark", it.toString())
             }.onError {
                 Log.d("getPlanBookmark", it.toString())
+            }
+        }
+    }
+
+    fun updatePlaceBookmark(placeId: Long) {
+        viewModelScope.launch {
+            updateBookmarkUseCase(placeId).onSuccess {
+                Log.d("updateBookmark", it.toString())
+
+                // 리사이클러뷰에서 해당 항목 삭제
+                val updatedList = _placeBookmarkList.value.orEmpty().toMutableList()
+                val index = updatedList.indexOfFirst { it.placeId == placeId }
+                if (index != -1) {
+                    updatedList.removeAt(index)
+                    _placeBookmarkList.postValue(updatedList)
+                }
+            }.onError {
+                Log.d("updateBookmark", it.toString())
             }
         }
     }

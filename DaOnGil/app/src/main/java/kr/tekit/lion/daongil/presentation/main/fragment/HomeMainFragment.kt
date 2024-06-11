@@ -43,6 +43,7 @@ import kr.tekit.lion.daongil.presentation.main.adapter.HomeVPAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModelFactory
+import java.io.IOException
 import java.util.Locale
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
@@ -230,14 +231,26 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses =
-                        geocoder.getFromLocation(location.latitude, location.longitude, 1)
-                    val address = addresses?.get(0)?.getAddressLine(0)
 
-                    val (area, sigungu) = splitAddress(address!!)
-                    binding.homeMyLocationTv.text = "$area $sigungu"
+                    for(i in 1..3) {
+                        try {
+                            val addresses =
+                                geocoder.getFromLocation(location.latitude, location.longitude, 1)
+                            val address = addresses?.get(0)?.getAddressLine(0)
 
-                    getAroundPlaceInfo(binding, area, sigungu)
+                            val (area, sigungu) = splitAddress(address!!)
+                            binding.homeMyLocationTv.text = "$area $sigungu"
+
+                            getAroundPlaceInfo(binding, area, sigungu)
+                            return
+                        } catch (e: IOException) {
+                            if (i == 4) {
+                                Log.e("HomeMainFragment", "Geocoder 위치 가져오기 실패", e)
+                            }
+                        }
+                        // 재시도 전 대기 시간
+                        Thread.sleep(1000)
+                    }
                 }
             }
         }

@@ -35,7 +35,7 @@ class HomeRecommendRVAdapter(
 
         init {
             binding.root.setOnClickListener {
-                onClick.invoke(adapterPosition)
+                onClick.invoke(absoluteAdapterPosition)
             }
         }
         fun bind(recommendPlace: RecommendPlace) {

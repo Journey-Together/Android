@@ -47,14 +47,8 @@ class BookmarkActivity : AppCompatActivity() {
         binding.tabLayoutBookmark.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> {
-                        Log.d("BookmarkActivity_check", "Place tab selected")
-                        settingPlaceBookmarkRVAdapter()
-                    }
-                    1 -> {
-                        Log.d("BookmarkActivity_check", "Plan tab selected")
-                        settingScheduleBookmarkRVAdapter()
-                    }
+                    0 -> settingPlaceBookmarkRVAdapter()
+                    1 -> settingScheduleBookmarkRVAdapter()
                 }
             }
 
@@ -67,7 +61,6 @@ class BookmarkActivity : AppCompatActivity() {
 
     private fun settingPlaceBookmarkRVAdapter() {
         viewModel.placeBookmarkList.observe(this) { placeBookmarkList ->
-            Log.d("BookmarkActivity_check", "Place bookmarks updated: $placeBookmarkList")
             if (placeBookmarkList.isNotEmpty()) {
                 binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
@@ -94,7 +87,6 @@ class BookmarkActivity : AppCompatActivity() {
 
     private fun settingScheduleBookmarkRVAdapter() {
         viewModel.planBookmarkList.observe(this) { planBookmarkList ->
-            Log.d("BookmarkActivity_check", "Plan bookmarks updated: $planBookmarkList")
             if (planBookmarkList.isNotEmpty()) {
                 binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE

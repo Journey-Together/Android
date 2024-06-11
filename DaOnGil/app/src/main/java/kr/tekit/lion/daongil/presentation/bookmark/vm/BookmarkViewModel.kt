@@ -37,7 +37,6 @@ class BookmarkViewModel(
         viewModelScope.launch {
             getPlaceBookmarkUseCase().onSuccess {
                 _placeBookmarkList.value = it
-                Log.d("getPlaceBookmark", it.toString())
             }.onError {
                 Log.d("getPlaceBookmark", it.toString())
             }
@@ -48,7 +47,6 @@ class BookmarkViewModel(
         viewModelScope.launch {
             getPlanBookmarkUseCase().onSuccess {
                 _planBookmarkList.value = it
-                Log.d("getPlanBookmark", it.toString())
             }.onError {
                 Log.d("getPlanBookmark", it.toString())
             }
@@ -58,8 +56,6 @@ class BookmarkViewModel(
     fun updatePlaceBookmark(placeId: Long) {
         viewModelScope.launch {
             updatePlaceBookmarkUseCase(placeId).onSuccess {
-                Log.d("updatePlaceBookmark", it.toString())
-
                 // 리사이클러뷰에서 해당 항목 삭제
                 val updatedList = _placeBookmarkList.value.orEmpty().toMutableList()
                 val index = updatedList.indexOfFirst { it.placeId == placeId }
@@ -76,8 +72,6 @@ class BookmarkViewModel(
     fun updatePlanBookmark(planId: Long) {
         viewModelScope.launch {
             updatePlanBookmarkUseCase(planId).onSuccess {
-                Log.d("updatePlanBookmark", it.toString())
-
                 // 리사이클러뷰에서 해당 항목 삭제
                 val updatedList = _planBookmarkList.value.orEmpty().toMutableList()
                 val index = updatedList.indexOfFirst { it.planId == planId }

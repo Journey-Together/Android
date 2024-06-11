@@ -40,6 +40,7 @@
                 android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small3"
+                android:lineSpacingMultiplier="0.9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewLocationBookmark"
                 tools:text="여행지 위치" />
@@ -54,6 +55,7 @@
                 android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small1"
+                android:lineSpacingMultiplier="0.9"
                 app:layout_constraintStart_toStartOf="@+id/textViewLocationBookmark"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLocationBookmark"
                 tools:text="여행지 이름" />

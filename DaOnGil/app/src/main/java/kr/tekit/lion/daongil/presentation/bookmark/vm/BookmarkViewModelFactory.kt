@@ -3,12 +3,16 @@ package kr.tekit.lion.daongil.presentation.bookmark.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
+import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlanBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
 
 class BookmarkViewModelFactory : ViewModelProvider.Factory {
     val bookmarkRepository = BookmarkRepository.create()
+    private val getPlaceBookmarkListUseCase = GetPlaceBookmarkListUseCase(
+        bookmarkRepository
+    )
 
     private val getPlaceBookmarkUseCase = GetPlaceBookmarkUseCase(
         bookmarkRepository

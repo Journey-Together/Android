@@ -11,12 +11,13 @@ import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormScheduleAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_form) {
-    private val scheduleFormViewModel: ScheduleFormViewModel by activityViewModels()
+    private val scheduleFormViewModel: ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

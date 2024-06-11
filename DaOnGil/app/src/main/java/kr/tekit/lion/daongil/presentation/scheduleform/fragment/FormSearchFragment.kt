@@ -1,6 +1,8 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.os.Bundle
+import android.util.Log
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -13,11 +15,12 @@ import kr.tekit.lion.daongil.domain.model.FormSearchedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 
 
 class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     private val args: FormSearchFragmentArgs by navArgs()
-    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
+    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +34,7 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
 
         settingBookmarkedRV(binding, schedulePosition)
         settingSearchResultRV(binding, schedulePosition)
+        settingPlaceSearchView(binding, schedulePosition)
     }
 
     private fun initToolbar(binding: FragmentFormSearchBinding){
@@ -71,5 +75,23 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
         scheduleFormViewModel.addNewPlace(schedulePosition, selectedPlaceId)
         findNavController().popBackStack()
     }
+
+    private fun settingPlaceSearchView(binding: FragmentFormSearchBinding, schedulePosition: Int){
+        binding.searchViewFSResult.apply {
+            editText.setOnEditorActionListener { textView, actionId, event ->
+                if(event!=null && event.action == KeyEvent.ACTION_DOWN){
+                    val word = editText.text.toString()
+                    if(word.isEmpty()){
+                        Log.d("test - FormSearchFragment", "검색어를 입력해주세요")
+                    }else{
+                        scheduleFormViewModel.getPlaceSearchResult(word, 0, 5)
+                    }
+
+                }
+                false
+            }
+        }
+    }
+
 
 }

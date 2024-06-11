@@ -36,11 +36,13 @@ class FormSearchResultAdapter(
             binding.apply {
                 textViewSearchResultName.text = placeSearchInfo.placeName
                 textViewSearchResultCategory.text = placeSearchInfo.category
-                Glide.with(binding.imageViewSearchResultThumbnail.context)
-                    .load(placeSearchInfo.imageUrl)
-                    .placeholder(R.drawable.empty_view_small)
-                    .error(R.drawable.empty_view_small)
-                    .into(imageViewSearchResultThumbnail)
+                placeSearchInfo.imageUrl?.let {
+                    Glide.with(binding.imageViewSearchResultThumbnail.context)
+                        .load(it)
+                        .placeholder(R.drawable.empty_view_small)
+                        .error(R.drawable.empty_view_small)
+                        .into(imageViewSearchResultThumbnail)
+                }
 
                 imageButtonSearchResultAdd.setOnClickListener {
                     onPlaceSelectedListener(placeSearchInfo.placeId)

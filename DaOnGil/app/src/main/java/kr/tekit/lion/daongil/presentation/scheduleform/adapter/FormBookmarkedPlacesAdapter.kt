@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
 
 class FormBookmarkedPlacesAdapter(
     private val bookmarkedPlaces: List<BookmarkedPlace>,
-    private val onPlaceSelectedListener : (selectedPlaceId: Int) -> Unit
+    private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
 ) : RecyclerView.Adapter<FormBookmarkedPlacesAdapter.FormBookmarkedPlacesViewHolder>() {
 
 
@@ -33,7 +33,7 @@ class FormBookmarkedPlacesAdapter(
 
     class FormBookmarkedPlacesViewHolder(
         private val binding: ItemFormBookmarkedPlacesBinding,
-        private val onPlaceSelectedListener : (selectedPlaceId: Int) -> Unit
+        private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(place: BookmarkedPlace) {
             binding.buttonBookmarkedPlace.text = place.bookmarkedPlaceName

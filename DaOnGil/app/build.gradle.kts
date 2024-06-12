@@ -24,6 +24,7 @@ val emergencyBaseUrl = properties.getProperty("emergency_base_url")?:""
 val emergencyApiKey = properties.getProperty("emergency_api_key")?:""
 val aedBaseUrl = properties.getProperty("aed_base_url")?:""
 val pharmacyBaseUrl = properties.getProperty("pharmacy_base_url")?:""
+val korApiKey = properties.getProperty("kor_api_key")?:""
 
 android {
     namespace = "kr.tekit.lion.daongil"
@@ -52,6 +53,7 @@ android {
         buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
         buildConfigField("String", "AED_BASE_URL", "\"$aedBaseUrl\"")
         buildConfigField("String", "PHARMACY_BASE_URL", "\"$pharmacyBaseUrl\"")
+        buildConfigField("String", "KOR_API_KEY", "\"$korApiKey\"")
         manifestPlaceholders["KAKAO_NATIVE_KEY"] = kakaoNativeKey
         manifestPlaceholders["NAVER_MAP_ID"] = naverMapId
     }
@@ -147,4 +149,5 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 
+    implementation("com.squareup.moshi:moshi-adapters:1.15.1")
 }

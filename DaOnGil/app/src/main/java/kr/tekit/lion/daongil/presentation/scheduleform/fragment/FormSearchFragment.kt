@@ -1,25 +1,26 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
-import kr.tekit.lion.daongil.domain.model.FormSearchedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 
 
 class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
-    val args: FormSearchFragmentArgs by navArgs()
-    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
+    private val args: FormSearchFragmentArgs by navArgs()
+    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -29,14 +30,20 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
 
         val binding = FragmentFormSearchBinding.bind(view)
 
-        val navController = findNavController()
+        initToolbar(binding)
 
-        settingBookmarkedRV(binding, navController, schedulePosition)
-        settingSearchResultRV(binding, navController, schedulePosition)
+        settingBookmarkedRV(binding, schedulePosition)
+        settingSearchResultRV(binding, schedulePosition)
+        settingPlaceSearchView(binding)
     }
 
-    private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int ){
-        val places = mutableListOf(
+    private fun initToolbar(binding: FragmentFormSearchBinding){
+        binding.toolbarFormSearch.setNavigationOnClickListener {
+            findNavController().popBackStack()
+        }
+    }
+    private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, schedulePosition: Int ){
+        val places = listOf(
             BookmarkedPlace(0, "보신각 터"),
             BookmarkedPlace(1, "부산 영화의 전당"),
             BookmarkedPlace(2, "광복로문화패션거리"),
@@ -44,22 +51,61 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             BookmarkedPlace(4, "고양 어울림누리"),
         )
 
-        binding.recyclerViewFSBookmark.adapter = FormBookmarkedPlacesAdapter(places, navController, scheduleFormViewModel, schedulePosition)
-        binding.recyclerViewFSBookmark.layoutManager = LinearLayoutManager(requireActivity(), LinearLayoutManager.VERTICAL, false)
+        binding.recyclerViewFSBookmark.apply {
+            adapter = FormBookmarkedPlacesAdapter(places){ selectedPlaceId ->
+                addNewPlace(this, schedulePosition, selectedPlaceId)
+            }
+        }
     }
 
-    private fun settingSearchResultRV(binding: FragmentFormSearchBinding, navController: NavController, schedulePosition: Int){
-        val searchResults = mutableListOf(
-            FormSearchedPlace(0, "", "보신각 터", "관광지"),
-            FormSearchedPlace(1, "", "광복로문화패션거리", "관광지"),
-            FormSearchedPlace(2, "", "상록해수욕장", "관광지"),
-            FormSearchedPlace(3, "", "원조 돼지국밥", "식당"),
-            FormSearchedPlace(4, "", "냉채족발", "식당"),
-            FormSearchedPlace(5, "", "부산 OOOOO 호텔", "숙박시설"),
-        )
-
-        binding.recyclerViewFSResult.adapter = FormSearchResultAdapter(searchResults, navController, scheduleFormViewModel, schedulePosition)
-        binding.recyclerViewFSResult.layoutManager = LinearLayoutManager(requireActivity())
+    private fun settingSearchResultRV(binding: FragmentFormSearchBinding, schedulePosition: Int){
+        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
+            if(it.placeInfoList.isNotEmpty()){
+                binding.recyclerViewFSResult.apply {
+                    adapter = FormSearchResultAdapter(it.placeInfoList){ selectedPlaceId ->
+                        addNewPlace(this, schedulePosition, selectedPlaceId)
+                    }
+                }
+            }else{
+                binding.recyclerViewFSResult.visibility = View.GONE
+                binding.textViewFSResultEmpty.visibility = View.VISIBLE
+            }
+        }
     }
+
+    private fun addNewPlace(view: View, schedulePosition: Int, selectedPlaceId: Long) {
+        val isDuplicate = scheduleFormViewModel.isPlaceAlreadyAdded(schedulePosition, selectedPlaceId)
+        if (isDuplicate) {
+            showSnackBar(view, "해당 여행지는 이미 일정에 추가되어 있습니다")
+        }else {
+            scheduleFormViewModel.getSearchedPlaceDetailInfo(schedulePosition, selectedPlaceId)
+            findNavController().popBackStack()
+        }
+    }
+
+    private fun settingPlaceSearchView(binding: FragmentFormSearchBinding){
+        binding.searchViewFSResult.apply {
+            editText.setOnEditorActionListener { textView, actionId, event ->
+                if(event!=null && event.action == KeyEvent.ACTION_DOWN){
+                    val word = editText.text.toString()
+                    if(word.isEmpty()){
+                        showSnackBar(this, "검색어를 입력해주세요")
+                    }else{
+                        binding.recyclerViewFSResult.visibility = View.VISIBLE
+                        binding.textViewFSResultEmpty.visibility = View.GONE
+                        scheduleFormViewModel.getPlaceSearchResult(word, 0, 10)
+                    }
+                }
+                false
+            }
+        }
+    }
+
+    private fun showSnackBar(view: View, message : String ){
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+            .show()
+    }
+
 
 }

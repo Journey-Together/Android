@@ -15,6 +15,7 @@ import kr.tekit.lion.daongil.presentation.bookmark.BookmarkActivity
 import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.login.LogInState
+import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.vm.MyInfoMainViewModel
@@ -67,7 +68,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
 
                     tvNameOrLogin.text = it.name
                     tvReviewCnt.text = it.reviewNum.toString()
-                    tvRegisteredData.text = "${it.date}일째"
+                    tvRegisteredData.text = "${it.date + 1}일째"
 
                     Glide.with(binding.imgProfile.context)
                         .load(it.profileImg)
@@ -83,11 +84,14 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun setUiLoginRequiredState(binding: FragmentMyInfoMainBinding) {
         with(binding) {
             userContainer.visibility = View.GONE
-            tvReview.text = "로그인 하러가기"
+            tvReview.text = getString(R.string.text_NameOrLogin)
             tvReviewCnt.visibility = View.GONE
             tvUserNameTitle.visibility = View.GONE
-            tvNameOrLogin.text = "로그인 해주세요"
-            btnLoginOrUpdate.setOnClickListener {
+            textViewMyInfoMainRegister.visibility = View.GONE
+            tvNameOrLogin.text = getString(R.string.text_myInfo_Review)
+            layoutProfile.setOnClickListener {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }

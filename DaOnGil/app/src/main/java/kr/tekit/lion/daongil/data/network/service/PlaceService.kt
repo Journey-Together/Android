@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.network.service
 
+import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
@@ -39,4 +40,11 @@ interface PlaceService {
         @Query("sigungucode") sigunguCode: String?  = "",
         @Query("arrange") arrange: String = "C",
     ): SearchPlaceResponse
+
+    @GET("place/guest/{placeId}")
+    suspend fun getPlaceDetailInfoGuest(
+        @Path("placeId") placeId: Long,
+        @Tag authType: AuthType = AuthType.NO_AUTH
+    ): DetailPlaceGuestResponse
+
 }

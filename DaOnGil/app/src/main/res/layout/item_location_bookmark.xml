@@ -8,7 +8,7 @@
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/locationBookmarkCard"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="240dp"
         android:layout_margin="@dimen/margin_big4"
         android:paddingHorizontal="20dp"
         app:cardBackgroundColor="@color/card_background_color"
@@ -31,13 +31,16 @@
 
             <TextView
                 android:id="@+id/textViewLocationBookmark"
-                android:layout_width="wrap_content"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_big4"
                 android:layout_marginTop="10dp"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
+                android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small3"
+                android:lineSpacingMultiplier="0.9"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageViewLocationBookmark"
                 tools:text="여행지 위치" />
@@ -52,6 +55,7 @@
                 android:maxLines="1"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_small1"
+                android:lineSpacingMultiplier="0.9"
                 app:layout_constraintStart_toStartOf="@+id/textViewLocationBookmark"
                 app:layout_constraintTop_toBottomOf="@+id/textViewLocationBookmark"
                 tools:text="여행지 이름" />
@@ -74,6 +78,7 @@
                 android:layout_height="36dp"
                 android:layout_marginTop="@dimen/margin_small1"
                 android:layout_marginRight="@dimen/margin_small1"
+                app:tint="@color/primary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/bookmark_fill_icon" />

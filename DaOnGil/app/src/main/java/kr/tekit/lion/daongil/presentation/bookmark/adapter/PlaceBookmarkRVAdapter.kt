@@ -3,15 +3,17 @@ package kr.tekit.lion.daongil.presentation.bookmark.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemLocationBookmarkBinding
 import kr.tekit.lion.daongil.domain.model.PlaceBookmark
 
-class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>, private val itemClickListener: (Int) -> Unit) : RecyclerView.Adapter<PlaceBookmarkRVAdapter.PlaceBookmarkViewHolder>() {
+class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>, private val itemClickListener: (Int) -> Unit, private val onBookmarkClick: (Long) -> Unit) : RecyclerView.Adapter<PlaceBookmarkRVAdapter.PlaceBookmarkViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceBookmarkViewHolder {
         val binding : ItemLocationBookmarkBinding = ItemLocationBookmarkBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return PlaceBookmarkViewHolder(binding, itemClickListener)
+        return PlaceBookmarkViewHolder(binding, itemClickListener, onBookmarkClick)
     }
 
     override fun getItemCount(): Int = placeBookmarkList.size
@@ -20,12 +22,27 @@ class PlaceBookmarkRVAdapter(private val placeBookmarkList: List<PlaceBookmark>,
         holder.bind(placeBookmarkList[position])
     }
 
-    class PlaceBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(placeBookmarkList: PlaceBookmark) {
-            binding.textViewLocationBookmark.text = placeBookmarkList.address
-            binding.textViewLocationBookmarkName.text = placeBookmarkList.name
+    class PlaceBookmarkViewHolder(val binding: ItemLocationBookmarkBinding, private val itemClickListener: (Int) -> Unit, private val onBookmarkClick: (Long) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener.invoke(bindingAdapterPosition)
+            }
+        }
 
-            val disabilityList = placeBookmarkList.disability
+        fun bind(placeBookmark: PlaceBookmark) {
+            binding.textViewLocationBookmark.text = placeBookmark.address
+            binding.textViewLocationBookmarkName.text = placeBookmark.name
+
+            Glide.with(binding.imageViewLocationBookmark.context)
+                .load(placeBookmark.image)
+                .error(R.drawable.empty_view)
+                .into(binding.imageViewLocationBookmark)
+
+            binding.locationBookmarkBtn.setOnClickListener {
+                onBookmarkClick(placeBookmark.placeId)
+            }
+
+            val disabilityList = placeBookmark.disability
 
             val bookmarkDisabilityRVAdapter = bookmarkDisabilityRVAdapter(disabilityList)
             binding.recyclerViewLocationBookmark.adapter = bookmarkDisabilityRVAdapter

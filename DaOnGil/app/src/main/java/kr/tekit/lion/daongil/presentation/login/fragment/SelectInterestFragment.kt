@@ -5,14 +5,20 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSelectInterestBinding
+import kr.tekit.lion.daongil.presentation.login.vm.LoginViewModel
+import kr.tekit.lion.daongil.presentation.login.vm.LoginViewModelFactory
+import kr.tekit.lion.daongil.presentation.login.vm.SelectInterestViewModel
+import kr.tekit.lion.daongil.presentation.login.vm.SelectInterestViewModelFactory
 import kr.tekit.lion.daongil.presentation.main.MainActivity
 
 class SelectInterestFragment : Fragment(R.layout.fragment_select_interest) {
 
     private lateinit var binding: FragmentSelectInterestBinding
+    private val viewModel: SelectInterestViewModel by viewModels { SelectInterestViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,24 +27,21 @@ class SelectInterestFragment : Fragment(R.layout.fragment_select_interest) {
 
         settingToolbar()
 
-        // NavController 한 번만 찾기
-        val navController = findNavController()
-
-        // 전달받은 Bundle 데이터 받기
-        val loginType = arguments?.getString("loginType")
-
-        // loginType에 따라 필요한 작업 수행
-        loginType?.let {
-            when (it) {
-                "kakao" -> {
-                    // 카카오 로그인 처리
-                }
-
-                "naver" -> {
-                    // 네이버 로그인 처리
-                }
-            }
-        }
+//        // 전달받은 Bundle 데이터 받기
+//        val loginType = arguments?.getString("loginType")
+//
+//        // loginType에 따라 필요한 작업 수행
+//        loginType?.let {
+//            when (it) {
+//                "kakao" -> {
+//                    // 카카오 로그인 처리
+//                }
+//
+//                "naver" -> {
+//                    // 네이버 로그인 처리
+//                }
+//            }
+//        }
 
         val interestImageViews = listOf(
             binding.physicalDisabilityImageView,

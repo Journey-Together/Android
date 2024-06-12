@@ -89,7 +89,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
     private val schedulePublic = ScheduleDetail(
         1,
-        "엄마랑 서울 나들이",
+        "고등학교 친구들과 우정 여행",
         "2024-06-10",
         "2024-06-11",
         null,
@@ -101,7 +101,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
             "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_207%2F1440992289833tONYr_JPEG%2F11491637_0.jpg"), // images
         listOf(day1, day3),
         1,
-        "다온길 앱 덕분에 일정을 편하게 짜고, 확인할 수 있었어요. 휴양림에서 편하게 쉬고, 미술관에서 작품들을 보며 힐링했어요. 같이 간 어머니도 좋아하시더라구요. 태평소 국밥은 다온길에서 처음 발견한 식당인데, 지역 맛집이네요! 다시 한 번 방문해서 국밥 후루룩 마시고 싶어요! 여행 2일차엔 휴양원에서 쉬엄쉬엄 쉬고, 집으로 돌아오기전 남해 축협에서 한우 2인분씩 먹고왔어요! 싸고 맛있네요",
+        "다온길 앱 덕분에 일정을 편하게 짜고, 확인할 수 있었어요. 휴양림에서 편하게 쉬고, 미술관에서 작품들을 보며 힐링했어요. 같이 간 친구들도 좋아했어요. 태평소 국밥은 다온길에서 처음 발견한 식당인데, 지역 맛집이네요! 다시 한 번 방문해서 국밥 후루룩 마시고 싶어요! 여행 2일차엔 휴양원에서 쉬엄쉬엄 쉬고, 집으로 돌아오기전 남해 축협에서 한우 2인분씩 먹고왔어요! 싸고 맛있네요",
         4,
     )
 

@@ -1,22 +1,29 @@
 package kr.tekit.lion.daongil.presentation.bookmark
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityBookmarkBinding
-import kr.tekit.lion.daongil.domain.model.PlaceBookmark
-import kr.tekit.lion.daongil.domain.model.ScheduleBookmark
 import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlaceBookmarkRVAdapter
-import kr.tekit.lion.daongil.presentation.bookmark.adapter.ScheduleBookmarkRVAdapter
+import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlanBookmarkRVAdapter
+import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModel
+import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModelFactory
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 
 class BookmarkActivity : AppCompatActivity() {
 
     private val binding: ActivityBookmarkBinding by lazy {
         ActivityBookmarkBinding.inflate(layoutInflater)
     }
+
+    private val viewModel: BookmarkViewModel by viewModels { BookmarkViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,15 +35,14 @@ class BookmarkActivity : AppCompatActivity() {
     }
 
     fun settingToolbar() {
-        binding.toolbarMyBookmark.setNavigationIcon(R.drawable.back_icon)
         binding.toolbarMyBookmark.setNavigationOnClickListener {
             finish()
         }
     }
 
     fun settingTabLayout() {
-        binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText("장소"))
-        binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText("일정"))
+        binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText(getString(R.string.tab_text_place)))
+        binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText(getString(R.string.tab_text_plan)))
 
         binding.tabLayoutBookmark.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -48,37 +54,60 @@ class BookmarkActivity : AppCompatActivity() {
 
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}
-        });
+        })
 
         binding.tabLayoutBookmark.getTabAt(0)?.select()
     }
 
     private fun settingPlaceBookmarkRVAdapter() {
-        val placeBookmarkList = listOf(
-            PlaceBookmark("강원특별자치도 동해시", "망상해변", null, listOf("physical_disability", "visual_impairment", "infant_family", "elderly_people")),
-            PlaceBookmark("대구 달성군", "비슬산 군립공원", null, listOf("physical_disability", "visual_impairment", "hearing_impairment")),
-            PlaceBookmark("전라남도 함평군", "함평엑스포공원", null, listOf("physical_disability"))
-        )
-
-        val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
-            placeBookmarkList,
-            itemClickListener = { }
-        )
-        binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
+        viewModel.placeBookmarkList.observe(this) { placeBookmarkList ->
+            if (placeBookmarkList.isNotEmpty()) {
+                binding.notExistBookmarkLayout.visibility = View.INVISIBLE
+                binding.recyclerViewBookmark.visibility = View.VISIBLE
+                val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
+                    placeBookmarkList,
+                    itemClickListener = { position ->
+                        val placeBookmark = placeBookmarkList[position]
+                        val intent = Intent(this, DetailActivity::class.java)
+                        intent.putExtra("placeId", placeBookmark.placeId)
+                        startActivity(intent)
+                    },
+                    onBookmarkClick = { placeId ->
+                        viewModel.updatePlaceBookmark(placeId)
+                    }
+                )
+                binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
+            } else {
+                binding.recyclerViewBookmark.visibility = View.INVISIBLE
+                binding.notExistBookmarkLayout.visibility = View.VISIBLE
+                binding.textViewNotExistBookmark.text = getString(R.string.text_place_bookmark)
+            }
+        }
     }
 
     private fun settingScheduleBookmarkRVAdapter() {
-        val scheduleBookmarkList = listOf(
-            ScheduleBookmark("서울 탐방 일정",  null, "다온길"),
-            ScheduleBookmark("대구는 내가 접수한다", null, "당근"),
-            ScheduleBookmark("부산을 접수한 다음은 제주도다 기다려라", null, "김사자")
-        )
-
-        val scheduleBookmarkRVAdapter = ScheduleBookmarkRVAdapter(
-            scheduleBookmarkList,
-            itemClickListener = { }
-        )
-
-        binding.recyclerViewBookmark.adapter = scheduleBookmarkRVAdapter
+        viewModel.planBookmarkList.observe(this) { planBookmarkList ->
+            if (planBookmarkList.isNotEmpty()) {
+                binding.notExistBookmarkLayout.visibility = View.INVISIBLE
+                binding.recyclerViewBookmark.visibility = View.VISIBLE
+                val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
+                    planBookmarkList,
+                    itemClickListener = { position ->
+                        val placeBookmark = planBookmarkList[position]
+                        val intent = Intent(this, ScheduleActivity::class.java)
+                        intent.putExtra("planId", placeBookmark.planId)
+                        startActivity(intent)
+                    },
+                    onBookmarkClick = { planId ->
+                        viewModel.updatePlanBookmark(planId)
+                    }
+                )
+                binding.recyclerViewBookmark.adapter = planBookmarkRVAdapter
+            } else {
+                binding.recyclerViewBookmark.visibility = View.INVISIBLE
+                binding.notExistBookmarkLayout.visibility = View.VISIBLE
+                binding.textViewNotExistBookmark.text = getString(R.string.text_plan_bookmark)
+            }
+        }
     }
 }

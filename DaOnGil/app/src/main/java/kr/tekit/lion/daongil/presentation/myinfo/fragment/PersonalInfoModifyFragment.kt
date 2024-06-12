@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentPersonalInfoModifyBinding
@@ -86,6 +87,8 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             Glide.with(requireContext())
                 .load(viewModel.profileImg.value)
                 .fallback(R.drawable.default_profile)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(imgProfile)
 
             btnModify.setOnClickListener {
@@ -166,15 +169,11 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
 
 
     private fun drawImage(view: ImageView, imgUrl: Uri) {
-
-        Log.d("ImgRuestResult", imgUrl.toString())
         Glide.with(requireContext())
             .load(imgUrl)
             .fallback(R.drawable.default_profile)
             .into(view)
         val path = requireContext().toAbsolutePath(imgUrl)
-        Log.d("ImgRuestResult", path.toString())
-
         viewModel.onSelectProfileImage(path)
         viewModel.modifyStateChange()
     }

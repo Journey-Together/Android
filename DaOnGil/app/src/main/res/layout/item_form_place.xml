@@ -27,7 +27,7 @@
             <ImageView
                 android:id="@+id/imageViewFPlaceThumbnail"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="160dp"
                 android:contentDescription="대표 사진"
                 android:scaleType="centerCrop"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -42,11 +42,11 @@
                 android:layout_marginStart="@dimen/margin_big3"
                 android:layout_marginTop="@dimen/margin_big3"
                 android:layout_marginEnd="@dimen/margin_big3"
-                android:text="OO시 OO구"
                 android:textSize="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewFPlaceThumbnail" />
+                app:layout_constraintTop_toBottomOf="@+id/imageViewFPlaceThumbnail"
+                tools:text="OO시 OO구" />
 
             <TextView
                 android:id="@+id/textViewFPlaceName"
@@ -56,11 +56,11 @@
                 android:layout_marginTop="@dimen/margin_small2"
                 android:layout_marginEnd="@dimen/margin_big3"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="OO 해변 공원"
                 android:textSize="@dimen/font_big3"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceAddr" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceAddr"
+                tools:text="OO 해변 공원" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -80,6 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_small2"
+                    android:contentDescription="@string/text_physical_disability"
                     android:visibility="gone"
                     app:srcCompat="@drawable/physical_disability_radius_icon" />
 
@@ -88,14 +89,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_small2"
+                    android:contentDescription="@string/text_visual_impairmnet"
                     android:visibility="gone"
                     app:srcCompat="@drawable/visual_impairment_radius_icon" />
+
+                <ImageView
+                    android:id="@+id/iconFPlaceHearingImpair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_small2"
+                    android:contentDescription="@string/text_hearing_impairment"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/hearing_impairment_radius_icon" />
 
                 <ImageView
                     android:id="@+id/iconFPlaceInfantFamily"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_small2"
+                    android:contentDescription="@string/text_infant_family"
                     android:visibility="gone"
                     app:srcCompat="@drawable/infant_familly_radius_icon" />
 
@@ -104,9 +116,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_small2"
+                    android:contentDescription="@string/text_elderly_person"
                     android:visibility="gone"
                     app:srcCompat="@drawable/elderly_people_radius_icon" />
-                <!-- contentDescription 추가할 것 -->
             </LinearLayout>
 
             <ImageButton
@@ -115,6 +127,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_small2"
                 android:layout_marginEnd="@dimen/margin_small2"
+                android:contentDescription="@string/text_schedule_delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/cancel_icon" />

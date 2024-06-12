@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "06fa0b93a92dc380cf23c008682f89f3",
+    "identityHash": "30223a5c10b34e2f08ae481fc96cbf85",
     "entities": [
       {
         "tableName": "area_code_table",
@@ -32,17 +32,17 @@
       },
       {
         "tableName": "village_code_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`villageName` TEXT NOT NULL, `villageCode` TEXT NOT NULL, `areaCode` TEXT NOT NULL, PRIMARY KEY(`villageName`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sigunguName` TEXT NOT NULL, `sigunguCode` TEXT NOT NULL, `areaCode` TEXT NOT NULL, PRIMARY KEY(`sigunguName`))",
         "fields": [
           {
-            "fieldPath": "villageName",
-            "columnName": "villageName",
+            "fieldPath": "sigunguName",
+            "columnName": "sigunguName",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "villageCode",
-            "columnName": "villageCode",
+            "fieldPath": "sigunguCode",
+            "columnName": "sigunguCode",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -56,7 +56,7 @@
         "primaryKey": {
           "autoGenerate": false,
           "columnNames": [
-            "villageName"
+            "sigunguName"
           ]
         },
         "indices": [],
@@ -64,18 +64,18 @@
       },
       {
         "tableName": "search_keyword_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `keyword` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`keyword` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL)",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "keyword",
             "columnName": "keyword",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -92,7 +92,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '06fa0b93a92dc380cf23c008682f89f3')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '30223a5c10b34e2f08ae481fc96cbf85')"
     ]
   }
 }

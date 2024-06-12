@@ -9,8 +9,23 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:backgroundTint="@color/white">
+        android:backgroundTint="@color/white"
+        android:orientation="vertical">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbarFormSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background_color"
+            android:minHeight="?attr/actionBarSize"
+            app:navigationIcon="@drawable/back_icon">
+
+            <TextView
+                style="@style/Theme.Toolbar.Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_places_to_add" />
+        </com.google.android.material.appbar.MaterialToolbar>
 
         <com.google.android.material.search.SearchBar
             android:id="@+id/searchBarFS"
@@ -33,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big3"
-            android:paddingHorizontal="@dimen/margin_basic" />
+            android:paddingHorizontal="@dimen/margin_basic"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     </LinearLayout>
 
@@ -48,20 +64,24 @@
             android:id="@+id/recyclerViewFSResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
             android:backgroundTint="@color/background_color"
-            android:paddingTop="@dimen/margin_small1" />
+            android:clipToPadding="false"
+            android:paddingVertical="@dimen/margin_basic"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <TextView
             android:id="@+id/textViewFSResultEmpty"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:fontFamily="@font/cafe24_oneprettynight"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.5"
             android:text="@string/result_empty"
-            android:textSize="@dimen/font_big1"
-            android:visibility="gone" />
+            android:textAlignment="center"
+            android:textSize="@dimen/font_big3"
+            android:visibility="gone"
+            app:drawableTopCompat="@drawable/onboarding_clover" />
 
     </com.google.android.material.search.SearchView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

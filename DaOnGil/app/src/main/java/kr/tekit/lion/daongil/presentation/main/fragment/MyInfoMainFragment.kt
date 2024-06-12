@@ -2,20 +2,20 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.material.snackbar.Snackbar
-import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyInfoMainBinding
 import kr.tekit.lion.daongil.presentation.bookmark.BookmarkActivity
 import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.login.LogInState
+import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.vm.MyInfoMainViewModel
@@ -62,16 +62,19 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         moveBookmark(binding)
         moveMyReview(binding)
         moveDeleteUser(binding)
+        with(binding) {
+            repeatOnViewStarted {
+                viewModel.myInfo.collect {
 
-        repeatOnViewStarted {
-            viewModel.myInfo.collect{
-                with(binding){
                     tvNameOrLogin.text = it.name
                     tvReviewCnt.text = it.reviewNum.toString()
+                    tvRegisteredData.text = "${it.date + 1}일째"
 
-                    Glide.with(requireContext())
+                    Glide.with(binding.imgProfile.context)
                         .load(it.profileImg)
                         .fallback(R.drawable.default_profile)
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
                         .into(imgProfile)
                 }
             }
@@ -81,11 +84,14 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun setUiLoginRequiredState(binding: FragmentMyInfoMainBinding) {
         with(binding) {
             userContainer.visibility = View.GONE
-            tvReview.text = "로그인 하러가기"
+            tvReview.text = getString(R.string.text_NameOrLogin)
             tvReviewCnt.visibility = View.GONE
             tvUserNameTitle.visibility = View.GONE
-            tvNameOrLogin.text = "로그인 해주세요"
-            btnLoginOrUpdate.setOnClickListener {
+            textViewMyInfoMainRegister.visibility = View.GONE
+            tvNameOrLogin.text = getString(R.string.text_myInfo_Review)
+            layoutProfile.setOnClickListener {
+                val intent = Intent(requireActivity(), LoginActivity::class.java)
+                startActivity(intent)
             }
         }
     }

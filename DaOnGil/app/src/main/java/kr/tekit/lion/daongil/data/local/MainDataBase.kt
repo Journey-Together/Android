@@ -7,20 +7,20 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import kr.tekit.lion.daongil.data.local.dao.AreaCodeDao
 import kr.tekit.lion.daongil.data.local.dao.RecentSearchKeywordDao
-import kr.tekit.lion.daongil.data.local.dao.VillageCodeDao
+import kr.tekit.lion.daongil.data.local.dao.SigunguCodeDao
 import kr.tekit.lion.daongil.data.dto.local.AreaCodeEntity
 import kr.tekit.lion.daongil.data.dto.local.RecentSearchKeywordEntity
-import kr.tekit.lion.daongil.data.dto.local.VillageCodeEntity
+import kr.tekit.lion.daongil.data.dto.local.SigunguCodeEntity
 
 @TypeConverters(ListConverter::class)
 @Database(
-    entities = [AreaCodeEntity::class, VillageCodeEntity::class, RecentSearchKeywordEntity::class],
-    version = 2
+    entities = [AreaCodeEntity::class, SigunguCodeEntity::class, RecentSearchKeywordEntity::class],
+    version = 3
 )
 abstract class MainDataBase : RoomDatabase() {
 
     abstract fun areaCodeDao(): AreaCodeDao
-    abstract fun villageCodeDao(): VillageCodeDao
+    abstract fun sigunguCodeDao(): SigunguCodeDao
     abstract fun RecentSearchKeywordDao(): RecentSearchKeywordDao
 
     companion object {

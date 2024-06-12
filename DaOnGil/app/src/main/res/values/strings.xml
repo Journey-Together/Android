@@ -139,6 +139,21 @@
     <string name="text_schedule_review_photo">여행 사진</string>
     <string name="text_save_schedule_review">저장하기</string>
 
+    <string name="text_schedule_form_name">여행 제목</string>
+    <string name="hint_schedule_form_name">15자 이내로 입력해주세요</string>
+    <string name="text_schedule_form_period">여행 기간</string>
+    <string name="hint_schedule_form_period"><b>＋</b> 여행 기간 설정하기</string>
+    <string name="text_schedule_form_next">다음으로</string>
+    <string name="text_schedule_form_add_place">새로운 장소 추가</string>
+
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
 
+    <string name="tab_text_place">장소</string>
+    <string name="tab_text_plan">일정</string>
+
+    <string name="text_place_bookmark">북마크한 장소가 없습니다.\n가고 싶은 장소를 추가해보세요!</string>
+    <string name="text_plan_bookmark">북마크한 일정이 없습니다.\n관심 있는 일정을 추가해보세요!</string>
+
+    <string name="text_NameOrLogin">아직 정보가 없어요!</string>
+    <string name="text_myInfo_Review">로그인을 진행해주세요</string>
 </resources>

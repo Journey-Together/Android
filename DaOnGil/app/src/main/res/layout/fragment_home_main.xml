@@ -137,14 +137,17 @@
 
             <TextView
                 android:id="@+id/home_my_location_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small2"
+                android:layout_marginEnd="@dimen/margin_basic"
                 android:fontFamily="@font/pretendard_medium"
+                android:maxLines="2"
                 android:text="현재 위치"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_small1"
                 app:layout_constraintBottom_toBottomOf="@+id/home_my_location_iv"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/home_my_location_iv"
                 app:layout_constraintTop_toTopOf="@+id/home_my_location_iv" />
 

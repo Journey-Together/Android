@@ -32,6 +32,7 @@
 
                 <TextView
                     style="@style/Theme.Toolbar.Title"
+                    android:id="@+id/detail_toolbar_title_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="관광지" />
@@ -55,7 +56,7 @@
                 android:layout_marginStart="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:fontFamily="@font/pretendard_medium"
-                android:text="화면 경로"
+                android:text="홈 > 무장애 관광정보 > 관광지"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -63,25 +64,29 @@
 
             <TextView
                 android:id="@+id/detail_title_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big3"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="관광지명"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big1"
+                android:layout_marginEnd="@dimen/margin_small1"
+                app:layout_constraintEnd_toStartOf="@+id/detail_bookmark_btn"
                 app:layout_constraintStart_toStartOf="@+id/detail_route_tv"
                 app:layout_constraintTop_toBottomOf="@+id/detail_route_tv" />
 
             <TextView
                 android:id="@+id/detail_address_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:fontFamily="@font/pretendard_medium"
                 android:text="주소"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big3"
+                android:layout_marginEnd="@dimen/margin_basic"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/detail_title_tv"
                 app:layout_constraintTop_toBottomOf="@+id/detail_title_tv" />
 
@@ -144,6 +149,7 @@
                 android:text="기본 정보 내용"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_small1"
+                android:lineSpacingMultiplier="1.2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_basic_divider" />
@@ -249,60 +255,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detail_service_title_tv" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/detail_disability_iv_layout"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/detail_disability_iv_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/margin_big1"
-                android:layout_marginTop="@dimen/margin_big3"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_service_divider">
-
-                <ImageView
-                    android:id="@+id/detail_physical_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sv_unselected_physical_disability_icon"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/detail_visual_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sv_unselected_visual_impairment_icon"
-                    app:layout_constraintEnd_toStartOf="@+id/detail_hearing_iv"
-                    app:layout_constraintStart_toEndOf="@+id/detail_physical_iv"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/detail_hearing_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/sv_unselected_hearing_impairment_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:id="@+id/detail_infant_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big3"
-                    android:src="@drawable/sv_unselected_infant_family_icon"
-                    app:layout_constraintStart_toStartOf="@+id/detail_physical_iv"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_physical_iv" />
-
-                <ImageView
-                    android:id="@+id/detail_elderly_iv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big3"
-                    android:src="@drawable/sv_unselected_elderly_people_icon"
-                    app:layout_constraintStart_toStartOf="@+id/detail_visual_iv"
-                    app:layout_constraintTop_toBottomOf="@+id/detail_visual_iv" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                app:layout_constraintTop_toBottomOf="@id/detail_service_divider"
+                android:layout_marginTop="@dimen/margin_big3" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/detail_disability_info_rv"
@@ -312,7 +273,7 @@
                 android:layout_marginTop="@dimen/margin_big2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_disability_iv_layout" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_disability_iv_rv" />
 
             <TextView
                 android:id="@+id/detail_map_tv"
@@ -398,6 +359,7 @@
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/detail_more_review_btn"
                 app:layout_constraintTop_toBottomOf="@id/detail_review_divider" />
 
             <Button

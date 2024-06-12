@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.data.network
 import android.util.Log
 import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.aed.AedJsonAdapter
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.message.EmergencyMessageJsonAdapter
@@ -18,6 +19,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import java.time.LocalDateTime
 
 
 object RetrofitInstance {
@@ -64,7 +66,7 @@ object RetrofitInstance {
 
     private fun retrofitProvider(): Retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(retrofitMoshi))
         .client(authClient)
         .build()
 
@@ -134,4 +136,8 @@ object RetrofitInstance {
             .create(InterestService::class.java)
     }
 
+    private val retrofitMoshi = Moshi.Builder()
+        .add(LocalDateTime::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(KotlinJsonAdapterFactory())
+        .build()
 }

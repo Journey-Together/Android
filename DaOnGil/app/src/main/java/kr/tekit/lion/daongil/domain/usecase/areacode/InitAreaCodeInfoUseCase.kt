@@ -1,21 +1,25 @@
 package kr.tekit.lion.daongil.domain.usecase.areacode
 
+import kr.tekit.lion.daongil.domain.model.SigunguCode
+import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
+import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
 import kr.tekit.lion.daongil.domain.usecase.base.BaseUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.Result
 
 class InitAreaCodeInfoUseCase(
-    private val addAreaCodeUseCase: AddAreaCodeUseCase,
-    private val getAllDetailAreaCodeUseCase: GetAllDetailAreaCodeUseCase,
-    private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
-    private val addVillageCodeUseCase: AddVillageCodeUseCase
+    private val areaCodeRepository: AreaCodeRepository,
+    private val villageCodeRepository: VillageCodeRepository,
 ): BaseUseCase() {
     suspend operator fun invoke(): Result<Unit> = execute {
-        addAreaCodeUseCase()
+        areaCodeRepository.addAreaCodeInfo()
+        val areaCodes = areaCodeRepository.getAllAreaCodes()
 
-        val areaCodes = getAllAreaCodeUseCase()
+        val sigunguCodeList = areaCodes.map { area->
+            areaCodeRepository.getSigunguCode(area.code).map {
+                SigunguCode(area.code, it.code, it.name)
+            }
+        }
 
-        val detailCodes = areaCodes.map { getAllDetailAreaCodeUseCase(it.code) }
-
-        detailCodes.map { addVillageCodeUseCase(it) }
+        sigunguCodeList.map { villageCodeRepository.addSigunguCode(it) }
     }
 }

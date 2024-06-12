@@ -119,8 +119,13 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
     private fun initButtonSubmit(binding: FragmentScheduleDetailsFormBinding){
         binding.buttonDFSubmit.setOnClickListener {
-            scheduleFormViewModel.submitNewPlan()
-            requireActivity().finish()
+            scheduleFormViewModel.submitNewPlan{
+                if(it){
+                    requireActivity().finish()
+                }else{
+                    // to do
+                }
+            }
         }
     }
 }

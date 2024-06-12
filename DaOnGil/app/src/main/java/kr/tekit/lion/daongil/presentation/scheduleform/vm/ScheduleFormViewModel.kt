@@ -129,23 +129,33 @@ class ScheduleFormViewModel(
         }
     }
 
-    fun submitNewPlan() {
+    fun submitNewPlan(callback: (Boolean) -> Unit) {
         val title = _title.value
         val startDateString = _startDate.value?.let { formatDateValue(it) }
         val endDateString = _endDate.value?.let { formatDateValue(it) }
         val dailyPlace = getDailyPlaceList()
+
         if (title != null && startDateString != null && endDateString != null) {
             val newPlan = NewPlan(title, startDateString, endDateString, false, dailyPlace)
-            Log.d("test1234", "newPlan : $newPlan")
+
             viewModelScope.launch {
-                addNewPlanUseCase(newPlan).onSuccess {
-                    //Log.d("submitNewPlan", "onSuccess : ${it.toString()}")
-                }.onError {
-                    //Log.d("submitNewPlan", "onError : ${it.toString()}")
+                val success = try {
+                    addNewPlanUseCase(newPlan).onSuccess {
+                        Log.d("submitNewPlan", "onSuccess : ${it}")
+                    }.onError {
+                        Log.d("submitNewPlan", "onError : ${it}")
+                    }
+                    true
+                } catch (e: Exception) {
+                    Log.d("submitNewPlan", "Error: ${e.message}")
+                    false
                 }
+                // 작업한 결과가 끝나면 true를 반환해준다.
+                callback(success)
             }
         }
     }
+
 
     private fun getDailyPlaceList() : List<DailyPlace>{
         val dailyPlaceList = mutableListOf<DailyPlace>()

@@ -4,17 +4,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeBinding
-import kr.tekit.lion.daongil.databinding.FragmentConcernTypeModifyBinding
+import kr.tekit.lion.daongil.domain.model.ConcernType
 import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModel
 import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModelFactory
 
 class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
 
-    private val viewModel: ConcernTypeViewModel by viewModels { ConcernTypeViewModelFactory() }
+    private val viewModel: ConcernTypeViewModel by activityViewModels { ConcernTypeViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -22,7 +22,7 @@ class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
         val binding = FragmentConcernTypeBinding.bind(view)
 
         initView(binding)
-        initSelection(binding)
+        observeAndInitSelection(binding)
         moveConcernTypeModify(binding)
     }
 
@@ -37,20 +37,28 @@ class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
         }
     }
 
-    private fun initSelection(binding: FragmentConcernTypeBinding) {
+    private fun observeAndInitSelection(binding: FragmentConcernTypeBinding) {
         viewModel.concernType.observe(viewLifecycleOwner) { concernType ->
-            val concernMap = mapOf(
-                concernType.isPhysical to Pair(binding.imageViewConcernTypePhysical, R.drawable.sv_selected_physical_disability_icon),
-                concernType.isHear to Pair(binding.imageViewConcernTypeHearing, R.drawable.sv_selected_hearing_impairment_icon),
-                concernType.isVisual to Pair(binding.imageViewConcernTypeVisual, R.drawable.sv_selected_visual_impairment_icon),
-                concernType.isElderly to Pair(binding.imageViewConcernTypeElderly, R.drawable.sv_selected_elderly_people_icon),
-                concernType.isChild to Pair(binding.imageViewConcernTypeInfant, R.drawable.sv_selected_infant_family_icon)
-            )
+            initSelection(binding, concernType)
+        }
+    }
 
-            concernMap.forEach { (isConcerned, viewAndDrawable) ->
-                if (isConcerned) {
-                    settingSelected(viewAndDrawable.first, viewAndDrawable.second)
-                }
+    private fun initSelection(binding: FragmentConcernTypeBinding, concernType: ConcernType) {
+        with(binding) {
+            if (concernType.isPhysical) {
+                settingSelected(imageViewConcernTypePhysical, R.drawable.sv_selected_physical_disability_icon)
+            }
+            if (concernType.isVisual) {
+                settingSelected(imageViewConcernTypeVisual, R.drawable.sv_selected_visual_impairment_icon)
+            }
+            if (concernType.isHear) {
+                settingSelected(imageViewConcernTypeHearing, R.drawable.sv_selected_hearing_impairment_icon)
+            }
+            if (concernType.isChild) {
+                settingSelected(imageViewConcernTypeInfant, R.drawable.sv_selected_infant_family_icon)
+            }
+            if (concernType.isElderly) {
+                settingSelected(imageViewConcernTypeElderly, R.drawable.sv_selected_elderly_people_icon)
             }
         }
     }

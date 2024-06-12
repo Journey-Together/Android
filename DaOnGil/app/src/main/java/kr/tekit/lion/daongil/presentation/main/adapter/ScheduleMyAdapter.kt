@@ -5,40 +5,57 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.RowScheduleMyBinding
+import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 
-class ScheduleMyAdapter(private val scheduleMainItemListener: OnScheduleMainItemClickListener) :
+class ScheduleMyAdapter(
+    private val itemClickListener: (Int) -> Unit
+) :
     RecyclerView.Adapter<ScheduleMyAdapter.ScheduleMyViewHolder>() {
-    interface OnScheduleMainItemClickListener {
-        fun onScheduleMainItemClick(scheduleIdx: Int)
+
+    private var items: MutableList<MyMainSchedule> = mutableListOf()
+
+    fun addItems(newItems: List<MyMainSchedule>){
+        items = newItems.toMutableList()
+        notifyDataSetChanged()
     }
 
     class ScheduleMyViewHolder(
         private val binding: RowScheduleMyBinding,
+        private val itemClickListener: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(scheduleMainItemListener: OnScheduleMainItemClickListener) {
-            val tempDDay = 1 // 임시 변수
+
+        init {
+            binding.root.setOnClickListener {
+                itemClickListener(absoluteAdapterPosition)
+            }
+        }
+
+        fun bind(item: MyMainSchedule) {
 
             with(binding) {
-                textViewRowScheduleName.text = "제주 둘레길 여행"
-                textViewRowSchedulePeriod.text = "2024.06.01 - 2024.06.05"
+                textViewRowScheduleName.text = item.title
+                textViewRowSchedulePeriod.text = item.startDate + " - " + item.endDate
 
+                // 다녀온 일정인 경우
+                if (item.remainDate == null) {
+                    viewRowScheduleRemainingDeco.visibility = View.INVISIBLE
+                    viewRowScheduleElapsedDeco.visibility = View.VISIBLE
+                    textViewRowScheduleDDay.visibility = View.INVISIBLE
+                    if(item.hasReview == false) {
+                        buttonRowScheduleReview.visibility = View.VISIBLE
+                        buttonRowScheduleReview.text = "후기를 작성해주세요"
+                    }
+                    if(item.hasReview == true){
+                        buttonRowScheduleReview.visibility = View.GONE
+                    }
+                }
                 // 다가오는 일정인 경우
-                if (tempDDay > 0) {
+                else {
                     viewRowScheduleRemainingDeco.visibility = View.VISIBLE
                     viewRowScheduleElapsedDeco.visibility = View.INVISIBLE
                     textViewRowScheduleDDay.isEnabled = true // 일정 상태에 따라 TextColor 변경
-                    textViewRowScheduleDDay.text = "D-1"
+                    textViewRowScheduleDDay.text = item.remainDate
                     buttonRowScheduleReview.visibility = View.GONE // 후기작성 버튼 숨김처리
-                }
-                // 다녀온 일정인 경우
-                else {
-                    viewRowScheduleRemainingDeco.visibility = View.INVISIBLE
-                    viewRowScheduleElapsedDeco.visibility = View.VISIBLE
-                    textViewRowScheduleDDay.isEnabled = false
-                    buttonRowScheduleReview.visibility = View.VISIBLE
-                }
-                root.setOnClickListener {
-                    scheduleMainItemListener.onScheduleMainItemClick(1)
                 }
             }
         }
@@ -46,14 +63,15 @@ class ScheduleMyAdapter(private val scheduleMainItemListener: OnScheduleMainItem
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleMyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ScheduleMyViewHolder(RowScheduleMyBinding.inflate(inflater, parent, false))
+        return ScheduleMyViewHolder(RowScheduleMyBinding.inflate(inflater, parent, false),
+            itemClickListener)
     }
 
     override fun onBindViewHolder(holder: ScheduleMyViewHolder, position: Int) {
-        holder.bind(scheduleMainItemListener)
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return items.size
     }
 }

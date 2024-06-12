@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.datasource
 
+import kr.tekit.lion.daongil.data.dto.remote.response.member.ConcernTypeResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.member.MyDefaultInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.member.MyInfoResponse
 import kr.tekit.lion.daongil.data.network.service.MemberService
@@ -27,5 +28,13 @@ class MemberDataSource(
 
     suspend fun modifyMyIceInfo(request: RequestBody) {
         memberService.modifyMyIceInfo(request)
+    }
+
+    suspend fun getConcernType(): ConcernTypeResponse {
+        return memberService.getConcernType()
+    }
+
+    suspend fun updateConcernType(requestBody: RequestBody) {
+        return memberService.updateConcernType(requestBody)
     }
 }

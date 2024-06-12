@@ -16,6 +16,7 @@ import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class DetailViewModel(

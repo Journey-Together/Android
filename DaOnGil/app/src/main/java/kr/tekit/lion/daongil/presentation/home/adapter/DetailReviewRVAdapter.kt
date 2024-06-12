@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailReviewSmallBinding
 import kr.tekit.lion.daongil.domain.model.Review
+import java.time.format.DateTimeFormatter
 
 class DetailReviewRVAdapter(private val reviewList : List<Review>) : RecyclerView.Adapter<DetailReviewRVAdapter.DetailReviewViewHolder>() {
 
@@ -27,8 +28,11 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>) : RecyclerVie
         fun bind(reviewData : Review) {
             binding.itemDetailReviewNickname.text = reviewData.nickname
             binding.itemDetailReviewContent.text = reviewData.content
-            // binding.itemDetailReviewDate.text = reviewData.date.toString()
             binding.itemDetailReviewStarScoreTv.text = reviewData.grade.toString()
+
+            val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd")
+            val formattedDate = reviewData.date.format(formatter)
+            binding.itemDetailReviewDate.text = formattedDate
 
             Glide.with(binding.itemDetailReviewProfileIv.context)
                 .load(reviewData.profileImg)

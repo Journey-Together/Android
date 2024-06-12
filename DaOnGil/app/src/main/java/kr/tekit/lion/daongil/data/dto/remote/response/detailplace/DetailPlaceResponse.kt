@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.data.dto.remote.response.detailplace
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
 import kr.tekit.lion.daongil.domain.model.Review
+import kr.tekit.lion.daongil.domain.model.SubDisability
 
 @JsonClass(generateAdapter = true)
 data class DetailPlaceResponse(
@@ -35,7 +36,12 @@ data class DetailPlaceResponse(
                     date = it.date
                 )
             },
-            subDisability = data.subDisability
+            subDisability = data.subDisability?.map {
+                SubDisability(
+                    description = it.description,
+                    subDisabilityName = it.subDisabilityName
+                )
+            }
         )
     }
 }

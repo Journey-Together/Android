@@ -1,7 +1,8 @@
 package kr.tekit.lion.daongil.data.network.service
 
-import kr.tekit.lion.daongil.data.dto.remote.response.plan.OpenPlanListResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlanListResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -35,4 +36,7 @@ interface PlanService {
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     )
 
+    // 내 일정 정보
+    @GET("plan/my")
+    suspend fun getMyMainSchedule(): MyMainScheduleResponse
 }

@@ -8,6 +8,7 @@ import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoGuestRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoGuestUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 

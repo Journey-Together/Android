@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailReviewBigBinding
 import kr.tekit.lion.daongil.domain.model.ReviewDetail
@@ -33,6 +34,7 @@ class ReviewListRVAdapter(private val reviewList : List<ReviewDetail>, private v
             binding.itemDetailReviewBigNickname.text = review.nickname
             binding.itemDetailReviewBigContent.text = review.content
             binding.itemDetailReviewBigDate.text = review.date
+            binding.itemDetailReviewBigRatingbar.rating = review.grade
 
             val reviewImageRVAdapter = ReviewImageRVAdapter(review.imageList)
             binding.itemDetailReviewBigRv.adapter = reviewImageRVAdapter
@@ -44,6 +46,11 @@ class ReviewListRVAdapter(private val reviewList : List<ReviewDetail>, private v
                 dialog.isCancelable = false
                 dialog.show(activty.supportFragmentManager, "ComplainDialog")
             }
+
+            Glide.with(binding.itemDetailReviewBigProfileIv.context)
+                .load(review.profileImg)
+                .error(R.drawable.default_profile)
+                .into(binding.itemDetailReviewBigProfileIv)
         }
 
         override fun onPosBtnClick() {

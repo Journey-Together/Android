@@ -89,6 +89,12 @@ class SchedulePlaceViewHolder(private val binding: ItemSchedulePlaceBinding) :
             textViewItemSPlaceName.text = schedulePlace.name
             textViewItemSPlaceCategory.text = schedulePlace.category
 
+            iconISPPhysicalDisability.visibility = View.GONE
+            iconISPVisualImpairment.visibility = View.GONE
+            iconISPHearingImpairment.visibility = View.GONE
+            iconISPInfantFamily.visibility = View.GONE
+            iconISPElderlyPeople.visibility = View.GONE
+
             // 무장애 유형 정보
             // 1 (지체 장애), 2 (시각 장애), 3 (청각 장애), 4 (유아 동반), 5 (고령자)
             schedulePlace.disability.forEach {

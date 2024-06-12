@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.data.dto.remote.response.plan
+package kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule
 
 
 import com.squareup.moshi.Json

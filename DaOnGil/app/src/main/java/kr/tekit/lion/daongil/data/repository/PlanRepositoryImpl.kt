@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.data.repository
 
 import kr.tekit.lion.daongil.data.datasource.PlanDataSource
 import kr.tekit.lion.daongil.data.dto.remote.request.toRequestBody
+import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
@@ -25,5 +26,9 @@ class PlanRepositoryImpl(
         size: Int
     ): PlaceSearchResult {
         return planDataSource.getPlaceSearchResult(word, page, size).toDomainModel()
+    }
+
+    override suspend fun getMyMainSchedule(): List<MyMainSchedule?>? {
+        return planDataSource.getMyMainSchedule().toDomainModel()
     }
 }

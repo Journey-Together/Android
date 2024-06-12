@@ -135,15 +135,13 @@ class ScheduleFormViewModel(
         val endDateString = _endDate.value?.let { formatDateValue(it) }
         val dailyPlace = getDailyPlaceList()
         if (title != null && startDateString != null && endDateString != null) {
-            val newPlan = NewPlan(title, startDateString, endDateString, true, dailyPlace)
+            val newPlan = NewPlan(title, startDateString, endDateString, false, dailyPlace)
             Log.d("test1234", "newPlan : $newPlan")
             viewModelScope.launch {
                 addNewPlanUseCase(newPlan).onSuccess {
-                    println("================================")
-                    Log.d("test1234", "onSuccess : ${it.toString()}")
+                    //Log.d("submitNewPlan", "onSuccess : ${it.toString()}")
                 }.onError {
-                    println("================================")
-                    Log.d("test1234", "onError : ${it.toString()}")
+                    //Log.d("submitNewPlan", "onError : ${it.toString()}")
                 }
             }
         }

@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.emergency.message.Emergenc
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.realtime.EmergencyRealtimeJsonAdapter
 import kr.tekit.lion.daongil.data.network.service.AedService
 import kr.tekit.lion.daongil.data.network.service.EmergencyService
+import kr.tekit.lion.daongil.data.network.service.InterestService
 import kr.tekit.lion.daongil.data.network.service.KorWithService
 import kr.tekit.lion.daongil.data.network.service.NaverMapService
 import kr.tekit.lion.daongil.data.network.service.PharmacyService
@@ -120,6 +121,17 @@ object RetrofitInstance {
             .client(okHttpClient)
             .build()
             .create(PharmacyService::class.java)
+    }
+
+    val interestService: InterestService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.BASE_URL)
+            .addConverterFactory(MoshiConverterFactory.create(
+                Moshi.Builder()
+                    .build()).asLenient())
+            .client(okHttpClient)
+            .build()
+            .create(InterestService::class.java)
     }
 
 }

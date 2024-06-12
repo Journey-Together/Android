@@ -1,22 +1,28 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.vm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kr.tekit.lion.daongil.domain.model.DailyPlace
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
+import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
+import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
-import java.util.Date
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ScheduleFormViewModel(
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase,
-    private val getPlaceDetailInfoUseCase: GetPlaceDetailInfoUseCase
+    private val getPlaceDetailInfoUseCase: GetPlaceDetailInfoUseCase,
+    private val addNewPlanUseCase: AddNewPlanUseCase
 ) : ViewModel() {
     private val _startDate = MutableLiveData<Date?>()
     val startDate: LiveData<Date?> get() = _startDate
@@ -91,7 +97,7 @@ class ScheduleFormViewModel(
         viewModelScope.launch {
             getPlaceSearchResultUseCase(word, page, size).onSuccess {
                 // 검색 결과를 받아오면 _placeSearchResult에 값을 갱신해준다
-                //Log.d("getPlaceSearchResult", "onSuccess ${it.toString()}")
+                Log.d("getPlaceSearchResult", "onSuccess ${it.toString()}")
                 _placeSearchResult.value = it
             }.onError {
                 //Log.d("getPlaceSearchResult", "onError ${it.toString()}")
@@ -121,6 +127,62 @@ class ScheduleFormViewModel(
                 //Log.d("getSearchedPlaceDetailInfo", "placeId $placeId  onError${it.toString()}")
             }
         }
+    }
+
+    fun submitNewPlan() {
+        val title = _title.value
+        val startDateString = _startDate.value?.let { formatDateValue(it) }
+        val endDateString = _endDate.value?.let { formatDateValue(it) }
+        val dailyPlace = getDailyPlaceList()
+        if (title != null && startDateString != null && endDateString != null) {
+            val newPlan = NewPlan(title, startDateString, endDateString, true, dailyPlace)
+            Log.d("test1234", "newPlan : $newPlan")
+            viewModelScope.launch {
+                addNewPlanUseCase(newPlan).onSuccess {
+                    println("================================")
+                    Log.d("test1234", "onSuccess : ${it.toString()}")
+                }.onError {
+                    println("================================")
+                    Log.d("test1234", "onError : ${it.toString()}")
+                }
+            }
+        }
+    }
+
+    private fun getDailyPlaceList() : List<DailyPlace>{
+        val dailyPlaceList = mutableListOf<DailyPlace>()
+        val schedule = _schedule.value
+        val startDate = _startDate.value
+
+        startDate?.let { startDate ->
+            schedule?.forEachIndexed { index, dailySchedule ->
+                val date = getDayNString(startDate, index)
+                val places = mutableListOf<Long>()
+                dailySchedule.dailyPlaces.forEach {
+                    places.add(it.placeId)
+                }
+                dailyPlaceList.add(DailyPlace(date, places))
+            }
+        }
+
+        return dailyPlaceList.toList()
+    }
+
+    private fun formatDateValue(date: Date): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+        val formattedDate = dateFormat.format(date)
+
+        return formattedDate
+    }
+
+    private fun getDayNString(date: Date, n: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.DAY_OF_MONTH, n)
+
+        val dayString = formatDateValue(calendar.time)
+
+        return dayString
     }
 
 

@@ -77,7 +77,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/margin_basic"
+                android:layout_margin="@dimen/margin_big2"
                 android:orientation="vertical">
 
                 <TextView
@@ -301,7 +301,8 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_search_result"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/margin_small1"/>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

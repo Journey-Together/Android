@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoRepository
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 
 // ViewModelFactory = ViewModel을 생성하는 역할을 하는 클래스
 // ViewModelProvider.Factory 인터페이스를 구현한다.

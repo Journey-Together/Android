@@ -6,14 +6,14 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoGuestRepository
-import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoRepository
+import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoGuestUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 
 class DetailViewModelFactory(context: Context) : ViewModelProvider.Factory{
     private val authRepository = AuthRepository.create(context)
-    private val placeDetailInfoRepository = PlaceDetailInfoRepository.crate()
+    private val placeDetailInfoRepository = PlaceRepository.crate()
     private val placeDetailInfoGuestRepository = PlaceDetailInfoGuestRepository.create()
     private val bookmarkRepository = BookmarkRepository.create()
 

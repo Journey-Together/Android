@@ -67,7 +67,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_route" />
+            android:text="@string/text_route"
+            app:chipIcon="@drawable/chip_route_icon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/ticket_office_chip"
@@ -116,20 +117,6 @@
             android:text="@string/text_restroom"
             app:chipIcon="@drawable/chip_restroom_icon" />
 
-        <com.google.android.material.chip.Chip
-            android:id="@+id/auditorium_chip"
-            style="@style/detail_category_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_auditorium" />
-
-        <com.google.android.material.chip.Chip
-            android:id="@+id/room_chip"
-            style="@style/detail_category_chip"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_room" />
-
     </com.google.android.material.chip.ChipGroup>
 
 
@@ -155,14 +142,16 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_help_dog" />
+            android:text="@string/text_help_dog"
+            app:chipIcon="@drawable/chip_helpdog_icon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/guide_chip"
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_guide" />
+            android:text="@string/text_guide"
+            app:chipIcon="@drawable/chip_guide_icon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/audio_guide_chip"
@@ -177,7 +166,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_big_print" />
+            android:text="@string/text_big_print"
+            app:chipIcon="@drawable/chip_big_print_icon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/braile_promotion_chip"
@@ -191,7 +181,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/guide_system" />
+            android:text="@string/guide_system"
+            app:chipIcon="@drawable/chip_guide_system_icon"/>
     </com.google.android.material.chip.ChipGroup>
 
 
@@ -210,7 +201,8 @@
             style="@style/detail_category_chip"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/category_option_height"
-            android:text="@string/text_sign_guide" />
+            android:text="@string/text_sign_guide"
+            app:chipIcon="@drawable/chip_sign_icon"/>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/video_guide_chip"

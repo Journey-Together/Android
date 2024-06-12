@@ -6,12 +6,14 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
+import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
 import kr.tekit.lion.daongil.domain.model.DailyPlace
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
+import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
@@ -22,7 +24,8 @@ import java.util.*
 class ScheduleFormViewModel(
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase,
     private val getPlaceDetailInfoUseCase: GetPlaceDetailInfoUseCase,
-    private val addNewPlanUseCase: AddNewPlanUseCase
+    private val addNewPlanUseCase: AddNewPlanUseCase,
+    private val getPlaceBookmarkListUseCase: GetPlaceBookmarkListUseCase
 ) : ViewModel() {
     private val _startDate = MutableLiveData<Date?>()
     val startDate: LiveData<Date?> get() = _startDate
@@ -36,10 +39,17 @@ class ScheduleFormViewModel(
     private val _schedule = MutableLiveData<List<DailySchedule>?>()
     val schedule : LiveData<List<DailySchedule>?> get() = _schedule
 
+    private val _bookmarkedPlaces = MutableLiveData<List<BookmarkedPlace>>()
+    val bookmarkedPlaces: LiveData<List<BookmarkedPlace>> get() = _bookmarkedPlaces
+
     // 여행지 검색 화면 - 검색 결과 목록
     private val _placeSearchResult = MutableLiveData<PlaceSearchResult>()
     // read only
     val placeSearchResult : LiveData<PlaceSearchResult> get() = _placeSearchResult
+
+    init {
+        getBookmarkedPlaceList()
+    }
 
     fun setStartDate(startDate: Date?){
         _startDate.value = startDate
@@ -191,6 +201,17 @@ class ScheduleFormViewModel(
         val dayString = formatDateValue(calendar.time)
 
         return dayString
+    }
+
+    fun getBookmarkedPlaceList(){
+        viewModelScope.launch {
+            getPlaceBookmarkListUseCase().onSuccess {
+                Log.d("getBookmarkedPlaceList", "onSuccess $it")
+                _bookmarkedPlaces.postValue(it)
+            }.onError {
+                Log.e("getBookmarkedPlaceList", "onError $it")
+            }
+        }
     }
 
 

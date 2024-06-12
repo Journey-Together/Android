@@ -99,6 +99,16 @@ class ScheduleFormViewModel(
         }
     }
 
+    fun isPlaceAlreadyAdded(dayPosition:Int, placeId: Long) : Boolean{
+        // 선택한 관광지정보가 같은 날에 추가된 경우
+        val daySchedule = _schedule.value?.get(dayPosition)?.dailyPlaces
+        daySchedule?.forEach {
+            if(it.placeId == placeId){
+                return true
+            }
+        }
+        return false
+    }
     fun getSearchedPlaceDetailInfo(dayPosition:Int, placeId: Long){
         viewModelScope.launch {
             getPlaceDetailInfoUseCase(placeId).onSuccess {

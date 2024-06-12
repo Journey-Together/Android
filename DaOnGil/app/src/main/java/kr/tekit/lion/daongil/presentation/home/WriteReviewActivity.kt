@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteReviewBinding
@@ -76,6 +77,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         settingToolbar()
         settingImageRVAdapter()
         settingBtn()
+        settingPlaceData(binding)
     }
 
     private fun settingToolbar() {
@@ -181,5 +183,19 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             formatDateValue(endDate)
         }
         binding.writeReviewDateBtn.text = getString(R.string.picked_dates, startDateFormatted, endDateFormatted)
+    }
+
+    private fun settingPlaceData(binding: ActivityWriteReviewBinding) {
+        val placeName = intent.getStringExtra("placeName")
+        val placeAddress = intent.getStringExtra("placeAddress")
+        val placeImg = intent.getStringExtra("placeImg")
+
+        binding.writeReviewTitleTv.text = placeName
+        binding.writeReviewAddressTv.text = placeAddress
+
+        Glide.with(binding.writeReviewIv.context)
+            .load(placeImg)
+            .error(R.drawable.empty_view)
+            .into(binding.writeReviewIv)
     }
 }

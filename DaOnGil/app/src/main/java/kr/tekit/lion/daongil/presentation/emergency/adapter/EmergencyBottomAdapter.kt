@@ -31,7 +31,6 @@ class EmergencyBottomAdapter(
                         binding.emergencyBedLayout.visibility = View.VISIBLE
                         binding.emergencyName.text = item.hospitalList?.hospitalName
                         binding.emergencyAddress.text = item.hospitalList?.hospitalAddress
-                        binding.emergencyCall.text = item.hospitalList?.emergencyTel
                         binding.emergencyBed.text =
                             item.hospitalList?.emergencyCount.toString() + " / " + item.hospitalList?.emergencyAllCount.toString()
 
@@ -55,7 +54,6 @@ class EmergencyBottomAdapter(
                         binding.emergencyBedLayout.visibility = View.GONE
                         binding.emergencyName.text = item.aedList?.aedName
                         binding.emergencyAddress.text = item.aedList?.aedAdress
-                        binding.emergencyCall.text = item.aedList?.aedTel
                     }
                 }
             }

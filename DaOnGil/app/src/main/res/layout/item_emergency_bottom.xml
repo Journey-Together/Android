@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_big4"
+            android:layout_marginBottom="25dp"
             android:orientation="vertical"
             android:layout_gravity="center_vertical">
 
@@ -33,7 +34,6 @@
                     android:id="@+id/emergencyName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_small2"
                     android:fontFamily="@font/pretendard_semibold"
                     android:textColor="@color/text_primary"
                     android:textSize="@dimen/font_big3" />
@@ -61,18 +61,6 @@
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_regular"
                 android:maxLines="1"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/font_small1" />
-
-            <TextView
-                android:id="@+id/emergencyCall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small2"
-                android:drawableStart="@drawable/call_icon"
-                android:drawablePadding="@dimen/margin_small2"
-                android:drawableTint="@color/text_quaternary"
-                android:fontFamily="@font/pretendard_regular"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_small1" />
 

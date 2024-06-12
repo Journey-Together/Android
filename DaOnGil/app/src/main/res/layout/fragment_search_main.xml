@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/background_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".presentation.main.fragment.SearchMainFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -46,7 +46,7 @@
             </com.google.android.material.appbar.MaterialToolbar>
 
             <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_container"
+                android:id="@+id/list_tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/tab_layout_background"
@@ -302,130 +302,142 @@
                     android:id="@+id/rv_search_result"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="@dimen/margin_small1"/>
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/margin_small1" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <LinearLayout
-        android:id="@+id/map_container"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/tab_layout_background"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.search.SearchBar
-            android:id="@+id/search_bar"
+        <LinearLayout
+            android:id="@+id/map_container"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/search_view_background"
-            android:hint="여기를 눌러 검색해주세요" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@color/tab_layout_background"
-            android:elevation="5dp"
-            app:tabIndicatorAnimationMode="elastic"
-            app:tabIndicatorFullWidth="true"
-            app:tabIndicatorHeight="5dp"
-            app:tabRippleColor="@android:color/transparent"
-            app:tabSelectedTextAppearance="@style/tabLayout_text_appearance.Active"
-            app:tabTextAppearance="@style/tabLayout_text_appearance">
+            android:orientation="vertical"
+            android:visibility="gone">
 
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tourist_spot" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/restaurant" />
-
-            <com.google.android.material.tabs.TabItem
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lodgment" />
-        </com.google.android.material.tabs.TabLayout>
-
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-
-            <androidx.fragment.app.FragmentContainerView
-                android:id="@+id/map"
-                android:name="com.naver.maps.map.MapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-            <HorizontalScrollView
+            <com.google.android.material.search.SearchBar
+                android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:paddingTop="5dp"
-                android:scrollbars="none">
+                android:backgroundTint="@color/search_view_background"
+                android:hint="여기를 눌러 검색해주세요" />
 
-                <com.google.android.material.chip.ChipGroup
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/map_tab_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/tab_layout_background"
+                android:elevation="5dp"
+                app:tabIndicatorAnimationMode="elastic"
+                app:tabIndicatorFullWidth="true"
+                app:tabIndicatorHeight="5dp"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextAppearance="@style/tabLayout_text_appearance.Active"
+                app:tabTextAppearance="@style/tabLayout_text_appearance">
+
+                <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top"
+                    android:text="@string/tourist_spot" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/restaurant" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lodgment" />
+            </com.google.android.material.tabs.TabLayout>
+
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <androidx.fragment.app.FragmentContainerView
+                    android:id="@+id/map"
+                    android:name="com.naver.maps.map.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
-                    app:singleLine="true">
+                    android:paddingTop="5dp"
+                    android:scrollbars="none">
 
-                    <ImageButton
-                        android:id="@+id/btn_reset"
+                    <com.google.android.material.chip.ChipGroup
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/circle_button_layout"
-                        android:elevation="2dp"
-                        android:padding="10dp"
-                        android:src="@drawable/reset_icon" />
+                        android:layout_gravity="top"
+                        android:background="@android:color/transparent"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        app:singleLine="true">
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_physical_disability"
-                        style="@style/map_category_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_physical_disability" />
+                        <ImageButton
+                            android:id="@+id/btn_reset"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/circle_button_layout"
+                            android:elevation="2dp"
+                            android:padding="10dp"
+                            android:src="@drawable/reset_icon" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_visual_impairment"
-                        style="@style/map_category_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_visual_impairmnet" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_physical_disability"
+                            style="@style/map_category_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_physical_disability" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_hearing_impairment"
-                        style="@style/map_category_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_hearing_impairment" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_visual_impairment"
+                            style="@style/map_category_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_visual_impairmnet" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_infant_familly"
-                        style="@style/map_category_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/text_infant_family" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_hearing_impairment"
+                            style="@style/map_category_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_hearing_impairment" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_elderly_people"
-                        style="@style/map_category_chip"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/text_elderly_person" />
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_infant_familly"
+                            style="@style/map_category_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_infant_family" />
 
-                </com.google.android.material.chip.ChipGroup>
-            </HorizontalScrollView>
-        </FrameLayout>
+                        <com.google.android.material.chip.Chip
+                            android:id="@+id/chip_elderly_people"
+                            style="@style/map_category_chip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/text_elderly_person" />
 
-    </LinearLayout>
+                    </com.google.android.material.chip.ChipGroup>
+                </HorizontalScrollView>
+            </FrameLayout>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/pharamcyBottomSheet"
+            layout="@layout/emergency_bottom_sheet_layout"
+            app:layout_anchor="@+id/pharamcyMapAreaButton"
+            app:layout_anchorGravity="bottom"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/mode_switch_btn"

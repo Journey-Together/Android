@@ -68,7 +68,7 @@ class SearchMainViewModel(
     val screenState: StateFlow<ScreenState> get() = _screenState.asStateFlow()
 
     private val _listSearchOption = MutableStateFlow(ListSearchOption(Category.PLACE.name, "", 0, 0))
-    val searchOption get() = _listSearchOption.asStateFlow()
+    val listSearchOption get() = _listSearchOption.asStateFlow()
 
     private val _areaCode = MutableStateFlow<List<AreaCode>>(emptyList())
     val areaCode get() = _areaCode.asStateFlow()

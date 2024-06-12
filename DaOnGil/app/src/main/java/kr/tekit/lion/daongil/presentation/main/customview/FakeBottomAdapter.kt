@@ -1,16 +1,16 @@
-package kr.tekit.lion.daongil.presentation.emergency.adapter
+package kr.tekit.lion.daongil.presentation.main.customview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemEmergencyBottomBinding
-import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
+import kr.tekit.lion.daongil.domain.model.FakeAroundPlace
 
-class PharmacyBottomAdapter(
-    private val pharmacyBottomList: List<PharmacyMapInfo>,
+class FakeBottomAdapter(
+    private val pharmacyBottomList: List<FakeAroundPlace>,
     private val itemClickListener: (Int) -> Unit
-) : RecyclerView.Adapter<PharmacyBottomAdapter.PharmacyBottomViewHolder>() {
+) : RecyclerView.Adapter<FakeBottomAdapter.PharmacyBottomViewHolder>() {
     class PharmacyBottomViewHolder(
         private val binding: ItemEmergencyBottomBinding,
         private val itemClickListener: (Int) -> Unit
@@ -22,12 +22,10 @@ class PharmacyBottomAdapter(
             }
         }
 
-        fun bind(item: PharmacyMapInfo) {
-            with(binding) {
-                binding.emergencyBottomImage.setImageResource(R.drawable.pharmacy_bottom_img)
-                binding.emergencyName.text = item.pharmacyName
-                binding.emergencyAddress.text = item.pharmacyAddress
-            }
+        fun bind(item: FakeAroundPlace) {
+            binding.emergencyBottomImage.setImageResource(item.image)
+            binding.emergencyName.text = item.name
+            binding.emergencyAddress.text = item.address
         }
     }
 

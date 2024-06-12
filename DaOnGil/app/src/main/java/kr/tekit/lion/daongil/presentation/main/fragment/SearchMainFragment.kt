@@ -6,7 +6,9 @@ import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -19,6 +21,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
@@ -40,6 +43,7 @@ import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.main.adapter.FakeHomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
+import kr.tekit.lion.daongil.presentation.main.customview.FakeBottomSheet
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
 import kr.tekit.lion.daongil.presentation.main.model.ScreenState
@@ -52,30 +56,45 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             requireContext()
         )
     }
-
     private lateinit var launcherForPermission: ActivityResultLauncher<Array<String>>
+    lateinit var binding: FragmentSearchMainBinding
 
     // 내장 위치 추적 기능 사용
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mLocationSource: FusedLocationSource
     private lateinit var naverMap: NaverMap
+    private val bottomSheetBehavior by lazy {
+        BottomSheetBehavior.from(binding.pharamcyBottomSheet.emergencyBottomSheetLayout)
+    }
 
     val placePos = ArrayList<LatLng>()
     val resPos = ArrayList<LatLng>()
     val roomPos = ArrayList<LatLng>()
+    val placeDataList = ArrayList<FakeAroundPlace>()
+    val resPlaceDataList = ArrayList<FakeAroundPlace>()
+    val roomPlaceDataList = ArrayList<FakeAroundPlace>()
 
+    private var selectedMarker: Marker? = null
+    val markers = mutableListOf<Marker>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSearchMainBinding.inflate(inflater)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentSearchMainBinding.bind(view)
 
         repeatOnViewStarted {
-            viewModel.searchOption.collect {
+            viewModel.listSearchOption.collect {
                 Log.d("CurrentOption", it.toString())
             }
         }
 
-        val placeDataList = ArrayList<FakeAroundPlace>()
         placeDataList.add(
             FakeAroundPlace(
                 "경기도 수원시 팔달구 정조로 833",
@@ -140,7 +159,17 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             )
         )
 
-        val resPlaceDataList = ArrayList<FakeAroundPlace>()
+        placeDataList.add(
+            FakeAroundPlace(
+                "경기도 수원시 팔달구 화서동 436-1 (화서동)",
+                listOf("1", "3", "4"),
+                R.drawable.test_search_seoho,
+                "서호공원",
+                12
+            )
+        )
+
+
         resPlaceDataList.add(
             FakeAroundPlace(
                 "경기도 수원시 영통구 센트럴파크로127번길 147 1층",
@@ -213,17 +242,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 10
             )
         )
-        resPlaceDataList.add(
-            FakeAroundPlace(
-                "경기도 수원시 장안구 경수대로 1013",
-                listOf("1"),
-                R.drawable.test_songpung,
-                "송풍가든",
-                10
-            )
-        )
 
-        val roomPlaceDataList = ArrayList<FakeAroundPlace>()
         roomPlaceDataList.add(
             FakeAroundPlace(
                 "경기도 수원시 영통구 광교호수공원로 320 (하동)",
@@ -284,19 +303,22 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         roomPos.add(LatLng(37.2817201, 126.9716314))
         roomPos.add(LatLng(37.2775048, 127.032461))
 
-
         with(binding) {
+            btnSearch.setOnClickListener {
+                rvSearchResult.visibility = View.VISIBLE
+                totalCnt.text = "7"
+            }
 
             val placeAdapter = FakeHomeLocationRVAdapter(placeDataList.toList()) {}
             val resAdapter = FakeHomeLocationRVAdapter(resPlaceDataList.toList()) {}
             val roomAdapter = FakeHomeLocationRVAdapter(roomPlaceDataList.toList()) {}
 
-            totalCnt.text = "7"
+            totalCnt.text = "0"
             rvSearchResult.adapter = placeAdapter
             rvSearchResult.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.VERTICAL, false)
 
-            tabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            listTabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
                     // 탭이 선택되었을 때 수행할 작업
                     when (tab.position) {
@@ -304,33 +326,70 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                             viewModel.onSelectedTab(Category.PLACE.name)
                             rvSearchResult.adapter = placeAdapter
                             totalCnt.text = "7"
-                            if (viewModel.screenState.value == ScreenState.Map) {
-                                placePos.map {
-                                    addMaker(it)
-                                }
-                            }
                         }
 
                         1 -> {
                             viewModel.onSelectedTab(Category.RESTAURANT.name)
                             rvSearchResult.adapter = resAdapter
                             totalCnt.text = "9"
-                            if (viewModel.screenState.value == ScreenState.Map) {
-
-                                resPos.map {
-                                    addResMaker(it)
-                                }
-                            }
                         }
 
                         2 -> {
                             viewModel.onSelectedTab(Category.ROOM.name)
                             rvSearchResult.adapter = roomAdapter
                             totalCnt.text = "4"
-                            if (viewModel.screenState.value == ScreenState.Map) {
+                        }
+                    }
+                }
 
-                                roomPos.map {
-                                    addRoomMaker(it)
+                override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
+
+            mapTabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    // 탭이 선택되었을 때 수행할 작업
+                    when (tab.position) {
+                        0 -> {
+                            markers.map {
+                                it.map = null
+                            }
+                            markers.clear()
+                            viewModel.onSelectedTab(Category.PLACE.name)
+                            rvSearchResult.adapter = placeAdapter
+                            totalCnt.text = "7"
+                            if (viewModel.screenState.value == ScreenState.Map) {
+                                placePos.mapIndexed { i, v ->
+                                    addMaker(placeDataList[i], v)
+                                }
+                            }
+                        }
+
+                        1 -> {
+                            markers.map {
+                                it.map = null
+                            }
+                            viewModel.onSelectedTab(Category.RESTAURANT.name)
+                            rvSearchResult.adapter = resAdapter
+                            totalCnt.text = "9"
+                            if (viewModel.screenState.value == ScreenState.Map) {
+                                resPos.mapIndexed { i, v ->
+                                    addResMaker(resPlaceDataList[i], v)
+                                }
+                            }
+                        }
+
+                        2 -> {
+                            markers.map {
+                                it.map = null
+                            }
+                            viewModel.onSelectedTab(Category.ROOM.name)
+                            rvSearchResult.adapter = roomAdapter
+                            totalCnt.text = "4"
+                            if (viewModel.screenState.value == ScreenState.Map) {
+                                roomPos.mapIndexed { i, v ->
+                                    addRoomMaker(roomPlaceDataList[i], v)
                                 }
                             }
                         }
@@ -341,6 +400,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
+
 
             selectedArea.doAfterTextChanged {
                 if (it != null) {
@@ -554,8 +614,6 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                         optionNames,
                         DisabilityType.PhysicalDisability
                     )
-
-
                 }
 
                 is DisabilityType.HearingImpairment -> {
@@ -616,7 +674,6 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
         } else {
             permissionGrantedMapUiSetting()
-
             naverMap.addOnCameraChangeListener { reason: Int, animated: Boolean ->
                 val bounds = naverMap.contentBounds
                 val northEast = bounds.northEast
@@ -659,11 +716,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 )
                 naverMap.moveCamera(cameraUpdate)
             }
+
+            viewModel.listSearchOption
         }
 
-        placePos.map {
-            addMaker(it)
-        }
+        placePos.mapIndexed { i, v -> addMaker(placeDataList[i], v) }
+
     }
 
     private fun permissionGrantedMapUiSetting() {
@@ -746,7 +804,13 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         }
     }
 
-    private fun addMaker(pos: LatLng) {
+    private fun setBottomRecylcerView(pharmacyBottomList: List<FakeAroundPlace>) {
+        val pharmacyBottomSheet = FakeBottomSheet(binding.pharamcyBottomSheet, pharmacyBottomList)
+        pharmacyBottomSheet.setRecyclerView()
+        pharmacyBottomSheet.recyclerViewTopButton()
+    }
+
+    private fun addMaker(info: FakeAroundPlace, pos: LatLng) {
         val marker = Marker()
         with(marker) {
             icon = OverlayImage.fromResource(R.drawable.maker_unselected_tourist_spot_icon)
@@ -758,17 +822,42 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             map = naverMap
             width = 86
             height = 90
+            this.isHideCollidedMarkers = true
+            this.isForceShowIcon = false
 
             setOnClickListener {
+                this@SearchMainFragment.selectedMarker?.let { previousMarker ->
+                    previousMarker.icon =
+                        OverlayImage.fromResource(R.drawable.maker_unselected_tourist_spot_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 86
+                    previousMarker.height = 86
+                    previousMarker.zIndex = 0
+                }
+
+                selectedMarker = this
+
+                // 클릭된 마커를 선택 상태로 변경
+                this.icon = OverlayImage.fromResource(R.drawable.maker_selected_tourist_spot_icon)
+                this.isHideCollidedMarkers = true
+                this.isForceShowIcon = true
+                this.width = 100
+                this.height = 130
+                this.zIndex = 10
+
+                setBottomRecylcerView(listOf(info))
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }
+
+            markers.add(marker)
         }
     }
 
-    private fun addResMaker(pos: LatLng) {
+    private fun addResMaker(info: FakeAroundPlace, pos: LatLng) {
         val marker = Marker()
         with(marker) {
-            Log.d("dasdas", pos.toString())
             icon = OverlayImage.fromResource(R.drawable.maker_unselected_restaurant_icon)
             position = LatLng(
                 pos.latitude,
@@ -778,14 +867,40 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             map = naverMap
             width = 86
             height = 90
+            this.isHideCollidedMarkers = true
+            this.isForceShowIcon = false
 
             setOnClickListener {
+                this@SearchMainFragment.selectedMarker?.let { previousMarker ->
+                    previousMarker.icon =
+                        OverlayImage.fromResource(R.drawable.maker_unselected_restaurant_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 86
+                    previousMarker.height = 86
+                    previousMarker.zIndex = 0
+                }
+
+                selectedMarker = this
+
+                // 클릭된 마커를 선택 상태로 변경
+                this.icon = OverlayImage.fromResource(R.drawable.maker_selected_restauraunt_icon)
+                this.isHideCollidedMarkers = true
+                this.isForceShowIcon = true
+                this.width = 100
+                this.height = 130
+                this.zIndex = 10
+
+                setBottomRecylcerView(listOf(info))
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }
+            markers.add(marker)
+
         }
     }
 
-    private fun addRoomMaker(pos: LatLng) {
+    private fun addRoomMaker(info: FakeAroundPlace, pos: LatLng) {
         val marker = Marker()
         with(marker) {
             icon = OverlayImage.fromResource(R.drawable.maker_unselected_lodging_icon)
@@ -797,10 +912,36 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             map = naverMap
             width = 86
             height = 90
+            this.isHideCollidedMarkers = true
+            this.isForceShowIcon = false
 
             setOnClickListener {
+                this@SearchMainFragment.selectedMarker?.let { previousMarker ->
+                    previousMarker.icon =
+                        OverlayImage.fromResource(R.drawable.maker_unselected_lodging_icon)
+                    previousMarker.isHideCollidedMarkers = true
+                    previousMarker.isForceShowIcon = false
+                    previousMarker.width = 86
+                    previousMarker.height = 86
+                    previousMarker.zIndex = 0
+                }
+
+                selectedMarker = this
+
+                // 클릭된 마커를 선택 상태로 변경
+                this.icon = OverlayImage.fromResource(R.drawable.maker_selected_lodging_icon)
+                this.isHideCollidedMarkers = true
+                this.isForceShowIcon = true
+                this.width = 100
+                this.height = 130
+                this.zIndex = 10
+
+                setBottomRecylcerView(listOf(info))
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 true
             }
+            markers.add(marker)
+
         }
     }
 

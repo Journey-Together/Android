@@ -57,7 +57,7 @@ class SplashActivity : AppCompatActivity() {
 
                 this.start()
                 repeatOnStarted {
-                    // delay(500)
+                    delay(400)
                     viewModel.uiState.collect { state ->
                         when (state) {
                             is LogInState.LoggedIn -> {

@@ -33,4 +33,8 @@ class MemberDataSource(
     suspend fun getConcernType(): ConcernTypeResponse {
         return memberService.getConcernType()
     }
+
+    suspend fun updateConcernType(requestBody: RequestBody) {
+        return memberService.updateConcernType(requestBody)
+    }
 }

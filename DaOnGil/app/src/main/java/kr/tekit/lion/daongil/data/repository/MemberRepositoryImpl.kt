@@ -11,6 +11,7 @@ import kr.tekit.lion.daongil.domain.model.PersonalInfo
 import kr.tekit.lion.daongil.domain.model.ProfileImg
 import kr.tekit.lion.daongil.domain.repository.MemberRepository
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class MemberRepositoryImpl(
     private val memberDataSource: MemberDataSource
@@ -38,5 +39,9 @@ class MemberRepositoryImpl(
 
     override suspend fun getConcernType(): ConcernType {
         return memberDataSource.getConcernType().toDomainModel()
+    }
+
+    override suspend fun updateConcernType(requestBody: ConcernType) {
+        return memberDataSource.updateConcernType(requestBody.toRequestBody())
     }
 }

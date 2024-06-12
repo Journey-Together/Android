@@ -49,4 +49,9 @@ interface MemberService {
 
     @GET("member/interest-type")
     suspend fun getConcernType(): ConcernTypeResponse
+
+    @PATCH("member/interest-type")
+    suspend fun updateConcernType(
+        @Body requestBody: RequestBody
+    )
 }

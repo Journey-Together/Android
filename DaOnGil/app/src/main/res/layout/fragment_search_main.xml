@@ -46,6 +46,7 @@
             </com.google.android.material.appbar.MaterialToolbar>
 
             <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tab_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/tab_layout_background"
@@ -436,7 +437,7 @@
         android:text="@string/watching_map"
         android:textColor="@color/floating_action_button_title"
         app:backgroundTint="@color/floating_action_button"
-        app:icon="@drawable/list_icon" />
+        app:icon="@drawable/map_icon" />
 
 </FrameLayout>
 

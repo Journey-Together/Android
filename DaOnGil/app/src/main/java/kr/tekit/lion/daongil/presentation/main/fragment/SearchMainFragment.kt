@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.content.res.Configuration
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import androidx.activity.result.ActivityResultLauncher
@@ -18,6 +19,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -36,7 +38,9 @@ import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
-import kr.tekit.lion.daongil.presentation.main.vm.Category
+import kr.tekit.lion.daongil.presentation.main.model.Category
+import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
+import kr.tekit.lion.daongil.presentation.main.model.ScreenState
 import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModelFactory
 
@@ -57,9 +61,29 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentSearchMainBinding.bind(view)
-        var uiState = Mode.CATEGORY.mode
+
+        repeatOnViewStarted {
+            viewModel.searchOption.collect{
+                Log.d("CurrentOption", it.toString())
+            }
+        }
 
         with(binding) {
+
+            tabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    // 탭이 선택되었을 때 수행할 작업
+                    when (tab.position) {
+                        0 -> viewModel.onSelectedTab(Category.PLACE.name)
+                        1 -> viewModel.onSelectedTab(Category.RESTAURANT.name)
+                        2 -> viewModel.onSelectedTab(Category.ROOM.name)
+                    }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab) {}
+
+                override fun onTabReselected(tab: TabLayout.Tab) {}
+            })
 
             selectedArea.doAfterTextChanged {
                 if (it != null) {
@@ -81,9 +105,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                         android.R.layout.simple_list_item_1,
                         areaList
                     )
-                    binding.selectedArea.setAdapter(adapter)
+                    selectedArea.setAdapter(adapter)
                 }
             }
+
+            selectedArea.doAfterTextChanged { viewModel.onSelectedArea(it.toString()) }
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.villageCode.collect {
@@ -96,15 +122,16 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                     binding.detailSelectedArea.setAdapter(adapter)
                 }
             }
+            detailSelectedArea.doAfterTextChanged { viewModel.onSelectedSigungu(it.toString()) }
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.physicalDisabilityOptions.collect { options ->
-                    btnPhysicalDisability.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.PhysicalDisability)
+                    btnPhysicalDisability.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.PhysicalDisability)
                     }
 
-                    chipPhysicalDisability.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.PhysicalDisability)
+                    chipPhysicalDisability.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.PhysicalDisability)
                     }
 
                     val text = if (options.isNotEmpty()) {
@@ -120,12 +147,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.visualImpairmentOptions.collect { options ->
-                    btnVisualImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.VisualImpairment)
+                    btnVisualImpairment.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.VisualImpairment)
                     }
 
-                    chipVisualImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.VisualImpairment)
+                    chipVisualImpairment.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.VisualImpairment)
                     }
 
                     val text = if (options.isNotEmpty()) {
@@ -142,12 +169,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.hearingImpairmentOptions.collect { options ->
-                    btnHearingImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.HearingImpairment)
+                    btnHearingImpairment.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.HearingImpairment)
                     }
 
-                    chipHearingImpairment.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.HearingImpairment)
+                    chipHearingImpairment.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.HearingImpairment)
                     }
 
                     val text = if (options.isNotEmpty()) {
@@ -163,12 +190,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.infantFamilyOptions.collect { options ->
-                    btnInfantFamily.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.InfantFamily)
+                    btnInfantFamily.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.InfantFamily)
                     }
 
-                    chipInfantFamilly.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.InfantFamily)
+                    chipInfantFamilly.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.InfantFamily)
                     }
 
                     val text = if (options.isNotEmpty()) {
@@ -184,12 +211,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
 
             this@SearchMainFragment.repeatOnViewStarted {
                 viewModel.elderlyPersonOptions.collect { options ->
-                    btnElderlyPeople.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.ElderlyPeople)
+                    btnElderlyPeople.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.ElderlyPeople)
                     }
 
-                    chipElderlyPeople.setClickEvent(viewLifecycleOwner.lifecycleScope) {
-                        showBottomSheet(options, Category.ElderlyPeople)
+                    chipElderlyPeople.setClickEvent(this) {
+                        showBottomSheet(options, DisabilityType.ElderlyPeople)
                     }
 
                     val text = if (options.isNotEmpty()) {
@@ -203,23 +230,29 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            modeSwitchBtn.setOnClickListener {
-                when (uiState) {
-                    Mode.CATEGORY.mode -> {
-                        uiState = Mode.MAP.mode
-                        categoryContainer.visibility = View.GONE
-                        mapContainer.visibility = View.VISIBLE
-                        modeSwitchBtn.setText(R.string.watching_list)
-                        modeSwitchBtn.setIconResource(R.drawable.list_icon)
+            this@SearchMainFragment.repeatOnViewStarted {
+                viewModel.screenState.collect{
+                    when(it){
+                        ScreenState.Map -> {
+                            categoryContainer.visibility = View.GONE
+                            mapContainer.visibility = View.VISIBLE
+                            modeSwitchBtn.setText(R.string.watching_list)
+                            modeSwitchBtn.setIconResource(R.drawable.list_icon)
+                        }
+                        ScreenState.List ->{
+                            categoryContainer.visibility = View.VISIBLE
+                            mapContainer.visibility = View.GONE
+                            modeSwitchBtn.setText(R.string.watching_map)
+                            modeSwitchBtn.setIconResource(R.drawable.map_icon)
+                        }
                     }
+                }
+            }
 
-                    Mode.MAP.mode -> {
-                        uiState = Mode.CATEGORY.mode
-                        categoryContainer.visibility = View.VISIBLE
-                        mapContainer.visibility = View.GONE
-                        modeSwitchBtn.setText(R.string.watching_map)
-                        modeSwitchBtn.setIconResource(R.drawable.map_icon)
-                    }
+            modeSwitchBtn.setOnClickListener {
+                when(viewModel.screenState.value){
+                    ScreenState.List -> viewModel.changeScreenState(ScreenState.Map)
+                    ScreenState.Map -> viewModel.changeScreenState(ScreenState.List)
                 }
             }
 
@@ -254,31 +287,28 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         initMap()
     }
 
-    private fun showBottomSheet(selectedOptions: List<Int>, category: Category) {
-        CategoryBottomSheet(selectedOptions, category) { options ->
-            when (category) {
-                is Category.PhysicalDisability -> {
-                    viewModel.onCompleteSelectPhysicalDisabilityOptions(options)
+    private fun showBottomSheet(selectedOptions: List<Int>, disabilityType: DisabilityType) {
+        CategoryBottomSheet(selectedOptions, disabilityType) { optionIds, optionNames ->
+            when (disabilityType) {
+                is DisabilityType.PhysicalDisability -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.PhysicalDisability)
                 }
-
-                is Category.HearingImpairment -> {
-                    viewModel.onCompleteSelectHearingImpairmentOptions(options)
+                is DisabilityType.HearingImpairment -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.HearingImpairment)
                 }
-
-                is Category.VisualImpairment -> {
-                    viewModel.onCompleteSelectVisualImpairmentOptions(options)
+                is DisabilityType.VisualImpairment -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.VisualImpairment)
                 }
-
-                is Category.InfantFamily -> {
-                    viewModel.onCompleteSelectInfantFamilyOptions(options)
+                is DisabilityType.InfantFamily -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.InfantFamily)
                 }
-
-                is Category.ElderlyPeople -> {
-                    viewModel.onCompleteElderlyPersonOptions(options)
+                is DisabilityType.ElderlyPeople -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.ElderlyPeople)
                 }
             }
         }.show(parentFragmentManager, "bottomSheet")
     }
+
 
     private fun initMap() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -311,6 +341,27 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             launcherForPermission.launch(REQUEST_LOCATION_PERMISSIONS)
         } else {
             permissionGrantedMapUiSetting()
+
+
+            naverMap.addOnCameraChangeListener { reason: Int, animated: Boolean ->
+                val bounds = naverMap.contentBounds
+                val northEast = bounds.northEast
+                val southWest = bounds.southWest
+
+                val northWest = LatLng(northEast.latitude, southWest.longitude)
+                val southEast = LatLng(southWest.latitude, northEast.longitude)
+
+                val maxX = northEast.latitude
+                val maxY = northEast.longitude
+                val minX = southWest.latitude
+                val southWestLng = southWest.longitude
+                val northWestLat = northWest.latitude
+                val northWestLng = northWest.longitude
+                val southEastLat = southEast.latitude
+                val minY = southEast.longitude
+
+
+            }
 
             // 사용자 현재 위치 받아오기
             fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
@@ -376,22 +427,6 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             }
 
 
-            /**
-             * 사용자의 위치를 지도에서 추적하는 모드
-             *
-             * Follow : 위치를 추적하면서 카메라도 따라 움직이는 모드.
-             * LocationOverlay와 카메라의 좌표가 사용자의 위치를 따라 움직입니다.
-             * API나 제스처를 사용해 지도를 임의로 움직일 경우 모드가 NoFollow로 바뀝니다.
-             *
-             * NoFollow : 위치는 추적하지만 지도는 움직이지 않는 모드.
-             * LocationOverlay가 사용자의 위치를 따라 움직이나 지도는 움직이지 않습니다.
-             *
-             * Face : 위치를 추적하면서 카메라의 좌표와 베어링도 따라 움직이는 모드.
-             * LocationOverlay와 카메라의 좌표,
-             * 베어링이 사용자의 위치, 사용자가 바라보고 있는 방향을 따라 움직입니다.
-             * API나 제스처를 사용해 지도를 임의로 움직일 경우 모드가 NoFollow로 바뀝니다.
-             *
-             * */
             locationTrackingMode = LocationTrackingMode.Follow
 
             // 건물 내부 표시
@@ -470,9 +505,4 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
             naverMap.isNightModeEnabled = false
         }
     }
-}
-
-enum class Mode(val mode: String) {
-    CATEGORY("category"),
-    MAP("map")
 }

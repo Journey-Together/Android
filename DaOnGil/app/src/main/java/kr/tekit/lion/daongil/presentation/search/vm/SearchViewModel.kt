@@ -23,7 +23,6 @@ import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.RemoveRecentSe
 
 class SearchViewModel(
     private val getAllRecentSearchKeywordUseCase: GetAllRecentSearchKeywordUseCase,
-    private val searchByKeywordUseCase: SearchByKeywordUseCase,
     private val addRecentSearchKeywordUseCase: AddRecentSearchKeywordUseCase,
     private val removeAllRecentSearchKeywordUseCase : RemoveAllRecentSearchKeywordUseCase,
     private val removeRecentSearchKeywordUseCase : RemoveRecentSearchKeywordUseCase
@@ -34,20 +33,20 @@ class SearchViewModel(
     val recentSearchKeyword: StateFlow<List<RecentSearchKeyword>> = getAllRecentSearchKeywordUseCase()
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), listOf())
 
-    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-    val searchResult = _searchKeyword
-        .debounce(800)
-        .flatMapLatest { query ->
-            if (query.isNotBlank()) {
-                searchByKeywordUseCase(query)
-            } else {
-                flowOf()
-            }
-        }
-        .flowOn(Dispatchers.IO)
-        .catch { e: Throwable ->
-            e.printStackTrace()
-        }
+//    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+//    val searchResult = _searchKeyword
+//        .debounce(800)
+//        .flatMapLatest { query ->
+//            if (query.isNotBlank()) {
+//                searchByKeywordUseCase(query)
+//            } else {
+//                flowOf()
+//            }
+//        }
+//        .flowOn(Dispatchers.IO)
+//        .catch { e: Throwable ->
+//            e.printStackTrace()
+//        }
 
 
     fun onCompleteTextChanged(searchKeyword: String) {

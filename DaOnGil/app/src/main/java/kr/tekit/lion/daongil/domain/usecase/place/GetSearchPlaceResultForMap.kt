@@ -1,16 +1,17 @@
 package kr.tekit.lion.daongil.domain.usecase.place
 
-import kr.tekit.lion.daongil.domain.model.SearchOption
+import kotlinx.coroutines.flow.Flow
+import kr.tekit.lion.daongil.domain.model.ListSearchOption
+import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.SearchPlace
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.usecase.base.BaseUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.Result
 
-
-class GetSearchPlaceUseCase(
+class GetSearchPlaceResultForMap(
     private val placeRepository: PlaceRepository
-): BaseUseCase() {
-    suspend operator fun invoke(options: SearchOption): Result<List<SearchPlace>> = execute {
-        placeRepository.getSearchPlaceResult(options)
+) {
+    operator fun invoke(options: MapSearchOption): Flow<List<SearchPlace>>{
+        return placeRepository.getSearchPlaceResultForMap(options)
     }
 }

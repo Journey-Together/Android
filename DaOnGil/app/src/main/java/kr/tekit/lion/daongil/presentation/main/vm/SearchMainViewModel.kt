@@ -40,9 +40,35 @@ class SearchMainViewModel(
     init {
         viewModelScope.launch {
             _areaCode.value = getAllAreaCodeUseCase()
+            getSearchPlaceResultForList(ListSearchOption("PLACE", "대현", 10, 0)).onSuccess {
+                Log.d("xczxczx", it.toString())
+            }.onError {
+                Log.d("xczxczx", it.toString())
+            }
         }
     }
 
+    private val _mapSearchResult = MutableStateFlow(MapSearchOption(Category.PLACE.name, "", 0, 0))
+
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    val mapSearchResult = _mapSearchResult
+        .debounce(800)
+        .flatMapLatest { request ->
+            if ((request.maxX != null) and (request.minY != null) and (request.maxY != null) and (request.minY != null)) {
+                getSearchPlaceResultForMap(request)
+            } else {
+                flowOf()
+            }
+        }.flowOn(Dispatchers.IO)
+        .catch { e: Throwable ->
+            e.printStackTrace()
+        }
+
+    private val _screenState = MutableStateFlow<ScreenState>(ScreenState.List)
+    val screenState: StateFlow<ScreenState> get() = _screenState.asStateFlow()
+
+    private val _listSearchOption = MutableStateFlow(ListSearchOption(Category.PLACE.name, "", 0, 0))
+    val searchOption get() = _listSearchOption.asStateFlow()
 
     private val _areaCode = MutableStateFlow<List<AreaCode>>(emptyList())
     val areaCode get() = _areaCode.asStateFlow()

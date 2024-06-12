@@ -25,7 +25,18 @@ interface PlaceService {
 
     @GET("place/search")
     suspend fun searchPlace(
-        @QueryMap request: Map<String, String?>,
-        @Tag authType: AuthType = AuthType.NO_AUTH
+        @Query("category") category: String,
+        @Query("query") query: String,
+        @Query("size") size: Int,
+        @Query("page") page: Int,
+        @Query("minX") minX: Double?,
+        @Query("maxX") maxX: Double?,
+        @Query("minY") minY: Double?,
+        @Query("maxY") maxY: Double?,
+        @Query("disabilityType") disabilityType: List<String>,
+        @Query("detailFilter") detailFilter: List<String>,
+        @Query("areacode") areaCode: String? = "",
+        @Query("sigungucode") sigunguCode: String?  = "",
+        @Query("arrange") arrange: String = "C",
     ): SearchPlaceResponse
 }

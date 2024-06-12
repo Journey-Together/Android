@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.RecentSearchKeywordRepository
-import kr.tekit.lion.daongil.domain.repository.SearchKeywordRepository
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.AddRecentSearchKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.GetAllRecentSearchKeywordUseCase
 import kr.tekit.lion.daongil.domain.usecase.recent_search_keyword.RemoveAllRecentSearchKeywordUseCase
@@ -16,8 +15,6 @@ class SearchViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val getAllRecentSearchKeywordUseCase = GetAllRecentSearchKeywordUseCase(
         recentSearchKeywordRepository
     )
-
-    private val searchByKeywordUseCase = SearchByKeywordUseCase(SearchKeywordRepository.create())
 
     private val addRecentSearchKeywordUseCase = AddRecentSearchKeywordUseCase(
         recentSearchKeywordRepository
@@ -33,7 +30,6 @@ class SearchViewModelFactory(context: Context) : ViewModelProvider.Factory {
         if (modelClass.isAssignableFrom(SearchViewModel::class.java)) {
             return SearchViewModel(
                 getAllRecentSearchKeywordUseCase,
-                searchByKeywordUseCase,
                 addRecentSearchKeywordUseCase,
                 removeAllRecentSearchKeywordUseCase,
                 removeRecentSearchKeywordUseCase

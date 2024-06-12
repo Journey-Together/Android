@@ -33,11 +33,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        this.repeatOnStarted {
-            viewModel.searchResult.collect {
-                Log.d("SearchResult", it.toString())
-            }
-        }
 
         with(binding) {
             btnBack.setOnClickListener { finish() }

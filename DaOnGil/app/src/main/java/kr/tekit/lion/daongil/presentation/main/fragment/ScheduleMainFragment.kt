@@ -34,6 +34,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         )
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getMyMainPlanList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -92,7 +98,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                         itemClickListener = { position ->
                             val intent = Intent(requireActivity(), ScheduleActivity::class.java)
                             // to do - 여행 일정 idx 전달
-                            intent.putExtra("placeId", it?.get(position)?.planId)
+                            //intent.putExtra("placeId", it?.get(position)?.planId)
+                            intent.putExtra("planType", 1)
                             startActivity(intent)
                         }
                     )
@@ -109,8 +116,9 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
-                            // 공개 일정 상세보기 페이지로 이동
-                            // onScheduleMainItemClick(it[position].planId)
+                            val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+                            intent.putExtra("planType", -1)
+                            startActivity(intent)
                         }
                     )
                     schedulePublicAdapter.addItems(it)

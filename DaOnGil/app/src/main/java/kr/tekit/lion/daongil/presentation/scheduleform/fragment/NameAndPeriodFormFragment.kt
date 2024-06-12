@@ -12,12 +12,13 @@ import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_form), ConfirmDialogInterface {
     // activity의 뷰모델
-    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels()
+    private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

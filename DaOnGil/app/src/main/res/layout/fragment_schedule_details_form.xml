@@ -48,7 +48,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <Button
-            android:id="@+id/buttonDFAddPlace"
+            android:id="@+id/buttonDFSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"

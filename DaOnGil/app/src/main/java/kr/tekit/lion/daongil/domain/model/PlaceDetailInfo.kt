@@ -7,7 +7,7 @@ data class PlaceDetailInfo (
     val category: String,
     val disability: List<Int>,
     val image: String?,
-    var isMark: Boolean,
+    val isMark: Boolean,
     val latitude: String,
     val longitude: String,
     val name: String,

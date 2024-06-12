@@ -5,9 +5,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import kr.tekit.lion.daongil.databinding.ActivityScheduleFormBinding
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
+import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 
 class ScheduleFormActivity : AppCompatActivity() {
-    private val scheduleFormViewModel : ScheduleFormViewModel by viewModels()
+    private val scheduleFormViewModel : ScheduleFormViewModel by viewModels { ScheduleFormViewModelFactory() }
 
     private val binding: ActivityScheduleFormBinding by lazy {
         ActivityScheduleFormBinding.inflate(layoutInflater)

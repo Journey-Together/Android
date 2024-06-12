@@ -3,12 +3,14 @@ package kr.tekit.lion.daongil.presentation.scheduleform.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemFormSearchResultBinding
-import kr.tekit.lion.daongil.domain.model.FormSearchedPlace
+import kr.tekit.lion.daongil.domain.model.PlaceSearchInfo
 
 class FormSearchResultAdapter(
-    private val searchResult: MutableList<FormSearchedPlace>,
-    private val onPlaceSelectedListener : (selectedPlaceId: Int) -> Unit
+    private val searchResult: List<PlaceSearchInfo>,
+    private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
 ) : RecyclerView.Adapter<FormSearchResultAdapter.FormSearchResultViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormSearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,14 +30,23 @@ class FormSearchResultAdapter(
 
     class FormSearchResultViewHolder(
         private val binding: ItemFormSearchResultBinding,
-        private val onPlaceSelectedListener : (selectedPlaceId: Int) -> Unit
+        private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(searchedPlace: FormSearchedPlace) {
-            binding.textViewSearchResultName.text = searchedPlace.searchedPlaceName
-            binding.textViewSearchResultCategory.text = searchedPlace.searchedPlaceCategory
+        fun bind(placeSearchInfo: PlaceSearchInfo) {
+            binding.apply {
+                textViewSearchResultName.text = placeSearchInfo.placeName
+                textViewSearchResultCategory.text = placeSearchInfo.category
+                placeSearchInfo.imageUrl?.let {
+                    Glide.with(binding.imageViewSearchResultThumbnail.context)
+                        .load(it)
+                        .placeholder(R.drawable.empty_view_small)
+                        .error(R.drawable.empty_view_small)
+                        .into(imageViewSearchResultThumbnail)
+                }
 
-            binding.imageButtonSearchResultAdd.setOnClickListener {
-                onPlaceSelectedListener(searchedPlace.searchedPlaceId)
+                imageButtonSearchResultAdd.setOnClickListener {
+                    onPlaceSelectedListener(placeSearchInfo.placeId)
+                }
             }
         }
     }

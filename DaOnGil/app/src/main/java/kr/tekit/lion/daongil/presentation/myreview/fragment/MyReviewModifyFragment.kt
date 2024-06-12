@@ -15,6 +15,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewModifyBinding
 import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
@@ -80,19 +81,31 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify), Con
 
     private fun setDummyData(binding: FragmentMyReviewModifyBinding) {
         // 더미 데이터
-        val dummyTitle = "광화문"
-        val dummyAddress = "서울특별시 샘플구 샘플로 123"
-        val dummySatisfaction = 4.5f
-        val dummyReview = "여행지에 대한 샘플 리뷰 내용입니다. 정말 멋진 경험이었어요!"
+        val dummyImage = "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=8ba0da28-67d3-4385-a5d4-7d8d3cee7b35&mode=row"
+        val dummyTitle = "망상해변"
+        val dummyAddress = "강원특별자치도 동해시 동해대로 6270-10 (망상동)"
+        val dummyDate = "2024.05.24 금"
+        val dummySatisfaction = 3.5
+        val dummyReview = "역시 바다입니다.\n" +
+                "탁 트여서 풍경도 좋고, 즐기기에 너무 좋습니다!\n" +
+                "시설도 잘 되어있어서 만족스러웠습니다.\n" +
+                "오랜만에 걱정 없이 즐긴 거 같습니다.\n" +
+                "다음에도 또 방문하고 싶어요."
         val dummyImages = listOf(
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MTRfMjc2%2FMDAxNjkyMDEwNjg4NjY5.xVKBUWPTf9iUZ2LOjmY3F5xxaP0PYb0boV6VwdDOK1cg.dICKJGMMb1H_FT6ezq-QMLSqNJzukn5wsNowbU7Nsu4g.PNG.khy920630%2F001-%25C8%25AD%25B8%25E9_%25C4%25B8%25C3%25B3_2023-08-14_195616.png&type=sc960_832"),
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzAxMDNfMTU0%2FMDAxNjcyNzQ2ODU1MDg4.UH9YeGpMu5OJrZYVnpeOTc7yVq6wA4M-MlErHMOt1bsg.cR1T4IxL60xSvjClSDJrVgl1bGHsU5KXaVKKuH49JaUg.JPEG.cellosj%2FKakaoTalk_20230103_193055989.jpg&type=sc960_832"),
+            Uri.parse("https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=72eabcf0-7c1f-416c-8c47-ac007e6e20a9&mode=row"),
+            Uri.parse("https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=22d309c5-09cf-458a-815a-e45bb1eeced7&mode=row"),
+            Uri.parse("https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=678ff254-540f-439a-9e28-3864829f3530&mode=row")
         )
 
         binding.textViewMyReviewModifyTitle.text = dummyTitle
         binding.textViewMyReviewModifyAddress.text = dummyAddress
-        binding.ratingbarMyReviewModify.rating = dummySatisfaction
+        binding.buttonModifyReviewDate.text = dummyDate
+        binding.ratingbarMyReviewModify.rating = dummySatisfaction.toFloat()
         binding.textFieldMyReviewModifyWrite.setText(dummyReview)
+        Glide.with(binding.ImageViewMyReviewModify.context)
+            .load(dummyImage)
+            .error(R.drawable.empty_view)
+            .into(binding.ImageViewMyReviewModify)
         imagesList.clear()
         imagesList.addAll(dummyImages)
         imageRVAdapter.notifyDataSetChanged()

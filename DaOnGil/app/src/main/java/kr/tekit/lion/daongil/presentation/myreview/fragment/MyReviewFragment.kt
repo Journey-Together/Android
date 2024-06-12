@@ -42,9 +42,9 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
     private fun settingMyReviewRVAdapter(binding: FragmentMyReviewBinding) {
         val myReviewList = listOf(
-            MyReview("강원특별자치도 동해시", "망상해변", null, 3.5),
-            MyReview("대구 달성군", "비슬산 군립공원", null, 3.0),
-            MyReview("전라남도 함평군", "함평엑스포공원", null, 4.0)
+            MyReview("강원특별자치도 동해시", "망상해변", "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=8ba0da28-67d3-4385-a5d4-7d8d3cee7b35&mode=row", 3.5),
+            MyReview("대구 달성군", "비슬산 군립공원", "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=39749dc0-911a-4609-a236-cc3c31e3e924&mode=row", 3.0),
+            MyReview("전라남도 함평군", "함평엑스포공원", "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=a30b8d81-918d-44c6-bb72-ac9c094f74c5&mode=row", 4.0)
         )
 
         val myReviewRVAdapter = MyReviewRVAdapter(

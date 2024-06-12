@@ -11,7 +11,6 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
-import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
@@ -43,17 +42,22 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
         }
     }
     private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, schedulePosition: Int ){
-        val places = listOf(
-            BookmarkedPlace(0, "보신각 터"),
-            BookmarkedPlace(1, "부산 영화의 전당"),
-            BookmarkedPlace(2, "광복로문화패션거리"),
-            BookmarkedPlace(3, "상록해수욕장"),
-            BookmarkedPlace(4, "고양 어울림누리"),
-        )
+        // 만약 검색 화면에 들어올 때마다 북마크 목록을 갱신해주고 싶다면..
+        //scheduleFormViewModel.getBookmarkedPlaceList()
 
-        binding.recyclerViewFSBookmark.apply {
-            adapter = FormBookmarkedPlacesAdapter(places){ selectedPlaceId ->
-                addNewPlace(this, schedulePosition, selectedPlaceId)
+        scheduleFormViewModel.bookmarkedPlaces.observe(viewLifecycleOwner){
+            if(it.isNotEmpty()){
+                binding.recyclerViewFSBookmark.apply {
+                    adapter = FormBookmarkedPlacesAdapter(it){ selectedPlaceId ->
+                        addNewPlace(this, schedulePosition, selectedPlaceId)
+                    }
+                }
+            }else{
+                // 북마크한 여행지가 없다면
+                binding.apply {
+                    recyclerViewFSBookmark.visibility = View.INVISIBLE
+                    textViewFSBookmarkEmpty.visibility = View.VISIBLE
+                }
             }
         }
     }

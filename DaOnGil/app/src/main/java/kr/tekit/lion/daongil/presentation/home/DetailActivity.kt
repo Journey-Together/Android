@@ -137,8 +137,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.detailAddressTv.text = address
         binding.detailBasicContentTv.text = overview
         binding.detailBasicAddressContentTv.text = address
-        //binding.detailToolbarTitleTv.text = category
-        //binding.detailToolbarTitleTv.text = category
+        binding.detailToolbarTitleTv.text = category
+        binding.detailRouteTv.text = category
 
         if (image != null) {
             Glide.with(binding.detailThumbnailIv.context)

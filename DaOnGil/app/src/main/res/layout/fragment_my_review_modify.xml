@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyTitle" />
 
             <TextView
-                android:id="@+id/textViewMyReviewModifyDate"
+                android:id="@+id/textViewModifyReviewDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big1"
@@ -83,6 +83,25 @@
                 app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifyAddress"
                 app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyAddress" />
 
+            <Button
+                android:id="@+id/buttonModifyReviewDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:backgroundTint="@color/navi_background"
+                android:drawableTint="@color/black"
+                android:fontFamily="@font/pretendard_regular"
+                android:hint="방문 날짜 설정하기"
+                android:padding="@dimen/margin_big4"
+                android:textSize="@dimen/font_big3"
+                app:cornerRadius="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewModifyReviewDate"
+                app:strokeColor="@color/text_secondary"
+                app:strokeWidth="1dp" />
+
             <TextView
                 android:id="@+id/textViewMyReviewModifySatisfaction"
                 android:layout_width="wrap_content"
@@ -92,8 +111,8 @@
                 android:text="만족도"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifyDate"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyDate" />
+                app:layout_constraintStart_toStartOf="@id/buttonModifyReviewDate"
+                app:layout_constraintTop_toBottomOf="@+id/buttonModifyReviewDate" />
 
             <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/ratingbarMyReviewModify"
@@ -138,7 +157,6 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/text_secondary"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

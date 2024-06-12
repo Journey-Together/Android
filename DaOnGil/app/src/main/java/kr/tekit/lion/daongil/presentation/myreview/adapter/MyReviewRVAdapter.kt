@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemMyReviewBinding
 import kr.tekit.lion.daongil.domain.model.MyReview
@@ -26,13 +27,19 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val it
     class MyReviewViewHolder(val binding: ItemMyReviewBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.root.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
+                itemClickListener.invoke(bindingAdapterPosition)
             }
         }
 
         fun bind(myReview: MyReview) {
             binding.textViewMyReviewLocation.text = myReview.myReviewLocation
             binding.textViewMyReviewLocationName.text = myReview.myReviewLocationName
+            binding.ratingbarItemMyReview.rating = myReview.rating.toFloat()
+
+            Glide.with(binding.imageViewMyReivew.context)
+                .load(myReview.myReviewImage)
+                .error(R.drawable.empty_view)
+                .into(binding.imageViewMyReivew)
         }
     }
 }

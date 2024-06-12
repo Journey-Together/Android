@@ -48,7 +48,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         settingToolbar()
-        settingReviewBtn()
         initMap()
         settingDetailInfoRVAdapter()
 
@@ -57,7 +56,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 1L,
                 "재롱맘",
                 "https://i.namu.wiki/i/sLpl_9SaPt63LS9uKn7ptjw1GtopAOeL-fVSbFHsfwm2ZKwywO-4rd91q_MPds0-pXHkGqRyAj6u366J2-SygA.webp",
-                "다양한 편의시설 덕분에 편하게 여행할 수 있었어요! 주위에 식당도 많고 바람 쐬러 가기 좋아요 주말에 좋은 시간 보내고 왔습니다~",
+                "다양한 편의시설 덕분에 편하게 여행할 수 있었어요! 가족 중에 몸이 불편한 분이 계셔서 휠체어가 필요했는데 휠체어 대여도 해줘서 넘 좋았습니다 굿굿 주위에 식당도 많고 바람 쐬러 가기 좋아요 주말에 좋은 시간 보내고 왔습니다~",
                 "https://a.cdn-hotels.com/gdcs/production3/d844/2981861a-8dc3-44c1-a38d-4f8257914a02.jpg?impolicy=fcrop&w=800&h=533&q=medium",
                 4.5f,
                 LocalDateTime.of(2024, 6, 11, 14, 45)
@@ -67,7 +66,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 "락스타",
                 "https://pbs.twimg.com/media/F8oSaScbwAAWB45.png",
                 "평소에도 자주 가는 곳인데 무장애 편의시설이 다양하고 배려가 많은 곳이라 편하게 쉬다 오기 좋은 것 같아요 주말에 놀러갈 곳을 찾고 계신다면 이 곳을 추천 드려요!!",
-                "https://static.hubzum.zumst.com/hubzum/2023/03/27/09/c829849de2cc4ecc89355f8ea74ef4ab_780x780.jpg",
+                "https://cdn.3hoursahead.com/v2/content/image-comp/f159e0e5-0570-4c3f-b963-234339ada50f.webp",
                 5.0f,
                 LocalDateTime.of(2024, 6, 11, 14, 45)
             ),
@@ -81,9 +80,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             DetailInfo("핵심 동선", "출입구까지 경사로가 설치되어 있음 (완만함)"),
             DetailInfo("홍보물", "다온길 리플렛 있음"),
             DetailInfo("화장실", "장애인 화장실 및 샤워실 있음"),
-            DetailInfo("휠체어대여","대여 가능(2대/안내데스크/신분증보관)"),
-            DetailInfo("점자블록", "점자블록 있음(주요시설 앞)_시각장애인 편의시설"),
-            DetailInfo("안내요원", "안내요원 있음(입구 사무실)")
+            DetailInfo("휠체어대여","대여 가능 (2대/안내데스크/신분증보관)"),
+            DetailInfo("점자블록", "점자블록 있음 (주요시설 앞)_시각장애인 편의시설"),
+            DetailInfo("안내요원", "안내요원 있음 (입구 사무실)")
         )
         val detailInfoRVAdapter = DetailInfoRVAdapter(detailInfo)
         binding.detailDisabilityInfoRv.adapter = detailInfoRVAdapter
@@ -108,14 +107,19 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun settingReviewBtn() {
+    private fun settingReviewBtn(placeName: String, placeAddress: String, placeImg: String?) {
         binding.detailMoreReviewBtn.setOnClickListener {
             val intent = Intent(this, ReviewListActivity::class.java)
+            intent.putExtra("placeName", placeName)
+            intent.putExtra("placeAddress", placeAddress)
             startActivity(intent)
         }
 
         binding.detailReviewBtn.setOnClickListener {
             val intent = Intent(this, WriteReviewActivity::class.java)
+            intent.putExtra("placeName", placeName)
+            intent.putExtra("placeAddress", placeAddress)
+            intent.putExtra("placeImg", placeImg)
             startActivity(intent)
         }
     }
@@ -154,6 +158,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.moveCamera(cameraUpdate)
 
         addMapMarker(longitude, latitude)
+
+        settingReviewBtn(name, address, image)
     }
 
     private fun getDetailPlaceInfo(placeId: Long) {
@@ -194,6 +200,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 Log.e("bookmarkcheck", detailPlaceInfo.isMark.toString())
             }
             binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
+
+
         }
     }
 

@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.data.network.service
 
 import kr.tekit.lion.daongil.data.dto.remote.request.MyIceInfoRequest
+import kr.tekit.lion.daongil.data.dto.remote.response.member.ConcernTypeResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.member.MyDefaultInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.member.MyInfoResponse
 import kr.tekit.lion.daongil.data.network.AuthType
@@ -45,4 +46,7 @@ interface MemberService {
     suspend fun getMyDefaultInfo(
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     ): MyDefaultInfoResponse
+
+    @GET("member/interest-type")
+    suspend fun getConcernType(): ConcernTypeResponse
 }

@@ -49,7 +49,22 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_big3"
             android:paddingHorizontal="@dimen/margin_basic"
+            android:visibility="visible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        <TextView
+            android:id="@+id/textViewFSBookmarkEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pretendard_medium"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.5"
+            android:padding="50dp"
+            android:text="@string/bookmarked_places_empty"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_big3"
+            android:visibility="gone"
+            app:drawableTopCompat="@drawable/onboarding_clover" />
 
     </LinearLayout>
 

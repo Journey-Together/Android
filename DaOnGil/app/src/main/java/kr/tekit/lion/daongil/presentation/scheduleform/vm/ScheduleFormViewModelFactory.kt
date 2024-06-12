@@ -2,9 +2,11 @@ package kr.tekit.lion.daongil.presentation.scheduleform.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoRepository
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
+import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
 
@@ -21,13 +23,18 @@ class ScheduleFormViewModelFactory : ViewModelProvider.Factory {
         PlanRepository.create()
     )
 
+    private val getPlaceBookmarkListUseCase = GetPlaceBookmarkListUseCase(
+        BookmarkRepository.create()
+    )
+
     // create : 특정 ViewModel 클래스를 인스턴스화하는 역할
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ScheduleFormViewModel::class.java)){
             return ScheduleFormViewModel(
                 getPlaceSearchResultUseCase,
                 getPlaceDetailInfoUseCase,
-                addNewPlanUseCase
+                addNewPlanUseCase,
+                getPlaceBookmarkListUseCase
             ) as T
         }
         throw IllegalArgumentException("unknown ViewModel Class")

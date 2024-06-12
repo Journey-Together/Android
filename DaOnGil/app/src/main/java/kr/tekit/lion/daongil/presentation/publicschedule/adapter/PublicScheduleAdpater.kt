@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemPublicScheduleBinding
-import kr.tekit.lion.daongil.domain.model.PublicSchedule
+import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 
 class PublicScheduleAdpater(
-    private val publicSchedules: List<PublicSchedule>,
     private val onPublicScheduleClicked: (Int) -> Unit
 ) :
     RecyclerView.Adapter<PublicScheduleAdpater.PublicScheduleViewHolder>() {
+
+    private var items: MutableList<OpenPlanInfo> = mutableListOf()
+
+    fun addItems(newItems: List<OpenPlanInfo>) {
+        items = newItems.toMutableList()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return PublicScheduleViewHolder(
@@ -22,11 +29,11 @@ class PublicScheduleAdpater(
     }
 
     override fun onBindViewHolder(holder: PublicScheduleViewHolder, position: Int) {
-        holder.bind(publicSchedules[position])
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return publicSchedules.size
+        return items.size
     }
 
     class PublicScheduleViewHolder(
@@ -34,7 +41,13 @@ class PublicScheduleAdpater(
         private val onPublicScheduleClicked: (Int) -> Unit
     ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(publicSchedule: PublicSchedule) {
+            init{
+                binding.root.setOnClickListener {
+                    onPublicScheduleClicked(adapterPosition)
+                }
+            }
+
+        fun bind(publicSchedule: OpenPlanInfo) {
             binding.apply {
                 textViewItemPublicScheduleName.text = publicSchedule.title
                 textViewItemPublicScheduleNickname.text = publicSchedule.memberNickname
@@ -54,10 +67,6 @@ class PublicScheduleAdpater(
                     .error(R.drawable.empty_view_small)
                     .override(16, 16)
                     .into(imageViewItemPublicScheduleProfile)
-
-                root.setOnClickListener {
-                    onPublicScheduleClicked(publicSchedule.planId)
-                }
             }
         }
     }

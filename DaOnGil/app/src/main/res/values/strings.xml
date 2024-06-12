@@ -154,4 +154,6 @@
     <string name="text_place_bookmark">북마크한 장소가 없습니다.\n가고 싶은 장소를 추가해보세요!</string>
     <string name="text_plan_bookmark">북마크한 일정이 없습니다.\n관심 있는 일정을 추가해보세요!</string>
 
+    <string name="text_NameOrLogin">아직 정보가 없어요!</string>
+    <string name="text_myInfo_Review">로그인을 진행해주세요</string>
 </resources>

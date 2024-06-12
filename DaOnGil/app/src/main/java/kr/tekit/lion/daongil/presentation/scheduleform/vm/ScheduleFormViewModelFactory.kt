@@ -3,11 +3,11 @@ package kr.tekit.lion.daongil.presentation.scheduleform.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
-import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoRepository
+import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkListUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
 
 // ViewModelFactory = ViewModel을 생성하는 역할을 하는 클래스
@@ -17,7 +17,7 @@ class ScheduleFormViewModelFactory : ViewModelProvider.Factory {
         PlanRepository.create() // repository의 인스턴스를 생성하여 전달
     )
     private val getPlaceDetailInfoUseCase = GetPlaceDetailInfoUseCase(
-        PlaceDetailInfoRepository.crate()
+        PlaceRepository.crate()
     )
     private val addNewPlanUseCase = AddNewPlanUseCase(
         PlanRepository.create()

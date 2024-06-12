@@ -286,7 +286,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/pretendard_medium"
-                        android:text="5,650"
+                        android:text="0"
                         android:textColor="@color/total_cnt" />
 
                     <TextView
@@ -301,7 +301,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_search_result"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

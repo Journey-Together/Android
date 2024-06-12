@@ -17,6 +17,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayout
@@ -32,11 +33,15 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
+import kr.tekit.lion.daongil.domain.model.AroundPlace
+import kr.tekit.lion.daongil.domain.model.FakeAroundPlace
 import kr.tekit.lion.daongil.presentation.ext.Permissions.LOCATION_PERMISSION_REQUEST_CODE
 import kr.tekit.lion.daongil.presentation.ext.Permissions.REQUEST_LOCATION_PERMISSIONS
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
+import kr.tekit.lion.daongil.presentation.main.adapter.FakeHomeLocationRVAdapter
+import kr.tekit.lion.daongil.presentation.main.adapter.HomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
@@ -67,6 +72,32 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 Log.d("CurrentOption", it.toString())
             }
         }
+
+        val placeDataList = ArrayList<FakeAroundPlace>()
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 정조로 833", listOf("1","2", "3"), R.drawable.test_saerch_sima, "수원시립미술관", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 화서동 26-35", listOf("1","2", "3", "4"), R.drawable.test_search_hwaseomoon, "화서공원", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 정조로 910 (장안동)", listOf("1","2"), R.drawable.test_search_janganmoon, "장안문(長安門)", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 장안구 영화동 320-2", listOf("1","2", "3"), R.drawable.test_search_hwasung, "수원 화성 [유네스코 세계유산]", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 동수원로 335 (인계동)", listOf("3", "4"), R.drawable.test_search_music, "수원야외음악당", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 화서문로72번길 9-6 (북수동)", listOf("1","3", "4"), R.drawable.test_search_byuckwha, "행궁동 벽화마을", 12))
+        placeDataList.add(FakeAroundPlace("경기도 수원시 팔달구 화서2동 264", listOf("1","3", "4"), R.drawable.test_search_sookji, "숙지공원", 12))
+
+        val resPlaceDataList = ArrayList<FakeAroundPlace>()
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 영통구 센트럴파크로127번길 147 1층", listOf("1","2", "3"), R.drawable.test_dear, "디어스윗랩", 10))
+        resPlaceDataList.add(FakeAroundPlace("경기도 수원시 영통구 센트럴타운로 85 ", listOf("1","2", "3"), R.drawable.test_dear, "335키친광교아브뉴프랑점",10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 팔달구 장다리로 282", listOf("1"), R.drawable.test_search_gabojoung, "가보정갈비",10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 영통구 센트럴파크로127번길 18 (이의동) 1층", listOf("1","2", "3"), R.drawable.test_ocho, "오늘의초밥", 10))
+        resPlaceDataList.add(FakeAroundPlace("경기도 수원시 장안구 경수대로 1196-3 (파장동)", listOf("2", "3"), R.drawable.test_zzambbong, "백세짬뽕북수원본점", 10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 영통구 대학로 56", listOf("1","2", "3"), R.drawable.test_jogae, "조개창고 수원점",10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 권선구 매송고색로 634-17 (고색동)", listOf("1", "3"), R.drawable.test_middle, "외식중학교",10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 영통구 광교호수공원로 80 (원천동,광교아이파크)", listOf("1"), R.drawable.test_book, "책발전소광교",10))
+        resPlaceDataList.add(FakeAroundPlace( "경기도 수원시 장안구 경수대로 1013", listOf("1"), R.drawable.test_songpung, "송풍가든",10))
+
+        val roomPlaceDataList = ArrayList<FakeAroundPlace>()
+        roomPlaceDataList.add(FakeAroundPlace( "경기도 수원시 영통구 광교호수공원로 320 (하동)", listOf("1","2"), R.drawable.test_kot, "코트야드바이메리어트수원", 10))
+        roomPlaceDataList.add(FakeAroundPlace( "경기도 수원시 팔달구 권광로 132", listOf("1","2","3"), R.drawable.test_ibis, "이비스 앰배서더 수원", 10))
+        roomPlaceDataList.add(FakeAroundPlace( "경기도 수원시 권선구 서부로1934번길 42", listOf("1","2","3"), R.drawable.test_patiz, "파티즈호텔", 10))
+        roomPlaceDataList.add(FakeAroundPlace( "경기도 수원시 팔달구 중부대로 150", listOf("1","3"), R.drawable.test_ramada, "라마다프라자 수원호텔", 10))
 
         with(binding) {
 

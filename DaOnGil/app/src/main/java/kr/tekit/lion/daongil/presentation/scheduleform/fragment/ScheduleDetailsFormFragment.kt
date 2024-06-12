@@ -32,6 +32,8 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         } else { // 이미 데이터가 존재하는 경우
             initView(binding)
         }
+
+        initButtonSubmit(binding)
     }
 
     private fun initToolbar(binding: FragmentScheduleDetailsFormBinding) {
@@ -113,5 +115,12 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         val dayString = SimpleDateFormat("M월 d일 E요일", Locale.KOREAN).format(calendar.time)
 
         return dayString
+    }
+
+    private fun initButtonSubmit(binding: FragmentScheduleDetailsFormBinding){
+        binding.buttonDFSubmit.setOnClickListener {
+            scheduleFormViewModel.submitNewPlan()
+            requireActivity().finish()
+        }
     }
 }

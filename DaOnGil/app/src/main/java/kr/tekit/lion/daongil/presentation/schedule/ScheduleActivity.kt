@@ -48,15 +48,68 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
     private val place4 = SchedulePlace(3, "한국보훈복지의료공단 보훈휴양원", "숙박시설", listOf(1))
     private val place5 = SchedulePlace(4, "보물섬남해한우프라자 (남해축협)", "음식점", listOf(1, 2))
 
+    //1 (지체 장애),
+    //2 (시각 장애),
+    //3 (청각 장애),
+    //4 (유아 동반),
+    //5 (고령자)
+    private val gj1 = SchedulePlace(1, "경주 황리단길", "관광지", listOf(1, 2))
+    private val gj2 = SchedulePlace(0, "늘봄떡갈비쌈밥", "음식점", listOf(1,4))
+    private val gj3 = SchedulePlace(2, "불국사한옥팜스테이[한국관광 품질인증/Korea Quality]", "숙박", listOf())
+    private val gj4 = SchedulePlace(3, "경주문화관 1918", "관광지", listOf())
+    private val gj5 = SchedulePlace(4, "첨성대", "관광지", listOf(1, 2))
+
+    private val gyeongju1 = DailyPlan(1, listOf(gj1,gj4))
+    private val gyeongju2 = DailyPlan(2, listOf())
+    private val gyeongju3 = DailyPlan(3, listOf(gj3, gj5))
+
     private val day1 = DailyPlan(1, listOf(place1, place2, place3))
     private val day2 = DailyPlan(2, listOf())
     private val day3 = DailyPlan(3, listOf(place4, place5))
 
+    private val scheduleMy = ScheduleDetail(
+        0,
+        "경주로",
+        "2024-06-10",
+        "2024-06-12",
+        null,
+        false,
+        true,
+        "토마토",
+        listOf(
+            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210317_54%2F1615960399867iteUS_JPEG%2Fbanner_x.jpg",
+            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_262%2F1441013639801FoVs2_JPEG%2F11663971_2.jpg",
+            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200106_270%2F1578237425235vhzPG_JPEG%2FBtFgbHMA5t8daqoR2j0zHNBL.jpeg.jpg"
+        ), // images
+        listOf(gyeongju1, gyeongju2, gyeongju3),
+        null,
+        null,
+        null,
+    )
+
+    private val schedulePublic = ScheduleDetail(
+        1,
+        "엄마랑 서울 나들이",
+        "2024-06-10",
+        "2024-06-11",
+        null,
+        true,
+        false,
+        "이서연",
+        listOf("https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_201%2F1440997727629Eh1lL_JPEG%2F11571707_1.jpg",
+            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150901_90%2F1441045537302H8wax_JPEG%2F156281538832608_4.jpg",
+            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_207%2F1440992289833tONYr_JPEG%2F11491637_0.jpg"), // images
+        listOf(day1, day3),
+        1,
+        "다온길 앱 덕분에 일정을 편하게 짜고, 확인할 수 있었어요. 휴양림에서 편하게 쉬고, 미술관에서 작품들을 보며 힐링했어요. 같이 간 어머니도 좋아하시더라구요. 태평소 국밥은 다온길에서 처음 발견한 식당인데, 지역 맛집이네요! 다시 한 번 방문해서 국밥 후루룩 마시고 싶어요! 여행 2일차엔 휴양원에서 쉬엄쉬엄 쉬고, 집으로 돌아오기전 남해 축협에서 한우 2인분씩 먹고왔어요! 싸고 맛있네요",
+        4,
+    )
+
     private val schedule = ScheduleDetail(
         0,
         "꼭 가봐야 할 경주 맛집투어",
-        "2024-06-01",
-        "2024-06-05",
+        "2024-06-14",
+        "2024-06-16",
         null,
         true,
         true,
@@ -74,11 +127,11 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         1,
         "제주 둘레길 여행",
         "2024-06-01",
-        "2024-06-05",
+        "2024-06-02",
         4,
         true,
         false,
-        "김사자",
+        "이서연",
         listOf("https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_201%2F1440997727629Eh1lL_JPEG%2F11571707_1.jpg",
             "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150901_90%2F1441045537302H8wax_JPEG%2F156281538832608_4.jpg",
             "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_207%2F1440992289833tONYr_JPEG%2F11491637_0.jpg"), // images
@@ -99,8 +152,15 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
         setContentView(binding.root)
 
-        initView(schedule)
-        settingScheduleAdapter(schedule)
+        val typeNum = intent.getIntExtra("planType", -1)
+        if(typeNum != -1){
+            initView(scheduleMy)
+            settingScheduleAdapter(scheduleMy)
+        }else{
+            initView(schedulePublic)
+            settingScheduleAdapter(schedulePublic)
+        }
+
     }
 
     private fun initView(scheduleDetail: ScheduleDetail) {
@@ -132,6 +192,9 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
             initReviewView(scheduleDetail)
             initImageViewPager(scheduleDetail.images)
+            scheduleDetail.rating?.let {
+                ratingBarScheduleSatisfaction.rating = it.toFloat()
+            }
         }
     }
 
@@ -177,7 +240,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
     private fun setBookmarkIcon(menuItem: MenuItem) {
         if (isBookmarked) {
             // 임시 아이콘 -> 교체 예정
-            menuItem.setIcon(R.drawable.bookmark_filled_icon)
+            menuItem.setIcon(R.drawable.bookmark_fill_icon)
         } else {
             menuItem.setIcon(R.drawable.bookmark_icon)
         }

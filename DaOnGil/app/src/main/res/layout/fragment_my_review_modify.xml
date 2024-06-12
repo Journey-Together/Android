@@ -99,7 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewModifyReviewDate"
-                app:strokeColor="@color/text_quaternary"
+                app:strokeColor="@color/text_secondary"
                 app:strokeWidth="1dp" />
 
             <TextView
@@ -157,7 +157,6 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/text_secondary"
                 app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

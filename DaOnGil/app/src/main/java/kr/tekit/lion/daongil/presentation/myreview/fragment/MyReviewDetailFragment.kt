@@ -41,7 +41,7 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
             "location" to "망상해변",
             "rating" to 3.5,
             "date" to "2024.05.24 금",
-            "review" to "풍경도 좋고 너무 좋아요!!!!\n시설도 잘 되어있어서 만족스러웠습니다"
+            "review" to "역시 바다입니다.\n탁 트여서 풍경도 좋고, 즐기기에 너무 좋습니다!\n시설도 잘 되어있어서 만족스러웠습니다.\n오랜만에 걱정 없이 즐긴 거 같습니다.\n다음에도 또 방문하고 싶어요."
         )
 
         binding.textViewMyReviewDetailLocation.text = reviewDetail["location"].toString()
@@ -51,9 +51,9 @@ class MyReviewDetailFragment : Fragment(R.layout.fragment_my_review_detail) {
 
     private fun settingVPAdapter(binding: FragmentMyReviewDetailBinding) {
         val reviewImages = listOfNotNull(
-            ContextCompat.getDrawable(requireContext(), R.drawable.img_2455),
-            ContextCompat.getDrawable(requireContext(), R.drawable.img_2859),
-            ContextCompat.getDrawable(requireContext(), R.drawable.img_8272)
+            "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=72eabcf0-7c1f-416c-8c47-ac007e6e20a9&mode=row",
+            "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=22d309c5-09cf-458a-815a-e45bb1eeced7&mode=row",
+            "https://access.visitkorea.or.kr/bfvk_img/call?cmd=VIEW&id=678ff254-540f-439a-9e28-3864829f3530&mode=row"
         )
 
         val myReviewDetailVPAdapter = MyReviewDetailVPAdapter(reviewImages)

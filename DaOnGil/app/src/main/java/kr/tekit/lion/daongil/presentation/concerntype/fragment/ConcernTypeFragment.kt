@@ -4,12 +4,17 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeBinding
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeModifyBinding
+import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModel
+import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModelFactory
 
 class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
+
+    private val viewModel: ConcernTypeViewModel by viewModels { ConcernTypeViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,15 +38,19 @@ class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
     }
 
     private fun initSelection(binding: FragmentConcernTypeBinding) {
-        val userConcernType = listOf("고령자")
+        viewModel.concernType.observe(viewLifecycleOwner) { concernType ->
+            val concernMap = mapOf(
+                concernType.isPhysical to Pair(binding.imageViewConcernTypePhysical, R.drawable.sv_selected_physical_disability_icon),
+                concernType.isHear to Pair(binding.imageViewConcernTypeHearing, R.drawable.sv_selected_hearing_impairment_icon),
+                concernType.isVisual to Pair(binding.imageViewConcernTypeVisual, R.drawable.sv_selected_visual_impairment_icon),
+                concernType.isElderly to Pair(binding.imageViewConcernTypeElderly, R.drawable.sv_selected_elderly_people_icon),
+                concernType.isChild to Pair(binding.imageViewConcernTypeInfant, R.drawable.sv_selected_infant_family_icon)
+            )
 
-        userConcernType.forEach { concernType ->
-            when (concernType) {
-                "지체장애" -> settingSelected(binding.imageViewConcernTypePhysical, R.drawable.sv_selected_physical_disability_icon)
-                "시각장애" -> settingSelected(binding.imageViewConcernTypeVisual, R.drawable.sv_selected_visual_impairment_icon)
-                "청각장애" -> settingSelected(binding.imageViewConcernTypeHearing, R.drawable.sv_selected_hearing_impairment_icon)
-                "영유아 가족" -> settingSelected(binding.imageViewConcernTypeInfant, R.drawable.sv_selected_infant_family_icon)
-                "고령자" -> settingSelected(binding.imageViewConcernTypeElderly, R.drawable.sv_selected_elderly_people_icon)
+            concernMap.forEach { (isConcerned, viewAndDrawable) ->
+                if (isConcerned) {
+                    settingSelected(viewAndDrawable.first, viewAndDrawable.second)
+                }
             }
         }
     }

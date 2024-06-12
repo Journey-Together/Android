@@ -13,5 +13,5 @@ data class PlaceDetailInfoGuest (
     val overview: String,
     val placeId: Int,
     val reviewList: List<Review>?,
-    val subDisability: List<String>
+    val subDisability: List<SubDisability>?
 )

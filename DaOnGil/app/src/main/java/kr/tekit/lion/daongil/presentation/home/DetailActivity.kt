@@ -24,6 +24,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityDetailBinding
 import kr.tekit.lion.daongil.domain.model.DetailInfo
 import kr.tekit.lion.daongil.domain.model.Review
+import kr.tekit.lion.daongil.domain.model.SubDisability
 import kr.tekit.lion.daongil.presentation.emergency.EmergencyMapActivity
 import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.home.adapter.DetailDisabilityRVAdapter
@@ -49,7 +50,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         settingToolbar()
         initMap()
-        settingDetailInfoRVAdapter()
 
         val reviewList = listOf(
             Review(
@@ -74,16 +74,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         settingReviewRVAdapter(reviewList)
     }
 
-    private fun settingDetailInfoRVAdapter() {
-        val detailInfo = listOf(
-            DetailInfo("주차 여부", "장애인 주차장 있음 (관광 안내소 앞)"),
-            DetailInfo("핵심 동선", "출입구까지 경사로가 설치되어 있음 (완만함)"),
-            DetailInfo("홍보물", "다온길 리플렛 있음"),
-            DetailInfo("화장실", "장애인 화장실 및 샤워실 있음"),
-            DetailInfo("휠체어대여","대여 가능 (2대/안내데스크/신분증보관)"),
-            DetailInfo("점자블록", "점자블록 있음 (주요시설 앞)_시각장애인 편의시설"),
-            DetailInfo("안내요원", "안내요원 있음 (입구 사무실)")
-        )
+    private fun settingDetailInfoRVAdapter(detailInfo: List<SubDisability>) {
         val detailInfoRVAdapter = DetailInfoRVAdapter(detailInfo)
         binding.detailDisabilityInfoRv.adapter = detailInfoRVAdapter
         binding.detailDisabilityInfoRv.layoutManager = LinearLayoutManager(applicationContext)
@@ -134,11 +125,13 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         longitude: Double,
         latitude: Double,
         category: String,
-        subDisability: List<String>
+        subDisability: List<SubDisability>?
     ) {
         //reviewList?.let { settingReviewRVAdapter(it) }
         settingDisabilityRVAdapter(disability)
-        // settingDetailInfoRVAdapter(detailPlaceInfo.subDisability)
+        if (subDisability != null) {
+            settingDetailInfoRVAdapter(subDisability)
+        }
 
         binding.detailTitleTv.text = name
         binding.detailAddressTv.text = address

@@ -11,6 +11,7 @@
         android:id="@+id/toolbarConcernType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:navigationIcon="@drawable/back_icon"
         android:minHeight="?attr/actionBarSize" >
 
         <TextView

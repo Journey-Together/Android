@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
-import kr.tekit.lion.daongil.domain.usecase.GetOpenPlanListUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetOpenPlanListUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
 class PublicScheduleViewModel(

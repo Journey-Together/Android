@@ -8,10 +8,10 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.PlaceBookmark
 import kr.tekit.lion.daongil.domain.model.PlanBookmark
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlanBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlanBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetPlanBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.UpdatePlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.UpdatePlanBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
@@ -33,7 +33,7 @@ class BookmarkViewModel(
         getPlanBookmark()
     }
 
-    fun getPlaceBookmark() {
+    private fun getPlaceBookmark() {
         viewModelScope.launch {
             getPlaceBookmarkUseCase().onSuccess {
                 _placeBookmarkList.value = it
@@ -43,7 +43,7 @@ class BookmarkViewModel(
         }
     }
 
-    fun getPlanBookmark() {
+    private fun getPlanBookmark() {
         viewModelScope.launch {
             getPlanBookmarkUseCase().onSuccess {
                 _planBookmarkList.value = it

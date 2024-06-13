@@ -7,7 +7,8 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemReviewBigImageBinding
 
-class ReviewImageRVAdapter(private val imageList : List<String>) : RecyclerView.Adapter<ReviewImageRVAdapter.ReviewImageViewHolder>() {
+class ReviewImageRVAdapter(private val imageList : List<String>)
+    : RecyclerView.Adapter<ReviewImageRVAdapter.ReviewImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewImageViewHolder {
         val binding: ItemReviewBigImageBinding = ItemReviewBigImageBinding.inflate(

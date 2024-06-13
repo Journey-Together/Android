@@ -11,8 +11,8 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfoGuest
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoGuestUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoGuestUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.UpdatePlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase

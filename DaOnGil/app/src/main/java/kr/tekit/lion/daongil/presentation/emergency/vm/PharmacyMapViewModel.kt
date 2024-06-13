@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
-import kr.tekit.lion.daongil.domain.usecase.GetPharmacyMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetPharmacyMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetUserLocationRegionUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 

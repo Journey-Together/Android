@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.databinding.ItemScheduleImageBinding
 
 class ScheduleImageViewPagerAdapter(private val images: List<String>) :
     RecyclerView.Adapter<ScheduleImageViewPagerAdapter.ScheduleImageViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleImageViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return ScheduleImageViewHolder(

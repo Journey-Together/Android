@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.NaverMapRepository
 import kr.tekit.lion.daongil.domain.repository.PharmacyRepository
-import kr.tekit.lion.daongil.domain.usecase.GetPharmacyMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetPharmacyMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetUserLocationRegionUseCase
 import java.lang.IllegalArgumentException
 

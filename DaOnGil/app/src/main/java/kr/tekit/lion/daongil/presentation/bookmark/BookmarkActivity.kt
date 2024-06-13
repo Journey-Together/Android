@@ -34,13 +34,13 @@ class BookmarkActivity : AppCompatActivity() {
         settingPlaceBookmarkRVAdapter()
     }
 
-    fun settingToolbar() {
+    private fun settingToolbar() {
         binding.toolbarMyBookmark.setNavigationOnClickListener {
             finish()
         }
     }
 
-    fun settingTabLayout() {
+    private fun settingTabLayout() {
         binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText(getString(R.string.tab_text_place)))
         binding.tabLayoutBookmark.addTab(binding.tabLayoutBookmark.newTab().setText(getString(R.string.tab_text_plan)))
 
@@ -64,6 +64,7 @@ class BookmarkActivity : AppCompatActivity() {
             if (placeBookmarkList.isNotEmpty()) {
                 binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
+
                 val placeBookmarkRVAdapter = PlaceBookmarkRVAdapter(
                     placeBookmarkList,
                     itemClickListener = { position ->
@@ -90,6 +91,7 @@ class BookmarkActivity : AppCompatActivity() {
             if (planBookmarkList.isNotEmpty()) {
                 binding.notExistBookmarkLayout.visibility = View.INVISIBLE
                 binding.recyclerViewBookmark.visibility = View.VISIBLE
+
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
                     itemClickListener = { position ->

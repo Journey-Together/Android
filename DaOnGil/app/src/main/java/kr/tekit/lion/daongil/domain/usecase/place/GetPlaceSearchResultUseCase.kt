@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.place
 
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.repository.PlanRepository

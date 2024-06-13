@@ -2,7 +2,9 @@ package kr.tekit.lion.daongil.data.datasource
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.domain.model.ListSearchOption
@@ -51,5 +53,13 @@ class PlaceDataSource(
                 )
             )
         }
+    }
+
+    suspend fun getPlaceDetailInfoGuest(placeId: Long): DetailPlaceGuestResponse {
+        return placeService.getPlaceDetailInfoGuest(placeId)
+    }
+
+    suspend fun getPlaceMainInfo(areaCode : String, sigunguCode : String) : MainPlaceResponse {
+        return placeService.getPlaceMainInfo(areaCode, sigunguCode)
     }
 }

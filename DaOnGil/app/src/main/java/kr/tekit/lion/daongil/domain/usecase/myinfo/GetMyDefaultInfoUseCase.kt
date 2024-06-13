@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.myinfo
 
 import kr.tekit.lion.daongil.domain.model.MyDefaultInfo
 import kr.tekit.lion.daongil.domain.repository.MemberRepository

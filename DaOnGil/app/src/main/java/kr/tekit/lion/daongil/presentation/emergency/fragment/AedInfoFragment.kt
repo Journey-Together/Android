@@ -56,12 +56,5 @@ class AedInfoFragment : Fragment(R.layout.fragment_aed_info) {
                 }
             }
         }
-
-    }
-
-    private fun showSnackbar(binding: FragmentAedInfoBinding, message: String) {
-        Snackbar.make(binding.root, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
-            .show()
     }
 }

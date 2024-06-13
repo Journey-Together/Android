@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.place
 
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository

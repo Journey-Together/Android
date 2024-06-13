@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceMainInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceMainInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetSigunguCodeByNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError

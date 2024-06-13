@@ -12,10 +12,10 @@ import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
-import kr.tekit.lion.daongil.domain.usecase.AddNewPlanUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkListUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.AddNewPlanUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceSearchResultUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceSearchResultUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import java.text.SimpleDateFormat

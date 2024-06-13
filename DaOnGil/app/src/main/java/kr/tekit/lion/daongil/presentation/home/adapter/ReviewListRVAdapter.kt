@@ -11,7 +11,10 @@ import kr.tekit.lion.daongil.domain.model.ReviewDetail
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 
-class ReviewListRVAdapter(private val reviewList : List<ReviewDetail>, private val activty : FragmentActivity) : RecyclerView.Adapter<ReviewListRVAdapter.ReviewListViewHolder>() {
+class ReviewListRVAdapter(
+    private val reviewList : List<ReviewDetail>,
+    private val activty : FragmentActivity
+) : RecyclerView.Adapter<ReviewListRVAdapter.ReviewListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewListViewHolder {
         val binding : ItemDetailReviewBigBinding = ItemDetailReviewBigBinding.inflate(

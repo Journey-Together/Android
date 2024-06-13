@@ -11,7 +11,7 @@ import kr.tekit.lion.daongil.data.repository.AuthRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 import kr.tekit.lion.daongil.domain.usecase.GetMyMainScheduleUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetOpenPlanListUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetOpenPlanListUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.presentation.login.LogInState
 

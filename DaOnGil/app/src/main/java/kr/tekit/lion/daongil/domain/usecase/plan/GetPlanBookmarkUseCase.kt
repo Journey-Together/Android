@@ -1,13 +1,15 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.plan
 
+import kr.tekit.lion.daongil.domain.model.PlanBookmark
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
 import kr.tekit.lion.daongil.domain.usecase.base.BaseUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.Result
 
-class UpdatePlaceBookmarkUseCase(
+class GetPlanBookmarkUseCase(
     private val bookmarkRepository: BookmarkRepository
 ) : BaseUseCase() {
-    suspend operator fun invoke(placeId: Long) : Result<Unit> = execute {
-        bookmarkRepository.updatePlaceBookmark(placeId)
+
+    suspend operator fun invoke() : Result<List<PlanBookmark>> = execute {
+        bookmarkRepository.getPlanBookmark()
     }
 }

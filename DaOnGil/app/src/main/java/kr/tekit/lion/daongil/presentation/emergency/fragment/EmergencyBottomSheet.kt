@@ -12,7 +12,7 @@ class EmergencyBottomSheet(
    private val emergencyMapInfoList: List<EmergencyMapInfo>
 ) {
 
-   private val emergencyBottomadapter: EmergencyBottomAdapter by lazy {
+   private val emergencyBottomAdapter: EmergencyBottomAdapter by lazy {
       EmergencyBottomAdapter(emergencyMapInfoList,
          itemClickListener = { position ->
             val context: Context = binding.root.context
@@ -27,8 +27,8 @@ class EmergencyBottomSheet(
 
    fun setRecyclerView(){
       with(binding){
-         emergencyBottomRv.adapter = emergencyBottomadapter
-         emergencyBottomadapter.notifyDataSetChanged()
+         emergencyBottomRv.adapter = emergencyBottomAdapter
+         emergencyBottomAdapter.notifyDataSetChanged()
       }
    }
 

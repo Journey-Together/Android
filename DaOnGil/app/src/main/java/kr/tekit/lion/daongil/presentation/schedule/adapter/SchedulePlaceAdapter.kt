@@ -11,8 +11,7 @@ import kr.tekit.lion.daongil.domain.model.SchedulePlace
 class SchedulePlaceAdapter(
     private val schedulePlaces: List<SchedulePlace?>,
     private val schedulePlaceListener: OnSchedulePlaceClickListener
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_PLACE = 0
     private val VIEW_TYPE_EMPTY = 1
 

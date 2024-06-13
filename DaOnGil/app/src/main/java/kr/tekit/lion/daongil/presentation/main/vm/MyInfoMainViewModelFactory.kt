@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.repository.MemberRepository
-import kr.tekit.lion.daongil.domain.usecase.GetMyDefaultInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.myinfo.GetMyDefaultInfoUseCase
 import java.lang.IllegalArgumentException
 
 class MyInfoMainViewModelFactory(context: Context): ViewModelProvider.Factory {

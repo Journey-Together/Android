@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AedRepository
 import kr.tekit.lion.daongil.domain.repository.EmergencyRepository
 import kr.tekit.lion.daongil.domain.repository.NaverMapRepository
-import kr.tekit.lion.daongil.domain.usecase.GetAedMapInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetEmergencyMapInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetHospitalMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetAedMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetEmergencyMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetHospitalMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetUserLocationRegionUseCase
 import java.lang.IllegalArgumentException
 
-class EmergencyMapViewModelFactory(): ViewModelProvider.Factory {
+class EmergencyMapViewModelFactory: ViewModelProvider.Factory {
 
     private val getUserLocationRegionUseCase = GetUserLocationRegionUseCase(
         NaverMapRepository.create()

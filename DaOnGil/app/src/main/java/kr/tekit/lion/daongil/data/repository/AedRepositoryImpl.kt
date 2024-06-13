@@ -10,6 +10,4 @@ class AedRepositoryImpl(
     override suspend fun getAedInfo(Q0: String?, Q1: String?): List<AedMapInfo> {
         return aedDataSource.getAedInfo(Q0, Q1).toDomainModel()
     }
-
-
 }

@@ -8,7 +8,8 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailReviewSmallBinding
 import kr.tekit.lion.daongil.domain.model.Review
 
-class DetailReviewRVAdapter(private val reviewList : List<Review>) : RecyclerView.Adapter<DetailReviewRVAdapter.DetailReviewViewHolder>() {
+class DetailReviewRVAdapter(private val reviewList : List<Review>)
+    : RecyclerView.Adapter<DetailReviewRVAdapter.DetailReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailReviewViewHolder {
         val binding : ItemDetailReviewSmallBinding = ItemDetailReviewSmallBinding.inflate(

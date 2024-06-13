@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.GetMyMainScheduleUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetOpenPlanListUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetOpenPlanListUseCase
 
 class ScheduleMainViewModelFactory(context: Context): ViewModelProvider.Factory {
 

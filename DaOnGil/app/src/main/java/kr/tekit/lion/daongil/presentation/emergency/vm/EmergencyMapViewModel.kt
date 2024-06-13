@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.AedMapInfo
 import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
 import kr.tekit.lion.daongil.domain.model.HospitalMapInfo
-import kr.tekit.lion.daongil.domain.usecase.GetEmergencyMapInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.emergency.GetEmergencyMapInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.GetUserLocationRegionUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 

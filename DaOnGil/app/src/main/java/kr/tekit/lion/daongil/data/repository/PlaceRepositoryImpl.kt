@@ -7,6 +7,8 @@ import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.toDomainModel
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
 import kr.tekit.lion.daongil.domain.model.ListSearchOption
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
+import kr.tekit.lion.daongil.domain.model.PlaceDetailInfoGuest
+import kr.tekit.lion.daongil.domain.model.PlaceMainInfo
 import kr.tekit.lion.daongil.domain.model.SearchPlace
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 
@@ -24,5 +26,13 @@ class PlaceRepositoryImpl(
 
     override fun getSearchPlaceResultForMap(request: MapSearchOption): Flow<List<SearchPlace>> {
         return placeDataSource.getSearchPlaceResultForMap(request).map { it.toDomainModel() }
+    }
+
+    override suspend fun getPlaceDetailInfoGuest(placeId: Long): PlaceDetailInfoGuest {
+        return placeDataSource.getPlaceDetailInfoGuest(placeId).toDomainModel()
+    }
+
+    override suspend fun getPlaceMainInfo(areaCode: String, sigunguCode: String): PlaceMainInfo {
+        return placeDataSource.getPlaceMainInfo(areaCode, sigunguCode).toDomainModel()
     }
 }

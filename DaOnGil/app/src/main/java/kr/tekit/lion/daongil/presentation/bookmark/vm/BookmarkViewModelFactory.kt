@@ -3,13 +3,13 @@ package kr.tekit.lion.daongil.presentation.bookmark.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.GetPlanBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlanBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetPlanBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.UpdatePlaceBookmarkUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.UpdatePlanBookmarkUseCase
 
 class BookmarkViewModelFactory : ViewModelProvider.Factory {
-    val bookmarkRepository = BookmarkRepository.create()
+    private val bookmarkRepository = BookmarkRepository.create()
 
     private val getPlaceBookmarkUseCase = GetPlaceBookmarkUseCase(
         bookmarkRepository
@@ -29,7 +29,12 @@ class BookmarkViewModelFactory : ViewModelProvider.Factory {
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BookmarkViewModel::class.java)) {
-            return BookmarkViewModel(getPlaceBookmarkUseCase, getPlanBookmarkUseCase, updatePlaceBookmarkUseCase, updatePlanBookmarkUseCase) as T
+            return BookmarkViewModel(
+                getPlaceBookmarkUseCase,
+                getPlanBookmarkUseCase,
+                updatePlaceBookmarkUseCase,
+                updatePlanBookmarkUseCase
+            ) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")
     }

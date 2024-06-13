@@ -12,6 +12,7 @@ class FormSearchResultAdapter(
     private val searchResult: List<PlaceSearchInfo>,
     private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
 ) : RecyclerView.Adapter<FormSearchResultAdapter.FormSearchResultViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormSearchResultViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return FormSearchResultViewHolder(

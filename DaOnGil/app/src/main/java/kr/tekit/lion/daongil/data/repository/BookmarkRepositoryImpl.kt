@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
 class BookmarkRepositoryImpl(
     private val bookmarkDataSource: BookmarkDataSource
 ) : BookmarkRepository {
+
     override suspend fun getPlaceBookmarkList(): List<BookmarkedPlace> {
         return bookmarkDataSource.getPlaceBookmarkList().toDomainModel()
     }

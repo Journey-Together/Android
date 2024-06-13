@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.plan
 
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.repository.PlanRepository

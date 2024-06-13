@@ -8,10 +8,10 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemPublicScheduleBinding
 import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 
-class PublicScheduleAdpater(
+class PublicScheduleAdapter(
     private val onPublicScheduleClicked: (Int) -> Unit
 ) :
-    RecyclerView.Adapter<PublicScheduleAdpater.PublicScheduleViewHolder>() {
+    RecyclerView.Adapter<PublicScheduleAdapter.PublicScheduleViewHolder>() {
 
     private var items: MutableList<OpenPlanInfo> = mutableListOf()
 

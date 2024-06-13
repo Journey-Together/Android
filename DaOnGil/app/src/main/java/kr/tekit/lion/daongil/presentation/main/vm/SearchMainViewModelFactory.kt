@@ -15,7 +15,7 @@ import java.lang.IllegalArgumentException
 class SearchMainViewModelFactory(context: Context): ViewModelProvider.Factory {
     private val areaCodeRepository = AreaCodeRepository.create(context)
     private val villageCodeRepository = VillageCodeRepository.create(context)
-    private val placeRepository = PlaceRepository.crate()
+    private val placeRepository = PlaceRepository.create()
 
     private val getAllAreaCodeUseCase = GetAllAreaCodeUseCase(areaCodeRepository)
     private val getAllSigunguCodeUseCase = GetAllSigunguCodeUseCase(villageCodeRepository)

@@ -5,20 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.repository.BookmarkRepository
-import kr.tekit.lion.daongil.domain.repository.PlaceDetailInfoGuestRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
-import kr.tekit.lion.daongil.domain.usecase.GetPlaceDetailInfoGuestUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoGuestUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.UpdatePlaceBookmarkUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
-import kr.tekit.lion.daongil.domain.usecase.UpdatePlaceBookmarkUseCase
 
-class DetailViewModelFactory(context: Context) : ViewModelProvider.Factory{
+class DetailViewModelFactory(context: Context) : ViewModelProvider.Factory {
     private val authRepository = AuthRepository.create(context)
-    private val placeDetailInfoRepository = PlaceRepository.crate()
-    private val placeDetailInfoGuestRepository = PlaceDetailInfoGuestRepository.create()
+    private val placeRepository = PlaceRepository.create()
     private val bookmarkRepository = BookmarkRepository.create()
 
-    private val getPlaceDetailInfoUseCase = GetPlaceDetailInfoUseCase(placeDetailInfoRepository)
-    private val getPlaceDetailInfoGuestUseCase = GetPlaceDetailInfoGuestUseCase(placeDetailInfoGuestRepository)
+    private val getPlaceDetailInfoUseCase = GetPlaceDetailInfoUseCase(placeRepository)
+    private val getPlaceDetailInfoGuestUseCase = GetPlaceDetailInfoGuestUseCase(placeRepository)
     private val updatePlaceBookmarkUseCase = UpdatePlaceBookmarkUseCase(bookmarkRepository)
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

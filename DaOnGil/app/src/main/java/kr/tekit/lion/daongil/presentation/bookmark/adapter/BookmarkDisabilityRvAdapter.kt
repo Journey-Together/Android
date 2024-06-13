@@ -5,23 +5,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemBookmarkDisabiltiyTypeBinding
-import kr.tekit.lion.daongil.databinding.ItemDisabilityTypeBinding
 
-class bookmarkDisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Adapter<bookmarkDisabilityRVAdapter.bookmarkDisabilityViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): bookmarkDisabilityViewHolder {
+class BookmarkDisabilityRvAdapter(private val typeList : List<String>)
+    : RecyclerView.Adapter<BookmarkDisabilityRvAdapter.BookmarkDisabilityViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkDisabilityViewHolder {
         val binding : ItemBookmarkDisabiltiyTypeBinding = ItemBookmarkDisabiltiyTypeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
-        return bookmarkDisabilityViewHolder(binding)
+        return BookmarkDisabilityViewHolder(binding)
     }
 
     override fun getItemCount(): Int = typeList.size
 
-    override fun onBindViewHolder(holder: bookmarkDisabilityViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BookmarkDisabilityViewHolder, position: Int) {
         holder.bind(typeList[position])
     }
 
-    class bookmarkDisabilityViewHolder(val binding: ItemBookmarkDisabiltiyTypeBinding) : RecyclerView.ViewHolder(binding.root) {
+    class BookmarkDisabilityViewHolder(private val binding: ItemBookmarkDisabiltiyTypeBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item : String) {
             val typeId = when(item) {
                 "1" -> R.drawable.physical_disability_radius_icon
@@ -33,5 +36,4 @@ class bookmarkDisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Ad
             binding.itemDisabilityTypeIv.setImageResource(typeId)
         }
     }
-
 }

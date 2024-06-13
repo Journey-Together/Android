@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import kr.tekit.lion.daongil.databinding.ActivityPublicScheduleBinding
-import kr.tekit.lion.daongil.presentation.publicschedule.adapter.PublicScheduleAdpater
+import kr.tekit.lion.daongil.presentation.publicschedule.adapter.PublicScheduleAdapter
 import kr.tekit.lion.daongil.presentation.publicschedule.vm.PublicScheduleViewModel
 import kr.tekit.lion.daongil.presentation.publicschedule.vm.PublicScheduleViewModelFactory
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
@@ -34,7 +34,7 @@ class PublicScheduleActivity : AppCompatActivity() {
     private fun initPublicScheduleRecyclerView(){
         with(binding.recyclerViewPublicScheduleList){
             viewModel.openPlanList.observe(this@PublicScheduleActivity) {
-                val scheduleAdpater = PublicScheduleAdpater(
+                val scheduleAdpater = PublicScheduleAdapter(
                     onPublicScheduleClicked = { position ->
                         // 공개 일정 상세보기 페이지로 이동 it[position].planId
                         val intent = Intent(this@PublicScheduleActivity,ScheduleActivity::class.java)

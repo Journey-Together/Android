@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemDetailServiceInfoBinding
 import kr.tekit.lion.daongil.domain.model.SubDisability
 
-class DetailInfoRVAdapter(private val infoList: List<SubDisability>) : RecyclerView.Adapter<DetailInfoRVAdapter.DetailInfoViewHolder>() {
+class DetailInfoRVAdapter(private val infoList: List<DetailInfo>)
+    : RecyclerView.Adapter<DetailInfoRVAdapter.DetailInfoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailInfoViewHolder {
         val binding : ItemDetailServiceInfoBinding = ItemDetailServiceInfoBinding.inflate(

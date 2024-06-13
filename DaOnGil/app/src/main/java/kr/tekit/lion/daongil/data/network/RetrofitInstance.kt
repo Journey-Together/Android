@@ -1,8 +1,8 @@
 package kr.tekit.lion.daongil.data.network
 
 import android.util.Log
-import com.squareup.moshi.KotlinJsonAdapterFactory
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import kr.tekit.lion.daongil.BuildConfig
 import kr.tekit.lion.daongil.data.dto.remote.response.emergency.aed.AedJsonAdapter

@@ -10,5 +10,4 @@ class NaverMapRepositoryImpl(
     override suspend fun getReverseGeoCode(coords: String): ReverseGecodes {
         return naverMapDataSource.getReverseGeoCode(coords).toDomainModel()
     }
-
 }

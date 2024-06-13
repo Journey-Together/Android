@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.domain.usecase
+package kr.tekit.lion.daongil.domain.usecase.emergency
 
 import kr.tekit.lion.daongil.domain.model.EmergencyBasicInfo
 import kr.tekit.lion.daongil.domain.model.HospitalMapInfo

@@ -6,7 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailDisabilityImageBinding
 
-class DetailDisabilityRVAdapter(private val disabilityList : List<Int>) : RecyclerView.Adapter<DetailDisabilityRVAdapter.DetailDisabilityViewHolder>(){
+class DetailDisabilityRVAdapter(private val disabilityList : List<Int>)
+    : RecyclerView.Adapter<DetailDisabilityRVAdapter.DetailDisabilityViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailDisabilityViewHolder {
         val binding : ItemDetailDisabilityImageBinding = ItemDetailDisabilityImageBinding.inflate(

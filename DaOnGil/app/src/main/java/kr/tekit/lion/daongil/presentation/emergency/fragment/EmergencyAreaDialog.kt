@@ -17,7 +17,7 @@ class EmergencyAreaDialog(
 
 ) : DialogFragment(R.layout.dialog_emergency_area) {
 
-    private val viewmodel: EmergencyMapViewModel by activityViewModels()
+    private val viewModel: EmergencyMapViewModel by activityViewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,7 +35,7 @@ class EmergencyAreaDialog(
 
             emergencyAreaPositive.setOnClickListener {
                 val areaDetail = if (emergencyDetailAreaSelected.text.toString() == "세종특별자치시") null else emergencyDetailAreaSelected.text.toString()
-                viewmodel.setArea(emergencyAreaSelected.text.toString(), areaDetail)
+                viewModel.setArea(emergencyAreaSelected.text.toString(), areaDetail)
                 emergencyAreaSelected.setText("")
                 emergencyDetailAreaSelected.setText("")
                 dismiss()

@@ -10,5 +10,4 @@ class PharmacyRepositoryImpl(
     override suspend fun getPharmacy(Q0: String?, Q1: String?): List<PharmacyMapInfo> {
         return pharmacyDataSource.getPharmacy(Q0, Q1).toDomainModel()
     }
-
 }

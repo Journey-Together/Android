@@ -18,5 +18,5 @@ data class Data(
     val overview: String,
     val placeId: Int,
     val reviewList: List<ReviewGuestRes>?,
-    val subDisability: List<String>
+    val subDisability: List<SubDisabilityGuestRes>?
 )

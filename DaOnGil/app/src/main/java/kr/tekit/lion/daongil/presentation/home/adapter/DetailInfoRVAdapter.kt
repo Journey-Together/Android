@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemDetailServiceInfoBinding
-import kr.tekit.lion.daongil.domain.model.DetailInfo
+import kr.tekit.lion.daongil.domain.model.SubDisability
 
 class DetailInfoRVAdapter(private val infoList: List<DetailInfo>)
     : RecyclerView.Adapter<DetailInfoRVAdapter.DetailInfoViewHolder>() {
@@ -23,9 +23,9 @@ class DetailInfoRVAdapter(private val infoList: List<DetailInfo>)
     }
 
     class DetailInfoViewHolder(val binding : ItemDetailServiceInfoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(infoData : DetailInfo) {
-            binding.itemDetailInfoTitleTv.text = infoData.infoTitle
-            binding.itemDetailInfoContentTv.text = infoData.infoContent
+        fun bind(infoData : SubDisability) {
+            binding.itemDetailInfoTitleTv.text = infoData.subDisabilityName
+            binding.itemDetailInfoContentTv.text = infoData.description
         }
     }
 }

@@ -22,8 +22,8 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityDetailBinding
-import kr.tekit.lion.daongil.domain.model.DetailInfo
 import kr.tekit.lion.daongil.domain.model.Review
+import kr.tekit.lion.daongil.domain.model.SubDisability
 import kr.tekit.lion.daongil.presentation.emergency.EmergencyMapActivity
 import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.home.adapter.DetailDisabilityRVAdapter
@@ -49,14 +49,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         settingToolbar()
         settingReviewBtn()
         initMap()
-        settingDetailInfoRVAdapter()
     }
 
-    private fun settingDetailInfoRVAdapter() {
-        val detailInfo = listOf(
-            DetailInfo("주차 여부", "장애인 주차장 있음 (관광 안내소 앞)"),
-            DetailInfo("핵심 동선", "출입구까지 경사로가 설치되어 있음 (완만함)")
-        )
+    private fun settingDetailInfoRVAdapter(detailInfo: List<SubDisability>) {
         val detailInfoRVAdapter = DetailInfoRVAdapter(detailInfo)
         binding.detailDisabilityInfoRv.adapter = detailInfoRVAdapter
         binding.detailDisabilityInfoRv.layoutManager = LinearLayoutManager(applicationContext)
@@ -102,17 +97,19 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         longitude: Double,
         latitude: Double,
         category: String,
-        subDisability: List<String>
+        subDisability: List<SubDisability>?
     ) {
         reviewList?.let { settingReviewRVAdapter(it) }
         settingDisabilityRVAdapter(disability)
-        // settingDetailInfoRVAdapter(detailPlaceInfo.subDisability)
+        if (subDisability != null) {
+            settingDetailInfoRVAdapter(subDisability)
+        }
 
         binding.detailTitleTv.text = name
         binding.detailAddressTv.text = address
         binding.detailBasicContentTv.text = overview
-        //binding.detailToolbarTitleTv.text = category
-        //binding.detailToolbarTitleTv.text = category
+        binding.detailToolbarTitleTv.text = category
+        binding.detailRouteTv.text = category
 
         if (image != null) {
             Glide.with(binding.detailThumbnailIv.context)

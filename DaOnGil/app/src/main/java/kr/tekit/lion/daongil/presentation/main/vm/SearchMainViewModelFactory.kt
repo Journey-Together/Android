@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllSigunguCodeUseCase
-import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForList
+import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceByList
 import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForMap
 import java.lang.IllegalArgumentException
 
@@ -19,7 +19,7 @@ class SearchMainViewModelFactory(context: Context): ViewModelProvider.Factory {
 
     private val getAllAreaCodeUseCase = GetAllAreaCodeUseCase(areaCodeRepository)
     private val getAllSigunguCodeUseCase = GetAllSigunguCodeUseCase(villageCodeRepository)
-    private val getSearchPlaceResultForList = GetSearchPlaceResultForList(placeRepository)
+    private val getSearchPlaceByList = GetSearchPlaceByList(placeRepository)
     private val getSearchPlaceResultForMap = GetSearchPlaceResultForMap(placeRepository)
 
 
@@ -28,7 +28,7 @@ class SearchMainViewModelFactory(context: Context): ViewModelProvider.Factory {
             return SearchMainViewModel(
                 getAllAreaCodeUseCase,
                 getAllSigunguCodeUseCase,
-                getSearchPlaceResultForList,
+                getSearchPlaceByList,
                 getSearchPlaceResultForMap
             ) as T
         }

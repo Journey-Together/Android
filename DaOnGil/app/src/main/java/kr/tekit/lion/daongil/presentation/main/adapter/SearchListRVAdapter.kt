@@ -2,34 +2,34 @@ package kr.tekit.lion.daongil.presentation.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.ItemTouristBigBinding
+import kr.tekit.lion.daongil.databinding.ItemTouristMediumBinding
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 
-class HomeLocationRVAdapter(
-    private val aroundPlaceList: List<AroundPlace>,
+
+class SearchListRVAdapter(
     private val onClick: (Int) -> Unit
-) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>() {
+) : ListAdapter<AroundPlace, SearchListRVAdapter.LocationViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
-        val binding: ItemTouristBigBinding = ItemTouristBigBinding.inflate(
+        val inflater = ItemTouristMediumBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
-        return LocationViewHolder(binding, onClick)
+        return LocationViewHolder(inflater, onClick)
     }
 
-    override fun getItemCount(): Int = 2
-
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
-        holder.bind(aroundPlaceList[position])
+        holder.bind(currentList[position])
     }
 
     class LocationViewHolder(
-        val binding: ItemTouristBigBinding,
+        val binding: ItemTouristMediumBinding,
         private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -38,21 +38,40 @@ class HomeLocationRVAdapter(
                 onClick.invoke(absoluteAdapterPosition)
             }
         }
-        fun bind(aroundPlace: AroundPlace) {
-            binding.touristBigLocationTv.text = aroundPlace.address
-            binding.touristBigTitleTv.text = aroundPlace.name
 
-            Glide.with(binding.touristBigIv.context)
-                .load(aroundPlace.image)
-                .error(R.drawable.empty_view)
-                .into(binding.touristBigIv)
+        fun bind(item: AroundPlace) {
+            with(binding) {
+                touristBigLocationTv.text = item.address
+                touristBigTitleTv.text = item.name
 
-            val disabilityList = aroundPlace.disability
+                Glide.with(binding.touristBigIv.context)
+                    .load(item.image)
+                    .error(R.drawable.empty_view)
+                    .into(touristBigIv)
 
-            val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
-            binding.touristBigDisabilityRv.adapter = disabilityRVAdapter
-            binding.touristBigDisabilityRv.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+                val disabilityList = item.disability
+
+                val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
+                touristBigDisabilityRv.adapter = disabilityRVAdapter
+                touristBigDisabilityRv.layoutManager = LinearLayoutManager(
+                    root.context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            }
+
+        }
+    }
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<AroundPlace>() {
+            override fun areItemsTheSame(oldItem: AroundPlace, newItem: AroundPlace): Boolean {
+                return oldItem.placeId == newItem.placeId
+            }
+
+            override fun areContentsTheSame(oldItem: AroundPlace, newItem: AroundPlace): Boolean {
+                return oldItem == newItem
+            }
 
         }
     }

@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.domain.repository.EmergencyRepository
 import kr.tekit.lion.daongil.domain.usecase.emergency.GetEmergencyMessageUseCase
 import java.lang.IllegalArgumentException
 
-class EmergencyInfoViewModelFactory(private val hospitalId: String): ViewModelProvider.Factory {
+class EmergencyInfoViewModelFactory(): ViewModelProvider.Factory {
 
     private val emergencyMessageUseCase = GetEmergencyMessageUseCase(
         EmergencyRepository.create()
@@ -14,7 +14,7 @@ class EmergencyInfoViewModelFactory(private val hospitalId: String): ViewModelPr
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(EmergencyInfoViewModel::class.java)){
-            return EmergencyInfoViewModel(emergencyMessageUseCase, hospitalId) as T
+            return EmergencyInfoViewModel(emergencyMessageUseCase) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")
     }

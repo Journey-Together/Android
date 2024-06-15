@@ -20,9 +20,6 @@ import java.time.format.DateTimeFormatter
 
 class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
 
-    private val hospitalId by lazy {
-        (requireActivity().intent.getSerializableExtra("data") as EmergencyMapInfo).emergencyId
-    }
     private val viewModel: EmergencyInfoViewModel by activityViewModels{ EmergencyInfoViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

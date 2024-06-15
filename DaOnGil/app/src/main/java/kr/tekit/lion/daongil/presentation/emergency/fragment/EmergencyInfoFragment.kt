@@ -7,7 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentEmergencyInfoBinding
@@ -23,9 +23,7 @@ class EmergencyInfoFragment : Fragment(R.layout.fragment_emergency_info) {
     private val hospitalId by lazy {
         (requireActivity().intent.getSerializableExtra("data") as EmergencyMapInfo).emergencyId
     }
-    private val viewModel: EmergencyInfoViewModel by viewModels{ EmergencyInfoViewModelFactory(
-        hospitalId.toString()
-    ) }
+    private val viewModel: EmergencyInfoViewModel by activityViewModels{ EmergencyInfoViewModelFactory() }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

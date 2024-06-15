@@ -11,18 +11,16 @@ import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 
 class EmergencyInfoViewModel(
     private val emergencyMessageUseCase: GetEmergencyMessageUseCase,
-    private val hospitalId: String
-) : ViewModel() {
+) : ViewModel(){
     private val _messageList = MutableLiveData<List<EmergencyMessageInfo>>()
     val messageList: LiveData<List<EmergencyMessageInfo>> = _messageList
 
-    init {
-        getEmergencyMessage()
-    }
 
-    private fun getEmergencyMessage() = viewModelScope.launch {
-        emergencyMessageUseCase(hospitalId).onSuccess {
-            _messageList.value = it
+    fun getEmergencyMessage(hospitalId: String) =
+        viewModelScope.launch {
+            emergencyMessageUseCase(hospitalId).onSuccess {
+                _messageList.value = it
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
 package kr.tekit.lion.daongil.domain.model
 
-class ListSearchResult {
-}
+data class ListSearchResult (
+    val place: AroundPlace,
+    val isLastPage: Boolean = false
+)

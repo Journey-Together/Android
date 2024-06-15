@@ -4,13 +4,10 @@ import java.util.TreeSet
 
 data class MapSearchOption(
     val category: String,
-    val query: String,
-    val size: Int,
-    val page: Int,
-    val minX: Double? = 0.0,
-    val maxX: Double?= 0.0,
-    val minY: Double?= 0.0,
-    val maxY: Double?= 0.0,
+    val minX: Double,
+    val maxX: Double,
+    val minY: Double,
+    val maxY: Double,
     val disabilityType: TreeSet<String> = TreeSet(),
     val detailFilter: Set<String> = TreeSet(),
     val arrange: String = "C"

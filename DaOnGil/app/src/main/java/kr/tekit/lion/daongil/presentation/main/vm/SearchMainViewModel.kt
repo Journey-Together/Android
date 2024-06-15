@@ -12,18 +12,18 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.AreaCode
 import kr.tekit.lion.daongil.domain.model.ListSearchOption
+import kr.tekit.lion.daongil.domain.model.ListSearchResult
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.SigunguCode
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllSigunguCodeUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
-import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForList
+import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceByList
 import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForMap
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
@@ -33,32 +33,25 @@ import java.util.TreeSet
 class SearchMainViewModel(
     private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
     private val getAllSigunguCodeUseCase: GetAllSigunguCodeUseCase,
-    private val getSearchPlaceResultForList: GetSearchPlaceResultForList,
+    private val getSearchPlaceByList: GetSearchPlaceByList,
     private val getSearchPlaceResultForMap: GetSearchPlaceResultForMap
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
             _areaCode.value = getAllAreaCodeUseCase()
-            getSearchPlaceResultForList(ListSearchOption("PLACE", "대현", 10, 0)).onSuccess {
-                Log.d("xczxczx", it.toString())
-            }.onError {
-                Log.d("xczxczx", it.toString())
-            }
+
         }
     }
 
-    private val _mapSearchResult = MutableStateFlow(MapSearchOption(Category.PLACE.name, "", 0, 0))
+    private val _mapSearchResult =
+        MutableStateFlow(MapSearchOption(Category.PLACE.name, 0.0, 0.0, 0.0, 0.0))
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val mapSearchResult = _mapSearchResult
         .debounce(800)
         .flatMapLatest { request ->
-            if ((request.maxX != null) and (request.minY != null) and (request.maxY != null) and (request.minY != null)) {
-                getSearchPlaceResultForMap(request)
-            } else {
-                flowOf()
-            }
+            getSearchPlaceResultForMap(request)
         }.flowOn(Dispatchers.IO)
         .catch { e: Throwable ->
             e.printStackTrace()
@@ -67,8 +60,8 @@ class SearchMainViewModel(
     private val _screenState = MutableStateFlow<ScreenState>(ScreenState.List)
     val screenState: StateFlow<ScreenState> get() = _screenState.asStateFlow()
 
-    private val _listSearchOption = MutableStateFlow(ListSearchOption(Category.PLACE.name, "", 0, 0))
-    val searchOption get() = _listSearchOption.asStateFlow()
+    private val _listSearchOption = MutableStateFlow(ListSearchOption(Category.PLACE.name, 0, 0))
+    val listSearchOption get() = _listSearchOption.asStateFlow()
 
     private val _areaCode = MutableStateFlow<List<AreaCode>>(emptyList())
     val areaCode get() = _areaCode.asStateFlow()
@@ -76,7 +69,7 @@ class SearchMainViewModel(
     private val _sigunguCode = MutableStateFlow<List<SigunguCode>>(emptyList())
     val villageCode get() = _sigunguCode.asStateFlow()
 
-    // BottomSheet 에서 선택된 항목을 들을 유지하기 위한 데이터
+    // BottomSheet 에서 선택된 항목을 들을 유지하기 위한 layout ID
     private val _physicalDisabilityOptions = MutableStateFlow<List<Int>>(emptyList())
     val physicalDisabilityOptions get() = _physicalDisabilityOptions.asStateFlow()
 
@@ -91,6 +84,10 @@ class SearchMainViewModel(
 
     private val _elderlyPersonOptions = MutableStateFlow<List<Int>>(emptyList())
     val elderlyPersonOptions get() = _elderlyPersonOptions.asStateFlow()
+
+    // 리스트 검색 결과
+    private val _listSearchResult = MutableStateFlow<List<ListSearchResult>>(emptyList())
+    val listSearchResult get() = _listSearchResult.asStateFlow()
 
     fun changeScreenState(state: ScreenState) {
         _screenState.value = state
@@ -110,65 +107,77 @@ class SearchMainViewModel(
         _listSearchOption.value = _listSearchOption.value.copy(sigunguCode = sigunguCode)
     }
 
-    fun onSelectOption(optionIds: List<Int>, optionNames: List<String>, type: DisabilityType){
+    fun onSelectOption(optionIds: List<Int>, optionNames: List<String>, type: DisabilityType) {
         val updatedTypes = _listSearchOption.value.disabilityType
-        val updatedOptions = _listSearchOption.value.detailFilter.toMutableSet()
+        val updatedOptions = _listSearchOption.value.detailFilter?.toMutableSet()
 
         if (optionIds.isEmpty()) {
-            when(type){
+            when (type) {
                 is DisabilityType.PhysicalDisability -> {
-                    updatedTypes.remove(DisabilityType.PhysicalDisability.type)
+                    updatedTypes?.remove(DisabilityType.PhysicalDisability.type)
                 }
+
                 is DisabilityType.VisualImpairment -> {
-                    updatedTypes.remove(DisabilityType.VisualImpairment.type)
+                    updatedTypes?.remove(DisabilityType.VisualImpairment.type)
                 }
+
                 is DisabilityType.HearingImpairment -> {
-                    updatedTypes.remove(DisabilityType.HearingImpairment.type)
+                    updatedTypes?.remove(DisabilityType.HearingImpairment.type)
                 }
+
                 is DisabilityType.InfantFamily -> {
-                    updatedTypes.remove(DisabilityType.InfantFamily.type)
+                    updatedTypes?.remove(DisabilityType.InfantFamily.type)
                 }
+
                 is DisabilityType.ElderlyPeople -> {
-                    updatedTypes.remove(DisabilityType.ElderlyPeople.type)
+                    updatedTypes?.remove(DisabilityType.ElderlyPeople.type)
                 }
             }
-            optionNames.map { updatedOptions.remove(it) }
+            optionNames.map { updatedOptions?.remove(it) }
             _physicalDisabilityOptions.value = optionIds
 
         } else {
-            when(type){
+            when (type) {
                 is DisabilityType.PhysicalDisability -> {
-                    updatedTypes.add(DisabilityType.PhysicalDisability.type)
+                    updatedTypes?.add(DisabilityType.PhysicalDisability.type)
                 }
+
                 is DisabilityType.VisualImpairment -> {
-                    updatedTypes.add(DisabilityType.VisualImpairment.type)
+                    updatedTypes?.add(DisabilityType.VisualImpairment.type)
                 }
+
                 is DisabilityType.HearingImpairment -> {
-                    updatedTypes.add(DisabilityType.HearingImpairment.type)
+                    updatedTypes?.add(DisabilityType.HearingImpairment.type)
                 }
+
                 is DisabilityType.InfantFamily -> {
-                    updatedTypes.add(DisabilityType.InfantFamily.type)
+                    updatedTypes?.add(DisabilityType.InfantFamily.type)
                 }
+
                 is DisabilityType.ElderlyPeople -> {
-                    updatedTypes.add(DisabilityType.ElderlyPeople.type)
+                    updatedTypes?.add(DisabilityType.ElderlyPeople.type)
                 }
             }
-            optionNames.map { updatedOptions.add(it) }
+            optionNames.map { updatedOptions?.add(it) }
         }
 
-        when(type){
+        when (type) {
             is DisabilityType.PhysicalDisability -> {
                 _physicalDisabilityOptions.value = optionIds
             }
+
             is DisabilityType.VisualImpairment -> {
                 _visualImpairmentOptions.value = optionIds
             }
+
             is DisabilityType.HearingImpairment -> {
                 _hearingImpairmentOptions.value = optionIds
             }
+
             is DisabilityType.InfantFamily -> {
                 _infantFamilyOptions.value = optionIds
             }
+
             is DisabilityType.ElderlyPeople -> {
                 _elderlyPersonOptions.value = optionIds
             }
@@ -185,6 +194,29 @@ class SearchMainViewModel(
             _sigunguCode.value = getAllSigunguCodeUseCase(findAreaCode)
         }
     }
+
+    fun onClickSearchButton() = viewModelScope.launch {
+        listSearchOption.collect {
+            getSearchPlaceByList(it).onSuccess { response ->
+                _listSearchResult.value = response
+            }.onError {
+                Log.d("MyOkhttpResult", it.toString())
+            }
+        }
+    }
+
+    fun whenLastPageReached() = viewModelScope.launch {
+        _listSearchOption.value = _listSearchOption.value.copy(
+            page = _listSearchOption.value.page + 1
+        )
+
+        getSearchPlaceByList(listSearchOption.value).onSuccess { response ->
+            _listSearchResult.value += response
+        }.onError {
+            Log.d("MyOkhttpResult", it.toString())
+        }
+    }
+
 
     fun onClickResetIcon() {
         _listSearchOption.value = _listSearchOption.value.copy(

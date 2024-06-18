@@ -8,6 +8,7 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetMyDefaultInfoUseCase(
     private val memberRepository: MemberRepository
 ): BaseUseCase() {
+
     suspend operator fun invoke(): Result<MyDefaultInfo> = execute {
         memberRepository.getMyDefaultInfo()
     }

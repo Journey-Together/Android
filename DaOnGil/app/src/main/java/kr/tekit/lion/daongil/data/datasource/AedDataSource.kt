@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.data.network.service.AedService
 class AedDataSource(
     private val aedService: AedService
 ) {
-    suspend fun getAedInfo(Q0: String?, Q1: String?) : AedResponse {
-        return aedService.getAedInfo(Q0, Q1)
+    suspend fun getAedInfo(q0: String?, q1: String?) : AedResponse {
+        return aedService.getAedInfo(q0, q1)
     }
 }

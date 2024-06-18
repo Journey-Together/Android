@@ -14,6 +14,7 @@ class FormPlaceAdapter(
     private val schedulePosition: Int,
     private val onRemoveButtonClick: (schedulePosition: Int, placePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormPlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return FormPlaceViewHolder(

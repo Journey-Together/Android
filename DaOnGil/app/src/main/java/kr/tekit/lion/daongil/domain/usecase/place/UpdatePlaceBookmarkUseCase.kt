@@ -7,6 +7,7 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class UpdatePlaceBookmarkUseCase(
     private val bookmarkRepository: BookmarkRepository
 ) : BaseUseCase() {
+
     suspend operator fun invoke(placeId: Long) : Result<Unit> = execute {
         bookmarkRepository.updatePlaceBookmark(placeId)
     }

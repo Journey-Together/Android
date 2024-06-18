@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.domain.repository.PharmacyRepository
 class PharmacyRepositoryImpl(
     private val pharmacyDataSource: PharmacyDataSource
 ) : PharmacyRepository {
-    override suspend fun getPharmacy(Q0: String?, Q1: String?): List<PharmacyMapInfo> {
-        return pharmacyDataSource.getPharmacy(Q0, Q1).toDomainModel()
+    override suspend fun getPharmacy(q0: String?, q1: String?): List<PharmacyMapInfo> {
+        return pharmacyDataSource.getPharmacy(q0, q1).toDomainModel()
     }
 }

@@ -8,8 +8,8 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetMyMainScheduleUseCase(
     private val planRepository: PlanRepository
 ) : BaseUseCase() {
-    suspend operator fun invoke(): Result<List<MyMainSchedule?>?>
-    = execute {
+
+    suspend operator fun invoke(): Result<List<MyMainSchedule?>?> = execute {
         planRepository.getMyMainSchedule()
     }
 }

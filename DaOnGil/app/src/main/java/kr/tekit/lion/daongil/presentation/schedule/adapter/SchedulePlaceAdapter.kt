@@ -15,6 +15,7 @@ class SchedulePlaceAdapter(
     private val VIEW_TYPE_PLACE = 0
     private val VIEW_TYPE_EMPTY = 1
 
+    //https://mashup-android.vercel.app/mashup-10th/hyeonseong/sealed_class/
     interface OnSchedulePlaceClickListener {
         fun onSchedulePlaceClick(placeId: Int)
     }

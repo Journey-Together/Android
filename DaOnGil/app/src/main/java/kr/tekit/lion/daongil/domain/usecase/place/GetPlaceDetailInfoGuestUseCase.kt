@@ -8,6 +8,7 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetPlaceDetailInfoGuestUseCase (
     private val placeRepository: PlaceRepository
 ): BaseUseCase() {
+
     suspend operator fun invoke(placeId: Long): Result<PlaceDetailInfoGuest> = execute {
         placeRepository.getPlaceDetailInfoGuest(placeId)
     }

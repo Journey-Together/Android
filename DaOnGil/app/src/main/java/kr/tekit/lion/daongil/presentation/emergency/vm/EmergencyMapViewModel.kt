@@ -20,18 +20,10 @@ class EmergencyMapViewModel(
     private val _area = MutableLiveData<String?>()
     val area : LiveData<String?> = _area
 
-    private val _hospitalMapInfo = MutableLiveData<List<HospitalMapInfo>>()
-    val hospitalMapInfo : LiveData<List<HospitalMapInfo>> = _hospitalMapInfo
-
-    private val _aedMapInfo = MutableLiveData<List<AedMapInfo>>()
-    val aedMapInfo : LiveData<List<AedMapInfo>> = _aedMapInfo
-
     private val _emergencyMapInfo = MutableLiveData<List<EmergencyMapInfo>>()
     val emergencyMapInfo: LiveData<List<EmergencyMapInfo>> = _emergencyMapInfo
 
-
-    fun getUserLocationRegion(coords: String) =
-        viewModelScope.launch {
+    fun getUserLocationRegion(coords: String) = viewModelScope.launch {
             getUserLocationRegionUseCase(coords).onSuccess {
                 if (it.code == 0) {
                     _area.value = "${it.results[0].area} ${it.results[0].areaDetail}"

@@ -7,7 +7,7 @@ import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
 
 interface PharmacyRepository {
 
-    suspend fun getPharmacy(Q0: String?, Q1: String?): List<PharmacyMapInfo>
+    suspend fun getPharmacy(q0: String?, q1: String?): List<PharmacyMapInfo>
 
     companion object {
         fun create(): PharmacyRepositoryImpl{

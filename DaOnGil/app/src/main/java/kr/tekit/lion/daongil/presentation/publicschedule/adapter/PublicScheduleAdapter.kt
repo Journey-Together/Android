@@ -10,8 +10,7 @@ import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 
 class PublicScheduleAdapter(
     private val onPublicScheduleClicked: (Int) -> Unit
-) :
-    RecyclerView.Adapter<PublicScheduleAdapter.PublicScheduleViewHolder>() {
+) : RecyclerView.Adapter<PublicScheduleAdapter.PublicScheduleViewHolder>() {
 
     private var items: MutableList<OpenPlanInfo> = mutableListOf()
 
@@ -43,7 +42,7 @@ class PublicScheduleAdapter(
         RecyclerView.ViewHolder(binding.root) {
             init{
                 binding.root.setOnClickListener {
-                    onPublicScheduleClicked(adapterPosition)
+                    onPublicScheduleClicked(absoluteAdapterPosition)
                 }
             }
 

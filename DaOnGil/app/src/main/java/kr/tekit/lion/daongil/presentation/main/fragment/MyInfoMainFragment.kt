@@ -16,8 +16,8 @@ import kr.tekit.lion.daongil.presentation.concerntype.ConcernTypeActivity
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.login.LogInState
 import kr.tekit.lion.daongil.presentation.login.LoginActivity
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.main.vm.MyInfoMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.MyInfoMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myinfo.DeleteUserActivity

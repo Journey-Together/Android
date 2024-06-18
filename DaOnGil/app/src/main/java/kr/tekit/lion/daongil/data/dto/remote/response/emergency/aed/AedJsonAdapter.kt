@@ -4,6 +4,7 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonReader
 import com.squareup.moshi.JsonWriter
 import com.squareup.moshi.ToJson
+
 class AedJsonAdapter {
     @FromJson
     fun fromJson(reader: JsonReader): Items {

@@ -8,6 +8,7 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetPlaceBookmarkListUseCase(
     private val bookmarkRepository: BookmarkRepository
 ) : BaseUseCase() {
+
     suspend operator fun invoke() : Result<List<BookmarkedPlace>> = execute {
         bookmarkRepository.getPlaceBookmarkList()
     }

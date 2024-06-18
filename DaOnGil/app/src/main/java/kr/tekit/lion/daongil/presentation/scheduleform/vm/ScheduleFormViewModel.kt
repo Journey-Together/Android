@@ -27,6 +27,7 @@ class ScheduleFormViewModel(
     private val addNewPlanUseCase: AddNewPlanUseCase,
     private val getPlaceBookmarkListUseCase: GetPlaceBookmarkListUseCase
 ) : ViewModel() {
+
     private val _startDate = MutableLiveData<Date?>()
     val startDate: LiveData<Date?> get() = _startDate
 
@@ -67,7 +68,7 @@ class ScheduleFormViewModel(
         _schedule.value = schedule
     }
 
-    fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
+    private fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
         // 업데이트 될 기존 데이터
         val updatedSchedule = _schedule.value?.toMutableList()
         val daySchedule = updatedSchedule?.get(dayPosition)
@@ -107,7 +108,6 @@ class ScheduleFormViewModel(
         viewModelScope.launch {
             getPlaceSearchResultUseCase(word, page, size).onSuccess {
                 // 검색 결과를 받아오면 _placeSearchResult에 값을 갱신해준다
-                Log.d("getPlaceSearchResult", "onSuccess ${it.toString()}")
                 _placeSearchResult.value = it
             }.onError {
                 //Log.d("getPlaceSearchResult", "onError ${it.toString()}")
@@ -125,10 +125,10 @@ class ScheduleFormViewModel(
         }
         return false
     }
+
     fun getSearchedPlaceDetailInfo(dayPosition:Int, placeId: Long){
         viewModelScope.launch {
             getPlaceDetailInfoUseCase(placeId).onSuccess {
-                //Log.d("getSearchedPlaceDetailInfo", "onSuccess ${it.toString()}")
 
                 val formPlace = FormPlace(it.placeId.toLong(), it.image, it.address, it.name, it.disability)
                 addNewPlace(formPlace, dayPosition)
@@ -151,7 +151,6 @@ class ScheduleFormViewModel(
             viewModelScope.launch {
                 val success = try {
                     addNewPlanUseCase(newPlan).onSuccess {
-                        Log.d("submitNewPlan", "onSuccess : ${it}")
                     }.onError {
                         Log.d("submitNewPlan", "onError : ${it}")
                     }
@@ -203,10 +202,9 @@ class ScheduleFormViewModel(
         return dayString
     }
 
-    fun getBookmarkedPlaceList(){
+    private fun getBookmarkedPlaceList(){
         viewModelScope.launch {
             getPlaceBookmarkListUseCase().onSuccess {
-                Log.d("getBookmarkedPlaceList", "onSuccess $it")
                 _bookmarkedPlaces.postValue(it)
             }.onError {
                 Log.e("getBookmarkedPlaceList", "onError $it")

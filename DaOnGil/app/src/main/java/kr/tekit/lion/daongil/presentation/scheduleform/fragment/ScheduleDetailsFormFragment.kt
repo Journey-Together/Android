@@ -17,7 +17,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_form) {
-    private val scheduleFormViewModel: ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
+    private val scheduleFormViewModel: ScheduleFormViewModel by activityViewModels{
+        ScheduleFormViewModelFactory()
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

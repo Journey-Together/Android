@@ -9,10 +9,7 @@ import kr.tekit.lion.daongil.domain.model.EmergencyMessageInfo
 class EmergencyMessageAdapter(private val emergencyMessageList: List<EmergencyMessageInfo>) :
     RecyclerView.Adapter<EmergencyMessageAdapter.EmergencyMessageViewHolder>() {
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): EmergencyMessageViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmergencyMessageViewHolder {
         return EmergencyMessageViewHolder(
             ItemEmergencyMessageBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -33,8 +30,8 @@ class EmergencyMessageAdapter(private val emergencyMessageList: List<EmergencyMe
         return emergencyMessageList.size
     }
 
-    class EmergencyMessageViewHolder(private val binding: ItemEmergencyMessageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class EmergencyMessageViewHolder(private val binding: ItemEmergencyMessageBinding)
+        : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: EmergencyMessageInfo) {
             binding.emergencyMessageText.text = item.emergencyMessage
             binding.emergencyMessageDate.text = item.emergencyDate

@@ -15,7 +15,7 @@ class PlaceBookmarkRVAdapter(
 ) : RecyclerView.Adapter<PlaceBookmarkRVAdapter.PlaceBookmarkViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceBookmarkViewHolder {
-        val binding : ItemLocationBookmarkBinding = ItemLocationBookmarkBinding.inflate(
+        val binding = ItemLocationBookmarkBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
         return PlaceBookmarkViewHolder(binding, itemClickListener, onBookmarkClick)

@@ -17,15 +17,16 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewModifyBinding
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewModifyImageRVAdapter
 
-class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify), ConfirmDialogInterface {
+class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
+    ConfirmDialogInterface {
 
     private val imagesList: ArrayList<Uri> = ArrayList()
 
-    val imageRVAdapter: MyReviewModifyImageRVAdapter by lazy {
+    private val imageRVAdapter: MyReviewModifyImageRVAdapter by lazy {
         MyReviewModifyImageRVAdapter(imagesList)
     }
 
@@ -132,7 +133,7 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify), Con
         }
     }
 
-    fun checkPermission() {
+    private fun checkPermission() {
         val permissionReadExternal = android.Manifest.permission.READ_EXTERNAL_STORAGE
 
         val permissionReadExternalGranted = ContextCompat.checkSelfPermission(

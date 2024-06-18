@@ -9,8 +9,7 @@ import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 
 class ScheduleMyAdapter(
     private val itemClickListener: (Int) -> Unit
-) :
-    RecyclerView.Adapter<ScheduleMyAdapter.ScheduleMyViewHolder>() {
+) : RecyclerView.Adapter<ScheduleMyAdapter.ScheduleMyViewHolder>() {
 
     private var items: MutableList<MyMainSchedule> = mutableListOf()
 

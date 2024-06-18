@@ -37,8 +37,7 @@ class MyScheduleElapsedAdapter(
         private val binding: ItemMyScheduleElapsedBinding,
         private val onReviewButtonClicked: (Int, Boolean?) -> Unit,
         private val onScheduleItemClicked: (Int) -> Unit
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(mySchedule: MySchedule) {
             binding.apply {
                 val hasReview = mySchedule.hasReview

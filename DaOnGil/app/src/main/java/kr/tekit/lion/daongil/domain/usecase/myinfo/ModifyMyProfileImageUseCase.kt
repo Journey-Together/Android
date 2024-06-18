@@ -10,9 +10,8 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class ModifyMyProfileImageUseCase(
     private val memberRepository: MemberRepository
 ): BaseUseCase() {
-    suspend operator fun invoke(profileImage: ProfileImg): Result<Unit> = execute{
-        Log.d("ImgRuestResult", "UseCase ${profileImage.path}")
 
+    suspend operator fun invoke(profileImage: ProfileImg): Result<Unit> = execute{
         memberRepository.modifyMyProfileImg(profileImage)
     }
 }

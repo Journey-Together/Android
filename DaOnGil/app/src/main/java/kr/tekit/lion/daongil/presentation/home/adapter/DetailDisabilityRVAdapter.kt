@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailDisabilityImageBinding
 
-class DetailDisabilityRVAdapter(private val disabilityList : List<Int>)
-    : RecyclerView.Adapter<DetailDisabilityRVAdapter.DetailDisabilityViewHolder>(){
+class DetailDisabilityRVAdapter(private val disabilityList: List<Int>) :
+    RecyclerView.Adapter<DetailDisabilityRVAdapter.DetailDisabilityViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailDisabilityViewHolder {
-        val binding : ItemDetailDisabilityImageBinding = ItemDetailDisabilityImageBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemDetailDisabilityImageBinding = ItemDetailDisabilityImageBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
 
         return DetailDisabilityViewHolder(binding)
     }
@@ -22,7 +23,8 @@ class DetailDisabilityRVAdapter(private val disabilityList : List<Int>)
         holder.bind(disabilityList[position])
     }
 
-    class DetailDisabilityViewHolder(val binding : ItemDetailDisabilityImageBinding) : RecyclerView.ViewHolder(binding.root) {
+    class DetailDisabilityViewHolder(private val binding: ItemDetailDisabilityImageBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Int) {
             val imageResource = when (data) {
                 1 -> R.drawable.sv_unselected_physical_disability_icon

@@ -8,8 +8,8 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetEmergencyMessageUseCase(
     private val emergencyRepository: EmergencyRepository
 ) : BaseUseCase() {
-    suspend operator fun invoke(HPID: String?): Result<List<EmergencyMessageInfo>> =
-        execute {
-            emergencyRepository.getEmergencyMessage(HPID)
-        }
+
+    suspend operator fun invoke(hpid: String?): Result<List<EmergencyMessageInfo>> = execute {
+        emergencyRepository.getEmergencyMessage(hpid)
+    }
 }

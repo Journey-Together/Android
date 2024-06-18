@@ -18,10 +18,10 @@ data class EmergencyMessageResponse(
             }
     }
 
-    fun formatDate(input: String): String {
+    private fun formatDate(input: String): String {
         if (input.length != 14) return "-"
 
-        try {
+        return try {
             val year = input.substring(0, 4)
             val month = input.substring(4, 6)
             val day = input.substring(6, 8)
@@ -29,9 +29,9 @@ data class EmergencyMessageResponse(
             val minute = input.substring(10, 12)
             val second = input.substring(12, 14)
 
-            return "$year.$month.$day $hour:$minute:$second"
+            "$year.$month.$day $hour:$minute:$second"
         } catch (e: Exception) {
-            return "-"
+            "-"
         }
     }
 }

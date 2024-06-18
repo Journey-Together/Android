@@ -6,7 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemHomeVpBinding
 
-class HomeVPAdapter(private val images: List<Drawable>) : RecyclerView.Adapter<HomeVPAdapter.ImageViewHolder>(){
+class HomeVPAdapter(private val images: List<Drawable>)
+    : RecyclerView.Adapter<HomeVPAdapter.ImageViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         val binding : ItemHomeVpBinding = ItemHomeVpBinding.inflate(
@@ -21,7 +22,8 @@ class HomeVPAdapter(private val images: List<Drawable>) : RecyclerView.Adapter<H
         holder.bind(images[position])
     }
 
-    class ImageViewHolder(private val binding: ItemHomeVpBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ImageViewHolder(private val binding: ItemHomeVpBinding)
+        : RecyclerView.ViewHolder(binding.root) {
         fun bind(image: Drawable) {
             binding.itemHomeIv.setImageDrawable(image)
         }

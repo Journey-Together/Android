@@ -8,8 +8,8 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetPharmacyMapInfoUseCase(
     private val pharmacyRepository: PharmacyRepository
 ) : BaseUseCase() {
-    suspend operator fun invoke(Q0: String?, Q1: String?): Result<List<PharmacyMapInfo>> =
-        execute {
-            pharmacyRepository.getPharmacy(Q0, Q1)
-        }
+
+    suspend operator fun invoke(q0: String?, q1: String?): Result<List<PharmacyMapInfo>> = execute {
+        pharmacyRepository.getPharmacy(q0, q1)
+    }
 }

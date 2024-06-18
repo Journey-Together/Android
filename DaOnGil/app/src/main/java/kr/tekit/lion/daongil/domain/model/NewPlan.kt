@@ -5,5 +5,5 @@ data class NewPlan(
     val startDate: String,
     val endDate: String,
     val isPublic: Boolean = false,
-    val dailyplace: List<DailyPlace>,
+    val dailyPlace: List<DailyPlace>,
 )

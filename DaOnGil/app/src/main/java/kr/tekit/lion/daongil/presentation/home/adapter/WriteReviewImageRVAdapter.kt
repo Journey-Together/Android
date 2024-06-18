@@ -26,7 +26,7 @@ class WriteReviewImageRVAdapter(private val imageList : MutableList<Uri>)
     }
 
     class WriteReviewImageViewHolder(
-        val binding: ItemReviewWriteImageBinding,
+        private val binding: ItemReviewWriteImageBinding,
         private val adapter : WriteReviewImageRVAdapter
     ) : RecyclerView.ViewHolder(binding.root) {
 

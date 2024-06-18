@@ -12,31 +12,30 @@ import kr.tekit.lion.daongil.domain.model.EmergencyMapInfo
 class EmergencyBottomAdapter(
     private val emergencyMapInfoList: List<EmergencyMapInfo>,
     private val itemClickListener: (Int) -> Unit
-):
-    RecyclerView.Adapter<EmergencyBottomAdapter.EmergencyBottomViewHolder>(){
+): RecyclerView.Adapter<EmergencyBottomAdapter.EmergencyBottomViewHolder>(){
+
     class EmergencyBottomViewHolder(
         private val binding: ItemEmergencyBottomBinding,
         private val itemClickListener: (Int) -> Unit
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    ) : RecyclerView.ViewHolder(binding.root) {
         init{
             binding.root.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
+                itemClickListener.invoke(absoluteAdapterPosition)
             }
         }
             fun bind(item: EmergencyMapInfo){
                 with(binding){
                     if(item.emergencyType == "hospital"){
-                        binding.emergencyBottomImage.setImageResource(R.drawable.emergency_bottom_img)
-                        binding.emergencyBedLayout.visibility = View.VISIBLE
-                        binding.emergencyName.text = item.hospitalList?.hospitalName
-                        binding.emergencyAddress.text = item.hospitalList?.hospitalAddress
-                        binding.emergencyCall.text = item.hospitalList?.emergencyTel
-                        binding.emergencyBed.text =
+                        emergencyBottomImage.setImageResource(R.drawable.emergency_bottom_img)
+                        emergencyBedLayout.visibility = View.VISIBLE
+                        emergencyName.text = item.hospitalList?.hospitalName
+                        emergencyAddress.text = item.hospitalList?.hospitalAddress
+                        emergencyCall.text = item.hospitalList?.emergencyTel
+                        emergencyBed.text =
                             item.hospitalList?.emergencyCount.toString() + " / " + item.hospitalList?.emergencyAllCount.toString()
 
                         item.hospitalList?.emergencyBed?.let { it ->
-                            val emergencyBedIcon = binding.emergencyBedIcon
+                            val emergencyBedIcon = emergencyBedIcon
 
                             val drawable = emergencyBedIcon.drawable
                             if (drawable != null) {
@@ -51,19 +50,17 @@ class EmergencyBottomAdapter(
                     }
 
                     if(item.emergencyType == "aed"){
-                        binding.emergencyBottomImage.setImageResource(R.drawable.aed_bottom_img)
-                        binding.emergencyBedLayout.visibility = View.GONE
-                        binding.emergencyName.text = item.aedList?.aedName
-                        binding.emergencyAddress.text = item.aedList?.aedAdress
-                        binding.emergencyCall.text = item.aedList?.aedTel
+                        emergencyBottomImage.setImageResource(R.drawable.aed_bottom_img)
+                        emergencyBedLayout.visibility = View.GONE
+                        emergencyName.text = item.aedList?.aedName
+                        emergencyAddress.text = item.aedList?.aedAdress
+                        emergencyCall.text = item.aedList?.aedTel
                     }
                 }
             }
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int): EmergencyBottomViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EmergencyBottomViewHolder {
         return EmergencyBottomViewHolder(
             ItemEmergencyBottomBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -79,9 +76,7 @@ class EmergencyBottomAdapter(
         return emergencyMapInfoList.size
     }
 
-    override fun onBindViewHolder(
-        holder: EmergencyBottomViewHolder, position: Int
-    ) {
+    override fun onBindViewHolder(holder: EmergencyBottomViewHolder, position: Int) {
        holder.bind(emergencyMapInfoList[position])
     }
 

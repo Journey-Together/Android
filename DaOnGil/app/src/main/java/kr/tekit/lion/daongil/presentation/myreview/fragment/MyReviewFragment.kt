@@ -15,7 +15,7 @@ import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewRVAdapter
 
 class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
-    val args: MyReviewFragmentArgs by navArgs()
+    private val args: MyReviewFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

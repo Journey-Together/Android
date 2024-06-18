@@ -9,6 +9,7 @@ class GetEmergencyMapInfoUseCase(
     private val getHospitalMapInfoUseCase: GetHospitalMapInfoUseCase,
     private val getAedMapInfoUseCase: GetAedMapInfoUseCase
 ) : BaseUseCase() {
+
     suspend operator fun invoke(area: String?, areaDetail: String?): Result<List<EmergencyMapInfo>> =
         execute {
             val aedArea = if (area == "전북특별자치도") "전라북도" else area

@@ -126,11 +126,11 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     }
 
     // 갤러리 접근 권한 확인 함수
-    fun checkPermission() {
+    private fun checkPermission() {
         val permissionReadExternal = android.Manifest.permission.READ_EXTERNAL_STORAGE
 
         val permissionReadExternalGranted = ContextCompat.checkSelfPermission(
-            applicationContext,
+            this,
             permissionReadExternal
         ) == PackageManager.PERMISSION_GRANTED
 

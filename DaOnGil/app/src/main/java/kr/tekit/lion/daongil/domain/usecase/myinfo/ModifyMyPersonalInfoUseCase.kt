@@ -10,6 +10,7 @@ import okhttp3.RequestBody
 class ModifyMyPersonalInfoUseCase(
     private val memberRepository: MemberRepository
 ): BaseUseCase() {
+
     suspend operator fun invoke(request: PersonalInfo): Result<Unit> = execute {
         memberRepository.modifyMyPersonalInfo(request)
     }

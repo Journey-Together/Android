@@ -11,6 +11,7 @@ class FormScheduleAdapter(
     private val onAddButtonClickListener : (schedulePosition: Int) -> Unit,
     private val onRemoveButtonClickListener : (schedulePosition: Int, placePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormScheduleAdapter.FormScheduleViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return FormScheduleViewHolder(

@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.data.repository.AedRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.AedMapInfo
 
 interface AedRepository {
-    suspend fun getAedInfo(Q0: String?, Q1: String?): List<AedMapInfo>
+    suspend fun getAedInfo(q0: String?, q1: String?): List<AedMapInfo>
 
     companion object {
         fun create(): AedRepositoryImpl{

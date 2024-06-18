@@ -1,13 +1,10 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.emergency.pharmacy
 
-
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.PharmacyMapInfo
 
 @JsonClass(generateAdapter = true)
 data class PharmacyResponse(
-    @Json(name = "response")
     val response: Response
 ) {
     fun toDomainModel(): List<PharmacyMapInfo> {
@@ -32,7 +29,7 @@ data class PharmacyResponse(
         }
     }
 
-    fun convertTimeFormat(timeRange: String): String {
+    private fun convertTimeFormat(timeRange: String): String {
         val times = timeRange.split("-")
         if (times.size != 2) {
             return "정보 없음"

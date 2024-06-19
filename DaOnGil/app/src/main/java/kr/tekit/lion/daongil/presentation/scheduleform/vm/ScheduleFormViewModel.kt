@@ -146,7 +146,7 @@ class ScheduleFormViewModel(
         val dailyPlace = getDailyPlaceList()
 
         if (title != null && startDateString != null && endDateString != null) {
-            val newPlan = NewPlan(title, startDateString, endDateString, false, dailyPlace)
+            val newPlan = NewPlan(title, startDateString, endDateString, dailyPlace)
 
             viewModelScope.launch {
                 val success = try {

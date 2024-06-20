@@ -49,7 +49,8 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             if(it.isNotEmpty()){
                 binding.recyclerViewFSBookmark.apply {
                     adapter = FormBookmarkedPlacesAdapter(it){ selectedPlaceId ->
-                        addNewPlace(this, schedulePosition, selectedPlaceId)
+                        val placeId = it[selectedPlaceId].bookmarkedPlaceId
+                        addNewPlace(this, schedulePosition, placeId)
                     }
                 }
             }else{

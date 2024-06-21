@@ -14,16 +14,16 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.domain.model.AreaCode
 import kr.tekit.lion.daongil.domain.model.ListSearchOption
 import kr.tekit.lion.daongil.domain.model.ListSearchResult
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.SigunguCode
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllSigunguCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
-import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceByList
+import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForList
 import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForMap
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
@@ -31,16 +31,16 @@ import kr.tekit.lion.daongil.presentation.main.model.ScreenState
 import java.util.TreeSet
 
 class SearchMainViewModel(
-    private val getAllAreaCodeUseCase: GetAllAreaCodeUseCase,
+    private val getAllAreaNameUseCase: GetAllAreaNameUseCase,
     private val getAllSigunguCodeUseCase: GetAllSigunguCodeUseCase,
-    private val getSearchPlaceByList: GetSearchPlaceByList,
+    private val getAreaCodeByNameUseCase: GetAreaCodeByNameUseCase,
+    private val getSearchPlaceByList: GetSearchPlaceResultForList,
     private val getSearchPlaceResultForMap: GetSearchPlaceResultForMap
 ) : ViewModel() {
 
     init {
         viewModelScope.launch {
-            _areaCode.value = getAllAreaCodeUseCase()
-
+            _areaCode.value = getAllAreaNameUseCase()
         }
     }
 
@@ -63,11 +63,11 @@ class SearchMainViewModel(
     private val _listSearchOption = MutableStateFlow(ListSearchOption(Category.PLACE.name, 0, 0))
     val listSearchOption get() = _listSearchOption.asStateFlow()
 
-    private val _areaCode = MutableStateFlow<List<AreaCode>>(emptyList())
+    private val _areaCode = MutableStateFlow<List<String>>(emptyList())
     val areaCode get() = _areaCode.asStateFlow()
 
     private val _sigunguCode = MutableStateFlow<List<SigunguCode>>(emptyList())
-    val villageCode get() = _sigunguCode.asStateFlow()
+    val sigunguCode get() = _sigunguCode.asStateFlow()
 
     // BottomSheet 에서 선택된 항목을 들을 유지하기 위한 layout ID
     private val _physicalDisabilityOptions = MutableStateFlow<List<Int>>(emptyList())
@@ -95,11 +95,6 @@ class SearchMainViewModel(
 
     fun onSelectedTab(category: String) {
         _listSearchOption.value = _listSearchOption.value.copy(category = category)
-    }
-
-    fun onSelectedArea(areaName: String) {
-        val areaCode = areaCode.value.find { it.name == areaName }?.code
-        _listSearchOption.value = _listSearchOption.value.copy(areaCode = areaCode)
     }
 
     fun onSelectedSigungu(sigunguName: String) {
@@ -188,10 +183,10 @@ class SearchMainViewModel(
         )
     }
 
-    fun onCompleteSelectArea(areaName: String) = viewModelScope.launch {
-        val findAreaCode = areaCode.value.find { it.name == areaName }?.code
-        if (findAreaCode != null) {
-            _sigunguCode.value = getAllSigunguCodeUseCase(findAreaCode)
+    fun onSelectedArea(areaName: String) = viewModelScope.launch{
+        getAreaCodeByNameUseCase(areaName)?.let { areaCode ->
+            _listSearchOption.value = _listSearchOption.value.copy(areaCode = areaCode)
+            _sigunguCode.value = getAllSigunguCodeUseCase(areaCode)
         }
     }
 

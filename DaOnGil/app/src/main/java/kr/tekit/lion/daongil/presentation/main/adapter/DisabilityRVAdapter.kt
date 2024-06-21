@@ -7,7 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDisabilityTypeBinding
 
-class DisabilityRVAdapter(var typeList : List<String>) : RecyclerView.Adapter<DisabilityRVAdapter.DisabilityViewHolder>(){
+class DisabilityRVAdapter(private val typeList : List<String>)
+    : RecyclerView.Adapter<DisabilityRVAdapter.DisabilityViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DisabilityViewHolder {
         val binding : ItemDisabilityTypeBinding = ItemDisabilityTypeBinding.inflate(

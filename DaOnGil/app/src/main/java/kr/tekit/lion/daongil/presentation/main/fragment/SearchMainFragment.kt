@@ -93,43 +93,9 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
 
-            selectedArea.doAfterTextChanged {
-                if (it != null) {
-                    detailAreaSelectLayout.visibility = View.VISIBLE
-                    detailSelectedArea.text = null
-                    viewModel.onCompleteSelectArea(it.toString())
-
-//                    categoryContainer.post {
-//                        categoryContainer.scrollTo(0, rvSearchResult.top)
-//                    }
-                }
-            }
-
-            repeatOnViewStarted {
-                viewModel.areaCode.collect {
-                    val areaList = it.map { area -> area.name }.toTypedArray()
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        areaList
-                    )
-                    selectedArea.setAdapter(adapter)
-                }
-            }
-
             selectedArea.doAfterTextChanged { viewModel.onSelectedArea(it.toString()) }
 
-            repeatOnViewStarted {
-                viewModel.villageCode.collect {
-                    val villageCodeList = it.map { area -> area.sigunguName }.toTypedArray()
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        villageCodeList
-                    )
-                    binding.detailSelectedArea.setAdapter(adapter)
-                }
-            }
+
             detailSelectedArea.doAfterTextChanged { viewModel.onSelectedSigungu(it.toString()) }
 
             repeatOnViewStarted {
@@ -294,7 +260,6 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            btnSearch.setOnClickListener { viewModel.onClickSearchButton() }
 
             btnReset.setOnClickListener { viewModel.onClickResetIcon() }
 

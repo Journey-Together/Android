@@ -1,12 +1,11 @@
 package kr.tekit.lion.daongil.domain.usecase.areacode
 
-import kr.tekit.lion.daongil.domain.model.AreaCode
 import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
 
-class GetAllAreaCodeUseCase(
+class GetAllAreaNameUseCase(
     private val areaCodeRepository: AreaCodeRepository,
 ) {
-    suspend operator fun invoke(): List<AreaCode>{
-        return areaCodeRepository.getAllAreaCodes()
+    suspend operator fun invoke(): List<String>{
+        return areaCodeRepository.getAllAreaCodes().map { it.name }
     }
 }

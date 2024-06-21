@@ -10,7 +10,7 @@ class GetSearchPlaceResultForList(
     private val placeRepository: PlaceRepository
 ): BaseUseCase() {
 
-    suspend operator fun invoke(options: ListSearchOption): Result<List<SearchPlace>> = execute {
-        placeRepository.getSearchPlaceResultForList(options)
+    suspend operator fun invoke(options: ListSearchOption): Result<List<ListSearchResult>> = execute {
+        placeRepository.getSearchPlaceResultByList(options)
     }
 }

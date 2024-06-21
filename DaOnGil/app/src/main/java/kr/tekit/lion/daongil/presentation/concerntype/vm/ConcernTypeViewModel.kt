@@ -24,13 +24,11 @@ class ConcernTypeViewModel(
         getConcernType()
     }
 
-    fun getConcernType() {
-        viewModelScope.launch {
-            getConcernTypeUseCase().onSuccess {
-                _concernType.value = it
-            }.onError {
-                Log.d("getConcernType", it.toString())
-            }
+    private fun getConcernType() = viewModelScope.launch {
+        getConcernTypeUseCase().onSuccess {
+            _concernType.value = it
+        }.onError {
+            Log.d("getConcernType", it.toString())
         }
     }
 

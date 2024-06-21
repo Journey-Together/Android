@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.data.repository
 import kr.tekit.lion.daongil.data.datasource.MemberDataSource
 import kr.tekit.lion.daongil.data.dto.remote.request.toMultiPartBody
 import kr.tekit.lion.daongil.data.dto.remote.request.toRequestBody
+import kr.tekit.lion.daongil.domain.model.ConcernType
 import kr.tekit.lion.daongil.domain.model.MyDefaultInfo
 import kr.tekit.lion.daongil.domain.model.IceInfo
 import kr.tekit.lion.daongil.domain.model.MyInfo
@@ -33,5 +34,13 @@ class MemberRepositoryImpl(
 
     override suspend fun modifyMyIceInfo(request: IceInfo) {
         memberDataSource.modifyMyIceInfo(request.toRequestBody())
+    }
+
+    override suspend fun getConcernType(): ConcernType {
+        return memberDataSource.getConcernType().toDomainModel()
+    }
+
+    override suspend fun updateConcernType(requestBody: ConcernType) {
+        return memberDataSource.updateConcernType(requestBody.toRequestBody())
     }
 }

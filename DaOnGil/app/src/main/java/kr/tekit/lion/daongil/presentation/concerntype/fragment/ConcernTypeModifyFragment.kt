@@ -5,12 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeModifyBinding
+import kr.tekit.lion.daongil.domain.model.ConcernType
+import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModel
+import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModelFactory
 
 class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify) {
+
+    private val viewModel: ConcernTypeViewModel by activityViewModels { ConcernTypeViewModelFactory() }
 
     private val selectedConcernType = mutableSetOf<Int>()
 
@@ -20,7 +26,7 @@ class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify
         val binding = FragmentConcernTypeModifyBinding.bind(view)
 
         initView(binding)
-        initSelection(binding)
+        observeSelection(binding)
         concernTypeModify(binding)
     }
 
@@ -49,16 +55,28 @@ class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify
         }
     }
 
-    private fun initSelection(binding: FragmentConcernTypeModifyBinding) {
-        val userConcernType = listOf("지체장애", "시각장애")
+    private fun observeSelection(binding: FragmentConcernTypeModifyBinding) {
+        viewModel.concernType.observe(viewLifecycleOwner) { concernType ->
+            initSelection(binding, concernType)
+        }
+    }
 
-        userConcernType.forEach { concernType ->
-            when (concernType) {
-                "지체장애" -> settingSelected(binding.imageViewConcernTypeModifyPhysical, R.drawable.physical_select)
-                "시각장애" -> settingSelected(binding.imageViewConcernTypeModifyVisual, R.drawable.visual_select)
-                "청각장애" -> settingSelected(binding.imageViewConcernTypeModifyHearing, R.drawable.hearing_select)
-                "영유아 가족" -> settingSelected(binding.imageViewConcernTypeModifyInfant, R.drawable.infant_family_select)
-                "고령자" -> settingSelected(binding.imageViewConcernTypeModifyElderly, R.drawable.elderly_people_select)
+    private fun initSelection(binding: FragmentConcernTypeModifyBinding, concernType: ConcernType) {
+        with(binding) {
+            if (concernType.isPhysical) {
+                settingSelected(imageViewConcernTypeModifyPhysical, R.drawable.physical_select)
+            }
+            if (concernType.isVisual) {
+                settingSelected(imageViewConcernTypeModifyVisual, R.drawable.visual_select)
+            }
+            if (concernType.isHear) {
+                settingSelected(imageViewConcernTypeModifyHearing, R.drawable.hearing_select)
+            }
+            if (concernType.isChild) {
+                settingSelected(imageViewConcernTypeModifyInfant, R.drawable.infant_family_select)
+            }
+            if (concernType.isElderly) {
+                settingSelected(imageViewConcernTypeModifyElderly, R.drawable.elderly_people_select)
             }
         }
 
@@ -91,6 +109,13 @@ class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify
 
     private fun concernTypeModify(binding: FragmentConcernTypeModifyBinding) {
         binding.buttonConcernTypeModify.setOnClickListener {
+            val isPhysical = binding.imageViewConcernTypeModifyPhysical.tag.toString().toBoolean()
+            val isHear = binding.imageViewConcernTypeModifyHearing.tag.toString().toBoolean()
+            val isVisual = binding.imageViewConcernTypeModifyVisual.tag.toString().toBoolean()
+            val isElderly = binding.imageViewConcernTypeModifyElderly.tag.toString().toBoolean()
+            val isChild = binding.imageViewConcernTypeModifyInfant.tag.toString().toBoolean()
+
+            viewModel.updateConcernType(ConcernType(isPhysical, isHear, isVisual, isElderly, isChild))
             showSnackbar(binding, "관심 유형이 수정되었습니다.")
             findNavController().navigate(R.id.action_concernTypeModifyFragment_to_concernTypeFragment)
         }

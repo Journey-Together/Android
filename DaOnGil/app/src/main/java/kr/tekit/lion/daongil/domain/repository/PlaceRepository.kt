@@ -10,6 +10,7 @@ import kr.tekit.lion.daongil.domain.model.ListSearchOption
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfoGuest
 import kr.tekit.lion.daongil.domain.model.PlaceMainInfo
+import kr.tekit.lion.daongil.domain.model.PlaceReviewInfo
 import kr.tekit.lion.daongil.domain.model.SearchPlace
 
 interface PlaceRepository {
@@ -18,6 +19,7 @@ interface PlaceRepository {
     fun getSearchPlaceResultForMap(request: MapSearchOption): Flow<List<SearchPlace>>
     suspend fun getPlaceDetailInfoGuest(placeId: Long): PlaceDetailInfoGuest
     suspend fun getPlaceMainInfo(areaCode: String, sigunguCode: String): PlaceMainInfo
+    suspend fun getPlaceReviewList(placeId: Long, size: Int, page: Int): PlaceReviewInfo
 
     companion object{
         fun create(): PlaceRepositoryImpl{

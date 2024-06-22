@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.domain.model.ListSearchOption
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfoGuest
 import kr.tekit.lion.daongil.domain.model.PlaceMainInfo
+import kr.tekit.lion.daongil.domain.model.PlaceReviewInfo
 import kr.tekit.lion.daongil.domain.model.SearchPlace
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 
@@ -34,5 +35,9 @@ class PlaceRepositoryImpl(
 
     override suspend fun getPlaceMainInfo(areaCode: String, sigunguCode: String): PlaceMainInfo {
         return placeDataSource.getPlaceMainInfo(areaCode, sigunguCode).toDomainModel()
+    }
+
+    override suspend fun getPlaceReviewList(placeId: Long, page: Int, size: Int): PlaceReviewInfo {
+        return placeDataSource.getPlaceReviewList(placeId, page, size).toDomainModel()
     }
 }

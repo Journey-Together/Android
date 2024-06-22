@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AreaCodeRepository
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
 import kr.tekit.lion.daongil.domain.repository.VillageCodeRepository
-import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllAreaNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.areacode.GetAllSigunguCodeUseCase
+import kr.tekit.lion.daongil.domain.usecase.areacode.GetAreaCodeByNameUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceByList
 import kr.tekit.lion.daongil.domain.usecase.place.GetSearchPlaceResultForMap
 import java.lang.IllegalArgumentException
@@ -17,7 +18,8 @@ class SearchMainViewModelFactory(context: Context): ViewModelProvider.Factory {
     private val villageCodeRepository = VillageCodeRepository.create(context)
     private val placeRepository = PlaceRepository.create()
 
-    private val getAllAreaCodeUseCase = GetAllAreaCodeUseCase(areaCodeRepository)
+    private val getAllAreaNameUseCase = GetAllAreaNameUseCase(areaCodeRepository)
+    private val getAreaCodeByNameUseCase = GetAreaCodeByNameUseCase(areaCodeRepository)
     private val getAllSigunguCodeUseCase = GetAllSigunguCodeUseCase(villageCodeRepository)
     private val getSearchPlaceByList = GetSearchPlaceByList(placeRepository)
     private val getSearchPlaceResultForMap = GetSearchPlaceResultForMap(placeRepository)
@@ -26,8 +28,9 @@ class SearchMainViewModelFactory(context: Context): ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SearchMainViewModel::class.java)) {
             return SearchMainViewModel(
-                getAllAreaCodeUseCase,
+                getAllAreaNameUseCase,
                 getAllSigunguCodeUseCase,
+                getAreaCodeByNameUseCase,
                 getSearchPlaceByList,
                 getSearchPlaceResultForMap
             ) as T

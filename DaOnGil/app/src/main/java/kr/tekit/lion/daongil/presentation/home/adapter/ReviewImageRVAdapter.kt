@@ -7,8 +7,8 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemReviewBigImageBinding
 
-class ReviewImageRVAdapter(private val imageList : List<String>)
-    : RecyclerView.Adapter<ReviewImageRVAdapter.ReviewImageViewHolder>() {
+class ReviewImageRVAdapter(private val imageList: List<String>) :
+    RecyclerView.Adapter<ReviewImageRVAdapter.ReviewImageViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewImageViewHolder {
         val binding: ItemReviewBigImageBinding = ItemReviewBigImageBinding.inflate(
@@ -24,8 +24,10 @@ class ReviewImageRVAdapter(private val imageList : List<String>)
         holder.bind(imageList[position])
     }
 
-    class ReviewImageViewHolder(val binding: ItemReviewBigImageBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(image : String) {
+    class ReviewImageViewHolder(
+        val binding: ItemReviewBigImageBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(image: String) {
             Glide.with(binding.reviewImage.context)
                 .load(image)
                 .error(R.drawable.empty_view_small)

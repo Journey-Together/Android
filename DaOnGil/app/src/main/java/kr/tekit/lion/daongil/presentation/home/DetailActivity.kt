@@ -2,7 +2,6 @@ package kr.tekit.lion.daongil.presentation.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
@@ -47,7 +46,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         setContentView(binding.root)
 
         settingToolbar()
-        settingReviewBtn()
         initMap()
     }
 
@@ -75,9 +73,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun settingReviewBtn() {
+    private fun settingReviewBtn(placeId: Long) {
         binding.detailMoreReviewBtn.setOnClickListener {
             val intent = Intent(this, ReviewListActivity::class.java)
+            intent.putExtra("reviewPlaceId", placeId)
             startActivity(intent)
         }
 
@@ -88,6 +87,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun handleCommonDetailPlaceInfo(
+        placeId: Long,
         reviewList: List<Review>?,
         disability: List<Int>,
         name: String,
@@ -104,6 +104,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         if (subDisability != null) {
             settingDetailInfoRVAdapter(subDisability)
         }
+
+        settingReviewBtn(placeId)
 
         binding.detailTitleTv.text = name
         binding.detailAddressTv.text = address
@@ -129,6 +131,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         viewModel.detailPlaceInfo.observe(this@DetailActivity) {detailPlaceInfo ->
             handleCommonDetailPlaceInfo(
+                detailPlaceInfo.placeId,
                 detailPlaceInfo.reviewList,
                 detailPlaceInfo.disability,
                 detailPlaceInfo.name,
@@ -142,7 +145,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             )
 
             updateBookmarkState(detailPlaceInfo.isMark)
-            Log.e("bookmarkcheck", detailPlaceInfo.isMark.toString())
 
             binding.detailBookmarkBtn.setOnClickListener {
                 val newMarkState = !detailPlaceInfo.isMark
@@ -158,9 +160,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     detailPlaceInfo.bookmarkNum--
                 }
                 binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
-
-                Log.e("bookmarkcheck", detailPlaceInfo.isMark.toString())
             }
+
             binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
         }
     }
@@ -170,6 +171,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) {detailPlaceInfoGuest ->
             handleCommonDetailPlaceInfo(
+                detailPlaceInfoGuest.placeId,
                 detailPlaceInfoGuest.reviewList,
                 detailPlaceInfoGuest.disability,
                 detailPlaceInfoGuest.name,

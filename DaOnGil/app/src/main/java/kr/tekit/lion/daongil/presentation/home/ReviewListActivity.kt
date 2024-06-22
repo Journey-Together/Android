@@ -7,14 +7,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
 import kr.tekit.lion.daongil.domain.model.PlaceReview
-import kr.tekit.lion.daongil.presentation.home.adapter.DialogCallback
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModel
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModelFactory
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 
-class ReviewListActivity : AppCompatActivity(), DialogCallback {
+class ReviewListActivity : AppCompatActivity() {
     private val viewModel : ReviewListViewModel by viewModels { ReviewListViewModelFactory() }
     private val binding : ActivityReviewListBinding by lazy {
         ActivityReviewListBinding.inflate(layoutInflater)
@@ -36,7 +34,9 @@ class ReviewListActivity : AppCompatActivity(), DialogCallback {
     }
 
     private fun settingReviewListRVAdapter(reviewList: List<PlaceReview>) {
-        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, this)
+        val reviewListRVAdapter = ReviewListRVAdapter(reviewList) {
+            showConfirmDialog()
+        }
         binding.reviewListRv.adapter = reviewListRVAdapter
         binding.reviewListRv.layoutManager = LinearLayoutManager(applicationContext)
     }
@@ -52,11 +52,12 @@ class ReviewListActivity : AppCompatActivity(), DialogCallback {
         }
     }
 
-    override fun showConfirmDialog(dialogInterface: ConfirmDialogInterface) {
-        val dialog = ConfirmDialog(
-            dialogInterface, "신고하기", "해당 댓글을 신고하시겠습니까?", "신고하기",
+    private fun showConfirmDialog() {
+        val dialog = ConfirmDialog( "신고하기", "해당 댓글을 신고하시겠습니까?", "신고하기",
             R.color.button_tertiary, R.color.white
-        )
+        ){
+            // 신고하기 api 연결
+        }
         dialog.isCancelable = false
         dialog.show(supportFragmentManager, "ComplainDialog")
     }

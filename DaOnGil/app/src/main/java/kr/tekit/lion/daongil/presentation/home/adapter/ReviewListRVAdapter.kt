@@ -8,12 +8,10 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailReviewBigBinding
 import kr.tekit.lion.daongil.domain.model.PlaceReview
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 
 class ReviewListRVAdapter(
     private val reviewList: List<PlaceReview>,
-    private val dialogCallback: DialogCallback
+    private val dialogCallback: () -> Unit
 ) : RecyclerView.Adapter<ReviewListRVAdapter.ReviewListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReviewListViewHolder {
@@ -32,9 +30,8 @@ class ReviewListRVAdapter(
 
     class ReviewListViewHolder(
         private val binding: ItemDetailReviewBigBinding,
-        private val dialogCallback: DialogCallback
-    ) : RecyclerView.ViewHolder(binding.root), ConfirmDialogInterface {
-        private var dialog: ConfirmDialog? = null
+        private val dialogCallback: () -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: PlaceReview) {
             binding.itemDetailReviewBigNickname.text = review.nickname
             binding.itemDetailReviewBigContent.text = review.content
@@ -52,12 +49,8 @@ class ReviewListRVAdapter(
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
             binding.itemDetailReviewBigComplain.setOnClickListener {
-               dialogCallback.showConfirmDialog(this)
+               dialogCallback()
             }
-        }
-
-        override fun onPosBtnClick() {
-            dialog?.dismiss()
         }
     }
 }

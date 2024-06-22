@@ -25,7 +25,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
         val binding = FragmentMyReviewBinding.bind(view)
 
-        initView(binding)
+        settingToolbar(binding)
         settingMyReviewRVAdapter(binding)
 
         val reviewDeleted = args.reviewDeleted
@@ -36,8 +36,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
         }
     }
 
-    private fun initView(binding: FragmentMyReviewBinding) {
-        binding.toolbarMyReview.setNavigationIcon(R.drawable.back_icon)
+    private fun settingToolbar(binding: FragmentMyReviewBinding) {
         binding.toolbarMyReview.setNavigationOnClickListener {
             requireActivity().finish()
         }

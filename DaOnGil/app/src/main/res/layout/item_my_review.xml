@@ -41,7 +41,7 @@
                     android:layout_marginBottom="@dimen/margin_small1"
                     android:fontFamily="@font/pretendard_medium"
                     android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_small1"
+                    android:textSize="@dimen/font_small2"
                     tools:text="여행지 위치" />
 
                 <TextView
@@ -51,7 +51,7 @@
                     android:layout_marginBottom="@dimen/margin_big4"
                     android:fontFamily="@font/pretendard_semibold"
                     android:textColor="@color/text_primary"
-                    android:textSize="@dimen/font_big2"
+                    android:textSize="@dimen/font_big3"
                     tools:text="여행지 이름" />
 
                 <com.willy.ratingbar.BaseRatingBar

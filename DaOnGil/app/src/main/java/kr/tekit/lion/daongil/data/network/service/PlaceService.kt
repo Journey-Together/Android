@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.data.network.service
 import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import retrofit2.http.GET
@@ -47,4 +48,9 @@ interface PlaceService {
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): DetailPlaceGuestResponse
 
+    @GET("place/review/my")
+    suspend fun getMyPlaceReview(
+        @Query("size") size: Int,
+        @Query("page") page: Int
+    ): MyPlaceReviewResponse
 }

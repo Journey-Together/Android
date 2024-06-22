@@ -5,15 +5,18 @@ import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchListMainBinding
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.main.adapter.ListSearchAdapter
+import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
 import kr.tekit.lion.daongil.presentation.main.model.AreaModel
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.CategoryModel
+import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
 import kr.tekit.lion.daongil.presentation.main.model.ListSearchUIModel
 import kr.tekit.lion.daongil.presentation.main.model.PlaceModel
 import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModel
@@ -30,11 +33,6 @@ class SearchListMainFragment : Fragment(R.layout.fragment_search_list_main) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentSearchListMainBinding.bind(view)
 
-        repeatOnViewStarted {
-            viewModel.listSearchOption.collect{
-                Log.d("OptionResult", it.toString())
-            }
-        }
 
         with(binding) {
             tabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -53,6 +51,27 @@ class SearchListMainFragment : Fragment(R.layout.fragment_search_list_main) {
             })
 
             val mainAdapter = ListSearchAdapter(
+                viewLifecycleOwner.lifecycleScope,
+                onClickPhysicalDisability = { type->
+                    val options = viewModel.physicalDisabilityOptions.value
+                    showBottomSheet(options, type)
+                },
+                onClickVisualImpairment = { type ->
+                    val options = viewModel.visualImpairmentOptions.value
+                    showBottomSheet(options, type)
+                },
+                onClickHearingDisability = { type->
+                    val options = viewModel.hearingImpairmentOptions.value
+                    showBottomSheet(options, type)
+                },
+                onClickInfantFamily = { type->
+                    val options = viewModel.infantFamilyOptions.value
+                    showBottomSheet(options, type)
+                },
+                onClickElderlyPeople = { type ->
+                    val options = viewModel.elderlyPersonOptions.value
+                    showBottomSheet(options, type)
+                },
                 onSelectArea = {
                     viewModel.onSelectedArea(it)
                 },
@@ -99,6 +118,44 @@ class SearchListMainFragment : Fragment(R.layout.fragment_search_list_main) {
 
 
         }
+    }
+
+    private fun showBottomSheet(selectedOptions: List<Int>, disabilityType: DisabilityType) {
+        CategoryBottomSheet(selectedOptions, disabilityType) { optionIds, optionNames ->
+            when (disabilityType) {
+                is DisabilityType.PhysicalDisability -> {
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.PhysicalDisability
+                    )
+                }
+
+                is DisabilityType.HearingImpairment -> {
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.HearingImpairment
+                    )
+                }
+
+                is DisabilityType.VisualImpairment -> {
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.VisualImpairment
+                    )
+                }
+
+                is DisabilityType.InfantFamily -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.InfantFamily)
+                }
+
+                is DisabilityType.ElderlyPeople -> {
+                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.ElderlyPeople)
+                }
+            }
+        }.show(parentFragmentManager, "bottomSheet")
     }
 }
 

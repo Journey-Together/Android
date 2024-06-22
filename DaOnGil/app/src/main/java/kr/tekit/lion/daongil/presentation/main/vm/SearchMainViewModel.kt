@@ -103,85 +103,37 @@ class SearchMainViewModel(
     }
 
     fun onSelectOption(optionIds: List<Int>, optionNames: List<String>, type: DisabilityType) {
-        val updatedTypes = _listSearchOption.value.disabilityType
-        val updatedOptions = _listSearchOption.value.detailFilter?.toMutableSet()
+        val updatedTypes = _listSearchOption.value.disabilityType ?: TreeSet()
+        val updatedOptions = _listSearchOption.value.detailFilter?.toMutableSet() ?: mutableSetOf()
 
-        if (optionIds.isEmpty()) {
-            when (type) {
-                is DisabilityType.PhysicalDisability -> {
-                    updatedTypes?.remove(DisabilityType.PhysicalDisability.type)
-                }
+        updatedOptions.clear()
+        updatedTypes.clear()
 
-                is DisabilityType.VisualImpairment -> {
-                    updatedTypes?.remove(DisabilityType.VisualImpairment.type)
-                }
-
-                is DisabilityType.HearingImpairment -> {
-                    updatedTypes?.remove(DisabilityType.HearingImpairment.type)
-                }
-
-                is DisabilityType.InfantFamily -> {
-                    updatedTypes?.remove(DisabilityType.InfantFamily.type)
-                }
-
-                is DisabilityType.ElderlyPeople -> {
-                    updatedTypes?.remove(DisabilityType.ElderlyPeople.type)
-                }
-            }
-            optionNames.map { updatedOptions?.remove(it) }
-            _physicalDisabilityOptions.value = optionIds
-
-        } else {
-            when (type) {
-                is DisabilityType.PhysicalDisability -> {
-                    updatedTypes?.add(DisabilityType.PhysicalDisability.type)
-                }
-
-                is DisabilityType.VisualImpairment -> {
-                    updatedTypes?.add(DisabilityType.VisualImpairment.type)
-                }
-
-                is DisabilityType.HearingImpairment -> {
-                    updatedTypes?.add(DisabilityType.HearingImpairment.type)
-                }
-
-                is DisabilityType.InfantFamily -> {
-                    updatedTypes?.add(DisabilityType.InfantFamily.type)
-                }
-
-                is DisabilityType.ElderlyPeople -> {
-                    updatedTypes?.add(DisabilityType.ElderlyPeople.type)
-                }
-            }
-            optionNames.map { updatedOptions?.add(it) }
-        }
+       if(optionIds.isNotEmpty()) {
+           when (type) {
+               is DisabilityType.PhysicalDisability -> updatedTypes.add(DisabilityType.PhysicalDisability.type)
+               is DisabilityType.VisualImpairment -> updatedTypes.add(DisabilityType.VisualImpairment.type)
+               is DisabilityType.HearingImpairment -> updatedTypes.add(DisabilityType.HearingImpairment.type)
+               is DisabilityType.InfantFamily -> updatedTypes.add(DisabilityType.InfantFamily.type)
+               is DisabilityType.ElderlyPeople -> updatedTypes.add(DisabilityType.ElderlyPeople.type)
+           }
+           optionNames.map { updatedOptions.add(it) }
+       }
 
         when (type) {
-            is DisabilityType.PhysicalDisability -> {
-                _physicalDisabilityOptions.value = optionIds
-            }
-
-            is DisabilityType.VisualImpairment -> {
-                _visualImpairmentOptions.value = optionIds
-            }
-
-            is DisabilityType.HearingImpairment -> {
-                _hearingImpairmentOptions.value = optionIds
-            }
-
-            is DisabilityType.InfantFamily -> {
-                _infantFamilyOptions.value = optionIds
-            }
-
-            is DisabilityType.ElderlyPeople -> {
-                _elderlyPersonOptions.value = optionIds
-            }
+            is DisabilityType.PhysicalDisability -> _physicalDisabilityOptions.value = optionIds
+            is DisabilityType.VisualImpairment -> _visualImpairmentOptions.value = optionIds
+            is DisabilityType.HearingImpairment -> _hearingImpairmentOptions.value = optionIds
+            is DisabilityType.InfantFamily -> _infantFamilyOptions.value = optionIds
+            is DisabilityType.ElderlyPeople -> _elderlyPersonOptions.value = optionIds
         }
+
         _listSearchOption.value = _listSearchOption.value.copy(
             disabilityType = updatedTypes,
             detailFilter = updatedOptions
         )
     }
+
 
     fun onSelectedArea(areaName: String) = viewModelScope.launch{
         getAreaCodeByNameUseCase(areaName)?.let { areaCode ->
@@ -212,7 +164,6 @@ class SearchMainViewModel(
         }
     }
 
-
     fun onClickResetIcon() {
         _listSearchOption.value = _listSearchOption.value.copy(
             disabilityType = TreeSet(),
@@ -226,6 +177,4 @@ class SearchMainViewModel(
         _elderlyPersonOptions.value = emptyList()
 
     }
-
-
 }

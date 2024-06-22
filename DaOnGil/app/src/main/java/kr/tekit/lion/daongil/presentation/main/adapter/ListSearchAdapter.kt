@@ -8,16 +8,25 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemListSearchAreaBinding
 import kr.tekit.lion.daongil.databinding.ItemListSearchCategoryBinding
 import kr.tekit.lion.daongil.databinding.ItemListSearchPlaceBinding
+import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.main.model.AreaModel
 import kr.tekit.lion.daongil.presentation.main.model.CategoryModel
+import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
 import kr.tekit.lion.daongil.presentation.main.model.ListSearchUIModel
 import kr.tekit.lion.daongil.presentation.main.model.PlaceModel
 
 class ListSearchAdapter(
+    private val uiScope: CoroutineScope,
+    private val onClickPhysicalDisability: (DisabilityType.PhysicalDisability) -> Unit,
+    private val onClickVisualImpairment: (DisabilityType.VisualImpairment) -> Unit,
+    private val onClickHearingDisability: (DisabilityType.HearingImpairment) -> Unit,
+    private val onClickInfantFamily: (DisabilityType.InfantFamily) -> Unit,
+    private val onClickElderlyPeople: (DisabilityType.ElderlyPeople) -> Unit,
     private val onSelectArea: (String) -> Unit,
     private val onSelectSigungu: (String) -> Unit,
     private val onClickSearchButton: () -> Unit,
@@ -57,7 +66,13 @@ class ListSearchAdapter(
 
         return when (viewType) {
             R.layout.item_list_search_category -> ListSearchCategoryViewHolder(
-                ItemListSearchCategoryBinding.bind(v)
+                ItemListSearchCategoryBinding.bind(v),
+                uiScope,
+                onClickPhysicalDisability,
+                onClickVisualImpairment,
+                onClickHearingDisability,
+                onClickInfantFamily,
+                onClickElderlyPeople
             )
 
             R.layout.item_list_search_place -> ListSearchPlaceViewHolder(
@@ -78,16 +93,44 @@ class ListSearchAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = dataList[position]
         when (holder) {
-            is ListSearchCategoryViewHolder -> holder.bind(item as CategoryModel)
+            is ListSearchCategoryViewHolder -> holder.bind()
             is ListSearchAreaViewHolder -> holder.bind(areaList, sigunguList)
             is ListSearchPlaceViewHolder -> holder.bind(item as PlaceModel)
         }
     }
 
-    class ListSearchCategoryViewHolder(private val binding: ItemListSearchCategoryBinding) :
+    class ListSearchCategoryViewHolder(
+        private val binding: ItemListSearchCategoryBinding,
+        private val uiScope: CoroutineScope,
+        private val onClickPhysicalDisability: (DisabilityType.PhysicalDisability) -> Unit,
+        private val onClickVisualImpairment: (DisabilityType.VisualImpairment) -> Unit,
+        private val onClickHearingDisability: (DisabilityType.HearingImpairment) -> Unit,
+        private val onClickInfantFamily: (DisabilityType.InfantFamily) -> Unit,
+        private val onClickElderlyPeople: (DisabilityType.ElderlyPeople) -> Unit,
+    ) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CategoryModel) {
-            // 데이터 바인딩 로직 추가
+        fun bind() {
+            with(binding){
+                btnPhysicalDisability.setClickEvent(uiScope){
+                    onClickPhysicalDisability(DisabilityType.PhysicalDisability)
+                }
+
+                btnVisualImpairment.setClickEvent(uiScope){
+                    onClickVisualImpairment(DisabilityType.VisualImpairment)
+                }
+
+                btnHearingImpairment.setClickEvent(uiScope){
+                    onClickHearingDisability(DisabilityType.HearingImpairment)
+                }
+
+                btnInfantFamily.setClickEvent(uiScope){
+                    onClickInfantFamily(DisabilityType.InfantFamily)
+                }
+
+                btnElderlyPeople.setClickEvent(uiScope){
+                    onClickElderlyPeople(DisabilityType.ElderlyPeople)
+                }
+            }
         }
     }
 

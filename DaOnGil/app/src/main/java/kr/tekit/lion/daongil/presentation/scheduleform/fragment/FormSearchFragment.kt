@@ -67,8 +67,9 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
         scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
             if(it.placeInfoList.isNotEmpty()){
                 binding.recyclerViewFSResult.apply {
-                    adapter = FormSearchResultAdapter(it.placeInfoList){ selectedPlaceId ->
-                        addNewPlace(this, schedulePosition, selectedPlaceId)
+                    adapter = FormSearchResultAdapter(it.placeInfoList){ selectedPlacePosition ->
+                        val placeId = it.placeInfoList[selectedPlacePosition].placeId
+                        addNewPlace(this, schedulePosition, placeId)
                     }
                 }
             }else{

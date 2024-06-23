@@ -2,17 +2,16 @@ package kr.tekit.lion.daongil.presentation.myreview.customview
 
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.BottomSheetMyReviewDetailBinding
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myreview.fragment.MyReviewDetailFragmentDirections
 
-class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_sheet_my_review_detail), ConfirmDialogInterface {
+class MyReviewDetailBottomSheet : BottomSheetDialogFragment(R.layout.bottom_sheet_my_review_detail),
+    ConfirmDialogInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

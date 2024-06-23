@@ -8,11 +8,20 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemMyScheduleUpcomingBinding
 import kr.tekit.lion.daongil.domain.model.MySchedule
 
-class MyScheduleUpcomingAdapter(private val mySchedules: List<MySchedule>, private val onScheduleItemClicked: (Int) -> Unit) : RecyclerView.Adapter<MyScheduleUpcomingAdapter.UpcomingScheduleViewHolder>(){
+class MyScheduleUpcomingAdapter(
+    private val mySchedules: List<MySchedule>,
+    private val onScheduleItemClicked: (Int) -> Unit
+) : RecyclerView.Adapter<MyScheduleUpcomingAdapter.UpcomingScheduleViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingScheduleViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return UpcomingScheduleViewHolder(ItemMyScheduleUpcomingBinding.inflate(inflater, parent, false), onScheduleItemClicked)
+        return UpcomingScheduleViewHolder(
+            ItemMyScheduleUpcomingBinding.inflate(
+                inflater,
+                parent,
+                false
+            ), onScheduleItemClicked
+        )
     }
 
     override fun onBindViewHolder(holder: UpcomingScheduleViewHolder, position: Int) {
@@ -23,12 +32,19 @@ class MyScheduleUpcomingAdapter(private val mySchedules: List<MySchedule>, priva
         return mySchedules.size
     }
 
-    class UpcomingScheduleViewHolder(private val binding : ItemMyScheduleUpcomingBinding, private val onScheduleItemClicked: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root){
-        fun bind(mySchedule: MySchedule){
+    class UpcomingScheduleViewHolder(
+        private val binding: ItemMyScheduleUpcomingBinding,
+        private val onScheduleItemClicked: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(mySchedule: MySchedule) {
             binding.apply {
                 textViewMyScheduleUpcomingName.text = mySchedule.title
                 textViewMyScheduleUpcomingDDay.text = mySchedule.remainDate
-                textViewMyScheduleUpcomingPeriod.text = itemView.context.getString(R.string.text_schedule_period, mySchedule.startDate, mySchedule.endDate)
+                textViewMyScheduleUpcomingPeriod.text = itemView.context.getString(
+                    R.string.text_schedule_period,
+                    mySchedule.startDate,
+                    mySchedule.endDate
+                )
                 Glide.with(itemView.context)
                     .load(mySchedule.imageUrl)
                     .placeholder(R.drawable.empty_view_small)
@@ -40,6 +56,5 @@ class MyScheduleUpcomingAdapter(private val mySchedules: List<MySchedule>, priva
                 }
             }
         }
-
     }
 }

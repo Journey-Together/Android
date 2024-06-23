@@ -10,9 +10,15 @@ import kr.tekit.lion.daongil.presentation.ext.setImage
 
 class SchedulePublicAdapter(
     private val itemClickListener: (Int) -> Unit
-) :
-    RecyclerView.Adapter<SchedulePublicAdapter.SchedulePublicViewHolder>() {
+) : RecyclerView.Adapter<SchedulePublicAdapter.SchedulePublicViewHolder>() {
 
+    //private val dataList: ArrayList<ListSearchUIModel> = ArrayList()
+    //
+    //    fun submitList(list: ArrayList<ListSearchUIModel>) {
+    //        dataList.clear()
+    //        dataList.addAll(list)
+    //    }
+    // https://mashup-android.vercel.app/mashup-10th/hyeonseong/sealed_class/
     private var items: MutableList<OpenPlanInfo> = mutableListOf()
 
     fun addItems(newItems: List<OpenPlanInfo>) {

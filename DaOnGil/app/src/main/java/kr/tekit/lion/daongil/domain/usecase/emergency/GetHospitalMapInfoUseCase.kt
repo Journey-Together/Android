@@ -10,16 +10,16 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetHospitalMapInfoUseCase(
     private val emergencyRepository: EmergencyRepository
 ) : BaseUseCase() {
-    suspend operator fun invoke(STAGE1: String?, STAGE2: String?): Result<List<HospitalMapInfo>> =
+
+    suspend operator fun invoke(stage1: String?, stage2: String?): Result<List<HospitalMapInfo>> =
         execute {
-            val emergencyRealtimeList = emergencyRepository.getEmergencyRealtime(STAGE1, STAGE2)
+            val emergencyRealtimeList = emergencyRepository.getEmergencyRealtime(stage1, stage2)
             val emergencyMapInfoList = emergencyRealtimeList.map {
                 val emergencyBasicInfo = emergencyRepository.getEmergencyBasic(it.hospitalId)
                 setEmergencyMapInfo(it, emergencyBasicInfo)
             }
             emergencyMapInfoList
         }
-
 
     private fun setEmergencyMapInfo(
         realtimeInfo: EmergencyRealtimeInfo,

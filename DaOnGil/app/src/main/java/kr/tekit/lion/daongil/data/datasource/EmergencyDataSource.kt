@@ -8,15 +8,15 @@ import kr.tekit.lion.daongil.data.network.service.EmergencyService
 class EmergencyDataSource(
     private val emergencyService: EmergencyService
 ) {
-    suspend fun getEmergencyRealtime(STAGE1: String?, STAGE2: String?) : EmergencyRealtimeResponse {
-        return emergencyService.getEmergencyRealtime(STAGE1, STAGE2)
+    suspend fun getEmergencyRealtime(stage1: String?, stage2: String?) : EmergencyRealtimeResponse {
+        return emergencyService.getEmergencyRealtime(stage1, stage2)
     }
 
-    suspend fun getEmergencyBasic(HPID: String?) : EmergencyBasicResponse {
-        return emergencyService.getEmergencyBasic(HPID)
+    suspend fun getEmergencyBasic(hpid: String?) : EmergencyBasicResponse {
+        return emergencyService.getEmergencyBasic(hpid)
     }
 
-    suspend fun getEmergencyMessage(HPID: String?): EmergencyMessageResponse {
-        return emergencyService.getEmergencyMessage(HPID)
+    suspend fun getEmergencyMessage(hpid: String?): EmergencyMessageResponse {
+        return emergencyService.getEmergencyMessage(hpid)
     }
 }

@@ -5,8 +5,8 @@ import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.BottomSheetScheduleReviewManageBinding
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 
 class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: () -> Unit) :
     BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_review_manage),

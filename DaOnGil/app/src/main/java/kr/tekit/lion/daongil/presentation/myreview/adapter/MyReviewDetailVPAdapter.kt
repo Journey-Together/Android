@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.databinding.ItemMyReviewDetailVpBinding
 
-class MyReviewDetailVPAdapter(private val reviewImages: List<Drawable>) : RecyclerView.Adapter<MyReviewDetailVPAdapter.MyReviewDetailViewHolder>() {
+class MyReviewDetailVPAdapter(private val reviewImages: List<Drawable>)
+    : RecyclerView.Adapter<MyReviewDetailVPAdapter.MyReviewDetailViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewDetailViewHolder {
         val binding : ItemMyReviewDetailVpBinding = ItemMyReviewDetailVpBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
@@ -21,7 +23,8 @@ class MyReviewDetailVPAdapter(private val reviewImages: List<Drawable>) : Recycl
         holder.bind(reviewImages[position])
     }
 
-    class MyReviewDetailViewHolder(private val binding: ItemMyReviewDetailVpBinding) : RecyclerView.ViewHolder(binding.root) {
+    class MyReviewDetailViewHolder(private val binding: ItemMyReviewDetailVpBinding)
+        : RecyclerView.ViewHolder(binding.root) {
         fun bind(imageResId: Drawable) {
             Glide.with(binding.imageViewMyReviewDetail.context)
                 .load(imageResId)

@@ -11,19 +11,17 @@ class EmergencyRepositoryImpl(
 )  : EmergencyRepository{
 
     override suspend fun getEmergencyRealtime(
-        STAGE1: String?,
-        STAGE2: String?
+        stage1: String?,
+        stage2: String?
     ): List<EmergencyRealtimeInfo> {
-        return emergencyDataSource.getEmergencyRealtime(STAGE1, STAGE2).toDomainModel()
+        return emergencyDataSource.getEmergencyRealtime(stage1, stage2).toDomainModel()
     }
 
-    override suspend fun getEmergencyBasic(
-        HPID: String?
-    ): EmergencyBasicInfo {
-        return emergencyDataSource.getEmergencyBasic(HPID).toDomainModel()
+    override suspend fun getEmergencyBasic(hpid: String?): EmergencyBasicInfo {
+        return emergencyDataSource.getEmergencyBasic(hpid).toDomainModel()
     }
 
-    override suspend fun getEmergencyMessage(HPID: String?): List<EmergencyMessageInfo> {
-        return emergencyDataSource.getEmergencyMessage(HPID).toDomainModel()
+    override suspend fun getEmergencyMessage(hpid: String?): List<EmergencyMessageInfo> {
+        return emergencyDataSource.getEmergencyMessage(hpid).toDomainModel()
     }
 }

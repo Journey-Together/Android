@@ -8,7 +8,9 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemReviewWriteImageBinding
 
-class MyReviewModifyImageRVAdapter(private val imageList : MutableList<Uri>) : RecyclerView.Adapter<MyReviewModifyImageRVAdapter.MyReviewModifyViewHolder>() {
+class MyReviewModifyImageRVAdapter(private val imageList : MutableList<Uri>)
+    : RecyclerView.Adapter<MyReviewModifyImageRVAdapter.MyReviewModifyViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewModifyViewHolder {
         val binding : ItemReviewWriteImageBinding = ItemReviewWriteImageBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -23,7 +25,11 @@ class MyReviewModifyImageRVAdapter(private val imageList : MutableList<Uri>) : R
         holder.bind(imageList[position], position)
     }
 
-    class MyReviewModifyViewHolder(val binding: ItemReviewWriteImageBinding, private val adapter : MyReviewModifyImageRVAdapter) : RecyclerView.ViewHolder(binding.root) {
+    class MyReviewModifyViewHolder(
+        private val binding: ItemReviewWriteImageBinding,
+        private val adapter : MyReviewModifyImageRVAdapter)
+        : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(image : Uri, position: Int) {
             Glide.with(binding.itemWriteReviewImage.context)
                 .load(image)

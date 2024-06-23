@@ -2,17 +2,19 @@ package kr.tekit.lion.daongil.presentation.myreview.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemMyReviewBinding
 import kr.tekit.lion.daongil.domain.model.MyReview
 
-class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val itemClickListener: (Int) -> Unit) : RecyclerView.Adapter<MyReviewRVAdapter.MyReviewViewHolder>() {
+class MyReviewRVAdapter(
+    private val myReviewList: List<MyReview>,
+    private val itemClickListener: (Int) -> Unit
+) : RecyclerView.Adapter<MyReviewRVAdapter.MyReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewViewHolder {
-        val binding : ItemMyReviewBinding = ItemMyReviewBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemMyReviewBinding = ItemMyReviewBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
 
         return MyReviewViewHolder(binding, itemClickListener)
     }
@@ -23,10 +25,14 @@ class MyReviewRVAdapter(private val myReviewList: List<MyReview>, private val it
         holder.bind(myReviewList[position])
     }
 
-    class MyReviewViewHolder(val binding: ItemMyReviewBinding, private val itemClickListener: (Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
+    class MyReviewViewHolder(
+        private val binding: ItemMyReviewBinding,
+        private val itemClickListener: (Int) -> Unit
+    ) : RecyclerView.ViewHolder(binding.root) {
+
         init {
             binding.root.setOnClickListener {
-                itemClickListener.invoke(adapterPosition)
+                itemClickListener.invoke(absoluteAdapterPosition)
             }
         }
 

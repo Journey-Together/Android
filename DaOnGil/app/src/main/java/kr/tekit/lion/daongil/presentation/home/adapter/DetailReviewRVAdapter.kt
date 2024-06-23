@@ -24,7 +24,8 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>)
         holder.bind(reviewList[position])
     }
 
-    class DetailReviewViewHolder(val binding : ItemDetailReviewSmallBinding) : RecyclerView.ViewHolder(binding.root) {
+    class DetailReviewViewHolder(private val binding : ItemDetailReviewSmallBinding)
+        : RecyclerView.ViewHolder(binding.root) {
         fun bind(reviewData : Review) {
             binding.itemDetailReviewNickname.text = reviewData.nickname
             binding.itemDetailReviewContent.text = reviewData.content

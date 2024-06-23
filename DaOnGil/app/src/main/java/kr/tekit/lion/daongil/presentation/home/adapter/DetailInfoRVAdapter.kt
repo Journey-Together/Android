@@ -6,12 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemDetailServiceInfoBinding
 import kr.tekit.lion.daongil.domain.model.SubDisability
 
-class DetailInfoRVAdapter(private val infoList: List<SubDisability>)
-    : RecyclerView.Adapter<DetailInfoRVAdapter.DetailInfoViewHolder>() {
+class DetailInfoRVAdapter(private val infoList: List<SubDisability>) :
+    RecyclerView.Adapter<DetailInfoRVAdapter.DetailInfoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailInfoViewHolder {
-        val binding : ItemDetailServiceInfoBinding = ItemDetailServiceInfoBinding.inflate(
-            LayoutInflater.from(parent.context), parent, false)
+        val binding: ItemDetailServiceInfoBinding = ItemDetailServiceInfoBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false
+        )
 
         return DetailInfoViewHolder(binding)
     }
@@ -22,8 +23,9 @@ class DetailInfoRVAdapter(private val infoList: List<SubDisability>)
         holder.bind(infoList[position])
     }
 
-    class DetailInfoViewHolder(val binding : ItemDetailServiceInfoBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(infoData : SubDisability) {
+    class DetailInfoViewHolder(private val binding: ItemDetailServiceInfoBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(infoData: SubDisability) {
             binding.itemDetailInfoTitleTv.text = infoData.subDisabilityName
             binding.itemDetailInfoContentTv.text = infoData.description
         }

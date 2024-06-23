@@ -11,11 +11,8 @@ class FormBookmarkedPlacesAdapter(
     private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
 ) : RecyclerView.Adapter<FormBookmarkedPlacesAdapter.FormBookmarkedPlacesViewHolder>() {
 
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): FormBookmarkedPlacesViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
+    : FormBookmarkedPlacesViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return FormBookmarkedPlacesViewHolder(
             ItemFormBookmarkedPlacesBinding.inflate(inflater, parent, false),

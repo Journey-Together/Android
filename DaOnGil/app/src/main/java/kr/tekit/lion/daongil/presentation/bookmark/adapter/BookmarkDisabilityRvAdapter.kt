@@ -10,7 +10,7 @@ class BookmarkDisabilityRvAdapter(private val typeList : List<String>)
     : RecyclerView.Adapter<BookmarkDisabilityRvAdapter.BookmarkDisabilityViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookmarkDisabilityViewHolder {
-        val binding : ItemBookmarkDisabiltiyTypeBinding = ItemBookmarkDisabiltiyTypeBinding.inflate(
+        val binding = ItemBookmarkDisabiltiyTypeBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
         return BookmarkDisabilityViewHolder(binding)

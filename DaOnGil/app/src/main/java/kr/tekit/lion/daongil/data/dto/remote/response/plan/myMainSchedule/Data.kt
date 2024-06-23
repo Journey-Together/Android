@@ -1,7 +1,5 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule
 
-
-import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

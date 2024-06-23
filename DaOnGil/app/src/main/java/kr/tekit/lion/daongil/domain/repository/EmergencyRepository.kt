@@ -9,11 +9,11 @@ import kr.tekit.lion.daongil.domain.model.EmergencyRealtimeInfo
 
 interface EmergencyRepository {
 
-    suspend fun getEmergencyRealtime(STAGE1: String?, STAGE2: String?): List<EmergencyRealtimeInfo>
+    suspend fun getEmergencyRealtime(stage1: String?, stage2: String?): List<EmergencyRealtimeInfo>
 
-    suspend fun getEmergencyBasic(HPID: String?): EmergencyBasicInfo
+    suspend fun getEmergencyBasic(hpid: String?): EmergencyBasicInfo
 
-    suspend fun getEmergencyMessage(HPID: String?):List<EmergencyMessageInfo>
+    suspend fun getEmergencyMessage(hpid: String?):List<EmergencyMessageInfo>
     companion object{
         fun create(): EmergencyRepositoryImpl{
             return EmergencyRepositoryImpl(

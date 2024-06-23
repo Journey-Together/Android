@@ -13,8 +13,8 @@ import kr.tekit.lion.daongil.databinding.ActivityScheduleBinding
 import kr.tekit.lion.daongil.domain.model.DailyPlan
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.model.SchedulePlace
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialog
-import kr.tekit.lion.daongil.presentation.main.customview.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedule.adapter.ScheduleImageViewPagerAdapter
 import kr.tekit.lion.daongil.presentation.schedule.adapter.ScheduleListAdapter
 import kr.tekit.lion.daongil.presentation.schedule.adapter.SchedulePlaceAdapter

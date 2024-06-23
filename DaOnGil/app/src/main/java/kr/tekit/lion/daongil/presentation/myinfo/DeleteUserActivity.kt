@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.user.UserApiClient
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityDeleteUserBinding
 import kr.tekit.lion.daongil.presentation.login.LoginActivity
 
@@ -26,9 +25,7 @@ class DeleteUserActivity : AppCompatActivity() {
                 val permissionDialog = ConfirmDialog(
                     "회원 탈퇴",
                     "정말 회원을 탈퇴 하시겠습니까?",
-                    "탈퇴 하기",
-                    R.color.button_tertiary,
-                    R.color.white
+                    "탈퇴 하기"
                 ) {
                     UserApiClient.instance.unlink {
 

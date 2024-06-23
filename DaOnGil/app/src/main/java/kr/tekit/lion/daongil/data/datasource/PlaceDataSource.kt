@@ -6,6 +6,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPla
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.service.PlaceService
 import kr.tekit.lion.daongil.domain.model.ListSearchOption
@@ -63,8 +64,12 @@ class PlaceDataSource(
     suspend fun getPlaceMainInfo(areaCode : String, sigunguCode : String) : MainPlaceResponse {
         return placeService.getPlaceMainInfo(areaCode, sigunguCode)
     }
-
-    suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReviewResponse {
+    
+    suspend fun getPlaceReviewList(placeId: Long, size: Int, page: Int) : PlaceReviewResponse {
+        return placeService.getPlaceReviewList(placeId, size, page)
+    }
+    
+     suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReviewResponse {
         return placeService.getMyPlaceReview(size, page)
     }
 }

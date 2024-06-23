@@ -3,7 +3,6 @@ package kr.tekit.lion.daongil.presentation.ext
 import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.database.Cursor
 import android.net.Uri
 import android.provider.DocumentsContract
@@ -12,8 +11,9 @@ import android.provider.Settings
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
+import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 
 fun Context.showSoftInput(view: View) {
     val inputMethodManger =
@@ -101,4 +101,17 @@ fun Context.getDataColumn(uri: Uri?, selection: String?, selectionArgs: Array<St
     return null
 }
 
-
+fun Context.showConfirmDialog(
+    fragmentManager: FragmentManager,
+    title: String,
+    subtitle: String,
+    posBtnTitle: String,
+    onClick: () -> Unit
+) {
+    ConfirmDialog(
+        title,
+        subtitle,
+        posBtnTitle,
+        onClick
+    ).show(fragmentManager, "ConfirmDialog")
+}

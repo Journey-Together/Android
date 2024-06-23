@@ -62,9 +62,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
                     val permissionDialog = ConfirmDialog(
                         "권한 설정",
                         "갤러리 이용을 위해 권한 설정이 필요합니다",
-                        "권한 설정",
-                        R.color.button_tertiary,
-                        R.color.white
+                        "권한 설정"
                     ) {
                         val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         val packageName = requireContext().packageName

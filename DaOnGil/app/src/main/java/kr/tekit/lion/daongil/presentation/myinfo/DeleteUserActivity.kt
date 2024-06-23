@@ -26,9 +26,7 @@ class DeleteUserActivity : AppCompatActivity() {
                 val permissionDialog = ConfirmDialog(
                     "회원 탈퇴",
                     "정말 회원을 탈퇴 하시겠습니까?",
-                    "탈퇴 하기",
-                    R.color.button_tertiary,
-                    R.color.white
+                    "탈퇴 하기"
                 ) {
                     UserApiClient.instance.unlink {
 

@@ -1,8 +1,10 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -25,6 +27,22 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         ScheduleFormViewModelFactory()
     }
 
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            resetForm()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onBackPressedCallback.remove()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -44,13 +62,17 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
     private fun initToolbar(binding: FragmentScheduleDetailsFormBinding) {
         binding.toolbarScheduleDetailsForm.setNavigationOnClickListener {
-            // 날짜 선택화면으로 돌아가는 경우 제목, 기간, 리스트 초기화
-            scheduleFormViewModel.setTitle(null)
-            scheduleFormViewModel.setStartDate(null)
-            scheduleFormViewModel.setEndDate(null)
-            scheduleFormViewModel.setSchedule(null)
-            findNavController().popBackStack()
+            resetForm()
         }
+    }
+
+    private fun resetForm(){
+        // 날짜 선택화면으로 돌아가는 경우 제목, 기간, 리스트 초기화
+        scheduleFormViewModel.setTitle(null)
+        scheduleFormViewModel.setStartDate(null)
+        scheduleFormViewModel.setEndDate(null)
+        scheduleFormViewModel.setSchedule(null)
+        findNavController().popBackStack()
     }
 
     private fun initScheduleList() {

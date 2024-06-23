@@ -4,13 +4,13 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
 import kr.tekit.lion.daongil.domain.model.PlaceReview
+import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModel
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModelFactory
-import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
+import java.time.LocalDate
 
 class ReviewListActivity : AppCompatActivity() {
     private val viewModel : ReviewListViewModel by viewModels { ReviewListViewModelFactory() }
@@ -35,7 +35,13 @@ class ReviewListActivity : AppCompatActivity() {
 
     private fun settingReviewListRVAdapter(reviewList: List<PlaceReview>) {
         val reviewListRVAdapter = ReviewListRVAdapter(reviewList) {
-            showConfirmDialog()
+            this.showConfirmDialog(
+                supportFragmentManager,
+                "신고하기", "해당 댓글을 신고하시겠습니까?", "신고하기",
+            ){
+                // 신고하기 api 연결
+            }
+
         }
         binding.reviewListRv.adapter = reviewListRVAdapter
         binding.reviewListRv.layoutManager = LinearLayoutManager(applicationContext)
@@ -50,15 +56,5 @@ class ReviewListActivity : AppCompatActivity() {
 
             settingReviewListRVAdapter(placeReviewInfo.placeReviewList)
         }
-    }
-
-    private fun showConfirmDialog() {
-        val dialog = ConfirmDialog( "신고하기", "해당 댓글을 신고하시겠습니까?", "신고하기",
-            R.color.button_tertiary, R.color.white
-        ){
-            // 신고하기 api 연결
-        }
-        dialog.isCancelable = false
-        dialog.show(supportFragmentManager, "ComplainDialog")
     }
 }

@@ -157,4 +157,6 @@
 
     <string name="text_NameOrLogin">아직 정보가 없어요!</string>
     <string name="text_myInfo_Review">로그인을 진행해주세요</string>
+
+    <string name="text_my_review">작성한 후기가 없습니다.\n다녀온 여행지의 후기를 작성해보세요!</string>
 </resources>

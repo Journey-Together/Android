@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.RowScheduleMyBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 
 class ScheduleMyAdapter(
-    private val itemClickListener: (Int) -> Unit
+    private val itemClickListener: (Int) -> Unit,
+    private val reviewClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<ScheduleMyAdapter.ScheduleMyViewHolder>() {
 
     private var items: MutableList<MyMainSchedule> = mutableListOf()
@@ -20,12 +22,16 @@ class ScheduleMyAdapter(
 
     class ScheduleMyViewHolder(
         private val binding: RowScheduleMyBinding,
-        private val itemClickListener: (Int) -> Unit
+        private val itemClickListener: (Int) -> Unit,
+        private val reviewClickListener: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             binding.root.setOnClickListener {
                 itemClickListener(absoluteAdapterPosition)
+            }
+            binding.buttonRowScheduleReview.setOnClickListener {
+                reviewClickListener(absoluteAdapterPosition)
             }
         }
 
@@ -33,7 +39,11 @@ class ScheduleMyAdapter(
 
             with(binding) {
                 textViewRowScheduleName.text = item.title
-                textViewRowSchedulePeriod.text = item.startDate + " - " + item.endDate
+                textViewRowSchedulePeriod.text = itemView.context.getString(
+                    R.string.text_schedule_period,
+                    item.startDate,
+                    item.endDate
+                )
 
                 // 다녀온 일정인 경우
                 if (item.remainDate == null) {
@@ -62,8 +72,11 @@ class ScheduleMyAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleMyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return ScheduleMyViewHolder(RowScheduleMyBinding.inflate(inflater, parent, false),
-            itemClickListener)
+        return ScheduleMyViewHolder(
+            RowScheduleMyBinding.inflate(inflater, parent, false),
+            itemClickListener,
+            reviewClickListener
+        )
     }
 
     override fun onBindViewHolder(holder: ScheduleMyViewHolder, position: Int) {

@@ -22,6 +22,7 @@ import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
+import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
 
@@ -92,6 +93,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                             val intent = Intent(requireActivity(), ScheduleActivity::class.java)
                             // to do - 여행 일정 idx 전달
                             intent.putExtra("placeId", it?.get(position)?.planId)
+                            startActivity(intent)
+                        },
+                        reviewClickListener = { position ->
+                            val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
+                            intent.putExtra("planId", it?.get(position)?.planId)
                             startActivity(intent)
                         }
                     )

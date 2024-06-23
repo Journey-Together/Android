@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -33,6 +34,7 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
 
     private fun initToolbar(binding: FragmentNameAndPeriodFormBinding){
         binding.toolbarNPF.setNavigationOnClickListener {
+            requireActivity().setResult(Activity.RESULT_CANCELED)
             requireActivity().finish()
         }
     }

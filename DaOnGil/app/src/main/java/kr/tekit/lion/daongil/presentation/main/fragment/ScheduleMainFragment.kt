@@ -1,12 +1,15 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
-import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
@@ -33,13 +36,23 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         )
     }
 
+    private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let{
+                Snackbar.make(it, "일정이 저장되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentScheduleMainBinding.bind(view)
 
         // initView(binding)
-        settingRecyclerView(binding, requireContext())
+        settingRecyclerView(binding)
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
@@ -78,7 +91,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     }*/
 
 
-    private fun settingRecyclerView(binding: FragmentScheduleMainBinding, context: Context) {
+    private fun settingRecyclerView(binding: FragmentScheduleMainBinding) {
 
         with(binding) {
             viewModel.myMainPlanList.observe(viewLifecycleOwner) {
@@ -129,7 +142,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         if (isUser) {
             // 일정 추가 화면으로 이동
             val intent = Intent(requireActivity(), ScheduleFormActivity::class.java)
-            startActivity(intent)
+            scheduleFormLauncher.launch(intent)
         } else {
             // 비회원 -> 로그인 다이얼로그
             displayLoginDialog()

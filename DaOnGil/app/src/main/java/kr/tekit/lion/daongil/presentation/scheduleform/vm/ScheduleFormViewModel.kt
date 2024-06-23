@@ -139,7 +139,7 @@ class ScheduleFormViewModel(
         }
     }
 
-    fun submitNewPlan(callback: (Boolean) -> Unit) {
+    fun submitNewPlan(callback: (Boolean, Boolean) -> Unit) {
         val title = _title.value
         val startDateString = _startDate.value?.let { formatDateValue(it) }
         val endDateString = _endDate.value?.let { formatDateValue(it) }
@@ -148,9 +148,12 @@ class ScheduleFormViewModel(
         if (title != null && startDateString != null && endDateString != null) {
             val newPlan = NewPlan(title, startDateString, endDateString, dailyPlace)
 
+            var requestFlag = false
+
             viewModelScope.launch {
                 val success = try {
                     addNewPlanUseCase(newPlan).onSuccess {
+                        requestFlag = true
                     }.onError {
                         Log.d("submitNewPlan", "onError : ${it}")
                     }
@@ -159,8 +162,8 @@ class ScheduleFormViewModel(
                     Log.d("submitNewPlan", "Error: ${e.message}")
                     false
                 }
-                // 작업한 결과가 끝나면 true를 반환해준다.
-                callback(success)
+                // 작업한 결과가 끝나면 success에 true를 반환해준다.
+                callback(success, requestFlag)
             }
         }
     }

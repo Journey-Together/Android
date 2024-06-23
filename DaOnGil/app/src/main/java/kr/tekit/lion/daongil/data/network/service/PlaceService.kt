@@ -3,12 +3,12 @@ package kr.tekit.lion.daongil.data.network.service
 import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
-import retrofit2.http.QueryMap
 import retrofit2.http.Tag
 
 interface PlaceService {
@@ -47,4 +47,11 @@ interface PlaceService {
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): DetailPlaceGuestResponse
 
+    @GET("place/review/{placeId}")
+    suspend fun getPlaceReviewList(
+        @Path("placeId") placeId: Long,
+        @Query("size") size: Int,
+        @Query("page") page: Int,
+        @Tag authType: AuthType = AuthType.NO_AUTH
+    ): PlaceReviewResponse
 }

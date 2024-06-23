@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.kakao.sdk.user.UserApiClient
-import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityDeleteUserBinding
 import kr.tekit.lion.daongil.presentation.login.LoginActivity
 

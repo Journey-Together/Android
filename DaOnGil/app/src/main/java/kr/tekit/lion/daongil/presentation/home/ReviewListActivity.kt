@@ -10,7 +10,6 @@ import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModel
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModelFactory
-import java.time.LocalDate
 
 class ReviewListActivity : AppCompatActivity() {
     private val viewModel : ReviewListViewModel by viewModels { ReviewListViewModelFactory() }

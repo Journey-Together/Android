@@ -3,6 +3,8 @@ package kr.tekit.lion.daongil.data.network.service
 import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.SearchPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
@@ -26,21 +28,29 @@ interface PlaceService {
     ): MainPlaceResponse
 
     @GET("place/search")
-    suspend fun searchPlace(
+    suspend fun searchPlaceByList(
         @Query("category") category: String,
-        @Query("query") query: String,
         @Query("size") size: Int,
         @Query("page") page: Int,
-        @Query("minX") minX: Double?,
-        @Query("maxX") maxX: Double?,
-        @Query("minY") minY: Double?,
-        @Query("maxY") maxY: Double?,
-        @Query("disabilityType") disabilityType: List<String>,
-        @Query("detailFilter") detailFilter: List<String>,
-        @Query("areacode") areaCode: String? = "",
-        @Query("sigungucode") sigunguCode: String?  = "",
-        @Query("arrange") arrange: String = "C",
+        @Query("query") query: String?,
+        @Query("disabilityType") disabilityType: List<Long>?,
+        @Query("detailFilter") detailFilter: List<Long>?,
+        @Query("areacode") areaCode: String?,
+        @Query("sigungucode") sigunguCode: String?,
+        @Query("arrange") arrange: String?,
     ): SearchPlaceResponse
+
+    @GET("place/search")
+    suspend fun searchPlaceByMap(
+        @Query("category") category: String,
+        @Query("minX") minX: Double,
+        @Query("maxX") maxX: Double,
+        @Query("minY") minY: Double,
+        @Query("maxY") maxY: Double,
+        @Query("disabilityType") disabilityType: List<String>?,
+        @Query("detailFilter") detailFilter: List<String>?,
+        @Query("arrange") arrange: String?,
+    ): MapSearchPlaceResponse
 
     @GET("place/guest/{placeId}")
     suspend fun getPlaceDetailInfoGuest(

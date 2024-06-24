@@ -29,6 +29,9 @@
         <action
             android:id="@+id/action_myReviewDetailFragment_to_myReviewModifyFragment"
             app:destination="@id/myReviewModifyFragment" />
+        <argument
+            android:name="reviewId"
+            app:argType="long" />
     </fragment>
     <fragment
         android:id="@+id/myReviewModifyFragment"

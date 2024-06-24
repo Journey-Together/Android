@@ -1,14 +1,19 @@
 package kr.tekit.lion.daongil.presentation.home
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
-import kr.tekit.lion.daongil.domain.model.ReviewDetail
+import kr.tekit.lion.daongil.domain.model.PlaceReview
+import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
+import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModel
+import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModelFactory
 
 class ReviewListActivity : AppCompatActivity() {
-    val binding : ActivityReviewListBinding by lazy {
+    private val viewModel : ReviewListViewModel by viewModels { ReviewListViewModelFactory() }
+    private val binding : ActivityReviewListBinding by lazy {
         ActivityReviewListBinding.inflate(layoutInflater)
     }
 
@@ -16,8 +21,9 @@ class ReviewListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        val placeId = intent.getLongExtra("reviewPlaceId", -1)
         settingToolbar()
-        settingReviewListRVAdapter()
+        getReviewListInfo(placeId)
     }
 
     private fun settingToolbar() {
@@ -26,28 +32,28 @@ class ReviewListActivity : AppCompatActivity() {
         }
     }
 
-    private fun settingReviewListRVAdapter() {
-        val reviewList = listOf(
-            ReviewDetail("홍길동", "휠체어를 대여해주셔서 편하게 여행할 수 있었던 것 같습니다! 주차도 편하고 좋았어요! 아쉬운 점은 장애인 화장실 시설이 아쉬웠습니다~\n" +
-                    "그래도 여행은 즐거웠어요~~~~~~~~~~~~~", "2024.06.01",
-                listOf("https://i.namu.wiki/i/aaXYKOQIQysu0xGNylPeZ0WGm9rMQvRxPcavkWndMHDCbDXauKFT2w_tbC2zygc-z993Ok-F2THft8xsX42dWoijVKTV85RVz9LJY1BODXEooKpPVf57K0OWZeETE5QWvleeZHnZeNUxageq1I8S5w.webp", "https://post-phinf.pstatic.net/MjAyMDA5MDJfMTcy/MDAxNTk5MDQyMzUyMzI3.2AFfkxQrEt77Rykdoui235yMaUEJ-Ernj0VgAuHygc0g.fgj_F4mphxVoeld5q8lmAFaX2l9-8lQiWyfSbwBjd_Ag.JPEG/IMG_4919.jpg?type=w1200")
-            ),
-            ReviewDetail("김길동", "재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워.. 재롱이 귀여워..", "2024.06.01",
-                listOf("https://i.namu.wiki/i/aaXYKOQIQysu0xGNylPeZ0WGm9rMQvRxPcavkWndMHDCbDXauKFT2w_tbC2zygc-z993Ok-F2THft8xsX42dWoijVKTV85RVz9LJY1BODXEooKpPVf57K0OWZeETE5QWvleeZHnZeNUxageq1I8S5w.webp", "https://post-phinf.pstatic.net/MjAyMDA5MDJfMTcy/MDAxNTk5MDQyMzUyMzI3.2AFfkxQrEt77Rykdoui235yMaUEJ-Ernj0VgAuHygc0g.fgj_F4mphxVoeld5q8lmAFaX2l9-8lQiWyfSbwBjd_Ag.JPEG/IMG_4919.jpg?type=w1200")
-            ),
-            ReviewDetail("김길동", "여행지로 추천!! 서울 구경 제대로 하고 갑니다 굿굿", "2024.06.01",
-                listOf("https://i.namu.wiki/i/aaXYKOQIQysu0xGNylPeZ0WGm9rMQvRxPcavkWndMHDCbDXauKFT2w_tbC2zygc-z993Ok-F2THft8xsX42dWoijVKTV85RVz9LJY1BODXEooKpPVf57K0OWZeETE5QWvleeZHnZeNUxageq1I8S5w.webp", "https://post-phinf.pstatic.net/MjAyMDA5MDJfMTcy/MDAxNTk5MDQyMzUyMzI3.2AFfkxQrEt77Rykdoui235yMaUEJ-Ernj0VgAuHygc0g.fgj_F4mphxVoeld5q8lmAFaX2l9-8lQiWyfSbwBjd_Ag.JPEG/IMG_4919.jpg?type=w1200")
-            ),
-            ReviewDetail("김길동", "여행지로 추천!! 서울 구경 제대로 하고 갑니다 굿굿", "2024.06.01",
-                listOf("https://i.namu.wiki/i/aaXYKOQIQysu0xGNylPeZ0WGm9rMQvRxPcavkWndMHDCbDXauKFT2w_tbC2zygc-z993Ok-F2THft8xsX42dWoijVKTV85RVz9LJY1BODXEooKpPVf57K0OWZeETE5QWvleeZHnZeNUxageq1I8S5w.webp", "https://post-phinf.pstatic.net/MjAyMDA5MDJfMTcy/MDAxNTk5MDQyMzUyMzI3.2AFfkxQrEt77Rykdoui235yMaUEJ-Ernj0VgAuHygc0g.fgj_F4mphxVoeld5q8lmAFaX2l9-8lQiWyfSbwBjd_Ag.JPEG/IMG_4919.jpg?type=w1200")
-            ),
-            ReviewDetail("김길동", "여행지로 추천!! 서울 구경 제대로 하고 갑니다 굿굿", "2024.06.01",
-                listOf("https://i.namu.wiki/i/aaXYKOQIQysu0xGNylPeZ0WGm9rMQvRxPcavkWndMHDCbDXauKFT2w_tbC2zygc-z993Ok-F2THft8xsX42dWoijVKTV85RVz9LJY1BODXEooKpPVf57K0OWZeETE5QWvleeZHnZeNUxageq1I8S5w.webp", "https://post-phinf.pstatic.net/MjAyMDA5MDJfMTcy/MDAxNTk5MDQyMzUyMzI3.2AFfkxQrEt77Rykdoui235yMaUEJ-Ernj0VgAuHygc0g.fgj_F4mphxVoeld5q8lmAFaX2l9-8lQiWyfSbwBjd_Ag.JPEG/IMG_4919.jpg?type=w1200")
-            ),
-        )
+    private fun settingReviewListRVAdapter(reviewList: List<PlaceReview>) {
+        val reviewListRVAdapter = ReviewListRVAdapter(reviewList) {
+            this.showConfirmDialog(
+                supportFragmentManager,
+                "신고하기", "해당 댓글을 신고하시겠습니까?", "신고하기",
+            ){
+                // 신고하기 api 연결
+            }
 
-        val reviewListRVAdapter = ReviewListRVAdapter(reviewList, this)
+        }
         binding.reviewListRv.adapter = reviewListRVAdapter
         binding.reviewListRv.layoutManager = LinearLayoutManager(applicationContext)
+    }
+
+    private fun getReviewListInfo(placeId : Long) {
+        viewModel.getPlaceReview(placeId, size = 5, page = 0)
+
+        viewModel.placeReviewInfo.observe(this@ReviewListActivity) { placeReviewInfo ->
+            binding.reviewListTitle.text = placeReviewInfo.placeName
+            binding.reviewListAddress.text = placeReviewInfo.placeAddress
+
+            settingReviewListRVAdapter(placeReviewInfo.placeReviewList)
+        }
     }
 }

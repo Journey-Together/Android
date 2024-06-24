@@ -18,6 +18,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.create
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 
@@ -126,6 +127,7 @@ object RetrofitInstance {
 
     private val retrofitMoshi = Moshi.Builder()
         .add(LocalDateTime::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(LocalDate::class.java, Rfc3339DateJsonAdapter().nullSafe())
         .add(KotlinJsonAdapterFactory())
         .build()
 }

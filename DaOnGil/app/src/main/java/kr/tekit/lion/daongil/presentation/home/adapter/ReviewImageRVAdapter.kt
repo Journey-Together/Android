@@ -24,8 +24,9 @@ class ReviewImageRVAdapter(private val imageList: List<String>) :
         holder.bind(imageList[position])
     }
 
-    class ReviewImageViewHolder(private val binding: ItemReviewBigImageBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class ReviewImageViewHolder(
+        val binding: ItemReviewBigImageBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(image: String) {
             Glide.with(binding.reviewImage.context)
                 .load(image)

@@ -16,7 +16,7 @@ data class Data(
     val mapY: String,
     val name: String,
     val overview: String,
-    val placeId: Int,
+    val placeId: Long,
     val reviewList: List<ReviewRes>?,
     val subDisability: List<SubDisabilityRes>?
 )

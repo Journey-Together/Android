@@ -117,7 +117,7 @@ class SearchMainViewModel(
                is DisabilityType.InfantFamily -> updatedTypes.add(DisabilityType.InfantFamily.type)
                is DisabilityType.ElderlyPeople -> updatedTypes.add(DisabilityType.ElderlyPeople.type)
            }
-           optionNames.map { updatedOptions.add(it) }
+           optionNames.map { updatedOptions.add(it.toLong()) }
        }
 
         when (type) {

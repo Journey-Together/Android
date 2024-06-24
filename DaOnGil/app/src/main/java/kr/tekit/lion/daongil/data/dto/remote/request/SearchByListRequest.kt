@@ -7,8 +7,8 @@ data class SearchByListRequest (
     val size: Int,
     val page: Int,
     val query: String?,
-    val disabilityType: List<String>?,
-    val detailFilter: List<String>?,
+    val disabilityType: List<Long>?,
+    val detailFilter: List<Long>?,
     val areaCode: String?,
     val sigunguCode: String?,
     val arrange: String

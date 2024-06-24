@@ -7,8 +7,8 @@ data class ListSearchOption (
     val size: Int,
     val page: Int,
     val query: String? = null,
-    val disabilityType: TreeSet<String>? = null,
-    val detailFilter: Set<String>? = null,
+    val disabilityType: TreeSet<Long>? = null,
+    val detailFilter: Set<Long>? = null,
     val areaCode: String? = null,
     val sigunguCode: String? = null,
     val arrange: String = "B"

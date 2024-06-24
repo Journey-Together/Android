@@ -16,10 +16,7 @@ class FormScheduleAdapter(
         val inflater = LayoutInflater.from(parent.context)
         return FormScheduleViewHolder(
             ItemFormScheduleBinding.inflate(inflater, parent, false),
-            onAddItemClick = { schedulePosition ->
-                // '여행지 추가' 버튼 클릭리스너 -> 다음 화면으로 이동시켜준다. (스케쥴 position 전달)
-                this.onAddButtonClickListener(schedulePosition)
-            },
+            onAddButtonClickListener,
             onRemoveButtonClickListener
         )
     }
@@ -34,20 +31,22 @@ class FormScheduleAdapter(
 
     class FormScheduleViewHolder(
         private val binding: ItemFormScheduleBinding,
-        private val onAddItemClick : (schedulePosition: Int) -> Unit,
+        private val onAddButtonClickListener : (schedulePosition: Int) -> Unit,
         private val onRemoveButtonClickListener : (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            // 여행지 추가 버튼
+            binding.buttonFScheduleAddPlace.setOnClickListener {
+                onAddButtonClickListener(absoluteAdapterPosition)
+            }
+        }
+
         fun bind(dailySchedule: DailySchedule) {
             binding.textViewFScheduleDate.text = dailySchedule.dailyDate
 
             // 추가할 여행지목록 Adapter
-            val formPlaceAdapter = FormPlaceAdapter(dailySchedule.dailyPlaces, layoutPosition, onRemoveButtonClickListener)
+            val formPlaceAdapter = FormPlaceAdapter(dailySchedule.dailyPlaces, absoluteAdapterPosition, onRemoveButtonClickListener)
             binding.recyclerViewFSchedulePlaces.adapter = formPlaceAdapter
-
-            // 여행지 추가 버튼
-            binding.buttonFScheduleAddPlace.setOnClickListener {
-                onAddItemClick(layoutPosition)
-            }
         }
     }
 }

@@ -1,10 +1,15 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleDetailsFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
@@ -17,8 +22,25 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_form) {
+
     private val scheduleFormViewModel: ScheduleFormViewModel by activityViewModels{
         ScheduleFormViewModelFactory()
+    }
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            resetForm()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        requireActivity().onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        onBackPressedCallback.remove()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,13 +62,17 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
     private fun initToolbar(binding: FragmentScheduleDetailsFormBinding) {
         binding.toolbarScheduleDetailsForm.setNavigationOnClickListener {
-            // 날짜 선택화면으로 돌아가는 경우 제목, 기간, 리스트 초기화
-            scheduleFormViewModel.setTitle(null)
-            scheduleFormViewModel.setStartDate(null)
-            scheduleFormViewModel.setEndDate(null)
-            scheduleFormViewModel.setSchedule(null)
-            findNavController().popBackStack()
+            resetForm()
         }
+    }
+
+    private fun resetForm(){
+        // 날짜 선택화면으로 돌아가는 경우 제목, 기간, 리스트 초기화
+        scheduleFormViewModel.setTitle(null)
+        scheduleFormViewModel.setStartDate(null)
+        scheduleFormViewModel.setEndDate(null)
+        scheduleFormViewModel.setSchedule(null)
+        findNavController().popBackStack()
     }
 
     private fun initScheduleList() {
@@ -120,14 +146,21 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
     }
 
     private fun initButtonSubmit(binding: FragmentScheduleDetailsFormBinding){
-        binding.buttonDFSubmit.setOnClickListener {
-            scheduleFormViewModel.submitNewPlan{
-                if(it){
+        binding.buttonDFSubmit.setOnClickListener { view ->
+            scheduleFormViewModel.submitNewPlan{ _, requestFlag ->
+                if(requestFlag){
+                    requireActivity().setResult(Activity.RESULT_OK)
                     requireActivity().finish()
                 }else{
-                    // to do
+                    showSnackBar(view, "다시 시도해주세요")
                 }
             }
         }
+    }
+
+    private fun showSnackBar(view: View, message : String ){
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+            .show()
     }
 }

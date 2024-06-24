@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.dto.remote.request
 
+import com.squareup.moshi.Json
 import kr.tekit.lion.daongil.data.dto.remote.base.AdapterProvider.Companion.JsonAdapter
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -10,7 +11,7 @@ data class NewPlanRequest(
     val title: String,
     val startDate: String,
     val endDate: String,
-    val isPublic: Boolean = false,
+    @Json(name = "dailyplace")
     val dailyPlace: List<DailyPlaceRequest>,
 )
 
@@ -20,7 +21,6 @@ fun NewPlan.toRequestBody(): RequestBody {
             this.title,
             this.startDate,
             this.endDate,
-            this.isPublic,
             this.dailyPlace.map {
                 DailyPlaceRequest(
                     it.date,

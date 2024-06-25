@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
+import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 import java.text.SimpleDateFormat
@@ -122,12 +123,10 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
         subTitle: String,
         isNameEmpty: Boolean
     ) {
-        val dialog = kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog(
+        val dialog = ConfirmDialog(
             title,
             subTitle,
-            getString(R.string.confirm),
-            R.color.primary,
-            R.color.text_primary
+            getString(R.string.confirm)
         ) {
             if (isNameEmpty) {
                 showSoftInput(binding.editTextNPFName)

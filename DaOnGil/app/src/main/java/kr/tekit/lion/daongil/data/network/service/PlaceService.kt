@@ -7,7 +7,6 @@ import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.SearchPla
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
-import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import retrofit2.http.GET
 import retrofit2.http.Path

@@ -11,7 +11,8 @@
         android:id="@+id/toolbarMyReviewDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize">
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/back_icon">
 
         <TextView
             android:layout_width="wrap_content"

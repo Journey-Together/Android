@@ -11,19 +11,25 @@ import android.os.ext.SdkExtensions
 import android.provider.Settings
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
 import kr.tekit.lion.daongil.presentation.home.adapter.WriteReviewImageRVAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedulereview.customview.ReviewPublicDialog
+import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
+import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
 
 class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface {
     private val selectedImages: ArrayList<Uri> = ArrayList()
     private lateinit var scheduleImageRVAdapter: WriteReviewImageRVAdapter
+
+    private val viewModel : WriteScheduleReviewViewModel by viewModels { WriteScheduleReviewViewModelFactory() }
 
     @SuppressLint("NotifyDataSetChanged")
     private val pickMedia =
@@ -71,10 +77,10 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
         setContentView(binding.root)
 
-        val planId = intent.getIntExtra("planId", -1)
+        val planId = intent.getLongExtra("planId", -1)
 
         initToolbar()
-        initView()
+        initView(planId)
         settingImageRVAdapter()
         settingButtonClickListner()
     }
@@ -84,11 +90,21 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 finish()
         }
     }
-    private fun initView(){
-        binding.apply {
-            textViewWriteScheReviewName.text = "일정 제목"
-            textViewWriteScheReviewPeriod.text = getString(R.string.text_schedule_period, "2024.01.01", "2024.01.02")
-//            imageViewWriteScheReviewThumb
+    private fun initView(planId: Long) {
+        viewModel.getBriefScheduleInfo(planId)
+        viewModel.briefSchedule.observe(this@WriteScheduleReviewActivity) { briefSchedule ->
+            binding.apply {
+                textViewWriteScheReviewName.text = briefSchedule?.title
+                textViewWriteScheReviewPeriod.text = getString(
+                    R.string.text_schedule_period,
+                    briefSchedule?.startDate,
+                    briefSchedule?.endDate
+                )
+                Glide.with(imageViewWriteScheReviewThumb.context)
+                    .load(briefSchedule?.imageUrl)
+                    .error(R.drawable.empty_view_small)
+                    .into(imageViewWriteScheReviewThumb)
+            }
         }
     }
 

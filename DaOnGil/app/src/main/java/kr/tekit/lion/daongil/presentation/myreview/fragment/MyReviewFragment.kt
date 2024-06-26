@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,7 +17,7 @@ import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
 
 class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
-    private val viewModel: MyReviewViewModel by viewModels { MyReviewViewModelFactory() }
+    private val viewModel: MyReviewViewModel by activityViewModels { MyReviewViewModelFactory() }
     private val args: MyReviewFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

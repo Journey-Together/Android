@@ -4,6 +4,7 @@ import kr.tekit.lion.daongil.data.datasource.PlanDataSource
 import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.data.network.service.PlanService
 import kr.tekit.lion.daongil.data.repository.PlanRepositoryImpl
+import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.OpenPlan
@@ -18,6 +19,8 @@ interface PlanRepository {
     suspend fun getPlaceSearchResult(word: String, page: Int, size: Int) : PlaceSearchResult
 
     suspend fun getMyMainSchedule(): List<MyMainSchedule?>?
+
+    suspend fun getBriefScheduleInfo(planId: Long) : BriefScheduleInfo
 
     companion object{
         fun create(): PlanRepositoryImpl{

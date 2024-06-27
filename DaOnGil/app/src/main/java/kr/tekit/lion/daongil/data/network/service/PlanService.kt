@@ -5,10 +5,12 @@ import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsRes
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
 import kr.tekit.lion.daongil.data.network.AuthType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
@@ -47,4 +49,12 @@ interface PlanService {
     suspend fun getBriefScheduleInfo(
         @Path("planId") planId: Long
     ) : BriefScheduleInfoResponse
+
+    // 여행 일정 후기 작성
+    @POST("plan/review/{planId}")
+    suspend fun addNewScheduleReview(
+        @Path("planId") planId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    )
 }

@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ext.SdkExtensions
 import android.provider.Settings
+import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
 import kr.tekit.lion.daongil.presentation.home.adapter.WriteReviewImageRVAdapter
@@ -126,13 +128,18 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
             }
 
             buttonWriteScheReivewSubmit.setOnClickListener {
+                val isValid = isReviewValid()
+                if(!isValid) return@setOnClickListener
+
                 val reviewPublicDialog = ReviewPublicDialog{ isPublic ->
-                    // 데이터 서버로 전송
-//                    binding.apply {
-//                        val reviewContent = editTextWriteScheReviewContent.text.toString()
-//                        val reviewRating = ratingbarWriteScheReview.rating
-//                        selectedImages (첨부이미지), isPublic (공개여부)
-//                    }
+                    binding.apply {
+                        val reviewContent = editTextWriteScheReviewContent.text.toString()
+                        val reviewRating = ratingbarWriteScheReview.rating
+
+                        //selectedImages (첨부이미지), isPublic
+
+
+                    }
                     finish()
                 }
                 reviewPublicDialog.isCancelable = false
@@ -180,5 +187,28 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    private fun isReviewValid(): Boolean {
+        with(binding){
+            val scheduleRating = ratingbarWriteScheReview.rating
+            if(scheduleRating <= 0){
+                showSnackBar(ratingbarWriteScheReview, "일정만족도를 선택해주세요")
+                return false
+            }
+
+            val reviewContent = editTextWriteScheReviewContent.text.toString()
+            if(reviewContent.isBlank()){
+                showSnackBar(editTextWriteScheReviewContent, "후기를 남겨주세요")
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun showSnackBar(view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(getColor(R.color.text_secondary))
+            .show()
     }
 }

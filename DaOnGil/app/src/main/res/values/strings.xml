@@ -173,6 +173,6 @@
     <string name="text_block_subtitle">차단 여부</string>
     <string name="text_block_board">해당 게시물/후기 차단하기</string>
     <string name="text_block_user">해당 작성자의 모든 게시물/후기 차단하기</string>
-    <string name="text_report_error_message">신고 사유를 입력해주세요.</string>
+    <string name="text_report_error_message">신고 내용을 입력해주세요.</string>
 
 </resources>

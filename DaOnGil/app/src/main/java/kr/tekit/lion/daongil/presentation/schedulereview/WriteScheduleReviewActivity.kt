@@ -15,21 +15,18 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
-import kr.tekit.lion.daongil.presentation.home.adapter.WriteReviewImageRVAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.customview.ReviewPublicDialog
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
 
 class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface {
-    private val selectedImages: ArrayList<Uri> = ArrayList()
-    private lateinit var scheduleImageRVAdapter: WriteReviewImageRVAdapter
 
     private val viewModel : WriteScheduleReviewViewModel by viewModels { WriteScheduleReviewViewModelFactory() }
 
@@ -37,8 +34,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                selectedImages.add(uri)
-                scheduleImageRVAdapter.notifyDataSetChanged()
+                viewModel.addNewReviewImage(uri)
             }
         }
 
@@ -50,9 +46,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 // 선택한 이미지의 Uri 가져오기
                 val uri = result.data?.data
                 uri?.let {
-                    // 이미지를 리스트에 추가하고 어댑터에 데이터 변경을 알림
-                    selectedImages.add(it)
-                    scheduleImageRVAdapter.notifyDataSetChanged()
+                    viewModel.addNewReviewImage(uri)
                 }
             }
         }
@@ -111,10 +105,12 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     }
 
     private fun settingImageRVAdapter() {
-        scheduleImageRVAdapter = WriteReviewImageRVAdapter(selectedImages)
-        binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleImageRVAdapter
-        binding.recyclerViewWriteScheReviewPhotos.layoutManager =
-            LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
+        viewModel.imageUriList.observe(this){ imageUriList ->
+            val scheduleReviewImageAdapter = WriteReviewImageAdapter(imageUriList){
+                // TO DO - 이미지 삭제 리스너
+            }
+            binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleReviewImageAdapter
+        }
     }
 
     private fun settingButtonClickListner(){

@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.schedulereview.vm
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,6 +21,10 @@ class WriteScheduleReviewViewModel(
     private val _briefSchedule = MutableLiveData<BriefScheduleInfo?>()
     val briefSchedule: LiveData<BriefScheduleInfo?> get() = _briefSchedule
 
+    private val _imageUriList = MutableLiveData<List<Uri>>()
+    val imageUriList : LiveData<List<Uri>> get() = _imageUriList
+
+
     fun getBriefScheduleInfo(planId: Long){
         viewModelScope.launch {
             getBriefScheduleInfoUseCase(planId).onSuccess {
@@ -30,5 +35,10 @@ class WriteScheduleReviewViewModel(
         }
     }
 
+    fun addNewReviewImage(imgUri: Uri){
+        val currentUriList = _imageUriList.value?.toMutableList() ?: mutableListOf<Uri>()
+        currentUriList.add(imgUri)
+        currentUriList.let { _imageUriList.value = it }
+    }
 
 }

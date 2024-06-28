@@ -22,7 +22,10 @@ class WriteScheduleReviewViewModel(
     val briefSchedule: LiveData<BriefScheduleInfo?> get() = _briefSchedule
 
     private val _imageUriList = MutableLiveData<List<Uri>>()
-    val imageUriList : LiveData<List<Uri>> get() = _imageUriList
+    val imageUriList: LiveData<List<Uri>> get() = _imageUriList
+
+    private val _numOfImages = MutableLiveData<Int>(0)
+    val numOfImages: LiveData<Int> get() = _numOfImages
 
 
     fun getBriefScheduleInfo(planId: Long){
@@ -39,12 +42,26 @@ class WriteScheduleReviewViewModel(
         val currentUriList = _imageUriList.value?.toMutableList() ?: mutableListOf<Uri>()
         currentUriList.add(imgUri)
         currentUriList.let { _imageUriList.value = it }
+
+        updateNumOfImages()
     }
 
     fun removeReviewImageFromList(position: Int){
         val currentUriList = _imageUriList.value?.toMutableList() ?: mutableListOf<Uri>()
         currentUriList.removeAt(position)
         currentUriList.let { _imageUriList.value = it }
+
+        updateNumOfImages()
+
+    }
+
+    private fun updateNumOfImages(){
+        _numOfImages.value = _imageUriList.value?.size ?: 0
+    }
+
+    fun isMoreImageAttachable(): Boolean{
+        val currentValue = _numOfImages.value ?: 0
+        return currentValue in 0..3
     }
 
 }

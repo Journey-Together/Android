@@ -102,6 +102,11 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                     .into(imageViewWriteScheReviewThumb)
             }
         }
+        viewModel.numOfImages.observe(this@WriteScheduleReviewActivity){ numOfImgs ->
+            binding.apply {
+                textViewWriteScheReviewPhotoNum.text = getString(R.string.text_num_of_images, numOfImgs)
+            }
+        }
     }
 
     private fun settingImageRVAdapter() {
@@ -116,6 +121,11 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     private fun settingButtonClickListner(){
         binding.apply {
             imageButtonWriteScheReviewPhotoAdd.setOnClickListener {
+                if(!viewModel.isMoreImageAttachable()){
+                    showSnackBar(it, "사진은 최대 4개까지 첨부할 수 있습니다")
+                    return@setOnClickListener
+                }
+
                 if (isPhotoPickerAvailable()) {
                     pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 } else {

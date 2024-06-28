@@ -15,6 +15,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
@@ -77,6 +78,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
         initToolbar()
         initView(planId)
+        initReviewContentWatcher()
         settingImageRVAdapter()
         settingButtonClickListner()
     }
@@ -205,11 +207,19 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
             val reviewContent = editTextWriteScheReviewContent.text.toString()
             if(reviewContent.isBlank()){
-                showSnackBar(editTextWriteScheReviewContent, "후기를 남겨주세요")
+                inputLayoutWriteScheReviewContent.error = getString(R.string.text_warning_review_content_empty)
                 return false
             }
         }
         return true
+    }
+
+    private fun initReviewContentWatcher() {
+        with(binding){
+            editTextWriteScheReviewContent.addTextChangedListener {
+                inputLayoutWriteScheReviewContent.error = null
+            }
+        }
     }
 
     private fun showSnackBar(view: View, message: String) {

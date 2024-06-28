@@ -9,10 +9,12 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
+import kr.tekit.lion.daongil.domain.usecase.plan.AddNewScheduleReviewUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetBriefScheduleInfoUseCase
 
 class WriteScheduleReviewViewModel(
-    private val getBriefScheduleInfoUseCase: GetBriefScheduleInfoUseCase
+    private val getBriefScheduleInfoUseCase: GetBriefScheduleInfoUseCase,
+    private val addNewScheduleReviewUseCase: AddNewScheduleReviewUseCase
 ) : ViewModel() {
 
     private val _briefSchedule = MutableLiveData<BriefScheduleInfo?>()
@@ -27,4 +29,6 @@ class WriteScheduleReviewViewModel(
             }
         }
     }
+
+
 }

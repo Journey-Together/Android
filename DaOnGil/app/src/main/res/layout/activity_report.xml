@@ -204,6 +204,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big1"
+                android:background="@drawable/background_radius_10"
                 android:fontFamily="@font/pretendard_bold"
                 android:text="@string/text_report_title"
                 android:textSize="@dimen/font_big2" />

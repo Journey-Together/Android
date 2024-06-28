@@ -128,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big4"
+                android:contentDescription="@string/text_schedule_satisfaction"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewRating"
@@ -201,8 +202,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewWriteScheReviewPhotoAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="12dp"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,12 +211,32 @@
                 app:strokeColor="@color/text_quaternary"
                 app:strokeWidth="1dp">
 
-                <ImageButton
-                    android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@color/background_color"
-                    android:src="@drawable/add_image_icon" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/background_color">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/margin_small1"
+                        android:background="@color/background_color"
+                        android:src="@drawable/add_image_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteScheReviewPhotoNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButtonWriteScheReviewPhotoAdd"
+                        tools:text="@string/text_num_of_images" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
 

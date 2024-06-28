@@ -41,4 +41,10 @@ class WriteScheduleReviewViewModel(
         currentUriList.let { _imageUriList.value = it }
     }
 
+    fun removeReviewImageFromList(position: Int){
+        val currentUriList = _imageUriList.value?.toMutableList() ?: mutableListOf<Uri>()
+        currentUriList.removeAt(position)
+        currentUriList.let { _imageUriList.value = it }
+    }
+
 }

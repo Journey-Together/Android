@@ -106,8 +106,8 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
     private fun settingImageRVAdapter() {
         viewModel.imageUriList.observe(this){ imageUriList ->
-            val scheduleReviewImageAdapter = WriteReviewImageAdapter(imageUriList){
-                // TO DO - 이미지 삭제 리스너
+            val scheduleReviewImageAdapter = WriteReviewImageAdapter(imageUriList){ position ->
+                viewModel.removeReviewImageFromList(position)
             }
             binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleReviewImageAdapter
         }

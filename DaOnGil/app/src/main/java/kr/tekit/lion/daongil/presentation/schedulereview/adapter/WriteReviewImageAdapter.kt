@@ -9,7 +9,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemReviewWriteImageBinding
 
 class WriteReviewImageAdapter(
-    private val images : MutableList<Uri>,
+    private val images : List<Uri>,
     private val imageRemoveListener: (imagePosition: Int) -> Unit
 ) : RecyclerView.Adapter<WriteReviewImageAdapter.WriteScheduleReviewImageViewHolder>(){
 

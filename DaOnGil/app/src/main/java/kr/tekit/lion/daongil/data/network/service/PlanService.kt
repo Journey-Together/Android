@@ -67,9 +67,4 @@ interface PlanService {
         @Part("planReviewReq") scheduleReview: RequestBody,
     )
 
-//    @POST("plan/review/{planId}")
-//    suspend fun addNewScheduleReviewTextOnly(
-//        @Path("planId") planId: Long,
-//        @Body planReviewReq: RequestBody,
-//    )
 }

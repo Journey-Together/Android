@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.data.dto.remote.response.placeReview.get
+package kr.tekit.lion.daongil.data.dto.remote.response.placeReview
 
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.PlaceReview

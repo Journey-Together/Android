@@ -6,7 +6,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceRespons
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
-import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.get.PlaceReviewResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -18,8 +18,6 @@ import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
-import java.time.LocalDate
-import java.util.Date
 
 interface PlaceService {
     @GET("place/{placeId}")

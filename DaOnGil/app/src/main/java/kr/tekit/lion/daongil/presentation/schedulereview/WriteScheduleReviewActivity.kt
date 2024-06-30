@@ -20,6 +20,8 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
+import kr.tekit.lion.daongil.domain.model.NewScheduleReviewDetail
+import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
@@ -35,7 +37,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                viewModel.addNewReviewImage(uri)
+                saveImageDataAndPath(uri)
             }
         }
 
@@ -47,7 +49,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 // 선택한 이미지의 Uri 가져오기
                 val uri = result.data?.data
                 uri?.let {
-                    viewModel.addNewReviewImage(uri)
+                    saveImageDataAndPath(uri)
                 }
             }
         }
@@ -80,7 +82,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         initView(planId)
         initReviewContentWatcher()
         settingImageRVAdapter()
-        settingButtonClickListner()
+        settingButtonClickListner(planId)
     }
 
     private fun initToolbar(){
@@ -120,7 +122,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         }
     }
 
-    private fun settingButtonClickListner(){
+    private fun settingButtonClickListner(planId: Long){
         binding.apply {
             imageButtonWriteScheReviewPhotoAdd.setOnClickListener {
                 if(!viewModel.isMoreImageAttachable()){
@@ -144,15 +146,23 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                         val reviewContent = editTextWriteScheReviewContent.text.toString()
                         val reviewRating = ratingbarWriteScheReview.rating
 
-                        //selectedImages (첨부이미지), isPublic
+                        val reviewDetail = NewScheduleReviewDetail(reviewRating, reviewContent, isPublic)
 
-
+                        viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
+                            if(requestFlag) finish()
+                        }
                     }
-                    finish()
                 }
                 reviewPublicDialog.isCancelable = false
                 reviewPublicDialog.show(supportFragmentManager, "ReviewPublicDialog")
             }
+        }
+    }
+
+    private fun saveImageDataAndPath(uri: Uri){
+        val imagePath = toAbsolutePath(uri)
+        if(imagePath!=null){
+            viewModel.addNewReviewImage(uri, imagePath)
         }
     }
 

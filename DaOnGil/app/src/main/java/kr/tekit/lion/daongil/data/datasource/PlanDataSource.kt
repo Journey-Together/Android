@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.datasource
 
+import android.util.Log
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlanListResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
@@ -34,9 +35,15 @@ class PlanDataSource(
     suspend fun addNewScheduleReview(
         planId: Long,
         scheduleReview: RequestBody,
-        images: List<MultipartBody.Part>
+        images: List<MultipartBody.Part>?
     ) {
-        planService.addNewScheduleReview(planId, scheduleReview, images)
+        if(images.isNullOrEmpty()){
+            Log.d("addNewScheduleReview", "addNewScheduleReview : Images Empty")
+            planService.addNewScheduleReviewTextOnly(planId, scheduleReview)
+        }else{
+            planService.addNewScheduleReview(planId, scheduleReview, images)
+        }
+
     }
 
 }

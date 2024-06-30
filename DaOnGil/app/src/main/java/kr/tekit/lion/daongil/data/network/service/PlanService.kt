@@ -59,4 +59,17 @@ interface PlanService {
         @Part("planReviewReq") scheduleReview: RequestBody,
         @Part images: List<MultipartBody.Part>
     )
+
+    @Multipart
+    @POST("plan/review/{planId}")
+    suspend fun addNewScheduleReviewTextOnly(
+        @Path("planId") planId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+    )
+
+//    @POST("plan/review/{planId}")
+//    suspend fun addNewScheduleReviewTextOnly(
+//        @Path("planId") planId: Long,
+//        @Body planReviewReq: RequestBody,
+//    )
 }

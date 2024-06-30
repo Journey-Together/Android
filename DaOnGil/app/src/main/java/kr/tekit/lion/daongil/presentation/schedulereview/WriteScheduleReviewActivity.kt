@@ -93,7 +93,9 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
     }
 
     private fun settingImageRVAdapter() {
-        scheduleImageRVAdapter = WriteReviewImageRVAdapter(selectedImages)
+        scheduleImageRVAdapter = WriteReviewImageRVAdapter(selectedImages) {
+            // 이미지 삭제 시
+        }
         binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleImageRVAdapter
         binding.recyclerViewWriteScheReviewPhotos.layoutManager =
             LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)

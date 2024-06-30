@@ -149,7 +149,10 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                         val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
 
                         viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
-                            if(requestFlag) finish()
+                            if(requestFlag) {
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
                         }
                     }
                 }

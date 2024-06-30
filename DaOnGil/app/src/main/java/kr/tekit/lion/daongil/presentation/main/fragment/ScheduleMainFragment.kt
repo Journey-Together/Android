@@ -1,12 +1,16 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
@@ -32,6 +36,16 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         ScheduleMainViewModelFactory(
             requireActivity()
         )
+    }
+
+    private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let{
+                Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -98,7 +112,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                         reviewClickListener = { position ->
                             val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
                             intent.putExtra("planId", it?.get(position)?.planId)
-                            startActivity(intent)
+                            scheduleReviewLauncher.launch(intent)
                         }
                     )
                     myscheduleAdapter.addItems(it as List<MyMainSchedule>)

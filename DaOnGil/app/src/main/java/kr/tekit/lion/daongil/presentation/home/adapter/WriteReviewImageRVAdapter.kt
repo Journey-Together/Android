@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.home.adapter
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,15 +9,17 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemReviewWriteImageBinding
 
-class WriteReviewImageRVAdapter(private val imageList : MutableList<Uri>)
-    : RecyclerView.Adapter<WriteReviewImageRVAdapter.WriteReviewImageViewHolder>(){
+class WriteReviewImageRVAdapter(
+    private val imageList : MutableList<Uri>,
+    private val onDeleteImage: (Int) -> Unit
+) : RecyclerView.Adapter<WriteReviewImageRVAdapter.WriteReviewImageViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WriteReviewImageViewHolder {
         val binding : ItemReviewWriteImageBinding = ItemReviewWriteImageBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
-        return WriteReviewImageViewHolder(binding, this)
+        return WriteReviewImageViewHolder(binding, this, onDeleteImage)
     }
 
     override fun getItemCount(): Int = imageList.size
@@ -27,9 +30,11 @@ class WriteReviewImageRVAdapter(private val imageList : MutableList<Uri>)
 
     class WriteReviewImageViewHolder(
         private val binding: ItemReviewWriteImageBinding,
-        private val adapter : WriteReviewImageRVAdapter
+        private val adapter : WriteReviewImageRVAdapter,
+        private val onDeleteImage: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("NotifyDataSetChanged")
         fun bind(image : Uri, position: Int) {
             Glide.with(binding.itemWriteReviewImage.context)
                 .load(image)
@@ -40,6 +45,7 @@ class WriteReviewImageRVAdapter(private val imageList : MutableList<Uri>)
                 if (position != RecyclerView.NO_POSITION) {
                     adapter.imageList.removeAt(position)
                     adapter.notifyDataSetChanged()
+                    onDeleteImage(position)
                 }
             }
         }

@@ -20,7 +20,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
-import kr.tekit.lion.daongil.domain.model.NewScheduleReviewDetail
+import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
@@ -146,7 +146,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                         val reviewContent = editTextWriteScheReviewContent.text.toString()
                         val reviewRating = ratingbarWriteScheReview.rating
 
-                        val reviewDetail = NewScheduleReviewDetail(reviewRating, reviewContent, isPublic)
+                        val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
 
                         viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
                             if(requestFlag) finish()

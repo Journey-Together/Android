@@ -9,7 +9,6 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
 import kr.tekit.lion.daongil.domain.model.NewScheduleReview
-import kr.tekit.lion.daongil.domain.model.NewScheduleReviewDetail
 import kr.tekit.lion.daongil.domain.model.ReviewImg
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
@@ -77,14 +76,13 @@ class WriteScheduleReviewViewModel(
         return currentValue in 0..3
     }
 
-    fun submitScheduleReview(planId: Long, reviewDetail: NewScheduleReviewDetail, callback: (Boolean, Boolean) -> Unit){
+    fun submitScheduleReview(planId: Long, reviewDetail: NewScheduleReview, callback: (Boolean, Boolean) -> Unit){
         val images = _imagePaths.value?.toMutableList() ?: mutableListOf<ReviewImg>()
         viewModelScope.launch {
             var requestFlag = false
             val success = try {
 
-
-                addNewScheduleReviewUseCase.invoke(planId, NewScheduleReview(reviewDetail), images)
+                addNewScheduleReviewUseCase.invoke(planId, reviewDetail, images)
                     .onSuccess {
                         Log.d("submitScheduleReview", "onSuccess ${it.toString()}")
                         requestFlag = true

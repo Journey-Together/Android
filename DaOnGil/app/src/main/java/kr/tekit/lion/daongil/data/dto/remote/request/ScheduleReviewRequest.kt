@@ -13,17 +13,16 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 data class ScheduleReviewRequest(
-    @Json(name = "planReviewReq")
-    val scheduleReviewDetailRequest: ScheduleReviewDetailRequest
+    val grade: Float,
+    val content: String,
+    val isPublic: Boolean
 )
 fun NewScheduleReview.toRequestBody() : RequestBody {
     return JsonAdapter(ScheduleReviewRequest::class.java).toJson(
         ScheduleReviewRequest(
-            scheduleReviewDetailRequest = ScheduleReviewDetailRequest(
-                this.scheduleReviewDetail.grade,
-                this.scheduleReviewDetail.content,
-                this.scheduleReviewDetail.isPublic
-            )
+            grade = this.grade,
+            content = this.content,
+            isPublic = this.isPublic
         )
     ).toRequestBody("application/json".toMediaTypeOrNull())
 }

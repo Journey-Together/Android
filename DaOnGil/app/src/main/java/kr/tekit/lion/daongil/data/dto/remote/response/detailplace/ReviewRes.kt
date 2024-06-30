@@ -1,7 +1,7 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.detailplace
 
 import com.squareup.moshi.JsonClass
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
 data class ReviewRes (
@@ -11,5 +11,5 @@ data class ReviewRes (
     val content : String,
     val reviewImg : String,
     val grade : Float,
-    val date : LocalDateTime
+    val date : LocalDate
 )

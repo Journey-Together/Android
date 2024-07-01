@@ -263,7 +263,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         } else if (reviewText.isEmpty()) {
             binding.writeReviewTextWriteEdit.requestFocus()
             this.showSoftInput(binding.writeReviewTextWriteEdit)
-            Snackbar.make(binding.root, "방문 날짜를 선택해 주세요", Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(binding.root, "후기 내용을 입력해 주세요", Snackbar.LENGTH_SHORT).show()
 
             false
 

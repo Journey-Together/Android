@@ -127,6 +127,9 @@ class ScheduleFormViewModel(
     fun fetchNextPlaceResults(size: Int) {
         val page = _placeSearchResult.value?.pageNo
         val keyword = _keyword.value
+        Log.d("fetchNextPlaceResults", "===========================")
+        Log.d("fetchNextPlaceResults", "page: ${page}")
+        Log.d("fetchNextPlaceResults", "===========================")
 
         if (keyword != null && page != null) {
             viewModelScope.launch {
@@ -138,6 +141,13 @@ class ScheduleFormViewModel(
                         // 'placeInfoList'만 갱신
                         val updatedResult = it.copy(placeInfoList = newList)
                         _placeSearchResult.value = updatedResult
+                        Log.d("fetchNextPlaceResults", "===========================")
+                        Log.d("fetchNextPlaceResults", "onSuccess pageNo: ${it.pageNo}")
+                        Log.d("fetchNextPlaceResults", "onSuccess last: ${it.last}")
+                        Log.d("fetchNextPlaceResults", "===========================")
+                        Log.d("fetchNextPlaceResults", "===========================")
+                        Log.d("fetchNextPlaceResults", "fetch 후 현재 page: ${_placeSearchResult.value?.pageNo}")
+                        Log.d("fetchNextPlaceResults", "===========================")
                     }
                     .onError {
                         Log.e("fetchNextPlaceResults", "onError ${it.message}")
@@ -146,7 +156,8 @@ class ScheduleFormViewModel(
         }
     }
 
-    fun isPlaceAlreadyAdded(dayPosition:Int, placeId: Long) : Boolean{
+    fun isPlaceAlreadyAdded(dayPosition:Int, selectedPlacePosition: Int) : Boolean{
+        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
         // 선택한 관광지정보가 같은 날에 추가된 경우
         val daySchedule = _schedule.value?.get(dayPosition)?.dailyPlaces
         daySchedule?.forEach {
@@ -157,15 +168,19 @@ class ScheduleFormViewModel(
         return false
     }
 
-    fun getSearchedPlaceDetailInfo(dayPosition:Int, placeId: Long){
+    fun getSearchedPlaceDetailInfo(dayPosition:Int, selectedPlacePosition: Int){
+        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+
         viewModelScope.launch {
-            getPlaceDetailInfoUseCase(placeId).onSuccess {
+            placeId?.let {
+                getPlaceDetailInfoUseCase(placeId).onSuccess {
 
-                val formPlace = FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
-                addNewPlace(formPlace, dayPosition)
+                    val formPlace = FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
+                    addNewPlace(formPlace, dayPosition)
 
-            }.onError {
-                //Log.e("getSearchedPlaceDetailInfo", "placeId $placeId onError ${it.message}")
+                }.onError {
+                    //Log.e("getSearchedPlaceDetailInfo", "placeId $placeId onError ${it.message}")
+                }
             }
         }
     }

@@ -43,10 +43,12 @@ class ScheduleFormViewModel(
     private val _bookmarkedPlaces = MutableLiveData<List<BookmarkedPlace>>()
     val bookmarkedPlaces: LiveData<List<BookmarkedPlace>> get() = _bookmarkedPlaces
 
-    // 여행지 검색 화면 - 검색 결과 목록
+    // 여행지 검색 화면 - 검색 결과 목록 + pageNo(0~), pageSize(itemSize), totalPages, last (t/f)
     private val _placeSearchResult = MutableLiveData<PlaceSearchResult>()
     // read only
     val placeSearchResult : LiveData<PlaceSearchResult> get() = _placeSearchResult
+
+    private val _keyword = MutableLiveData<String>()
 
     init {
         getBookmarkedPlaceList()
@@ -104,13 +106,42 @@ class ScheduleFormViewModel(
     }
 
     fun getPlaceSearchResult(word: String, page: Int, size: Int){
+        _keyword.value = word
+
         // viewModelScope = ViewModel에 정의된 코루틴 스코프
         viewModelScope.launch {
-            getPlaceSearchResultUseCase(word, page, size).onSuccess {
+            getPlaceSearchResultUseCase(word, page, size)
+                .onSuccess {
                 // 검색 결과를 받아오면 _placeSearchResult에 값을 갱신해준다
                 _placeSearchResult.value = it
             }.onError {
-                //Log.d("getPlaceSearchResult", "onError ${it.toString()}")
+                //Log.e("getPlaceSearchResult", "onError ${it.message}")
+            }
+        }
+    }
+
+    fun isLastPage(): Boolean {
+        return _placeSearchResult.value?.last ?: true
+    }
+
+    fun fetchNextPlaceResults(size: Int) {
+        val page = _placeSearchResult.value?.pageNo
+        val keyword = _keyword.value
+
+        if (keyword != null && page != null) {
+            viewModelScope.launch {
+                getPlaceSearchResultUseCase(keyword, page + 1, size)
+                    .onSuccess {
+                        // orEmpty() : null 인 경우 빈 리스트로 처리해준다.
+                        val newList =
+                            _placeSearchResult.value?.placeInfoList.orEmpty() + it.placeInfoList
+                        // 'placeInfoList'만 갱신
+                        val updatedResult = it.copy(placeInfoList = newList)
+                        _placeSearchResult.value = updatedResult
+                    }
+                    .onError {
+                        Log.e("fetchNextPlaceResults", "onError ${it.message}")
+                    }
             }
         }
     }
@@ -130,11 +161,11 @@ class ScheduleFormViewModel(
         viewModelScope.launch {
             getPlaceDetailInfoUseCase(placeId).onSuccess {
 
-                val formPlace = FormPlace(it.placeId.toLong(), it.image, it.address, it.name, it.disability)
+                val formPlace = FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
                 addNewPlace(formPlace, dayPosition)
 
             }.onError {
-                //Log.d("getSearchedPlaceDetailInfo", "placeId $placeId  onError${it.toString()}")
+                //Log.e("getSearchedPlaceDetailInfo", "placeId $placeId onError ${it.message}")
             }
         }
     }

@@ -11,6 +11,7 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
+import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
@@ -70,6 +71,13 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
                     adapter = FormSearchResultAdapter(it.placeInfoList){ selectedPlacePosition ->
                         val placeId = it.placeInfoList[selectedPlacePosition].placeId
                         addNewPlace(this, schedulePosition, placeId)
+                    }
+                    addOnScrollEndListener{
+                        with(scheduleFormViewModel){
+                            if(!isLastPage()){
+                                fetchNextPlaceResults(10)
+                            }
+                        }
                     }
                 }
             }else{

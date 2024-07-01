@@ -18,7 +18,6 @@ import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
 class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
     private val viewModel: MyReviewViewModel by activityViewModels { MyReviewViewModelFactory() }
-    private val args: MyReviewFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -27,13 +26,6 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
         settingToolbar(binding)
         settingMyReviewRVAdapter(binding)
-
-        val reviewDeleted = args.reviewDeleted
-        if (reviewDeleted) {
-            Snackbar.make(requireView(), "나의 여행지 후기가 삭제되었습니다.", Snackbar.LENGTH_LONG)
-                .setBackgroundTint(ContextCompat.getColor(requireContext(), R.color.text_secondary))
-                .show()
-        }
     }
 
     private fun settingToolbar(binding: FragmentMyReviewBinding) {
@@ -48,12 +40,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 binding.notExistReviewLayout.visibility = View.INVISIBLE
                 binding.recyclerViewMyReview.visibility = View.VISIBLE
 
-                val myReviewRVAdapter = MyReviewRVAdapter(
-                    myPlaceReviewList,
-                    itemClickListener = { position ->
-                        val action = MyReviewFragmentDirections.actionMyReviewFragmentToMyReviewDetailFragment(reviewId = myPlaceReviewList[position].reviewId)
-                        findNavController().navigate(action)
-                    })
+                val myReviewRVAdapter = MyReviewRVAdapter(myPlaceReviewList)
                 binding.recyclerViewMyReview.adapter = myReviewRVAdapter
                 binding.recyclerViewMyReview.layoutManager = LinearLayoutManager(context)
             } else {

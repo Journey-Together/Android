@@ -156,26 +156,43 @@ class ScheduleFormViewModel(
         }
     }
 
-    fun isPlaceAlreadyAdded(dayPosition:Int, selectedPlacePosition: Int) : Boolean{
-        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
-        // 선택한 관광지정보가 같은 날에 추가된 경우
+    fun isPlaceAlreadyAdded(
+        dayPosition: Int,
+        selectedPlacePosition: Int,
+        isBookmarkedPlace: Boolean
+    ): Boolean {
+        val placeId = if (isBookmarkedPlace) {
+            _bookmarkedPlaces.value?.get(selectedPlacePosition)?.bookmarkedPlaceId
+        } else {
+            _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+        }
+
+        // 선택한 관광지 정보가 같은 날에 추가된 경우
         val daySchedule = _schedule.value?.get(dayPosition)?.dailyPlaces
         daySchedule?.forEach {
-            if(it.placeId == placeId){
+            if (it.placeId == placeId) {
                 return true
             }
         }
         return false
     }
 
-    fun getSearchedPlaceDetailInfo(dayPosition:Int, selectedPlacePosition: Int){
-        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+    fun getSearchedPlaceDetailInfo(
+        dayPosition: Int,
+        selectedPlacePosition: Int,
+        isBookmarkedPlace: Boolean
+    ) {
+        val placeId = if (isBookmarkedPlace) {
+            _bookmarkedPlaces.value?.get(selectedPlacePosition)?.bookmarkedPlaceId
+        } else {
+            _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+        }
 
         viewModelScope.launch {
             placeId?.let {
                 getPlaceDetailInfoUseCase(placeId).onSuccess {
-
-                    val formPlace = FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
+                    val formPlace =
+                        FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
                     addNewPlace(formPlace, dayPosition)
 
                 }.onError {

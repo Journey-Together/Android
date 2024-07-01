@@ -56,10 +56,8 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
         scheduleFormViewModel.bookmarkedPlaces.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
                 binding.recyclerViewFSBookmark.apply {
-                    adapter = FormBookmarkedPlacesAdapter(it){ selectedPlaceId ->
-                        val placeId = it[selectedPlaceId].bookmarkedPlaceId
-                        //addNewPlace(this, schedulePosition, placeId)
-
+                    adapter = FormBookmarkedPlacesAdapter(it){ selectedPlacePosition ->
+                        addNewPlace(schedulePosition, selectedPlacePosition, true)
                     }
                 }
             }else{
@@ -96,11 +94,11 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     }
 
     private fun addNewPlace(schedulePosition: Int, selectedPlacePosition: Int, isBookmarkedPlace: Boolean) {
-        val isDuplicate = scheduleFormViewModel.isPlaceAlreadyAdded(schedulePosition, selectedPlacePosition)
+        val isDuplicate = scheduleFormViewModel.isPlaceAlreadyAdded(schedulePosition, selectedPlacePosition, isBookmarkedPlace)
         if (isDuplicate) {
             showSnackBar("해당 여행지는 이미 일정에 추가되어 있습니다")
         }else {
-            scheduleFormViewModel.getSearchedPlaceDetailInfo(schedulePosition, selectedPlacePosition)
+            scheduleFormViewModel.getSearchedPlaceDetailInfo(schedulePosition, selectedPlacePosition, isBookmarkedPlace)
             findNavController().popBackStack()
         }
     }

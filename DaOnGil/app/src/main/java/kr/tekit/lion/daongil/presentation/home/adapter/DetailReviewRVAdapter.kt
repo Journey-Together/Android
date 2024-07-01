@@ -29,7 +29,7 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>)
         fun bind(reviewData : Review) {
             binding.itemDetailReviewNickname.text = reviewData.nickname
             binding.itemDetailReviewContent.text = reviewData.content
-            // binding.itemDetailReviewDate.text = reviewData.date.toString()
+            binding.itemDetailReviewDate.text = reviewData.date.toString()
             binding.itemDetailReviewStarScoreTv.text = reviewData.grade.toString()
 
             Glide.with(binding.itemDetailReviewProfileIv.context)

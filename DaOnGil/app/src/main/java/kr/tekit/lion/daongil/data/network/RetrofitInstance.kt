@@ -127,7 +127,8 @@ object RetrofitInstance {
 
     private val retrofitMoshi = Moshi.Builder()
         .add(LocalDateTime::class.java, Rfc3339DateJsonAdapter().nullSafe())
-        .add(LocalDate::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        //.add(LocalDate::class.java, Rfc3339DateJsonAdapter().nullSafe())
+        .add(LocalDateAdapter())
         .add(KotlinJsonAdapterFactory())
         .build()
 }

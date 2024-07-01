@@ -12,6 +12,9 @@ import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchP
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.network.service.PlaceService
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 
 class PlaceDataSource(
     private val placeService: PlaceService
@@ -65,5 +68,9 @@ class PlaceDataSource(
     
      suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReviewResponse {
         return placeService.getMyPlaceReview(size, page)
+    }
+
+    suspend fun writePlaceReviewData(placeId: Long, placeReviewReq: RequestBody, images: List<MultipartBody.Part>): ResponseBody {
+        return placeService.writePlaceReviewData(placeId, placeReviewReq, images)
     }
 }

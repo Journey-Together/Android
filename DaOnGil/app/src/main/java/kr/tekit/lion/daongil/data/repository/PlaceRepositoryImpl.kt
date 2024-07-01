@@ -1,9 +1,10 @@
 package kr.tekit.lion.daongil.data.repository
 
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kr.tekit.lion.daongil.data.datasource.PlaceDataSource
+import kr.tekit.lion.daongil.data.dto.remote.request.toMultiPartBody
+import kr.tekit.lion.daongil.data.dto.remote.request.toRequestBody
 import kr.tekit.lion.daongil.data.dto.remote.request.toRequestModel
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.toDomainModel
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfo
@@ -12,11 +13,13 @@ import kr.tekit.lion.daongil.domain.model.ListSearchResult
 import kr.tekit.lion.daongil.domain.model.MapSearchOption
 import kr.tekit.lion.daongil.domain.model.MapSearchResult
 import kr.tekit.lion.daongil.domain.model.MyPlaceReview
+import kr.tekit.lion.daongil.domain.model.NewReviewData
+import kr.tekit.lion.daongil.domain.model.NewReviewImages
 import kr.tekit.lion.daongil.domain.model.PlaceDetailInfoGuest
 import kr.tekit.lion.daongil.domain.model.PlaceMainInfo
 import kr.tekit.lion.daongil.domain.model.PlaceReviewInfo
-import kr.tekit.lion.daongil.domain.model.SearchPlace
 import kr.tekit.lion.daongil.domain.repository.PlaceRepository
+import okhttp3.ResponseBody
 
 class PlaceRepositoryImpl(
     private val placeDataSource: PlaceDataSource
@@ -50,8 +53,12 @@ class PlaceRepositoryImpl(
     override suspend fun getPlaceReviewList(placeId: Long, page: Int, size: Int): PlaceReviewInfo {
         return placeDataSource.getPlaceReviewList(placeId, page, size).toDomainModel()
     }
-    
+
     override suspend fun getMyPlaceReview(size: Int, page: Int): List<MyPlaceReview> {
         return placeDataSource.getMyPlaceReview(size, page).toDomainModel()
+    }
+
+    override suspend fun writePlaceReviewData(placeId: Long, newReviewData: NewReviewData, reviewImages: NewReviewImages) : ResponseBody {
+        return placeDataSource.writePlaceReviewData(placeId, newReviewData.toRequestBody(), reviewImages.toMultiPartBody())
     }
 }

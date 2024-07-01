@@ -8,7 +8,13 @@ import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchP
 import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.network.AuthType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 import retrofit2.http.GET
+import retrofit2.http.Multipart
+import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
@@ -65,9 +71,17 @@ interface PlaceService {
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): PlaceReviewResponse
   
-   @GET("place/review/my")
+    @GET("place/review/my")
     suspend fun getMyPlaceReview(
         @Query("size") size: Int,
         @Query("page") page: Int
     ): MyPlaceReviewResponse
+
+    @Multipart
+    @POST("place/review/{placeId}")
+    suspend fun writePlaceReviewData(
+        @Path("placeId") placeId: Long,
+        @Part("placeReviewReq") placeReviewReq: RequestBody,
+        @Part images : List<MultipartBody.Part>?
+    ): ResponseBody
 }

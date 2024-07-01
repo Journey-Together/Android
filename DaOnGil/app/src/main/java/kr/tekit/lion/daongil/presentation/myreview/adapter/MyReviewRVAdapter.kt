@@ -9,8 +9,7 @@ import kr.tekit.lion.daongil.databinding.ItemMyReviewBinding
 import kr.tekit.lion.daongil.domain.model.MyPlaceReview
 
 class MyReviewRVAdapter(
-    private val myReviewList: List<MyPlaceReview>,
-    private val itemClickListener: (Int) -> Unit
+    private val myReviewList: List<MyPlaceReview>
 ) : RecyclerView.Adapter<MyReviewRVAdapter.MyReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyReviewViewHolder {
@@ -18,7 +17,7 @@ class MyReviewRVAdapter(
             LayoutInflater.from(parent.context), parent, false
         )
 
-        return MyReviewViewHolder(binding, itemClickListener)
+        return MyReviewViewHolder(binding)
     }
 
     override fun getItemCount(): Int = 3
@@ -28,15 +27,8 @@ class MyReviewRVAdapter(
     }
 
     class MyReviewViewHolder(
-        private val binding: ItemMyReviewBinding,
-        private val itemClickListener: (Int) -> Unit
+        private val binding: ItemMyReviewBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-            binding.root.setOnClickListener {
-                itemClickListener.invoke(absoluteAdapterPosition)
-            }
-        }
 
         fun bind(myPlaceReview: MyPlaceReview) {
             binding.textViewMyReviewLocation.text = myPlaceReview.address

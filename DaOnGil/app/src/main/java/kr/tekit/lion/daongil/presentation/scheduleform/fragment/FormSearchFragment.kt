@@ -8,6 +8,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
@@ -49,13 +54,22 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             findNavController().popBackStack()
         }
     }
+
     private fun settingBookmarkedRV(binding: FragmentFormSearchBinding, schedulePosition: Int ){
         // 만약 검색 화면에 들어올 때마다 북마크 목록을 갱신해주고 싶다면..
         //scheduleFormViewModel.getBookmarkedPlaceList()
 
+        val flexboxLayoutManager = FlexboxLayoutManager(requireActivity()).apply {
+            flexDirection = FlexDirection.ROW
+            flexWrap = FlexWrap.WRAP
+            alignItems = AlignItems.FLEX_START
+            justifyContent = JustifyContent.FLEX_START
+        }
+
         scheduleFormViewModel.bookmarkedPlaces.observe(viewLifecycleOwner){
             if(it.isNotEmpty()){
                 binding.recyclerViewFSBookmark.apply {
+                    layoutManager = flexboxLayoutManager
                     adapter = FormBookmarkedPlacesAdapter(it){ selectedPlacePosition ->
                         addNewPlace(schedulePosition, selectedPlacePosition, true)
                     }
@@ -94,11 +108,19 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     }
 
     private fun addNewPlace(schedulePosition: Int, selectedPlacePosition: Int, isBookmarkedPlace: Boolean) {
-        val isDuplicate = scheduleFormViewModel.isPlaceAlreadyAdded(schedulePosition, selectedPlacePosition, isBookmarkedPlace)
+        val isDuplicate = scheduleFormViewModel.isPlaceAlreadyAdded(
+            schedulePosition,
+            selectedPlacePosition,
+            isBookmarkedPlace
+        )
         if (isDuplicate) {
-            showSnackBar("해당 여행지는 이미 일정에 추가되어 있습니다")
-        }else {
-            scheduleFormViewModel.getSearchedPlaceDetailInfo(schedulePosition, selectedPlacePosition, isBookmarkedPlace)
+            showSnackBar("이 여행지는 이미 일정에 추가되어 있습니다")
+        } else {
+            scheduleFormViewModel.getSearchedPlaceDetailInfo(
+                schedulePosition,
+                selectedPlacePosition,
+                isBookmarkedPlace
+            )
             findNavController().popBackStack()
         }
     }
@@ -126,6 +148,5 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
             .show()
     }
-
 
 }

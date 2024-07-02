@@ -20,14 +20,12 @@ class FormPlaceAdapter(
         return FormPlaceViewHolder(
             ItemFormPlaceBinding.inflate(inflater, parent, false),
             schedulePosition,
-            onRemoveItemClick = { schedulePosition, placePosition ->
-                onRemoveButtonClick(schedulePosition,placePosition)
-            }
+            onRemoveButtonClick
         )
     }
 
     override fun onBindViewHolder(holder: FormPlaceViewHolder, position: Int) {
-        holder.bind(places[position], position)
+        holder.bind(places[position])
     }
 
     override fun getItemCount(): Int {
@@ -39,10 +37,18 @@ class FormPlaceAdapter(
         private val schedulePosition: Int,
         private val onRemoveItemClick: (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(place: FormPlace, placePosition: Int) {
+        init {
+            binding.imageButtonFPlaceRemove.setOnClickListener {
+                onRemoveItemClick(schedulePosition, absoluteAdapterPosition)
+            }
+        }
+
+        fun bind(place: FormPlace) {
             binding.apply {
                 textViewFPlaceAddr.text = place.placeAddress
                 textViewFPlaceName.text = place.placeName
+
+                initDisabilityIcons()
                 place.placeDisability.forEach {
                     when (it) {
                         1 -> iconFPlacePhysicalDisability.visibility = View.VISIBLE
@@ -61,9 +67,15 @@ class FormPlaceAdapter(
                         .into(imageViewFPlaceThumbnail)
                 }
             }
+        }
 
-            binding.imageButtonFPlaceRemove.setOnClickListener {
-                onRemoveItemClick(schedulePosition, placePosition)
+        private fun initDisabilityIcons(){
+            binding.apply {
+                iconFPlacePhysicalDisability.visibility = View.GONE
+                iconFPlaceVisualImpair.visibility = View.GONE
+                iconFPlaceHearingImpair.visibility = View.GONE
+                iconFPlaceInfantFamily.visibility = View.GONE
+                iconFPlaceElderlyPeople.visibility = View.GONE
             }
         }
     }

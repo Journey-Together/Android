@@ -1,5 +1,5 @@
 package kr.tekit.lion.daongil.domain.model
-import java.time.LocalDateTime
+import java.time.LocalDate
 
 data class Review (
     val reviewId: Long,
@@ -8,5 +8,5 @@ data class Review (
     val content : String,
     val reviewImg : String,
     val grade : Float,
-    val date : LocalDateTime
+    val date : LocalDate
 )

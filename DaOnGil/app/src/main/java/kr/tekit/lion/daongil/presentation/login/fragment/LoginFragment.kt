@@ -51,9 +51,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     repeatOnViewStarted {
             viewModel.sigInInUiState.collectLatest {
                 if (it) Navigation.findNavController(view).navigate(
-                    R.id.to_selectInterestFragment
+                    R.id.action_loginFragment_to_concernTypeSelectFragment
                 )
-
             }
         }
     }

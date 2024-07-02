@@ -301,7 +301,16 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_search_result"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/tv_last_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/font_small3"
+                    android:layout_gravity="center"
+                    android:visibility="gone"
+                    android:text="마지막 페이지입니다."/>
             </LinearLayout>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

@@ -2,15 +2,19 @@ package kr.tekit.lion.daongil.data.datasource
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kr.tekit.lion.daongil.data.dto.remote.request.SearchByListRequest
+import kr.tekit.lion.daongil.data.dto.remote.request.SearchByMapRequest
 import kr.tekit.lion.daongil.data.dto.remote.response.detailPlaceGuest.DetailPlaceGuestResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
-import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.SearchPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchPlaceResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.myreview.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
-import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.network.service.PlaceService
-import kr.tekit.lion.daongil.domain.model.ListSearchOption
-import kr.tekit.lion.daongil.domain.model.MapSearchOption
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.ResponseBody
 
 class PlaceDataSource(
     private val placeService: PlaceService
@@ -19,38 +23,31 @@ class PlaceDataSource(
         return placeService.getPlaceDetailInfo(placeId)
     }
 
-    suspend fun getSearchPlaceResultForList(request: ListSearchOption): SearchPlaceResponse {
-        return placeService.searchPlace(
+    suspend fun searchPlaceByList(request: SearchByListRequest): SearchPlaceResponse {
+        return placeService.searchPlaceByList(
             category = request.category,
-            query = request.query,
             size = request.size,
             page = request.page,
-            minX = request.minX,
-            maxX = request.maxX,
-            minY = request.minY,
-            maxY = request.maxY,
-            disabilityType = request.disabilityType.toList(),
-            detailFilter = request.detailFilter.toList(),
+            query = request.query,
+            disabilityType = request.disabilityType,
+            detailFilter = request.detailFilter,
             areaCode = request.areaCode,
             sigunguCode = request.sigunguCode,
             arrange = request.arrange
         )
     }
 
-     fun getSearchPlaceResultForMap(request: MapSearchOption): Flow<SearchPlaceResponse> {
+    fun searchPlaceByMap(request: SearchByMapRequest): Flow<MapSearchPlaceResponse> {
         return flow {
             emit(
-                placeService.searchPlace(
+                placeService.searchPlaceByMap(
                     category = request.category,
-                    query = request.query,
-                    size = request.size,
-                    page = request.page,
                     minX = request.minX,
                     maxX = request.maxX,
                     minY = request.minY,
                     maxY = request.maxY,
-                    disabilityType = request.disabilityType.toList(),
-                    detailFilter = request.detailFilter.toList(),
+                    disabilityType = request.disabilityType,
+                    detailFilter = request.detailFilter,
                     arrange = request.arrange
                 )
             )
@@ -61,7 +58,7 @@ class PlaceDataSource(
         return placeService.getPlaceDetailInfoGuest(placeId)
     }
 
-    suspend fun getPlaceMainInfo(areaCode : String, sigunguCode : String) : MainPlaceResponse {
+    suspend fun getPlaceMainInfo(areaCode: String, sigunguCode: String): MainPlaceResponse {
         return placeService.getPlaceMainInfo(areaCode, sigunguCode)
     }
     
@@ -71,5 +68,9 @@ class PlaceDataSource(
     
      suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReviewResponse {
         return placeService.getMyPlaceReview(size, page)
+    }
+
+    suspend fun writePlaceReviewData(placeId: Long, placeReviewReq: RequestBody, images: List<MultipartBody.Part>): ResponseBody {
+        return placeService.writePlaceReviewData(placeId, placeReviewReq, images)
     }
 }

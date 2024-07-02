@@ -169,7 +169,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
                     android:gravity="top"
-                    android:hint="리뷰를 남겨주세요"
+                    android:hint="후기를 남겨주세요"
                     android:lines="7"
                     android:maxLines="7"
                     android:text=""

@@ -16,7 +16,7 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayout
@@ -34,12 +34,15 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentSearchMainBinding
 import kr.tekit.lion.daongil.presentation.ext.Permissions.LOCATION_PERMISSION_REQUEST_CODE
 import kr.tekit.lion.daongil.presentation.ext.Permissions.REQUEST_LOCATION_PERMISSIONS
+import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.ext.repeatOnViewStarted
 import kr.tekit.lion.daongil.presentation.ext.setClickEvent
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
+import kr.tekit.lion.daongil.presentation.main.adapter.SearchListRVAdapter
 import kr.tekit.lion.daongil.presentation.main.customview.CategoryBottomSheet
 import kr.tekit.lion.daongil.presentation.main.model.Category
 import kr.tekit.lion.daongil.presentation.main.model.DisabilityType
+import kr.tekit.lion.daongil.presentation.main.model.PageState
 import kr.tekit.lion.daongil.presentation.main.model.ScreenState
 import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.SearchMainViewModelFactory
@@ -49,6 +52,11 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         SearchMainViewModelFactory(
             requireContext()
         )
+    }
+    private val rvAdapter: SearchListRVAdapter by lazy {
+        SearchListRVAdapter {
+
+        }
     }
 
     private lateinit var launcherForPermission: ActivityResultLauncher<Array<String>>
@@ -62,13 +70,13 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentSearchMainBinding.bind(view)
 
-        repeatOnViewStarted {
-            viewModel.searchOption.collect{
-                Log.d("CurrentOption", it.toString())
-            }
-        }
-
         with(binding) {
+
+            repeatOnViewStarted {
+                viewModel.listSearchResult.collect {
+                    Log.d("CurrentOption", it.toString())
+                }
+            }
 
             tabContainer.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
                 override fun onTabSelected(tab: TabLayout.Tab) {
@@ -89,7 +97,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 if (it != null) {
                     detailAreaSelectLayout.visibility = View.VISIBLE
                     detailSelectedArea.text = null
-                    viewModel.onCompleteSelectArea(it.toString())
+                    viewModel.onSelectedArea(it.toString())
 
                     categoryContainer.post {
                         categoryContainer.scrollTo(0, rvSearchResult.top)
@@ -97,34 +105,12 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
-                viewModel.areaCode.collect {
-                    val areaList = it.map { area -> area.name }.toTypedArray()
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        areaList
-                    )
-                    selectedArea.setAdapter(adapter)
-                }
-            }
-
             selectedArea.doAfterTextChanged { viewModel.onSelectedArea(it.toString()) }
 
-            this@SearchMainFragment.repeatOnViewStarted {
-                viewModel.villageCode.collect {
-                    val villageCodeList = it.map { area -> area.sigunguName }.toTypedArray()
-                    val adapter = ArrayAdapter(
-                        requireContext(),
-                        android.R.layout.simple_list_item_1,
-                        villageCodeList
-                    )
-                    binding.detailSelectedArea.setAdapter(adapter)
-                }
-            }
+
             detailSelectedArea.doAfterTextChanged { viewModel.onSelectedSigungu(it.toString()) }
 
-            this@SearchMainFragment.repeatOnViewStarted {
+            repeatOnViewStarted {
                 viewModel.physicalDisabilityOptions.collect { options ->
                     btnPhysicalDisability.setClickEvent(this) {
                         showBottomSheet(options, DisabilityType.PhysicalDisability)
@@ -145,7 +131,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
+            repeatOnViewStarted {
                 viewModel.visualImpairmentOptions.collect { options ->
                     btnVisualImpairment.setClickEvent(this) {
                         showBottomSheet(options, DisabilityType.VisualImpairment)
@@ -167,7 +153,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
+            repeatOnViewStarted {
                 viewModel.hearingImpairmentOptions.collect { options ->
                     btnHearingImpairment.setClickEvent(this) {
                         showBottomSheet(options, DisabilityType.HearingImpairment)
@@ -188,7 +174,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
+            repeatOnViewStarted {
                 viewModel.infantFamilyOptions.collect { options ->
                     btnInfantFamily.setClickEvent(this) {
                         showBottomSheet(options, DisabilityType.InfantFamily)
@@ -209,7 +195,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
+            repeatOnViewStarted {
                 viewModel.elderlyPersonOptions.collect { options ->
                     btnElderlyPeople.setClickEvent(this) {
                         showBottomSheet(options, DisabilityType.ElderlyPeople)
@@ -230,16 +216,17 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
-            this@SearchMainFragment.repeatOnViewStarted {
-                viewModel.screenState.collect{
-                    when(it){
+            repeatOnViewStarted {
+                viewModel.screenState.collect {
+                    when (it) {
                         ScreenState.Map -> {
                             categoryContainer.visibility = View.GONE
                             mapContainer.visibility = View.VISIBLE
                             modeSwitchBtn.setText(R.string.watching_list)
                             modeSwitchBtn.setIconResource(R.drawable.list_icon)
                         }
-                        ScreenState.List ->{
+
+                        ScreenState.List -> {
                             categoryContainer.visibility = View.VISIBLE
                             mapContainer.visibility = View.GONE
                             modeSwitchBtn.setText(R.string.watching_map)
@@ -249,14 +236,46 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
                 }
             }
 
+            rvSearchResult.adapter = rvAdapter
+            rvSearchResult.layoutManager = LinearLayoutManager(
+                root.context,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            var cnt = 0
+            rvSearchResult.addOnScrollEndListener {
+                val isLastPage = viewModel.listSearchResult.value[0].isLastPage
+                Log.d("MyOkHttpResult", "call")
+                if (isLastPage){
+                    //tvLastMsg.visibility = View.VISIBLE
+                }else{
+                    viewModel.whenLastPageReached()
+                    cnt++
+                    Log.d("MyOkHttpResult", "$cnt")
+
+                    tvLastMsg.visibility = View.GONE
+                }
+            }
+
+
+            repeatOnViewStarted {
+                viewModel.listSearchResult.collect { places ->
+                    totalCnt.text = places.size.toString()
+                    rvAdapter.submitList(places.map { it.place })
+                }
+            }
+
             modeSwitchBtn.setOnClickListener {
-                when(viewModel.screenState.value){
+                when (viewModel.screenState.value) {
                     ScreenState.List -> viewModel.changeScreenState(ScreenState.Map)
                     ScreenState.Map -> viewModel.changeScreenState(ScreenState.List)
                 }
             }
 
+            btnSearch.setOnClickListener { viewModel.onClickSearchButton() }
+
             btnReset.setOnClickListener { viewModel.onClickResetIcon() }
+
         }
 
         val contracts = ActivityResultContracts.RequestMultiplePermissions()
@@ -291,17 +310,33 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
         CategoryBottomSheet(selectedOptions, disabilityType) { optionIds, optionNames ->
             when (disabilityType) {
                 is DisabilityType.PhysicalDisability -> {
-                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.PhysicalDisability)
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.PhysicalDisability
+                    )
                 }
+
                 is DisabilityType.HearingImpairment -> {
-                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.HearingImpairment)
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.HearingImpairment
+                    )
                 }
+
                 is DisabilityType.VisualImpairment -> {
-                    viewModel.onSelectOption(optionIds, optionNames, DisabilityType.VisualImpairment)
+                    viewModel.onSelectOption(
+                        optionIds,
+                        optionNames,
+                        DisabilityType.VisualImpairment
+                    )
                 }
+
                 is DisabilityType.InfantFamily -> {
                     viewModel.onSelectOption(optionIds, optionNames, DisabilityType.InfantFamily)
                 }
+
                 is DisabilityType.ElderlyPeople -> {
                     viewModel.onSelectOption(optionIds, optionNames, DisabilityType.ElderlyPeople)
                 }
@@ -469,7 +504,7 @@ class SearchMainFragment : Fragment(R.layout.fragment_search_main), OnMapReadyCa
     }
 
     private fun addMaker() {
-        this.repeatOnViewStarted {
+        repeatOnViewStarted {
 
             val marker = Marker()
             with(marker) {

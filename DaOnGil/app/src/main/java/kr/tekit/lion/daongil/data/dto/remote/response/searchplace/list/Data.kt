@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.data.dto.remote.response.searchplace
+package kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list
 
 import com.squareup.moshi.JsonClass
 

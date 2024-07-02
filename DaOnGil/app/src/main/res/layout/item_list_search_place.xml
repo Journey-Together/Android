@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_small1"
+    android:orientation="horizontal">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="95dp"
+        android:layout_height="95dp">
+
+        <ImageView
+            android:id="@+id/thumbnail_img"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_small1"
+        android:orientation="vertical"
+        android:weightSum="4">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small1"
+            android:layout_weight="1"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="화성행궁"
+            android:textColor="@color/text_primary"
+            android:textSize="@dimen/font_small1" />
+
+        <TextView
+            android:id="@+id/tv_addr"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small1"
+            android:layout_weight="2"
+            android:fontFamily="@font/pretendard_regular"
+            android:text="경기도 수원시 팔달구 매향동"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/font_small2" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tourist_big_disability_rv"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="@dimen/margin_small1"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+</LinearLayout>

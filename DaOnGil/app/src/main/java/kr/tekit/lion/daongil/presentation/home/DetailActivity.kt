@@ -49,6 +49,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         initMap()
     }
 
+    override fun onResume() {
+        super.onResume()
+        initMap()
+    }
+
     private fun settingDetailInfoRVAdapter(detailInfo: List<SubDisability>) {
         val detailInfoRVAdapter = DetailInfoRVAdapter(detailInfo)
         binding.detailDisabilityInfoRv.adapter = detailInfoRVAdapter
@@ -56,9 +61,18 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun settingReviewRVAdapter(reviewList : List<Review>) {
-        val detailReviewRVAdapter = DetailReviewRVAdapter(reviewList)
-        binding.detailReviewRv.adapter = detailReviewRVAdapter
-        binding.detailReviewRv.layoutManager = LinearLayoutManager(applicationContext)
+        if (reviewList.isEmpty()) {
+            binding.detailReviewRv.visibility = View.GONE
+            binding.detailNoReviewTv.visibility = View.VISIBLE
+            binding.detailNoReviewTv.text = "현재 작성된 리뷰가 없습니다"
+        } else {
+            binding.detailReviewRv.visibility = View.VISIBLE
+            binding.detailNoReviewTv.visibility = View.GONE
+
+            val detailReviewRVAdapter = DetailReviewRVAdapter(reviewList)
+            binding.detailReviewRv.adapter = detailReviewRVAdapter
+            binding.detailReviewRv.layoutManager = LinearLayoutManager(applicationContext)
+        }
     }
 
     private fun settingDisabilityRVAdapter(disabilityList : List<Int>) {
@@ -73,15 +87,19 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun settingReviewBtn(placeId: Long) {
+    private fun settingReviewBtn(placeId: Long, placeName: String, placeAddress: String, image: String?) {
         binding.detailMoreReviewBtn.setOnClickListener {
             val intent = Intent(this, ReviewListActivity::class.java)
             intent.putExtra("reviewPlaceId", placeId)
             startActivity(intent)
         }
 
-        binding.detailReviewBtn.setOnClickListener {
+        binding.detailWriteReviewBtn.setOnClickListener {
             val intent = Intent(this, WriteReviewActivity::class.java)
+            intent.putExtra("reviewPlaceId", placeId)
+            intent.putExtra("reviewPlaceName", placeName)
+            intent.putExtra("reviewPlaceAddress", placeAddress)
+            intent.putExtra("reviewPlaceImage", image)
             startActivity(intent)
         }
     }
@@ -105,7 +123,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             settingDetailInfoRVAdapter(subDisability)
         }
 
-        settingReviewBtn(placeId)
+        settingReviewBtn(placeId, name, address, image)
 
         binding.detailTitleTv.text = name
         binding.detailAddressTv.text = address

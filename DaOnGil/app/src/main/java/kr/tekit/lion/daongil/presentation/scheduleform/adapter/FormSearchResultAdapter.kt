@@ -10,7 +10,7 @@ import kr.tekit.lion.daongil.domain.model.PlaceSearchInfo
 
 class FormSearchResultAdapter(
     private val searchResult: List<PlaceSearchInfo>,
-    private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
+    private val onPlaceSelectedListener : (selectedPlacePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormSearchResultAdapter.FormSearchResultViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FormSearchResultViewHolder {
@@ -31,8 +31,13 @@ class FormSearchResultAdapter(
 
     class FormSearchResultViewHolder(
         private val binding: ItemFormSearchResultBinding,
-        private val onPlaceSelectedListener : (selectedPlaceId: Long) -> Unit
+        private val onPlaceSelectedListener : (selectedPlacePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.imageButtonSearchResultAdd.setOnClickListener {
+                onPlaceSelectedListener(absoluteAdapterPosition)
+            }
+        }
         fun bind(placeSearchInfo: PlaceSearchInfo) {
             binding.apply {
                 textViewSearchResultName.text = placeSearchInfo.placeName
@@ -43,10 +48,6 @@ class FormSearchResultAdapter(
                         .placeholder(R.drawable.empty_view_small)
                         .error(R.drawable.empty_view_small)
                         .into(imageViewSearchResultThumbnail)
-                }
-
-                imageButtonSearchResultAdd.setOnClickListener {
-                    onPlaceSelectedListener(placeSearchInfo.placeId)
                 }
             }
         }

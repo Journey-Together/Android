@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.data.dto.remote.response.review
+package kr.tekit.lion.daongil.data.dto.remote.response.myreview
 
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.MyPlaceReview

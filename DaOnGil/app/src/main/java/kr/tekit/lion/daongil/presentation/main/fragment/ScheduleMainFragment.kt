@@ -38,10 +38,18 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         )
     }
 
+
     private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK) {
             view?.let{
                 Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
+                .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+
+    private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let{
+                Snackbar.make(it, "일정이 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
                     .show()
             }
@@ -54,7 +62,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         val binding = FragmentScheduleMainBinding.bind(view)
 
         // initView(binding)
-        settingRecyclerView(binding, requireContext())
+        settingRecyclerView(binding)
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
@@ -93,7 +101,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     }*/
 
 
-    private fun settingRecyclerView(binding: FragmentScheduleMainBinding, context: Context) {
+    private fun settingRecyclerView(binding: FragmentScheduleMainBinding) {
 
         with(binding) {
             viewModel.myMainPlanList.observe(viewLifecycleOwner) {
@@ -149,7 +157,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         if (isUser) {
             // 일정 추가 화면으로 이동
             val intent = Intent(requireActivity(), ScheduleFormActivity::class.java)
-            startActivity(intent)
+            scheduleFormLauncher.launch(intent)
         } else {
             // 비회원 -> 로그인 다이얼로그
             displayLoginDialog()

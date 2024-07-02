@@ -10,10 +10,10 @@
         android:label="fragment_home_main"
         tools:layout="@layout/fragment_home_main" />
     <fragment
-        android:id="@+id/searchMainFragment"
-        android:name="kr.tekit.lion.daongil.presentation.main.fragment.SearchMainFragment"
-        android:label="fragment_search_main"
-        tools:layout="@layout/fragment_search_main" />
+        android:id="@+id/searchListMainFragment"
+        android:name="kr.tekit.lion.daongil.presentation.main.fragment.SearchListMainFragment"
+        android:label="fragment_search_list_main"
+        tools:layout="@layout/fragment_search_list_main" />
     <fragment
         android:id="@+id/emergencyMainFragment"
         android:name="kr.tekit.lion.daongil.presentation.main.fragment.EmergencyMainFragment"

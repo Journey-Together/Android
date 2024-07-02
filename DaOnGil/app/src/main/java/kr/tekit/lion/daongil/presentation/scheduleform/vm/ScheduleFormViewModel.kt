@@ -70,6 +70,10 @@ class ScheduleFormViewModel(
         _schedule.value = schedule
     }
 
+    fun hasStartDate() : Boolean {
+        return startDate.value != null
+    }
+
     private fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
         // 업데이트 될 기존 데이터
         val updatedSchedule = _schedule.value?.toMutableList()
@@ -227,7 +231,7 @@ class ScheduleFormViewModel(
         val schedule = _schedule.value
         val startDate = _startDate.value
 
-        startDate?.let { startDate ->
+        startDate?.let {
             schedule?.forEachIndexed { index, dailySchedule ->
                 val date = getDayNString(startDate, index)
                 val places = mutableListOf<Long>()

@@ -128,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big4"
+                android:contentDescription="@string/text_schedule_satisfaction"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewWriteScheReviewRating"
@@ -166,6 +167,7 @@
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeColor="@color/text_secondary"
                 app:boxStrokeWidth="1dp"
+                app:errorEnabled="true"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -177,7 +179,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
                     android:gravity="top"
-                    android:hint="후기를 남겨주세요"
+                    android:hint="@string/hint_review_content"
                     android:inputType="textMultiLine"
                     android:lines="7"
                     android:maxLines="7"
@@ -201,8 +203,8 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardViewWriteScheReviewPhotoAdd"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="12dp"
                 app:cardCornerRadius="10dp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -210,12 +212,32 @@
                 app:strokeColor="@color/text_quaternary"
                 app:strokeWidth="1dp">
 
-                <ImageButton
-                    android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@color/background_color"
-                    android:src="@drawable/add_image_icon" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/background_color">
+
+                    <ImageButton
+                        android:id="@+id/imageButtonWriteScheReviewPhotoAdd"
+                        android:layout_width="80dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="@dimen/margin_small1"
+                        android:background="@color/background_color"
+                        android:src="@drawable/add_image_icon"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textViewWriteScheReviewPhotoNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/text_primary"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/imageButtonWriteScheReviewPhotoAdd"
+                        tools:text="@string/text_num_of_images" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
 
@@ -224,6 +246,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_small1"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="@+id/cardViewWriteScheReviewPhotoAdd"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/cardViewWriteScheReviewPhotoAdd"

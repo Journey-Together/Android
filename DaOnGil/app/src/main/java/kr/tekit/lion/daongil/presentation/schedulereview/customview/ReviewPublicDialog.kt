@@ -9,7 +9,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.DialogReviewPublicBinding
 
 class ReviewPublicDialog(private val onReviewPublicSettingListener: (Boolean) -> Unit) :
-    DialogFragment(R.layout.dialog_review_public){
+    DialogFragment(R.layout.dialog_review_public) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -21,13 +21,13 @@ class ReviewPublicDialog(private val onReviewPublicSettingListener: (Boolean) ->
         initView(binding)
     }
 
-    private fun initView(binding: DialogReviewPublicBinding){
+    private fun initView(binding: DialogReviewPublicBinding) {
         binding.apply {
-            buttonDialogReviewPublicNegative.setOnClickListener { isPublic ->
+            buttonDialogReviewPublicNegative.setOnClickListener {
                 onReviewPublicSettingListener(false)
                 dismiss()
             }
-            buttonDialogReviewPublicPositive.setOnClickListener {  isPublic ->
+            buttonDialogReviewPublicPositive.setOnClickListener {
                 onReviewPublicSettingListener(true)
                 dismiss()
             }

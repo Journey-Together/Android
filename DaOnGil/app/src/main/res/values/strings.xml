@@ -160,6 +160,11 @@
 
     <string name="text_my_review">작성한 후기가 없습니다.\n다녀온 여행지의 후기를 작성해보세요!</string>
 
+
+    <string name="text_num_of_images">%d/4</string>
+    <string name="hint_review_content">후기를 작성해 주세요.\n더 자세한 후기를 남겨주시면 다른 분들께 큰 도움이 됩니다!</string>
+    <string name="text_warning_review_content_empty">후기를 작성해 주세요</string>
+
     <string name="text_report_title">신고/차단하기</string>
     <string name="text_report_subtitle">신고 사유 (필수)</string>
     <string name="text_report_reason_pirate">도용</string>

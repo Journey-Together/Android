@@ -2,12 +2,17 @@ package kr.tekit.lion.daongil.data.network.service
 
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlanListResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
 import kr.tekit.lion.daongil.data.network.AuthType
+import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 import retrofit2.http.Tag
 
@@ -39,4 +44,27 @@ interface PlanService {
     // 내 일정 정보
     @GET("plan/my")
     suspend fun getMyMainSchedule(): MyMainScheduleResponse
+
+    // 일정 간단한 정보 (한 개)
+    @GET("plan/{planId}")
+    suspend fun getBriefScheduleInfo(
+        @Path("planId") planId: Long
+    ) : BriefScheduleInfoResponse
+
+    // 여행 일정 후기 작성
+    @Multipart
+    @POST("plan/review/{planId}")
+    suspend fun addNewScheduleReview(
+        @Path("planId") planId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    )
+
+    @Multipart
+    @POST("plan/review/{planId}")
+    suspend fun addNewScheduleReviewTextOnly(
+        @Path("planId") planId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+    )
+
 }

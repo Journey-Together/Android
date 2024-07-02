@@ -127,9 +127,6 @@ class ScheduleFormViewModel(
     fun fetchNextPlaceResults(size: Int) {
         val page = _placeSearchResult.value?.pageNo
         val keyword = _keyword.value
-        Log.d("fetchNextPlaceResults", "===========================")
-        Log.d("fetchNextPlaceResults", "page: ${page}")
-        Log.d("fetchNextPlaceResults", "===========================")
 
         if (keyword != null && page != null) {
             viewModelScope.launch {
@@ -141,13 +138,6 @@ class ScheduleFormViewModel(
                         // 'placeInfoList'만 갱신
                         val updatedResult = it.copy(placeInfoList = newList)
                         _placeSearchResult.value = updatedResult
-                        Log.d("fetchNextPlaceResults", "===========================")
-                        Log.d("fetchNextPlaceResults", "onSuccess pageNo: ${it.pageNo}")
-                        Log.d("fetchNextPlaceResults", "onSuccess last: ${it.last}")
-                        Log.d("fetchNextPlaceResults", "===========================")
-                        Log.d("fetchNextPlaceResults", "===========================")
-                        Log.d("fetchNextPlaceResults", "fetch 후 현재 page: ${_placeSearchResult.value?.pageNo}")
-                        Log.d("fetchNextPlaceResults", "===========================")
                     }
                     .onError {
                         Log.e("fetchNextPlaceResults", "onError ${it.message}")

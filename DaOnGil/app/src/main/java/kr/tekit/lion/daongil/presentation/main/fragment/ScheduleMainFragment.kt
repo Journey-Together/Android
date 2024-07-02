@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -39,12 +38,15 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     }
 
 
-    private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+    private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            view?.let{
+            view?.let {
                 Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
-                .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
                     .show()
+            }
+        }
+    }
 
     private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK) {

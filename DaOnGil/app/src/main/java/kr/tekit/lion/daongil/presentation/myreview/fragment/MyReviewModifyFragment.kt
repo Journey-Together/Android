@@ -101,7 +101,6 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
 
     private fun settingToolbar(binding: FragmentMyReviewModifyBinding) {
         binding.toolbarMyReviewModify.setNavigationOnClickListener {
-            findNavController().navigate(R.id.action_myReviewModifyFragment_to_myReviewDetailFragment)
         }
     }
 
@@ -115,7 +114,6 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         }
 
         binding.buttonMyReviewModify.setOnClickListener {
-            findNavController().navigate(R.id.action_myReviewModifyFragment_to_myReviewDetailFragment)
         }
     }
 

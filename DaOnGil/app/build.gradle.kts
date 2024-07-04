@@ -150,4 +150,6 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.13.2")
 
     implementation("com.squareup.moshi:moshi-adapters:1.15.1")
+
+    implementation ("com.google.android.flexbox:flexbox:3.0.0")
 }

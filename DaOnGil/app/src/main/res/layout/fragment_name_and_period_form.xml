@@ -44,7 +44,10 @@
         android:layout_marginTop="@dimen/margin_big3"
         app:boxBackgroundColor="@color/background_color"
         app:boxBackgroundMode="filled"
+        app:counterEnabled="true"
+        app:counterMaxLength="15"
         app:endIconMode="clear_text"
+        app:errorEnabled="true"
         app:hintEnabled="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +60,7 @@
             android:fontFamily="@font/pretendard_medium"
             android:hint="@string/hint_schedule_form_name"
             android:inputType="text"
+            android:maxLength="15"
             android:maxLines="1"
             android:paddingStart="@dimen/margin_small2"
             android:textSize="@dimen/font_big3" />

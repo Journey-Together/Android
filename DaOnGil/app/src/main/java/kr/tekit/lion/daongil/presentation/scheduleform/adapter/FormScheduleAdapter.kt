@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.domain.model.DailySchedule
 class FormScheduleAdapter(
     private val dailyScheduleList: List<DailySchedule>,
     private val onAddButtonClickListener : (schedulePosition: Int) -> Unit,
+    private val onItemClickListener: (schedulePosition: Int, placePosition: Int) -> Unit,
     private val onRemoveButtonClickListener : (schedulePosition: Int, placePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormScheduleAdapter.FormScheduleViewHolder>() {
 
@@ -17,6 +18,7 @@ class FormScheduleAdapter(
         return FormScheduleViewHolder(
             ItemFormScheduleBinding.inflate(inflater, parent, false),
             onAddButtonClickListener,
+            onItemClickListener,
             onRemoveButtonClickListener
         )
     }
@@ -32,6 +34,7 @@ class FormScheduleAdapter(
     class FormScheduleViewHolder(
         private val binding: ItemFormScheduleBinding,
         private val onAddButtonClickListener : (schedulePosition: Int) -> Unit,
+        private val onItemClickListener: (schedulePosition: Int, placePosition: Int) -> Unit,
         private val onRemoveButtonClickListener : (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
@@ -45,7 +48,12 @@ class FormScheduleAdapter(
             binding.textViewFScheduleDate.text = dailySchedule.dailyDate
 
             // 추가할 여행지목록 Adapter
-            val formPlaceAdapter = FormPlaceAdapter(dailySchedule.dailyPlaces, absoluteAdapterPosition, onRemoveButtonClickListener)
+            val formPlaceAdapter = FormPlaceAdapter(
+                dailySchedule.dailyPlaces,
+                absoluteAdapterPosition,
+                onItemClickListener,
+                onRemoveButtonClickListener
+            )
             binding.recyclerViewFSchedulePlaces.adapter = formPlaceAdapter
         }
     }

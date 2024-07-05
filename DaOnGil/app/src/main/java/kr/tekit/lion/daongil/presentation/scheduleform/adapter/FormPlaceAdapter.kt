@@ -12,6 +12,7 @@ import kr.tekit.lion.daongil.domain.model.FormPlace
 class FormPlaceAdapter(
     private val places: List<FormPlace>,
     private val schedulePosition: Int,
+    private val onItemClickListener: (schedulePosition: Int, placePosition: Int) -> Unit,
     private val onRemoveButtonClick: (schedulePosition: Int, placePosition: Int) -> Unit
 ) : RecyclerView.Adapter<FormPlaceAdapter.FormPlaceViewHolder>() {
 
@@ -20,6 +21,7 @@ class FormPlaceAdapter(
         return FormPlaceViewHolder(
             ItemFormPlaceBinding.inflate(inflater, parent, false),
             schedulePosition,
+            onItemClickListener,
             onRemoveButtonClick
         )
     }
@@ -35,11 +37,15 @@ class FormPlaceAdapter(
     class FormPlaceViewHolder(
         private val binding: ItemFormPlaceBinding,
         private val schedulePosition: Int,
+        private val onItemClickListener: (schedulePosition: Int, placePosition: Int) -> Unit,
         private val onRemoveItemClick: (schedulePosition: Int, placePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.imageButtonFPlaceRemove.setOnClickListener {
                 onRemoveItemClick(schedulePosition, absoluteAdapterPosition)
+            }
+            binding.cardViewFPlace.setOnClickListener {
+                onItemClickListener(schedulePosition, absoluteAdapterPosition)
             }
         }
 

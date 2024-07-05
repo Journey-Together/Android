@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
@@ -14,6 +15,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleDetailsFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormScheduleAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
@@ -109,10 +111,15 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
                     )
                 findNavController().navigate(action)
             },
+            onItemClickListener = { schedulePosition, placePosition ->
+                val placeId = dailyScheduleList[schedulePosition].dailyPlaces[placePosition].placeId
+                showPlaceDetail(placeId)
+            },
             onRemoveButtonClickListener = { schedulePosition, placePosition ->
                 // viewModel에서 해당 place 제거
                 scheduleFormViewModel.removePlace(schedulePosition, placePosition)
-            })
+            }
+        )
     }
 
     private fun getSchedulePeriod(startDate: Date, endDate: Date): Int {
@@ -162,5 +169,11 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         Snackbar.make(view, message, Snackbar.LENGTH_LONG)
             .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
             .show()
+    }
+
+    private fun showPlaceDetail(placeId: Long){
+        val intent = Intent(requireActivity(), DetailActivity::class.java)
+        intent.putExtra("detailPlaceId", placeId.toInt())
+        startActivity(intent)
     }
 }

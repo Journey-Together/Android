@@ -8,12 +8,15 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentNameAndPeriodFormBinding
-import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
 import java.text.SimpleDateFormat
@@ -30,6 +33,7 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
         val binding = FragmentNameAndPeriodFormBinding.bind(view)
 
         initToolbar(binding)
+        initView(binding)
         setPeriod(binding)
         proceedToNext(binding)
 
@@ -40,6 +44,14 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
         binding.toolbarNPF.setNavigationOnClickListener {
             requireActivity().setResult(Activity.RESULT_CANCELED)
             requireActivity().finish()
+        }
+    }
+
+    private fun initView(binding: FragmentNameAndPeriodFormBinding){
+        with(binding){
+            editTextNPFName.addTextChangedListener {
+                clearErrorMessage(textInputNPFName)
+            }
         }
     }
 
@@ -97,46 +109,34 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
     }
 
     private fun validateScheduleNameAndPeriod(binding: FragmentNameAndPeriodFormBinding): Boolean {
-        val tempName = binding.editTextNPFName.text.toString()
+        with(binding) {
+            editTextNPFName.apply {
+                val tempName = this.text.toString()
 
-        if (tempName.isEmpty()) {
-            displayValidationDialog(binding, "제목 입력 안내", "최소 1글자 이상 입력해주세요.", true)
-            return false
-        }
-        if (tempName.length > 15) {
-            displayValidationDialog(binding, "제목 입력 안내", "제목은 15글자 이하로 입력해주세요.", true)
-            return false
-        }
-        val tempStartDate = scheduleFormViewModel.startDate.value
+                if (tempName.isEmpty()) {
+                    textInputNPFName.error = "제목은 1글자 이상 입력해주세요"
+                    return false
+                }
+            }
 
-        if (tempStartDate == null) {
-            displayValidationDialog(binding, "여행 기간 안내", "여행 기간 설정하기 버튼을 눌러 여행 기간을 설정해주세요", false)
-            return false
+            val hasStartDate = scheduleFormViewModel.hasStartDate()
+
+            if (!hasStartDate) {
+                showSnackBar(buttonNPFSetPeriod, "여행 기간을 설정해주세요")
+                return false
+            }
         }
 
         return true
     }
 
-    private fun displayValidationDialog(
-        binding: FragmentNameAndPeriodFormBinding,
-        title: String,
-        subTitle: String,
-        isNameEmpty: Boolean
-    ) {
-        val dialog = ConfirmDialog(
-            title,
-            subTitle,
-            getString(R.string.confirm)
-        ) {
-            if (isNameEmpty) {
-                showSoftInput(binding.editTextNPFName)
-            }
-        }
-        dialog.isCancelable = false
-        dialog.show(activity?.supportFragmentManager!!, "ScheduleLoginDialog")
+    private fun showSnackBar(view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+            .show()
     }
 
-    fun showSoftInput(view: View) {
+    private fun showSoftInput(view: View) {
         view.requestFocus()
 
         thread {
@@ -145,5 +145,9 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
                 requireActivity().getSystemService(AppCompatActivity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.showSoftInput(view, 0)
         }
+    }
+
+    private fun clearErrorMessage(textInputLayout: TextInputLayout){
+        textInputLayout.error = null
     }
 }

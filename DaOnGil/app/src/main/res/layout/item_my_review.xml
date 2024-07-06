@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_small2"
+            android:layout_marginTop="1dp"
             app:srcCompat="@drawable/ic_chevron_right_24px"
             app:tint="@color/text_primary" />
     </LinearLayout>
@@ -57,6 +58,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_small1"
+        android:layout_marginTop="1dp"
         android:fontFamily="@font/pretendard_medium"
         android:textColor="@color/text_tertiary"
         android:textSize="@dimen/font_small2"
@@ -98,26 +100,26 @@
 
     <TextView
         android:id="@+id/textViewMyReviewContent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_big3"
         android:fontFamily="@font/pretendard_medium"
         android:lineSpacingMultiplier="1.1"
         android:textColor="@color/text_primary"
         android:textSize="@dimen/font_small1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/ratingbarItemMyReview"
         app:layout_constraintTop_toBottomOf="@+id/ratingbarItemMyReview"
         tools:text="역시 풍경도 너무 예쁘고 좋았습니다! 휠체어가 다니기에도 너무 편하고, 오랜만에 걱정 없이 즐긴 거 같아요😊 다음에도 또 방문하고 싶네요" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMyReivew"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/font_small2"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textViewMyReviewContent"
         app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewContent" />
 

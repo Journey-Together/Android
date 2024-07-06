@@ -15,8 +15,10 @@ class MyReviewViewModel(
     private val getMyPlaceReviewUseCase: GetMyPlaceReviewUseCase
 ) : ViewModel() {
 
-    private val _myPlaceReviewList = MutableLiveData<List<MyPlaceReview>>()
-    val myPlaceReviewList: LiveData<List<MyPlaceReview>> = _myPlaceReviewList
+    private val _myPlaceReview = MutableLiveData<MyPlaceReview>()
+    val myPlaceReview: LiveData<MyPlaceReview> = _myPlaceReview
+
+    var isLastPage = false
 
     init {
         getMyPlaceReview(5, 0)
@@ -24,9 +26,28 @@ class MyReviewViewModel(
 
     private fun getMyPlaceReview(size: Int, page: Int) = viewModelScope.launch {
         getMyPlaceReviewUseCase(size, page).onSuccess {
-            _myPlaceReviewList.value = it
+            _myPlaceReview.value = it
         }.onError {
             Log.d("getMyPlaceReview", it.toString())
+        }
+    }
+
+    fun getNextMyPlaceReview(size: Int) = viewModelScope.launch {
+        val page = _myPlaceReview.value?.pageNo
+
+        if (page != null) {
+            getMyPlaceReviewUseCase(size, page+1).onSuccess { newReviews ->
+                if (newReviews.myPlaceReviewInfoList.isEmpty()) {
+                    isLastPage = true
+                } else {
+                    val currentReviews = _myPlaceReview.value?.myPlaceReviewInfoList ?: emptyList()
+                    val updatedReviews = currentReviews + newReviews.myPlaceReviewInfoList
+                    val updatedReviewData = newReviews.copy(myPlaceReviewInfoList = updatedReviews)
+                    _myPlaceReview.value = updatedReviewData
+                }
+            }.onError {
+                Log.d("getNextMyPlaceReview", it.toString())
+            }
         }
     }
 }

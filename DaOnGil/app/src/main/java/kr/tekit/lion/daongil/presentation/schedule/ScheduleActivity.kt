@@ -139,8 +139,6 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         binding.viewPagerScheduleImages.apply {
             adapter = ScheduleImageViewPagerAdapter(images)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-            binding.indicatorScheduleImages.setViewPager(this)
         }
     }
 

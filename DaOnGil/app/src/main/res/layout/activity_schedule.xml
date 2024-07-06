@@ -7,24 +7,13 @@
     android:layout_height="match_parent"
     tools:context=".presentation.schedule.ScheduleActivity">
 
-    <com.google.android.material.appbar.MaterialToolbar
-        android:id="@+id/toolbarViewSchedule"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/back_icon"
-        app:title="@string/text_my_schedule"
-        app:titleCentered="true" />
-
     <androidx.core.widget.NestedScrollView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarViewSchedule">
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,74 +31,98 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:background="@color/black"/>
 
-                </androidx.viewpager2.widget.ViewPager2>
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/toolbarViewSchedule"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:navigationIcon="@drawable/back_icon"
+                    app:navigationIconTint="@color/white">
 
-                <me.relex.circleindicator.CircleIndicator3
-                    android:id="@+id/indicatorScheduleImages"
+                    <TextView
+                        android:id="@+id/textViewScheduleType"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_medium"
+                        android:textSize="18dp"
+                        android:textColor="@color/white"
+                        android:layout_gravity="center"
+                        tools:text="@string/text_my_schedule"/>
+
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/margin_basic"
+                    android:layout_marginBottom="@dimen/margin_big3"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewScheduleName"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/schedulePublic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/font_small2"
+                        app:chipCornerRadius="50dp"
+                        tools:text="공개" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/scheduleDday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small1"
+                        android:backgroundTint="@color/total_cnt"
+                        android:fontFamily="@font/pretendard_semibold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/font_small2"
+                        app:chipCornerRadius="50dp"
+                        app:chipStrokeColor="@color/white"
+                        app:chipStrokeWidth="0.5dp"
+                        tools:text="D+10" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textViewScheduleName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_basic"
+                    android:layout_marginEnd="@dimen/margin_basic"
                     android:layout_marginBottom="@dimen/margin_small1"
-                    app:ci_animator="@animator/scale_with_alpha"
-                    app:ci_drawable="@drawable/indicator_selected"
-                    app:ci_drawable_unselected="@drawable/indicator_unselected"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/pretendard_semibold"
+                    android:maxLines="1"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/margin_basic"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewSchedulePeriod"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="앱스쿨 수료 기념 경주 여행(일정명)" />
 
                 <TextView
                     android:id="@+id/textViewSchedulePeriod"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_big3"
-                    android:layout_marginBottom="@dimen/margin_big3"
-                    android:fontFamily="@font/pretendard_medium"
-                    android:textColor="@color/white"
-                    app:layout_constraintBottom_toTopOf="@+id/indicatorScheduleImages"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="@string/text_schedule_period" />
-
-                <TextView
-                    android:id="@+id/textViewScheduleName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_big3"
-                    android:layout_marginBottom="@dimen/margin_small1"
-                    android:fontFamily="@font/pretendard_bold"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/font_big1"
-                    app:layout_constraintBottom_toTopOf="@+id/textViewSchedulePeriod"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="앱스쿨 수료 기념 경주 여행(일정명)" />
-
-                <TextView
-                    android:id="@+id/textViewScheduleType"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_basic"
-                    android:layout_marginEnd="@dimen/margin_big3"
+                    android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
-                    android:gravity="end"
+                    android:textSize="@dimen/font_small1"
                     android:textColor="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@+id/textViewSchedulePeriod"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textViewSchedulePeriod"
-                    tools:text="닉네임 또는 공개여부" />
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:text="2024.06.01-2024.06.03" />
 
-                <TextView
-                    android:id="@+id/textViewScheduleDDay"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big3"
-                    android:layout_marginEnd="@dimen/margin_big3"
-                    android:fontFamily="@font/pretendard_semibold"
-                    android:textColor="@color/white"
-                    android:visibility="invisible"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/text_schedule_d_day" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
@@ -130,10 +143,12 @@
                 android:visibility="gone" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big3"
+                android:fontFamily="@font/pretendard_medium"
+                android:textSize="@dimen/font_big2"
                 android:text="@string/text_schedule_full"
                 android:textColor="@color/text_secondary" />
 

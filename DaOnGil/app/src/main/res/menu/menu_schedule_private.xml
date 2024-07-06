@@ -5,6 +5,7 @@
     <item
         android:id="@+id/menuSchedulPrivate"
         android:icon="@drawable/more_vert_icon"
+        android:iconTint="@color/white"
         android:title="@string/text_schedule_menu"
         app:showAsAction="always" />
 </menu>

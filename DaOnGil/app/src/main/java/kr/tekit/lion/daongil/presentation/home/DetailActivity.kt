@@ -236,7 +236,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         naverMap.minZoom = 10.0
         naverMap.maxZoom = 15.0
 
-        val recommendPlaceId = intent.getIntExtra("detailPlaceId", -1)
+        val recommendPlaceId = intent.getLongExtra("detailPlaceId", -1)
 
         repeatOnStarted {
             viewModel.loginState.collect { uiState ->
@@ -245,10 +245,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                         return@collect
                     }
                     is LogInState.LoggedIn -> {
-                        getDetailPlaceInfo(recommendPlaceId.toLong())
+                        getDetailPlaceInfo(recommendPlaceId)
                     }
                     is LogInState.LoginRequired -> {
-                        getDetailPlaceInfoGuest(recommendPlaceId.toLong())
+                        getDetailPlaceInfoGuest(recommendPlaceId)
                     }
                 }
             }

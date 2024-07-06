@@ -110,8 +110,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
             // '다녀는 일정' 정보를 볼 때, '남은 기간' 변수에 null 값을 전달해줄 것이라고 가정하고 작성한 코드입니다.
             // 서버에서 전달해주는 값에 따라 코드 수정할게요
             scheduleDetail.daysRemaining?.let {
-                textViewScheduleDDay.text = getString(R.string.text_schedule_d_day, it)
-                textViewScheduleDDay.visibility = View.VISIBLE
+                scheduleDday.text = getString(R.string.text_schedule_d_day, it)
             }
 
             textViewScheduleName.text = scheduleDetail.title

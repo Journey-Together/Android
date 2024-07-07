@@ -57,7 +57,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         "꼭 가봐야 할 경주 맛집투어",
         "2024-06-01",
         "2024-06-05",
-        null,
+        "D-3",
         true,
         true,
         "멋쟁이",
@@ -75,7 +75,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         "제주 둘레길 여행",
         "2024-06-01",
         "2024-06-05",
-        4,
+        null,
         true,
         false,
         "김사자",
@@ -110,7 +110,16 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
             // '다녀는 일정' 정보를 볼 때, '남은 기간' 변수에 null 값을 전달해줄 것이라고 가정하고 작성한 코드입니다.
             // 서버에서 전달해주는 값에 따라 코드 수정할게요
             scheduleDetail.daysRemaining?.let {
-                scheduleDday.text = getString(R.string.text_schedule_d_day, it)
+                scheduleDday.text = it
+            } ?: run {
+                scheduleDday.visibility = View.GONE
+            }
+
+
+            if(scheduleDetail.isPublic){
+                schedulePublic.text = getString(R.string.text_schedule_public)
+            } else {
+                schedulePublic.text = getString(R.string.text_schedule_private)
             }
 
             textViewScheduleName.text = scheduleDetail.title
@@ -119,15 +128,6 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
                 scheduleDetail.startDate,
                 scheduleDetail.endDate
             )
-            if (scheduleDetail.isWriter) {
-                textViewScheduleType.text = if (scheduleDetail.isPublic) {
-                    getString(R.string.text_schedule_public)
-                } else {
-                    getString(R.string.text_schedule_private)
-                }
-            } else {
-                textViewScheduleType.text = scheduleDetail.nickname
-            }
 
             initReviewView(scheduleDetail)
             initImageViewPager(scheduleDetail.images)
@@ -148,6 +148,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
             }
             if (isWriter) { // 로그인한 사용자의 일정인 경우
                 inflateMenu(R.menu.menu_schedule_private)
+                binding.textViewScheduleType.text = getString(R.string.text_my_schedule)
                 setOnMenuItemClickListener {
                     showScheduleManageBottomSheet(isPublic)
                     true
@@ -155,6 +156,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
             } else { // 로그인 여부와 상관없이 타인의 일정인 경우
                 title = getString(R.string.text_public_schedule)
+                binding.textViewScheduleType.text = getString(R.string.text_public_schedule)
                 inflateMenu(R.menu.menu_schedule_public)
                 val menuItemBookmark =
                     binding.toolbarViewSchedule.menu.findItem(R.id.menuSchedulPublicBookmark)

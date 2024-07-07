@@ -75,6 +75,9 @@
                         android:textColor="@color/black"
                         android:textSize="@dimen/font_small2"
                         app:chipCornerRadius="50dp"
+                        app:chipStrokeColor="@color/white"
+                        app:chipStrokeWidth="0.5dp"
+                        android:background="@color/white"
                         tools:text="공개" />
 
                     <com.google.android.material.chip.Chip
@@ -118,7 +121,7 @@
                     android:layout_marginBottom="@dimen/margin_basic"
                     android:fontFamily="@font/pretendard_medium"
                     android:textSize="@dimen/font_small1"
-                    android:textColor="@color/white"
+                    android:textColor="@color/schedule_detail_period"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="2024.06.01-2024.06.03" />

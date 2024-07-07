@@ -81,7 +81,6 @@
     <string name="text_schedule_report_review">신고하기</string>
     <string name="text_schedule_weather">예상 날씨</string>
     <string name="text_schedule_full">일정 보기</string>
-    <string name="text_schedule_d_day">D-%d</string>
     <string name="text_schedule_period">%s - %s</string>
     <string name="text_schedule_days">일차</string>
     <string name="text_schedule_place_empty">해당 일자에 추가된 여행지가 없습니다</string>

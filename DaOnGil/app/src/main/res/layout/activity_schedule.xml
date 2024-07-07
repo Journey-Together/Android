@@ -241,7 +241,8 @@
                         app:layout_constraintBottom_toBottomOf="@+id/textViewScheduleReview"
                         app:layout_constraintEnd_toStartOf="@+id/buttonScheduleReportReview"
                         app:layout_constraintTop_toTopOf="@+id/textViewScheduleReview"
-                        app:srcCompat="@drawable/more_vert_icon" />
+                        app:srcCompat="@drawable/more_vert_icon"
+                        app:tint="?attr/colorControlNormal" />
 
                     <Button
                         android:id="@+id/buttonScheduleReportReview"

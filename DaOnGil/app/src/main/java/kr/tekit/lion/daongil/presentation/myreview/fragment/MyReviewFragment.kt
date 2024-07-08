@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.myreview.fragment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels

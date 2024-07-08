@@ -55,7 +55,16 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_modify_schedule_review)
+        setContentView(binding.root)
+
+        initTestView()
+    }
+
+    private fun initTestView(){
+        binding.textViewModifyScheReviewName.text = "즐거운 여행"
+        binding.textViewModifyScheReviewPeriod.text = "2024.07.01 - 2024.07.02"
+        binding.textViewModifyScheReviewPhotoNum.text = getString(R.string.text_num_of_images, 0)
+
     }
 
     private fun isPhotoPickerAvailable(): Boolean {

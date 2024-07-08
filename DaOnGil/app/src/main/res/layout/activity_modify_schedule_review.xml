@@ -5,18 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/navi_background"
     tools:context=".presentation.schedulereview.ModifyScheduleReviewActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarModifyScheReview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_color"
+        android:background="@color/navi_background"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/back_icon">
+        app:navigationIcon="@drawable/cancel_icon">
 
         <TextView
             style="@style/Theme.Toolbar.Title"
@@ -133,6 +134,17 @@
                 app:srb_starWidth="40dp"
                 app:srb_stepSize="0.5" />
 
+            <View
+                android:id="@+id/view"
+                android:layout_width="wrap_content"
+                android:layout_height="10dp"
+                android:layout_marginTop="@dimen/margin_basic"
+                android:background="@drawable/dotted_line_horizontal"
+                android:layerType="software"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbarModifyScheReview" />
+
             <TextView
                 android:id="@+id/textViewModifyScheReviewPublic"
                 android:layout_width="wrap_content"
@@ -154,7 +166,8 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/textViewModifyScheReviewPublic"
-                app:layout_constraintTop_toBottomOf="@+id/textViewModifyScheReviewPublic">
+                app:layout_constraintTop_toBottomOf="@+id/textViewModifyScheReviewPublic"
+                >
 
                 <RadioButton
                     android:id="@+id/radioButtonModifyScheReviewPublic"
@@ -165,21 +178,19 @@
                     android:button="@null"
                     android:text="@string/text_schedule_public"
                     android:textAlignment="center"
-                    android:textColor="@drawable/selector_review_public_text"
-                    tools:checked="false" />
+                    android:textColor="@drawable/selector_review_public_text" />
 
                 <RadioButton
                     android:id="@+id/radioButtonModifyScheReviewPrivate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/margin_small2"
+                    android:layout_marginStart="@dimen/margin_big4"
                     android:layout_weight="1"
                     android:background="@drawable/selector_review_public_background"
                     android:button="@null"
                     android:text="@string/text_schedule_private"
                     android:textAlignment="center"
-                    android:textColor="@drawable/selector_review_public_text"
-                    tools:checked="true" />
+                    android:textColor="@drawable/selector_review_public_text" />
             </RadioGroup>
 
             <TextView
@@ -206,7 +217,6 @@
                 app:boxCornerRadiusBottomStart="10dp"
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/text_secondary"
                 app:boxStrokeWidth="0dp"
                 app:errorEnabled="true"
                 app:hintEnabled="false"
@@ -249,7 +259,9 @@
                 android:layout_height="80dp"
                 android:layout_marginStart="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginBottom="150dp"
                 app:cardCornerRadius="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewModifyScheReviewPhoto"
                 app:strokeColor="@color/primary_disabled"
@@ -287,11 +299,11 @@
                         android:id="@+id/textViewModifyScheReviewPhotoNumMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/text_num_of_max_images"
                         android:textColor="@color/text_num_of_review_images"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/textViewModifyScheReviewPhotoNum"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButtonModifyScheReviewPhotoAdd"
-                        tools:text="@string/text_num_of_max_images" />
+                        app:layout_constraintTop_toBottomOf="@+id/imageButtonModifyScheReviewPhotoAdd" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -309,34 +321,25 @@
                 app:layout_constraintStart_toEndOf="@+id/cardViewModifyScheReviewPhotoAdd"
                 app:layout_constraintTop_toTopOf="@+id/cardViewModifyScheReviewPhotoAdd" />
 
-            <Button
-                android:id="@+id/buttonModifyScheReivewSubmit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big1"
-                android:layout_marginBottom="@dimen/margin_basic"
-                android:background="@drawable/background_radius_10"
-                android:fontFamily="@font/pretendard_bold"
-                android:text="@string/text_save_schedule_review"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/font_small1"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardViewModifyScheReviewPhotoAdd"
-                app:layout_constraintVertical_bias="1" />
-
-            <View
-                android:id="@+id/view"
-                android:layout_width="wrap_content"
-                android:layout_height="10dp"
-                android:layout_marginTop="@dimen/margin_basic"
-                android:background="@drawable/dotted_line_horizontal"
-                android:layerType="software"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ratingbarModifyScheReview" />
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/buttonModifyScheReivewSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="@dimen/margin_big1"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="@dimen/margin_basic"
+        android:background="@drawable/background_radius_10"
+        android:fontFamily="@font/pretendard_bold"
+        android:text="@string/text_save_schedule_review"
+        android:textColor="@color/text_primary"
+        android:textSize="@dimen/font_small1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="1" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

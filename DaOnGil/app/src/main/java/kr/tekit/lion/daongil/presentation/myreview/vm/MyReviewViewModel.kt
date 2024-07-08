@@ -18,9 +18,12 @@ class MyReviewViewModel(
     private val _myPlaceReview = MutableLiveData<MyPlaceReview>()
     val myPlaceReview: LiveData<MyPlaceReview> = _myPlaceReview
 
-    var isLastPage = false
+    private val _isLastPage = MutableLiveData<Boolean>()
+    val isLastPage: LiveData<Boolean> = _isLastPage
+
 
     init {
+        _isLastPage.value = false
         getMyPlaceReview(5, 0)
     }
 
@@ -38,7 +41,7 @@ class MyReviewViewModel(
         if (page != null) {
             getMyPlaceReviewUseCase(size, page+1).onSuccess { newReviews ->
                 if (newReviews.myPlaceReviewInfoList.isEmpty()) {
-                    isLastPage = true
+                    _isLastPage.value = true
                 } else {
                     val currentReviews = _myPlaceReview.value?.myPlaceReviewInfoList ?: emptyList()
                     val updatedReviews = currentReviews + newReviews.myPlaceReviewInfoList

@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.myreview.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -66,7 +67,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 }
 
                 binding.recyclerViewMyReview.addOnScrollEndListener {
-                    if (!viewModel.isLastPage) {
+                    if (viewModel.isLastPage.value == false) {
                         viewModel.getNextMyPlaceReview(5)
                     }
                 }

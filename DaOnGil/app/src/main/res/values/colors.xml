@@ -78,4 +78,11 @@
     <color name="pharmcy_color">#F8B60B</color>
 
     <color name="transparent">#00000000</color>
+
+    <color name="text_box_background">#EEEEEF</color>
+    <color name="text_num_of_review_images">#878787</color>
+    <color name="radio_button_public_background_checked">#5F6368</color>
+    <color name="radio_button_public_background_default">#F4F6F8</color>
+    <color name="radio_button_public_text_default">#AFABAB</color>
+
 </resources>

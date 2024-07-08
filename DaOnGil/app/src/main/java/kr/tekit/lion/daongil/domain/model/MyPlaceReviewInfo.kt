@@ -1,10 +1,8 @@
-package kr.tekit.lion.daongil.data.dto.remote.response.myreview
+package kr.tekit.lion.daongil.domain.model
 
-import com.squareup.moshi.JsonClass
 import java.time.LocalDate
 
-@JsonClass(generateAdapter = true)
-data class MyPlaceReviewDto(
+data class MyPlaceReviewInfo (
     val content: String,
     val date: LocalDate,
     val grade: Float,

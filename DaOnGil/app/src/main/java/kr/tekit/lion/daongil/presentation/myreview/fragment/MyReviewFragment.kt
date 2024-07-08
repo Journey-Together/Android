@@ -3,14 +3,13 @@ package kr.tekit.lion.daongil.presentation.myreview.fragment
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewBinding
+import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
+import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewRVAdapter
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModel
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
@@ -35,14 +34,42 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
     }
 
     private fun settingMyReviewRVAdapter(binding: FragmentMyReviewBinding) {
-        viewModel.myPlaceReviewList.observe(viewLifecycleOwner) { myPlaceReviewList ->
-            if(myPlaceReviewList.isNotEmpty()) {
+        viewModel.myPlaceReview.observe(viewLifecycleOwner) { myPlaceReview ->
+            if(myPlaceReview.myPlaceReviewInfoList.isNotEmpty()) {
                 binding.notExistReviewLayout.visibility = View.INVISIBLE
                 binding.recyclerViewMyReview.visibility = View.VISIBLE
 
-                val myReviewRVAdapter = MyReviewRVAdapter(myPlaceReviewList)
+                val myReviewRVAdapter = MyReviewRVAdapter(
+                    myPlaceReview,
+                    myPlaceReview.myPlaceReviewInfoList,
+                    onMoveReviewListClick = {},
+                    onModifyClick = {
+                        findNavController().navigate(R.id.action_myReviewFragment_to_myReviewModifyFragment2)
+                    },
+                    onDeleteClick = { reviewId ->
+                        requireContext().showConfirmDialog(
+                            parentFragmentManager,
+                            "여행지 후기 삭제",
+                            "삭제한 데이터는 되돌릴 수 없습니다.",
+                            "삭제하기"
+                        ) {
+                            // 삭제하기 api
+                        }
+                    }
+                )
+
+                val rvState = binding.recyclerViewMyReview.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewMyReview.adapter = myReviewRVAdapter
                 binding.recyclerViewMyReview.layoutManager = LinearLayoutManager(context)
+                rvState?.let {
+                    binding.recyclerViewMyReview.layoutManager?.onRestoreInstanceState(it)
+                }
+
+                binding.recyclerViewMyReview.addOnScrollEndListener {
+                    if (viewModel.isLastPage.value == false) {
+                        viewModel.getNextMyPlaceReview(5)
+                    }
+                }
             } else {
                 binding.recyclerViewMyReview.visibility = View.INVISIBLE
                 binding.notExistReviewLayout.visibility = View.VISIBLE

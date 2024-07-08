@@ -82,7 +82,6 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
     private fun setDummyData(binding: FragmentMyReviewModifyBinding) {
         // 더미 데이터
         val dummyTitle = "광화문"
-        val dummyAddress = "서울특별시 샘플구 샘플로 123"
         val dummySatisfaction = 4.5f
         val dummyReview = "여행지에 대한 샘플 리뷰 내용입니다. 정말 멋진 경험이었어요!"
         val dummyImages = listOf(
@@ -91,7 +90,6 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         )
 
         binding.textViewMyReviewModifyTitle.text = dummyTitle
-        binding.textViewMyReviewModifyAddress.text = dummyAddress
         binding.ratingbarMyReviewModify.rating = dummySatisfaction
         binding.textFieldMyReviewModifyWrite.setText(dummyReview)
         imagesList.clear()
@@ -105,7 +103,7 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
     }
 
     private fun settingButton(binding: FragmentMyReviewModifyBinding) {
-        binding.imageButtonMyReviewModifyAddBtn.setOnClickListener {
+        binding.layoutImageAddBtn.setOnClickListener {
             if (isPhotoPickerAvailable()) {
                 this.pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             } else {

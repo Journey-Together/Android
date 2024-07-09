@@ -25,6 +25,7 @@ import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
+import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmDialogInterface {
 
@@ -34,6 +35,17 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         ScheduleMainViewModelFactory(
             requireActivity()
         )
+    }
+
+
+    private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let {
+                Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+            }
+        }
     }
 
     private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -106,6 +118,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                             // to do - 여행 일정 idx 전달
                             intent.putExtra("placeId", it?.get(position)?.planId)
                             startActivity(intent)
+                        },
+                        reviewClickListener = { position ->
+                            val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
+                            intent.putExtra("planId", it?.get(position)?.planId)
+                            scheduleReviewLauncher.launch(intent)
                         }
                     )
                     myscheduleAdapter.addItems(it as List<MyMainSchedule>)

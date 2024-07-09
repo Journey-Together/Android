@@ -9,28 +9,35 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ext.SdkExtensions
 import android.provider.Settings
+import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.core.widget.addTextChangedListener
+import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
-import kr.tekit.lion.daongil.presentation.home.adapter.WriteReviewImageRVAdapter
+import kr.tekit.lion.daongil.domain.model.NewScheduleReview
+import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.customview.ReviewPublicDialog
+import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
+import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
 
 class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface {
-    private val selectedImages: ArrayList<Uri> = ArrayList()
-    private lateinit var scheduleImageRVAdapter: WriteReviewImageRVAdapter
+
+    private val viewModel : WriteScheduleReviewViewModel by viewModels { WriteScheduleReviewViewModelFactory() }
 
     @SuppressLint("NotifyDataSetChanged")
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                selectedImages.add(uri)
-                scheduleImageRVAdapter.notifyDataSetChanged()
+                saveImageDataAndPath(uri)
             }
         }
 
@@ -42,9 +49,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 // 선택한 이미지의 Uri 가져오기
                 val uri = result.data?.data
                 uri?.let {
-                    // 이미지를 리스트에 추가하고 어댑터에 데이터 변경을 알림
-                    selectedImages.add(it)
-                    scheduleImageRVAdapter.notifyDataSetChanged()
+                    saveImageDataAndPath(uri)
                 }
             }
         }
@@ -71,12 +76,13 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
         setContentView(binding.root)
 
-        val planId = intent.getIntExtra("planId", -1)
+        val planId = intent.getLongExtra("planId", -1)
 
         initToolbar()
-        initView()
+        initView(planId)
+        initReviewContentWatcher()
         settingImageRVAdapter()
-        settingButtonClickListner()
+        settingButtonClickListner(planId)
     }
 
     private fun initToolbar(){
@@ -84,26 +90,46 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 finish()
         }
     }
-    private fun initView(){
-        binding.apply {
-            textViewWriteScheReviewName.text = "일정 제목"
-            textViewWriteScheReviewPeriod.text = getString(R.string.text_schedule_period, "2024.01.01", "2024.01.02")
-//            imageViewWriteScheReviewThumb
+    private fun initView(planId: Long) {
+        viewModel.getBriefScheduleInfo(planId)
+        viewModel.briefSchedule.observe(this@WriteScheduleReviewActivity) { briefSchedule ->
+            binding.apply {
+                textViewWriteScheReviewName.text = briefSchedule?.title
+                textViewWriteScheReviewPeriod.text = getString(
+                    R.string.text_schedule_period,
+                    briefSchedule?.startDate,
+                    briefSchedule?.endDate
+                )
+                Glide.with(imageViewWriteScheReviewThumb.context)
+                    .load(briefSchedule?.imageUrl)
+                    .error(R.drawable.empty_view_small)
+                    .into(imageViewWriteScheReviewThumb)
+            }
+        }
+        viewModel.numOfImages.observe(this@WriteScheduleReviewActivity){ numOfImgs ->
+            binding.apply {
+                textViewWriteScheReviewPhotoNum.text = getString(R.string.text_num_of_images, numOfImgs)
+            }
         }
     }
 
     private fun settingImageRVAdapter() {
-        scheduleImageRVAdapter = WriteReviewImageRVAdapter(selectedImages) {
-            // 이미지 삭제 시
+        viewModel.imageUriList.observe(this){ imageUriList ->
+            val scheduleReviewImageAdapter = WriteReviewImageAdapter(imageUriList){ position ->
+                viewModel.removeReviewImageFromList(position)
+            }
+            binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleReviewImageAdapter
         }
-        binding.recyclerViewWriteScheReviewPhotos.adapter = scheduleImageRVAdapter
-        binding.recyclerViewWriteScheReviewPhotos.layoutManager =
-            LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
     }
 
-    private fun settingButtonClickListner(){
+    private fun settingButtonClickListner(planId: Long){
         binding.apply {
             imageButtonWriteScheReviewPhotoAdd.setOnClickListener {
+                if(!viewModel.isMoreImageAttachable()){
+                    showSnackBar(it, "사진은 최대 4개까지 첨부할 수 있습니다")
+                    return@setOnClickListener
+                }
+
                 if (isPhotoPickerAvailable()) {
                     pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 } else {
@@ -112,18 +138,34 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
             }
 
             buttonWriteScheReivewSubmit.setOnClickListener {
+                val isValid = isReviewValid()
+                if(!isValid) return@setOnClickListener
+
                 val reviewPublicDialog = ReviewPublicDialog{ isPublic ->
-                    // 데이터 서버로 전송
-//                    binding.apply {
-//                        val reviewContent = editTextWriteScheReviewContent.text.toString()
-//                        val reviewRating = ratingbarWriteScheReview.rating
-//                        selectedImages (첨부이미지), isPublic (공개여부)
-//                    }
-                    finish()
+                    binding.apply {
+                        val reviewContent = editTextWriteScheReviewContent.text.toString()
+                        val reviewRating = ratingbarWriteScheReview.rating
+
+                        val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+
+                        viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
+                            if(requestFlag) {
+                                setResult(Activity.RESULT_OK)
+                                finish()
+                            }
+                        }
+                    }
                 }
                 reviewPublicDialog.isCancelable = false
                 reviewPublicDialog.show(supportFragmentManager, "ReviewPublicDialog")
             }
+        }
+    }
+
+    private fun saveImageDataAndPath(uri: Uri){
+        val imagePath = toAbsolutePath(uri)
+        if(imagePath!=null){
+            viewModel.addNewReviewImage(uri, imagePath)
         }
     }
 
@@ -166,5 +208,36 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         val uri = Uri.fromParts("package", packageName, null)
         intent.data = uri
         startActivity(intent)
+    }
+
+    private fun isReviewValid(): Boolean {
+        with(binding){
+            val scheduleRating = ratingbarWriteScheReview.rating
+            if(scheduleRating <= 0){
+                showSnackBar(ratingbarWriteScheReview, "일정만족도를 선택해주세요")
+                return false
+            }
+
+            val reviewContent = editTextWriteScheReviewContent.text.toString()
+            if(reviewContent.isBlank()){
+                inputLayoutWriteScheReviewContent.error = getString(R.string.text_warning_review_content_empty)
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun initReviewContentWatcher() {
+        with(binding){
+            editTextWriteScheReviewContent.addTextChangedListener {
+                inputLayoutWriteScheReviewContent.error = null
+            }
+        }
+    }
+
+    private fun showSnackBar(view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
+            .setBackgroundTint(getColor(R.color.text_secondary))
+            .show()
     }
 }

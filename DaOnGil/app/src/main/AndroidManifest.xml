@@ -20,7 +20,9 @@
         android:theme="@style/Theme.DaOnGil"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
+        <activity
+            android:name=".presentation.report.ReportActivity"
+            android:exported="false" />
         <activity
             android:name=".presentation.schedulereview.WriteScheduleReviewActivity"
             android:exported="false" />
@@ -81,13 +83,12 @@
         <activity
             android:name=".presentation.login.LoginActivity"
             android:exported="true" />
-
         <activity
             android:name=".presentation.onboarding.OnBoardingActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.onboarding.SplashActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

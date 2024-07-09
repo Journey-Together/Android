@@ -70,7 +70,7 @@ class BookmarkActivity : AppCompatActivity() {
                     itemClickListener = { position ->
                         val placeBookmark = placeBookmarkList[position]
                         val intent = Intent(this, DetailActivity::class.java)
-                        intent.putExtra("placeId", placeBookmark.placeId)
+                        intent.putExtra("detailPlaceId", placeBookmark.placeId)
                         startActivity(intent)
                     },
                     onBookmarkClick = { placeId ->

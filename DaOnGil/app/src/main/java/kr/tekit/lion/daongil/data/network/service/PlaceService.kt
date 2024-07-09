@@ -5,7 +5,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.detailplace.DetailPlaceRes
 import kr.tekit.lion.daongil.data.dto.remote.response.mainplace.MainPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.list.SearchPlaceResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.searchplace.map.MapSearchPlaceResponse
-import kr.tekit.lion.daongil.data.dto.remote.response.review.MyPlaceReviewResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.myreview.MyPlaceReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.placeReview.PlaceReviewResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody

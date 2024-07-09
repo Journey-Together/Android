@@ -11,12 +11,15 @@
         android:label="fragment_login"
         tools:layout="@layout/fragment_login" >
         <action
-            android:id="@+id/to_selectInterestFragment"
-            app:destination="@id/selectInterestFragment" />
+            android:id="@+id/action_loginFragment_to_concernTypeSelectFragment"
+            app:destination="@id/concernTypeSelectFragment" />
     </fragment>
     <fragment
-        android:id="@+id/selectInterestFragment"
-        android:name="kr.tekit.lion.daongil.presentation.login.fragment.SelectInterestFragment"
-        android:label="fragment_select_interest"
-        tools:layout="@layout/fragment_select_interest" />
+        android:id="@+id/concernTypeSelectFragment"
+        android:name="kr.tekit.lion.daongil.presentation.concerntype.fragment.ConcernTypeSelectFragment"
+        android:label="ConcernTypeSelectFragment" >
+        <action
+            android:id="@+id/action_concernTypeSelectFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

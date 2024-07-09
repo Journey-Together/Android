@@ -84,7 +84,7 @@
         app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/item_detail_review_profile_iv">
+        app:layout_constraintTop_toBottomOf="@id/item_detail_review_profile_iv">
 
         <ImageView
             android:id="@+id/item_detail_review_iv"
@@ -97,9 +97,11 @@
 
     <TextView
         android:id="@+id/item_detail_review_content"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="@dimen/margin_big3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big3"
+        android:layout_marginEnd="96dp"
+        android:layout_marginBottom="@dimen/margin_big2"
         android:ellipsize="end"
         android:fontFamily="@font/pretendard_medium"
         android:lineSpacingMultiplier="1.1"
@@ -107,10 +109,10 @@
         android:text="리뷰 내용입니다"
         android:textColor="@color/text_secondary"
         android:textSize="@dimen/font_small1"
-        app:layout_constraintBottom_toBottomOf="@id/item_detail_review_card"
-        app:layout_constraintEnd_toStartOf="@+id/item_detail_review_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_detail_review_card" />
+        app:layout_constraintTop_toBottomOf="@id/item_detail_review_profile_iv" />
 
     <com.google.android.material.divider.MaterialDivider
         android:id="@+id/item_detail_review_divider"

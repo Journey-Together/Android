@@ -54,7 +54,7 @@ class PlaceRepositoryImpl(
         return placeDataSource.getPlaceReviewList(placeId, page, size).toDomainModel()
     }
 
-    override suspend fun getMyPlaceReview(size: Int, page: Int): List<MyPlaceReview> {
+    override suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReview {
         return placeDataSource.getMyPlaceReview(size, page).toDomainModel()
     }
 

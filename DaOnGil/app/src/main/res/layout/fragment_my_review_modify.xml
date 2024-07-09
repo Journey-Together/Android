@@ -29,71 +29,27 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbarMyReviewModify">
+        app:layout_constraintTop_toBottomOf="@+id/toolbarMyReviewModify"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/ImageViewMyReviewModify"
-                android:layout_width="match_parent"
-                android:layout_height="260dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/empty_view"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
             <TextView
                 android:id="@+id/textViewMyReviewModifyTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_basic"
-                android:layout_marginTop="@dimen/margin_big3"
+                android:layout_marginTop="@dimen/margin_basic"
                 android:fontFamily="@font/pretendard_bold"
-                android:text="여행지"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ImageViewMyReviewModify" />
-
-            <TextView
-                android:id="@+id/textViewMyReviewModifyAddress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big4"
-                android:fontFamily="@font/pretendard_medium"
-                android:text="여행지 주소"
-                android:textColor="@color/text_secondary"
-                android:textSize="@dimen/font_big3"
-                app:layout_constraintStart_toStartOf="@+id/textViewMyReviewModifyTitle"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyTitle" />
-
-            <TextView
-                android:id="@+id/textViewMyReviewModifyDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big1"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="방문 날짜"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifyAddress"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyAddress" />
-
-            <TextView
-                android:id="@+id/textViewMyReviewModifySatisfaction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big1"
-                android:fontFamily="@font/pretendard_semibold"
-                android:text="만족도"
-                android:textColor="@color/text_primary"
-                android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifyDate"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyDate" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="여행지 이름" />
 
             <com.willy.ratingbar.BaseRatingBar
                 android:id="@+id/ratingbarMyReviewModify"
@@ -102,7 +58,7 @@
                 android:layout_marginTop="@dimen/margin_big4"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifySatisfaction"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyTitle"
                 app:srb_drawableEmpty="@drawable/star_icon"
                 app:srb_drawableFilled="@drawable/star_filled_icon"
                 app:srb_isIndicator="false"
@@ -110,9 +66,63 @@
                 app:srb_numStars="5"
                 app:srb_rating="0"
                 app:srb_starHeight="40dp"
-                app:srb_starPadding="7dp"
+                app:srb_starPadding="6dp"
                 app:srb_starWidth="40dp"
                 app:srb_stepSize="0.5" />
+
+            <com.google.android.material.divider.MaterialDivider
+                android:id="@+id/materialDivider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_basic"
+                app:dividerColor="@color/text_quinary"
+                app:dividerThickness="1dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ratingbarMyReviewModify" />
+
+            <TextView
+                android:id="@+id/textViewMyReviewModifyDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big1"
+                android:fontFamily="@font/pretendard_semibold"
+                android:text="방문 날짜"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_big2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialDivider" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/margin_basic"
+                android:layout_marginTop="@dimen/margin_big4"
+                android:focusable="false"
+                app:boxBackgroundColor="@color/button_quaternary"
+                app:boxStrokeColor="@color/button_quaternary"
+                app:boxStrokeWidth="0dp"
+                app:cursorColor="@color/text_primary"
+                app:endIconMode="none"
+                app:errorEnabled="true"
+                app:hintEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMyReviewModifyDate"
+                app:startIconDrawable="@drawable/calendar_icon"
+                app:startIconTint="@color/text_quaternary">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="방문 날짜를 선택해주세요"
+                    android:paddingStart="45dp"
+                    android:textColor="@color/text_primary"
+                    android:textColorHint="@color/text_tertiary"
+                    android:textSize="@dimen/font_small1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/textViewMyReviewModifyWrite"
@@ -120,11 +130,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big1"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="후기 작성"
+                android:text="후기"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"
-                app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifySatisfaction"
-                app:layout_constraintTop_toBottomOf="@id/ratingbarMyReviewModify" />
+                app:layout_constraintStart_toStartOf="@+id/textInputLayout"
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutMyReviewModifyWrite"
@@ -133,13 +143,13 @@
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big4"
                 android:textColorHint="@color/text_tertiary"
+                app:boxStrokeColor="@color/button_quaternary"
+                app:cursorColor="@color/text_primary"
+                app:boxBackgroundColor="@color/button_quaternary"
+                app:boxStrokeWidth="0dp"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
                 app:hintEnabled="false"
-                app:boxCornerRadiusBottomEnd="10dp"
-                app:boxCornerRadiusBottomStart="10dp"
-                app:boxCornerRadiusTopEnd="10dp"
-                app:boxCornerRadiusTopStart="10dp"
-                app:boxStrokeColor="@color/text_secondary"
-                app:boxStrokeWidth="1dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textViewMyReviewModifyWrite">
@@ -150,10 +160,9 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pretendard_medium"
                     android:gravity="top"
-                    android:hint="리뷰를 남겨주세요"
+                    android:hint="후기를 작성해주세요"
                     android:lines="7"
                     android:maxLines="7"
-                    android:text=""
                     android:textColor="@color/text_primary"
                     android:textColorHint="@color/text_tertiary"
                     android:textSize="@dimen/font_small1" />
@@ -165,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_big1"
                 android:fontFamily="@font/pretendard_semibold"
-                android:text="사진 첨부"
+                android:text="사진"
                 android:textColor="@color/text_primary"
                 android:textSize="@dimen/font_big2"
                 app:layout_constraintStart_toStartOf="@+id/textInputLayoutMyReviewModifyWrite"
@@ -173,21 +182,43 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/CardViewMyReviewModify"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_marginTop="@dimen/margin_big4"
-                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="@color/background_color"
+                app:cardCornerRadius="0dp"
                 app:layout_constraintStart_toStartOf="@id/textViewMyReviewModifyAddImage"
                 app:layout_constraintTop_toBottomOf="@id/textViewMyReviewModifyAddImage"
                 app:strokeColor="@color/text_tertiary"
                 app:strokeWidth="1dp">
 
-                <ImageButton
-                    android:id="@+id/imageButtonMyReviewModifyAddBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:background="@color/background_color"
-                    android:src="@drawable/add_image_icon" />
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layoutImageAddBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageViewMyReviewModifyAddBtn"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@color/background_color"
+                        android:src="@drawable/photo_icon"
+                        app:layout_constraintBottom_toTopOf="@+id/textViewMyReviewModifyPhotoCnt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/text_num_of_images" />
+
+                    <TextView
+                        android:id="@+id/textViewMyReviewModifyPhotoCnt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/imageViewMyReviewModifyAddBtn"
+                        app:layout_constraintStart_toStartOf="@+id/imageViewMyReviewModifyAddBtn"
+                        app:layout_constraintTop_toBottomOf="@+id/imageViewMyReviewModifyAddBtn"
+                        tools:text="3/4" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>
 

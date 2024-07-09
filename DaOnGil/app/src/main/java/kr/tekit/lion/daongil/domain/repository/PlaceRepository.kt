@@ -24,7 +24,7 @@ interface PlaceRepository {
     fun getSearchPlaceResultForMap(request: MapSearchOption): Flow<List<MapSearchResult>>
     suspend fun getPlaceDetailInfoGuest(placeId: Long): PlaceDetailInfoGuest
     suspend fun getPlaceMainInfo(areaCode: String, sigunguCode: String): PlaceMainInfo
-    suspend fun getMyPlaceReview(size: Int, page: Int): List<MyPlaceReview>
+    suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReview
     suspend fun getPlaceReviewList(placeId: Long, size: Int, page: Int): PlaceReviewInfo
     suspend fun writePlaceReviewData(placeId: Long, newReviewData: NewReviewData, reviewImages: NewReviewImages): ResponseBody
     companion object{

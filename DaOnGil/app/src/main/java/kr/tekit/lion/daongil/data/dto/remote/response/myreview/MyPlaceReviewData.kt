@@ -7,5 +7,6 @@ data class MyPlaceReviewData(
     val myPlaceReviewDtoList: List<MyPlaceReviewDto>,
     val pageNo: Int,
     val pageSize: Int,
+    val reviewNum: Long,
     val totalPages: Int
 )

@@ -49,24 +49,12 @@ class ModifyReviewImageAdapter (
                     .error(R.drawable.empty_view_small)
                     .into(binding.itemWriteReviewImage)
             }
-
-//            if(reviewImage.imageUri != null){
-//                requestManager.load(reviewImage.imageUri)
-//                    .error(R.drawable.empty_view_small)
-//                    .into(binding.itemWriteReviewImage)
-//            }
-//            else if(reviewImage.imageUrl != null){
-//                requestManager.load(reviewImage.imageUrl)
-//                    .error(R.drawable.empty_view_small)
-//                    .into(binding.itemWriteReviewImage)
-//            }
         }
 
         private fun determineImageType(reviewImage: ReviewImage) : Any? {
-            if(reviewImage.imageUri != null){
+            if (reviewImage.imageUri != null) {
                 return reviewImage.imageUri
-            }
-            else if(reviewImage.imageUrl != null){
+            } else if (reviewImage.imageUrl != null) {
                 return reviewImage.imageUrl
             }
             return null

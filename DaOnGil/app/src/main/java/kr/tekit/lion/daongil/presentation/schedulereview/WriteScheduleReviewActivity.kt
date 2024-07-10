@@ -210,11 +210,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
     private fun isReviewValid(): Boolean {
         with(binding){
-            val scheduleRating = ratingbarWriteScheReview.rating
-            if(scheduleRating <= 0){
-                showSnackBar(ratingbarWriteScheReview, "일정만족도를 선택해주세요")
-                return false
-            }
+            // TO DO 공개 범주 선택 유효성 검사
 
             val reviewContent = editTextWriteScheReviewContent.text.toString()
             if(reviewContent.isBlank()){

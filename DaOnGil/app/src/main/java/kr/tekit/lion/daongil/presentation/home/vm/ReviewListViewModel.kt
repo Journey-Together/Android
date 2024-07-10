@@ -20,19 +20,12 @@ class ReviewListViewModel(
     private val _isLastPage = MutableLiveData<Boolean>()
     val isLastPage : LiveData<Boolean> = _isLastPage
 
-    private var placeId : Long = 0
-
     init {
         _isLastPage.value = false
     }
 
-    fun setPlaceId(placeId: Long) {
-        this.placeId = placeId
-        getPlaceReview(placeId, 5, 0)
-    }
-
-    private fun getPlaceReview(placeId: Long, size: Int, page: Int) = viewModelScope.launch {
-        getPlaceReviewListUseCase(placeId, size, page).onSuccess {
+    fun getPlaceReview(placeId: Long) = viewModelScope.launch {
+        getPlaceReviewListUseCase(placeId, 5, 0).onSuccess {
             Log.d("getPlaceReview", it.toString())
             _placeReviewInfo.value = it
         }.onError {
@@ -40,11 +33,11 @@ class ReviewListViewModel(
         }
     }
 
-    fun getNewPlaceReview(placeId: Long, size: Int) = viewModelScope.launch {
+    fun getNewPlaceReview(placeId: Long) = viewModelScope.launch {
         val page = _placeReviewInfo.value?.pageNo
 
         if (page != null) {
-            getPlaceReviewListUseCase(placeId, size = size, page = page + 1).onSuccess {
+            getPlaceReviewListUseCase(placeId, size = 5, page = page + 1).onSuccess {
                 if (it.pageNo == it.totalPages) {
                     _isLastPage.value = true
                 } else {

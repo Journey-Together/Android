@@ -25,7 +25,6 @@ class ReviewListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val placeId = intent.getLongExtra("reviewPlaceId", -1)
-        viewModel.setPlaceId(placeId)
 
         settingToolbar()
         getReviewListInfo(placeId)
@@ -52,9 +51,11 @@ class ReviewListActivity : AppCompatActivity() {
     }
 
     private fun getReviewListInfo(placeId : Long) {
+        viewModel.getPlaceReview(placeId)
+
         binding.reviewListRv.addOnScrollEndListener {
             if (viewModel.isLastPage.value == false) {
-                viewModel.getNewPlaceReview(placeId, size = 5)
+                viewModel.getNewPlaceReview(placeId)
             }
         }
 

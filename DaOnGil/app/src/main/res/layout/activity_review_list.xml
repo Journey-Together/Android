@@ -82,8 +82,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_basic"
                 android:layout_marginTop="@dimen/margin_big4"
-                android:overScrollMode="never"
-                android:nestedScrollingEnabled="false"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

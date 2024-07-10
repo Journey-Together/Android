@@ -1,11 +1,14 @@
 package kr.tekit.lion.daongil.presentation.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
 import kr.tekit.lion.daongil.domain.model.PlaceReview
+import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
 import kr.tekit.lion.daongil.presentation.home.adapter.ReviewListRVAdapter
 import kr.tekit.lion.daongil.presentation.home.vm.ReviewListViewModel
@@ -22,6 +25,7 @@ class ReviewListActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val placeId = intent.getLongExtra("reviewPlaceId", -1)
+
         settingToolbar()
         getReviewListInfo(placeId)
     }
@@ -47,7 +51,13 @@ class ReviewListActivity : AppCompatActivity() {
     }
 
     private fun getReviewListInfo(placeId : Long) {
-        viewModel.getPlaceReview(placeId, size = 5, page = 0)
+        viewModel.getPlaceReview(placeId)
+
+        binding.reviewListRv.addOnScrollEndListener {
+            if (viewModel.isLastPage.value == false) {
+                viewModel.getNewPlaceReview(placeId)
+            }
+        }
 
         viewModel.placeReviewInfo.observe(this@ReviewListActivity) { placeReviewInfo ->
             binding.reviewListTitle.text = placeReviewInfo.placeName

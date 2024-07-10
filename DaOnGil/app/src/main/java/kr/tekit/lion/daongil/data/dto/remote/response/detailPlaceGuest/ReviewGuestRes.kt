@@ -9,7 +9,7 @@ data class ReviewGuestRes (
     val nickname : String,
     val profileImg : String,
     val content : String,
-    val reviewImg : String,
+    val reviewImg : String?,
     val grade : Float,
     val date : LocalDate
 )

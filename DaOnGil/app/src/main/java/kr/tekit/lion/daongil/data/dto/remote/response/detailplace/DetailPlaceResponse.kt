@@ -24,6 +24,7 @@ data class DetailPlaceResponse(
             longitude = data.mapY,
             name = data.name,
             overview = data.overview,
+            isReview = data.isReview,
             placeId = data.placeId,
             reviewList = data.reviewList?.map {
                 Review(

@@ -274,11 +274,12 @@
 
                     <ImageButton
                         android:id="@+id/imageButtonModifyScheReviewPhotoAdd"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_small1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:background="@color/navi_background"
+                        android:paddingBottom="@dimen/margin_basic"
                         android:src="@drawable/review_image_icon"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -287,23 +288,26 @@
                         android:id="@+id/textViewModifyScheReviewPhotoNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:textColor="@color/days_remaining"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/textViewModifyScheReviewPhotoNumMax"
                         app:layout_constraintHorizontal_chainStyle="packed"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButtonModifyScheReviewPhotoAdd"
                         tools:text="@string/text_num_of_images" />
 
                     <TextView
                         android:id="@+id/textViewModifyScheReviewPhotoNumMax"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="16dp"
                         android:text="@string/text_num_of_max_images"
                         android:textColor="@color/text_num_of_review_images"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/textViewModifyScheReviewPhotoNum"
-                        app:layout_constraintTop_toBottomOf="@+id/imageButtonModifyScheReviewPhotoAdd" />
+                        app:layout_constraintStart_toEndOf="@+id/textViewModifyScheReviewPhotoNum" />
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.card.MaterialCardView>
 

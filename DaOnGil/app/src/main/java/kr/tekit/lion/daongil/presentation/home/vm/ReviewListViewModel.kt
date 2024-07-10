@@ -20,12 +20,16 @@ class ReviewListViewModel(
     private val _isLastPage = MutableLiveData<Boolean>()
     val isLastPage : LiveData<Boolean> = _isLastPage
 
+    companion object {
+        const val PAGE_SIZE = 5
+    }
+
     init {
         _isLastPage.value = false
     }
 
     fun getPlaceReview(placeId: Long) = viewModelScope.launch {
-        getPlaceReviewListUseCase(placeId, 5, 0).onSuccess {
+        getPlaceReviewListUseCase(placeId, PAGE_SIZE, 0).onSuccess {
             Log.d("getPlaceReview", it.toString())
             _placeReviewInfo.value = it
         }.onError {
@@ -37,7 +41,7 @@ class ReviewListViewModel(
         val page = _placeReviewInfo.value?.pageNo
 
         if (page != null) {
-            getPlaceReviewListUseCase(placeId, size = 5, page = page + 1).onSuccess {
+            getPlaceReviewListUseCase(placeId, size = PAGE_SIZE, page = page + 1).onSuccess {
                 if (it.pageNo == it.totalPages) {
                     _isLastPage.value = true
                 } else {

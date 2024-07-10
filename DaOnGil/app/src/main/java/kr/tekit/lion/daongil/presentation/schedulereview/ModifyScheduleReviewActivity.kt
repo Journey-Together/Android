@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityModifyScheduleReviewBinding
@@ -74,6 +75,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         initTestView()
         initToolbar()
         initView()
+        initReviewContentWatcher()
         settingImageRVAdapter()
         settingButtonClickListner()
     }
@@ -119,6 +121,13 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
                 } else {
                     checkPermission()
                 }
+            }
+
+            buttonModifyScheReivewSubmit.setOnClickListener {
+                val isValid = isReviewValid()
+                if(!isValid) return@setOnClickListener
+
+                // TO DO - API 연결
             }
         }
     }
@@ -169,6 +178,31 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         if (imagePath != null) {
             val newImage = ReviewImage(imageUri = uri, uriPath = imagePath)
             viewModel.addNewReviewImage(newImage)
+        }
+    }
+
+    private fun isReviewValid(): Boolean {
+        with(binding){
+            val isPrivateOrPublic = buttonGroupModifyScheReviewPublic.checkedRadioButtonId
+            if(isPrivateOrPublic == View.NO_ID){
+                showSnackBar(buttonGroupModifyScheReviewPublic, "여행 일정 공개 범주를 선택해주세요")
+                return false
+            }
+
+            val reviewContent = editTextModifyScheReviewContent.text.toString()
+            if(reviewContent.isBlank()){
+                inputLayoutModifyScheReviewContent.error = getString(R.string.text_warning_review_content_empty)
+                return false
+            }
+        }
+        return true
+    }
+
+    private fun initReviewContentWatcher() {
+        with(binding){
+            editTextModifyScheReviewContent.addTextChangedListener {
+                inputLayoutModifyScheReviewContent.error = null
+            }
         }
     }
 

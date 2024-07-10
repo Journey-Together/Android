@@ -25,7 +25,6 @@ import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
-import kr.tekit.lion.daongil.presentation.schedulereview.customview.ReviewPublicDialog
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
 
@@ -141,23 +140,22 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 val isValid = isReviewValid()
                 if(!isValid) return@setOnClickListener
 
-                val reviewPublicDialog = ReviewPublicDialog{ isPublic ->
-                    binding.apply {
-                        val reviewContent = editTextWriteScheReviewContent.text.toString()
-                        val reviewRating = ratingbarWriteScheReview.rating
+                // TO DO - isPublic 값 초기화
+                val isPublic = false
 
-                        val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+                binding.apply {
+                    val reviewContent = editTextWriteScheReviewContent.text.toString()
+                    val reviewRating = ratingbarWriteScheReview.rating
 
-                        viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
-                            if(requestFlag) {
-                                setResult(Activity.RESULT_OK)
-                                finish()
-                            }
+                    val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+
+                    viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
+                        if(requestFlag) {
+                            setResult(Activity.RESULT_OK)
+                            finish()
                         }
                     }
                 }
-                reviewPublicDialog.isCancelable = false
-                reviewPublicDialog.show(supportFragmentManager, "ReviewPublicDialog")
             }
         }
     }

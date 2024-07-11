@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_small2"
         android:layout_marginBottom="@dimen/margin_small1"
-        android:backgroundTint="@color/item_background"
+        android:backgroundTint="@color/navi_background"
         app:cardCornerRadius="5dp"
         app:cardPreventCornerOverlap="true"
         app:strokeColor="@color/schedule_detail_divider"
@@ -63,7 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
-                android:layout_marginTop="@dimen/margin_big4"
+                android:layout_marginTop="@dimen/margin_big3"
+                android:textSize="@dimen/font_small2"
                 android:fontFamily="@font/pretendard_regular"
                 android:textColor="@color/text_secondary"
                 app:layout_constraintStart_toEndOf="@+id/textViewItemSPlaceName"
@@ -82,6 +83,7 @@
                 app:srcCompat="@drawable/right_icon" />
 
             <LinearLayout
+                android:id="@+id/linearLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
@@ -120,8 +122,8 @@
                     android:id="@+id/iconISPInfantFamily"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/text_infant_family"
                     android:layout_marginStart="@dimen/margin_small2"
+                    android:contentDescription="@string/text_infant_family"
                     android:visibility="visible"
                     app:srcCompat="@drawable/schedule_detail_infant_family" />
 

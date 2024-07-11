@@ -68,32 +68,29 @@
                     app:layout_constraintBottom_toTopOf="@+id/textViewScheduleName"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <com.google.android.material.chip.Chip
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/schedulePublic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
+                        android:backgroundTint="@color/schedule_detail_public"
+                        android:background="@drawable/background_radius_50"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:textColor="@color/black"
+                        android:textColor="@color/text_primary"
                         android:textSize="@dimen/font_small2"
-                        app:chipCornerRadius="50dp"
-                        app:chipStrokeColor="@color/white"
-                        app:chipStrokeWidth="0.5dp"
                         tools:text="공개" />
 
-                    <com.google.android.material.chip.Chip
+                    <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/scheduleDday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="50dp"
+                        android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/margin_small1"
                         android:backgroundTint="@color/total_cnt"
+                        android:background="@drawable/background_radius_50"
                         android:fontFamily="@font/pretendard_semibold"
-                        android:textColor="@color/white"
+                        android:textColor="@color/text_primary_reverse"
                         android:textSize="@dimen/font_small2"
-                        app:chipCornerRadius="50dp"
-                        app:chipStrokeColor="@color/white"
-                        app:chipStrokeWidth="0.5dp"
-                        tools:text="D+10" />
+                        tools:text="D-10" />
+
 
                 </LinearLayout>
 

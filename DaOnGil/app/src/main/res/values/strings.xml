@@ -18,6 +18,7 @@
     <string name="confirm">확인</string>
     <string name="save">저장하기</string>
     <string name="inform_add_places">여행지를 추가해주세요</string>
+    <string name="block_report">신고</string>
 
 
     <string name="text_parking">주차장</string>
@@ -76,6 +77,7 @@
     <string name="text_my_schedule">내 일정</string>
     <string name="text_public_schedule">공개 일정</string>
     <string name="text_leave_schedule_review"><u>후기/만족도 남기기 ＞</u></string>
+    <string name="text_schedule_detail_review">여행 후기</string>
     <string name="text_schedule_review">후기</string>
     <string name="text_schedule_satisfaction">일정 만족도</string>
     <string name="text_schedule_report_review">신고하기</string>

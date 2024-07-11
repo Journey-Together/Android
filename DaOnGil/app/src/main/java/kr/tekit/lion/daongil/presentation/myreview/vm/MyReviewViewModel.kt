@@ -13,7 +13,8 @@ import kr.tekit.lion.daongil.domain.usecase.place.DeleteMyPlaceReviewUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetMyPlaceReviewUseCase
 
 class MyReviewViewModel(
-    private val getMyPlaceReviewUseCase: GetMyPlaceReviewUseCase
+    private val getMyPlaceReviewUseCase: GetMyPlaceReviewUseCase,
+    private val deleteMyPlaceReviewUseCase: DeleteMyPlaceReviewUseCase
 ) : ViewModel() {
 
     private val _myPlaceReview = MutableLiveData<MyPlaceReview>()
@@ -32,7 +33,11 @@ class MyReviewViewModel(
     private fun getMyPlaceReview(size: Int, page: Int) = viewModelScope.launch {
         getMyPlaceReviewUseCase(size, page).onSuccess {
             _myPlaceReview.value = it
-            _isLastPage.value = it.myPlaceReviewInfoList.size < size
+
+            if (it.pageNo == it.totalPages) {
+                _isLastPage.value = true
+            }
+            Log.d("MyReviewViewModel", "getMyPlaceReview")
         }.onError {
             Log.d("getMyPlaceReview", it.toString())
         }
@@ -50,18 +55,33 @@ class MyReviewViewModel(
                 val updatedReviewData = newReviews.copy(myPlaceReviewInfoList = updatedReviews)
                 _myPlaceReview.value = updatedReviewData
 
-                if (newReviews.myPlaceReviewInfoList.size < size) {
+                if (newReviews.pageNo == newReviews.totalPages) {
                     _isLastPage.value = true
                 }
 
-                Log.d("MyReviewViewModel", "currentReviews : ${currentReviews}")
-                Log.d("MyReviewViewModel", "updatedReviews : ${updatedReviews}")
-                Log.d("MyReviewViewModel", "updatedReviewData : ${updatedReviewData}")
-                Log.d("MyReviewViewModel", _isLastPage.value.toString())
+                Log.d("MyReviewViewModel", "getNextMyPlaceReview")
             }.onError {
                 Log.d("getNextMyPlaceReview", it.toString())
             }.also {
                 isRequesting = false
+            }
+        }
+    }
+
+    fun deleteMyPlaceReview(reviewId: Long) {
+        viewModelScope.launch {
+            deleteMyPlaceReviewUseCase(reviewId).onSuccess {
+                _myPlaceReview.value?.let { currentReviewData ->
+                    val updatedReviews =
+                        currentReviewData.myPlaceReviewInfoList.filter { it.reviewId != reviewId }
+                    val updatedReviewData = currentReviewData.copy(
+                        myPlaceReviewInfoList = updatedReviews,
+                        reviewNum = currentReviewData.reviewNum - 1
+                    )
+                    _myPlaceReview.value = updatedReviewData
+                }
+            }.onError {
+                Log.d("deleteMyPlaceReview", it.toString())
             }
         }
     }

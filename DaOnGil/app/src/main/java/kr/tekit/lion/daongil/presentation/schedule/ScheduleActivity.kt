@@ -48,15 +48,15 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
     private val place4 = SchedulePlace(3, "한국보훈복지의료공단 보훈휴양원", "숙박시설", listOf(1))
     private val place5 = SchedulePlace(4, "보물섬남해한우프라자 (남해축협)", "음식점", listOf(1, 2))
 
-    private val day1 = DailyPlan(1, listOf(place1, place2, place3))
-    private val day2 = DailyPlan(2, listOf())
-    private val day3 = DailyPlan(3, listOf(place4, place5))
+    private val day1 = DailyPlan(1, "2024-06-01", listOf(place1, place2, place3))
+    private val day2 = DailyPlan(2, "2024-06-02", listOf())
+    private val day3 = DailyPlan(3, "2024-06-03", listOf(place4, place5))
 
     private val schedule = ScheduleDetail(
         0,
         "꼭 가봐야 할 경주 맛집투어",
         "2024-06-01",
-        "2024-06-05",
+        "2024-06-03",
         "D-3",
         true,
         true,
@@ -74,7 +74,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         1,
         "제주 둘레길 여행",
         "2024-06-01",
-        "2024-06-05",
+        "2024-06-03",
         null,
         true,
         false,
@@ -193,7 +193,7 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         // TO DO - daysRemaining!=null : 여행 일정이 "다녀온 일정" 일때만 리뷰 작성 View를 보여준다.
         // daysRemaining 리턴 타입에 맞춰서 코드 수정 필요
         if (scheduleDetail.reviewIdx == null) {
-            if (scheduleDetail.isWriter && scheduleDetail.daysRemaining == null) {
+            if (scheduleDetail.isWriter && scheduleDetail.daysRemaining != null) {
                 binding.apply {
                     cardViewScheduleEmptyReview.visibility = View.VISIBLE
                     textViewScheduleLeaveReview.setOnClickListener {

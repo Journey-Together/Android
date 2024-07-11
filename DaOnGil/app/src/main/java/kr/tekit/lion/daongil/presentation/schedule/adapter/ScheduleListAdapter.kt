@@ -34,7 +34,8 @@ class ScheduleListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dailyPlan: DailyPlan) {
             with(binding) {
-                textViewItemDay.text = dailyPlan.dailyPlanDate.toString()
+                textViewItemDay.text = "Day ${dailyPlan.dailyPlanDay}"
+                textViewItemDate.text = dailyPlan.dailyPlanDate
                 rvItemScheduleList.adapter =
                     SchedulePlaceAdapter(dailyPlan.schedulePlaces, schedulePlaceListener)
             }

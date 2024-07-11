@@ -86,6 +86,7 @@ class SchedulePlaceViewHolder(private val binding: ItemSchedulePlaceBinding) :
         schedulePlacelistener: SchedulePlaceAdapter.OnSchedulePlaceClickListener
     ) {
         with(binding) {
+            schedulePlacePostion.text = (absoluteAdapterPosition + 1).toString()
             textViewItemSPlaceName.text = schedulePlace.name
             textViewItemSPlaceCategory.text = schedulePlace.category
 

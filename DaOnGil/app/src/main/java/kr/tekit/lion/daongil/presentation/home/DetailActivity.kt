@@ -33,8 +33,8 @@ import kr.tekit.lion.daongil.presentation.home.vm.DetailViewModelFactory
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
-    private val viewModel : DetailViewModel by viewModels { DetailViewModelFactory(this) }
-    private val binding : ActivityDetailBinding by lazy {
+    private val viewModel: DetailViewModel by viewModels { DetailViewModelFactory(this) }
+    private val binding: ActivityDetailBinding by lazy {
         ActivityDetailBinding.inflate(layoutInflater)
     }
     private lateinit var naverMap: NaverMap
@@ -60,7 +60,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         binding.detailDisabilityInfoRv.layoutManager = LinearLayoutManager(applicationContext)
     }
 
-    private fun settingReviewRVAdapter(reviewList : List<Review>) {
+    private fun settingReviewRVAdapter(reviewList: List<Review>) {
         if (reviewList.isEmpty()) {
             binding.detailReviewRv.visibility = View.GONE
             binding.detailNoReviewTv.visibility = View.VISIBLE
@@ -75,7 +75,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun settingDisabilityRVAdapter(disabilityList : List<Int>) {
+    private fun settingDisabilityRVAdapter(disabilityList: List<Int>) {
         val disabilityRVAdapter = DetailDisabilityRVAdapter(disabilityList)
         binding.detailDisabilityIvRv.adapter = disabilityRVAdapter
         binding.detailDisabilityIvRv.layoutManager = GridLayoutManager(applicationContext, 3)
@@ -87,7 +87,12 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    private fun settingReviewBtn(placeId: Long, placeName: String, placeAddress: String, image: String?) {
+    private fun settingReviewBtn(
+        placeId: Long,
+        placeName: String,
+        placeAddress: String,
+        image: String?
+    ) {
         binding.detailMoreReviewBtn.setOnClickListener {
             val intent = Intent(this, ReviewListActivity::class.java)
             intent.putExtra("reviewPlaceId", placeId)
@@ -101,6 +106,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             intent.putExtra("reviewPlaceAddress", placeAddress)
             intent.putExtra("reviewPlaceImage", image)
             startActivity(intent)
+        }
+
+        binding.detailModifyReviewBtn.setOnClickListener {
+
         }
     }
 
@@ -144,10 +153,10 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         addMapMarker(longitude, latitude)
     }
 
-    private fun getDetailPlaceInfo(placeId : Long) {
+    private fun getDetailPlaceInfo(placeId: Long) {
         viewModel.getDetailPlace(placeId)
 
-        viewModel.detailPlaceInfo.observe(this@DetailActivity) {detailPlaceInfo ->
+        viewModel.detailPlaceInfo.observe(this@DetailActivity) { detailPlaceInfo ->
             handleCommonDetailPlaceInfo(
                 detailPlaceInfo.placeId,
                 detailPlaceInfo.reviewList,
@@ -181,13 +190,21 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             }
 
             binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
+
+            if (detailPlaceInfo.isReview) {
+                binding.detailWriteReviewBtn.visibility = View.GONE
+                binding.detailModifyReviewBtn.visibility = View.VISIBLE
+            } else {
+                binding.detailWriteReviewBtn.visibility = View.VISIBLE
+                binding.detailModifyReviewBtn.visibility = View.GONE
+            }
         }
     }
 
-    private fun getDetailPlaceInfoGuest(placeId : Long) {
+    private fun getDetailPlaceInfoGuest(placeId: Long) {
         viewModel.getDetailPlaceGuest(placeId)
 
-        viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) {detailPlaceInfoGuest ->
+        viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) { detailPlaceInfoGuest ->
             handleCommonDetailPlaceInfo(
                 detailPlaceInfoGuest.placeId,
                 detailPlaceInfoGuest.reviewList,
@@ -203,6 +220,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             )
             binding.detailBookmarkBtn.visibility = View.GONE
             binding.detailBookmarkCount.visibility = View.GONE
+            binding.detailWriteReviewBtn.visibility = View.GONE
+            binding.detailModifyReviewBtn.visibility = View.GONE
         }
     }
 
@@ -219,7 +238,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         // 네이버 지도 SDK에 위치를 제공하는 인터페이스
-        mLocationSource = FusedLocationSource(this, EmergencyMapActivity.LOCATION_PERMISSION_REQUEST_CODE)
+        mLocationSource =
+            FusedLocationSource(this, EmergencyMapActivity.LOCATION_PERMISSION_REQUEST_CODE)
         // 네이버맵 동적으로 불러오기
         val fm = supportFragmentManager
         val mapFragment = fm.findFragmentById(R.id.detail_map) as MapFragment?
@@ -244,9 +264,11 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                     is LogInState.Checking -> {
                         return@collect
                     }
+
                     is LogInState.LoggedIn -> {
                         getDetailPlaceInfo(recommendPlaceId)
                     }
+
                     is LogInState.LoginRequired -> {
                         getDetailPlaceInfoGuest(recommendPlaceId)
                     }

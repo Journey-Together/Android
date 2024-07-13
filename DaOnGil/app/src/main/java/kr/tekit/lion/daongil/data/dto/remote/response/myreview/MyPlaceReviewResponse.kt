@@ -3,7 +3,6 @@ package kr.tekit.lion.daongil.data.dto.remote.response.myreview
 import com.squareup.moshi.JsonClass
 import kr.tekit.lion.daongil.domain.model.MyPlaceReview
 import kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo
-import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
 data class MyPlaceReviewResponse(
@@ -21,7 +20,7 @@ data class MyPlaceReviewResponse(
                     images = it.images,
                     name = it.name,
                     placeId = it.placeId,
-                    reviewId = it.placeId
+                    reviewId = it.reviewId
                 )
             },
             pageNo = data.pageNo,

@@ -11,6 +11,7 @@ import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.ResponseBody
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -84,4 +85,9 @@ interface PlaceService {
         @Part("placeReviewReq") placeReviewReq: RequestBody,
         @Part images : List<MultipartBody.Part>?
     ): ResponseBody
+
+    @DELETE("place/review/my/{reviewId}")
+    suspend fun deleteMyPlaceReview(
+        @Path("reviewId") reviewId: Long
+    )
 }

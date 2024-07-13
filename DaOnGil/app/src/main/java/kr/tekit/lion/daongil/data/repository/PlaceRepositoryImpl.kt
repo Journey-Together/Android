@@ -61,4 +61,8 @@ class PlaceRepositoryImpl(
     override suspend fun writePlaceReviewData(placeId: Long, newReviewData: NewReviewData, reviewImages: NewReviewImages) : ResponseBody {
         return placeDataSource.writePlaceReviewData(placeId, newReviewData.toRequestBody(), reviewImages.toMultiPartBody())
     }
+
+    override suspend fun deleteMyPlaceReview(reviewId: Long) {
+        return placeDataSource.deleteMyPlaceReview(reviewId)
+    }
 }

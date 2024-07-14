@@ -43,8 +43,9 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                     myPlaceReview,
                     myPlaceReview.myPlaceReviewInfoList,
                     onMoveReviewListClick = {},
-                    onModifyClick = {
-                        findNavController().navigate(R.id.action_myReviewFragment_to_myReviewModifyFragment2)
+                    onModifyClick = { myPlaceReviewInfo ->
+                        val action = MyReviewFragmentDirections.actionMyReviewFragmentToMyReviewModifyFragment(myPlaceReviewInfo)
+                        findNavController().navigate(action)
                     },
                     onDeleteClick = { reviewId ->
                         requireContext().showConfirmDialog(

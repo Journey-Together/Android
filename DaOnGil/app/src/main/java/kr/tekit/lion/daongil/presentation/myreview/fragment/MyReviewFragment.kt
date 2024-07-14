@@ -54,7 +54,7 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                             "삭제한 데이터는 되돌릴 수 없습니다.",
                             "삭제하기"
                         ) {
-                            // 삭제하기 api
+                            viewModel.deleteMyPlaceReview(reviewId)
                         }
                     }
                 )

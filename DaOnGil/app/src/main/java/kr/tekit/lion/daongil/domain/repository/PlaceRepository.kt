@@ -27,6 +27,7 @@ interface PlaceRepository {
     suspend fun getMyPlaceReview(size: Int, page: Int): MyPlaceReview
     suspend fun getPlaceReviewList(placeId: Long, size: Int, page: Int): PlaceReviewInfo
     suspend fun writePlaceReviewData(placeId: Long, newReviewData: NewReviewData, reviewImages: NewReviewImages): ResponseBody
+    suspend fun deleteMyPlaceReview(reviewId: Long)
     companion object{
         fun create(): PlaceRepositoryImpl{
             return PlaceRepositoryImpl(

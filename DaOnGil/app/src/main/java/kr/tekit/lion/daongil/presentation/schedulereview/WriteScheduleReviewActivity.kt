@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.schedulereview
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -25,7 +24,6 @@ import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
-import kr.tekit.lion.daongil.presentation.schedulereview.customview.ReviewPublicDialog
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
 
@@ -33,7 +31,6 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
     private val viewModel : WriteScheduleReviewViewModel by viewModels { WriteScheduleReviewViewModelFactory() }
 
-    @SuppressLint("NotifyDataSetChanged")
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
@@ -41,7 +38,6 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
             }
         }
 
-    @SuppressLint("NotifyDataSetChanged")
     private val albumLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             // 사진 선택을 완료한 후 돌아왔다면
@@ -139,25 +135,27 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
             buttonWriteScheReivewSubmit.setOnClickListener {
                 val isValid = isReviewValid()
-                if(!isValid) return@setOnClickListener
+                if (!isValid) return@setOnClickListener
 
-                val reviewPublicDialog = ReviewPublicDialog{ isPublic ->
-                    binding.apply {
-                        val reviewContent = editTextWriteScheReviewContent.text.toString()
-                        val reviewRating = ratingbarWriteScheReview.rating
+                val isPrivateOrPublic = buttonGroupWriteScheReviewPublic.checkedRadioButtonId
+                val isPublic = when (isPrivateOrPublic) {
+                    R.id.radioButtonWriteScheReviewPublic -> true
+                    else -> false // isPrivateOrPublic == R.id.radioButtonWriteScheReviewPrivate
+                }
 
-                        val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+                binding.apply {
+                    val reviewContent = editTextWriteScheReviewContent.text.toString()
+                    val reviewRating = ratingbarWriteScheReview.rating
 
-                        viewModel.submitScheduleReview(planId, reviewDetail){ _, requestFlag ->
-                            if(requestFlag) {
-                                setResult(Activity.RESULT_OK)
-                                finish()
-                            }
+                    val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+
+                    viewModel.submitScheduleReview(planId, reviewDetail) { _, requestFlag ->
+                        if (requestFlag) {
+                            setResult(Activity.RESULT_OK)
+                            finish()
                         }
                     }
                 }
-                reviewPublicDialog.isCancelable = false
-                reviewPublicDialog.show(supportFragmentManager, "ReviewPublicDialog")
             }
         }
     }
@@ -212,9 +210,9 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
     private fun isReviewValid(): Boolean {
         with(binding){
-            val scheduleRating = ratingbarWriteScheReview.rating
-            if(scheduleRating <= 0){
-                showSnackBar(ratingbarWriteScheReview, "일정만족도를 선택해주세요")
+            val isPrivateOrPublic = buttonGroupWriteScheReviewPublic.checkedRadioButtonId
+            if (isPrivateOrPublic == View.NO_ID) {
+                showSnackBar(buttonGroupWriteScheReviewPublic, "여행 일정 공개 범주를 선택해주세요")
                 return false
             }
 

@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.myschedule
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -11,6 +12,8 @@ import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleElapsedAd
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleUpcomingAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.vm.MyScheduleViewModel
 import kr.tekit.lion.daongil.presentation.myschedule.vm.MyScheduleViewModelFactory
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 class MyScheduleActivity : AppCompatActivity() {
 
@@ -22,19 +25,28 @@ class MyScheduleActivity : AppCompatActivity() {
 
     private val upcomingAdapter by lazy {
         MyScheduleUpcomingAdapter { planPosition ->
-            // todo - ScheduleActivity로 이동하는 함수
+            val planId = viewModel.getUpcomingPlanId(planPosition)
+            if( planId != -1L ){
+                startScheduleDetailActivity(planId)
+            }
         }
     }
 
     private val elapsedAdapter by lazy {
         MyScheduleElapsedAdapter(
             onReviewButtonClicked = { planPosition ->
-//                val intent = Intent(this, WriteScheduleReviewActivity::class.java)
-//                intent.putExtra("planId", planId)
-//                startActivity(intent)
+                val planId = viewModel.getElapsedPlanId(planPosition)
+                if( planId != -1L ){
+                    val intent = Intent(this, WriteScheduleReviewActivity::class.java)
+                    intent.putExtra("planId", planId)
+                    startActivity(intent)
+                }
             },
             onScheduleItemClicked = { planPosition ->
-                // TO DO 일정화면으로 이동
+                val planId = viewModel.getElapsedPlanId(planPosition)
+                if( planId != -1L ){
+                    startScheduleDetailActivity(planId)
+                }
             }
         )
     }
@@ -102,5 +114,11 @@ class MyScheduleActivity : AppCompatActivity() {
                 binding.recyclerViewMyScheduleList.visibility = View.GONE
             }
         }
+    }
+
+    private fun startScheduleDetailActivity(planId: Long){
+        val intent = Intent(this, ScheduleActivity::class.java)
+        intent.putExtra("planId", planId)
+        startActivity(intent)
     }
 }

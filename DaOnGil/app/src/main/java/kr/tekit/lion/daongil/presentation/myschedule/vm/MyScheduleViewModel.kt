@@ -63,5 +63,12 @@ class MyScheduleViewModel(
         }
     }
 
+    fun getUpcomingPlanId(planPosition: Int) : Long {
+        return _upcomingSchedules.value?.get(planPosition)?.planId ?: -1
+    }
+
+    fun getElapsedPlanId(planPosition: Int) : Long {
+        return _elapsedSchedules.value?.get(planPosition)?.planId ?: -1
+    }
 
 }

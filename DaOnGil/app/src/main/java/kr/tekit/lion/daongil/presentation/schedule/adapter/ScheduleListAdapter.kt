@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.domain.model.DailyPlan
 
 class ScheduleListAdapter(
     private val dailyPlans: List<DailyPlan>,
-    private val schedulePlaceListener: SchedulePlaceAdapter.OnSchedulePlaceClickListener
+    private val scheduleListListener: (Int, Int) -> Unit
 ) : RecyclerView.Adapter<ScheduleListAdapter.ScheduleHeaderViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ScheduleHeaderViewHolder {
@@ -16,12 +16,12 @@ class ScheduleListAdapter(
         return ScheduleHeaderViewHolder(
             ItemScheduleListBinding.inflate(
                 inflater, parent, false
-            ), schedulePlaceListener
+            )
         )
     }
 
     override fun onBindViewHolder(holder: ScheduleHeaderViewHolder, position: Int) {
-        holder.bind(dailyPlans[position])
+        holder.bind(dailyPlans[position], scheduleListListener)
     }
 
     override fun getItemCount(): Int {
@@ -30,13 +30,14 @@ class ScheduleListAdapter(
 
     class ScheduleHeaderViewHolder(
         private val binding: ItemScheduleListBinding,
-        private val schedulePlaceListener: SchedulePlaceAdapter.OnSchedulePlaceClickListener
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(dailyPlan: DailyPlan) {
+        fun bind(dailyPlan: DailyPlan, scheduleListListener: (Int, Int) -> Unit) {
             with(binding) {
-                textViewItemSLDays.text = dailyPlan.dailyPlanDate.toString()
-                rvItemScheduleList.adapter =
-                    SchedulePlaceAdapter(dailyPlan.schedulePlaces, schedulePlaceListener)
+                textViewItemDay.text = "Day ${dailyPlan.dailyPlanDay}"
+                textViewItemDate.text = dailyPlan.dailyPlanDate
+                rvItemScheduleList.adapter = SchedulePlaceAdapter(dailyPlan.schedulePlaces) { childPosition ->
+                    scheduleListListener(absoluteAdapterPosition, childPosition)
+                }
             }
         }
     }

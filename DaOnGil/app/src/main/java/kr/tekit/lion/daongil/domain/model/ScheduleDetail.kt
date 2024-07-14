@@ -6,7 +6,7 @@ data class ScheduleDetail (
     val startDate : String,
     val endDate : String,
     // 여행 시작일까지 남은 날짜 (이미 지난 경우 null?)
-    val daysRemaining : Int?,
+    val daysRemaining : String?,
     // 공개 일정 여부
     var isPublic: Boolean,
     // 본인 일정 여부

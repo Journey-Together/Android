@@ -15,8 +15,10 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewModifyBinding
+import kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewModifyImageRVAdapter
@@ -73,27 +75,23 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
 
         val binding = FragmentMyReviewModifyBinding.bind(view)
 
+        val args: MyReviewModifyFragmentArgs by navArgs()
+        val review = args.myPlaceReviewInfo
+
         settingToolbar(binding)
+        settingReviewData(binding, review)
         settingImageRVAdapter(binding)
         settingButton(binding)
-        setDummyData(binding)
     }
 
-    private fun setDummyData(binding: FragmentMyReviewModifyBinding) {
-        // 더미 데이터
-        val dummyTitle = "광화문"
-        val dummySatisfaction = 4.5f
-        val dummyReview = "여행지에 대한 샘플 리뷰 내용입니다. 정말 멋진 경험이었어요!"
-        val dummyImages = listOf(
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MTRfMjc2%2FMDAxNjkyMDEwNjg4NjY5.xVKBUWPTf9iUZ2LOjmY3F5xxaP0PYb0boV6VwdDOK1cg.dICKJGMMb1H_FT6ezq-QMLSqNJzukn5wsNowbU7Nsu4g.PNG.khy920630%2F001-%25C8%25AD%25B8%25E9_%25C4%25B8%25C3%25B3_2023-08-14_195616.png&type=sc960_832"),
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzAxMDNfMTU0%2FMDAxNjcyNzQ2ODU1MDg4.UH9YeGpMu5OJrZYVnpeOTc7yVq6wA4M-MlErHMOt1bsg.cR1T4IxL60xSvjClSDJrVgl1bGHsU5KXaVKKuH49JaUg.JPEG.cellosj%2FKakaoTalk_20230103_193055989.jpg&type=sc960_832"),
-        )
+    private fun settingReviewData(binding: FragmentMyReviewModifyBinding, review: MyPlaceReviewInfo) {
+        binding.textViewMyReviewModifyTitle.text = review.name
+        binding.ratingbarMyReviewModify.rating = review.grade
+        binding.textFieldMyReviewModifyDate.setText(review.date.toString())
+        binding.textFieldMyReviewModifyWrite.setText(review.content)
 
-        binding.textViewMyReviewModifyTitle.text = dummyTitle
-        binding.ratingbarMyReviewModify.rating = dummySatisfaction
-        binding.textFieldMyReviewModifyWrite.setText(dummyReview)
         imagesList.clear()
-        imagesList.addAll(dummyImages)
+        imagesList.addAll(review.images.map { Uri.parse(it) })
         imageRVAdapter.notifyDataSetChanged()
     }
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kr.tekit.lion.daongil.databinding.ActivityMyScheduleBinding
+import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleElapsedAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleUpcomingAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.vm.MyScheduleViewModel
@@ -85,6 +86,13 @@ class MyScheduleActivity : AppCompatActivity() {
     private fun settingUpcomingScheduleAdapter(){
         binding.recyclerViewMyScheduleList.apply {
             adapter = upcomingAdapter
+            addOnScrollEndListener {
+                with(viewModel){
+                    if(!isUpcomingLastPage()){
+                        fetchNextUpcomingSchedules()
+                    }
+                }
+            }
         }
 
         viewModel.upcomingSchedules.observe(this@MyScheduleActivity){
@@ -102,6 +110,13 @@ class MyScheduleActivity : AppCompatActivity() {
     private fun settingElapsedScheduleAdapter() {
         binding.recyclerViewMyScheduleList.apply {
             adapter = elapsedAdapter
+            addOnScrollEndListener {
+                with(viewModel){
+                    if(!isElapsedLastPage()){
+                        fetchNextElapsedSchedules()
+                    }
+                }
+            }
         }
 
         viewModel.elapsedSchedules.observe(this@MyScheduleActivity){

@@ -30,11 +30,13 @@ class MyScheduleViewModel(
     private val _upcomingSchedules = MutableLiveData<List<MyUpcomingScheduleInfo>?>()
     val upcomingSchedules : LiveData<List<MyUpcomingScheduleInfo>?> get() = _upcomingSchedules
 
+    private val _upcomingPageNo = MutableLiveData<Int>()
     private val _isLastUpcoming = MutableLiveData<Boolean>()
 
     private val _elapsedSchedules = MutableLiveData<List<MyElapsedScheduleInfo>?>()
     val elapsedSchedules : LiveData<List<MyElapsedScheduleInfo>?> get() = _elapsedSchedules
 
+    private val _elapsedPageNo = MutableLiveData<Int>()
     private val _isLastElapsed = MutableLiveData<Boolean>()
 
     private fun getMyUpcomingScheduleList(size: Int, page: Int) {
@@ -42,6 +44,7 @@ class MyScheduleViewModel(
             getMyUpcomingSchedulesUseCase(size, page)
                 .onSuccess {
                     _upcomingSchedules.value = it.myUpcomingScheduleList
+                    _upcomingPageNo.value = it.pageNo
                     _isLastUpcoming.value = it.last
                     Log.d("getMyUpcomingScheduleList", "onSuccess")
                 }.onError {
@@ -55,6 +58,7 @@ class MyScheduleViewModel(
             getMyElapsedSchedulesUseCase(size, page)
                 .onSuccess {
                     _elapsedSchedules.value = it.myElapsedScheduleList
+                    _elapsedPageNo.value = it.pageNo
                     _isLastElapsed.value = it.last
                     Log.d("getMyElapsedScheduleList", "onSuccess")
                 }.onError {
@@ -69,6 +73,51 @@ class MyScheduleViewModel(
 
     fun getElapsedPlanId(planPosition: Int) : Long {
         return _elapsedSchedules.value?.get(planPosition)?.planId ?: -1
+    }
+
+    fun isUpcomingLastPage(): Boolean {
+        return _isLastUpcoming.value ?: true
+    }
+
+    fun isElapsedLastPage(): Boolean {
+        return _isLastElapsed.value ?: true
+    }
+
+    fun fetchNextUpcomingSchedules() {
+        val page = _upcomingPageNo.value
+
+        if(page != null){
+            viewModelScope.launch {
+                getMyUpcomingSchedulesUseCase(PAGE_SIZE, page+1)
+                    .onSuccess {
+                        val newList = _upcomingSchedules.value.orEmpty() + it.myUpcomingScheduleList
+                        _upcomingSchedules.value = newList
+                        _upcomingPageNo.value = it.pageNo
+                        _isLastUpcoming.value = it.last
+                    }.onError {
+                        Log.e("fetchNextUpcomingSchedules", "onError ${it.message}")
+                    }
+            }
+        }
+    }
+
+    fun fetchNextElapsedSchedules() {
+        val page = _elapsedPageNo.value
+
+        if(page != null){
+            viewModelScope.launch {
+                getMyElapsedSchedulesUseCase(PAGE_SIZE, page+1)
+                    .onSuccess {
+                        val newList = _elapsedSchedules.value.orEmpty() + it.myElapsedScheduleList
+                        _elapsedSchedules.value = newList
+                        _elapsedPageNo.value = it.pageNo
+                        _isLastElapsed.value = it.last
+                    }.onError {
+                        Log.e("fetchNextElapsedSchedules", "onError ${it.message}")
+                    }
+            }
+        }
+
     }
 
 }

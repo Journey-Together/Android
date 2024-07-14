@@ -11,6 +11,8 @@ data class PlaceDetailInfoGuest (
     val longitude: String,
     val name: String,
     val overview: String,
+    val tel: String,
+    val homepage: String,
     val placeId: Long,
     val reviewList: List<Review>?,
     val subDisability: List<SubDisability>?

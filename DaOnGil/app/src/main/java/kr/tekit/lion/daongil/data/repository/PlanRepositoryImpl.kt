@@ -4,7 +4,9 @@ import kr.tekit.lion.daongil.data.datasource.PlanDataSource
 import kr.tekit.lion.daongil.data.dto.remote.request.toMultiPartBodyList
 import kr.tekit.lion.daongil.data.dto.remote.request.toRequestBody
 import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
+import kr.tekit.lion.daongil.domain.model.MyElapsedSchedules
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
+import kr.tekit.lion.daongil.domain.model.MyUpcomingSchedules
 import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
@@ -47,5 +49,13 @@ class PlanRepositoryImpl(
             scheduleReview.toRequestBody(),
             images.toMultiPartBodyList()
         )
+    }
+
+    override suspend fun getMyUpcomingScheduleList(size: Int, page: Int): MyUpcomingSchedules {
+        return planDataSource.getMyUpcomingScheduleList(size, page).toDomainModel()
+    }
+
+    override suspend fun getMyElapsedScheduleList(size: Int, page: Int): MyElapsedSchedules {
+        return planDataSource.getMyElapsedScheduleList(size, page).toDomainModel()
     }
 }

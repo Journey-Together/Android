@@ -12,7 +12,7 @@ class MyReviewRVAdapter(
     private val myReviewList: MyPlaceReview,
     private val myReviewListInfo: List<MyPlaceReviewInfo>,
     private val onMoveReviewListClick: (Long) -> Unit,
-    private val onModifyClick: () -> Unit,
+    private val onModifyClick: (MyPlaceReviewInfo) -> Unit,
     private val onDeleteClick: (Long) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -54,7 +54,7 @@ class MyReviewRVAdapter(
     class MyReviewViewHolder(
         private val binding: ItemMyReviewBinding,
         private val onMoveReviewListClick: (Long) -> Unit,
-        private val onModifyClick: () -> Unit,
+        private val onModifyClick: (MyPlaceReviewInfo) -> Unit,
         private val onDeleteClick: (Long) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -69,7 +69,7 @@ class MyReviewRVAdapter(
             }
 
             binding.myReviewModifyBtn.setOnClickListener {
-                onModifyClick()
+                onModifyClick(myPlaceReview)
             }
 
             binding.myReviewDeleteBtn.setOnClickListener {

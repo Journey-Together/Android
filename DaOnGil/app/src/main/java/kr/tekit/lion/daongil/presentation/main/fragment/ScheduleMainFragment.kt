@@ -58,6 +58,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.getMyMainPlanList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -109,7 +115,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
             viewModel.myMainPlanList.observe(viewLifecycleOwner) {
                 if (it.isNullOrEmpty()) {
                     displayAddSchedulePrompt(binding)
+                    return@observe
                 }
+
+                binding.recyclerViewMySchedule.visibility = View.VISIBLE
+                binding.cardViewEmptySchedule.visibility = View.GONE
 
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(

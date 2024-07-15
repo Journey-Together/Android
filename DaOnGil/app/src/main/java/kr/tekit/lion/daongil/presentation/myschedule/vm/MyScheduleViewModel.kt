@@ -46,7 +46,6 @@ class MyScheduleViewModel(
                     _upcomingSchedules.value = it.myUpcomingScheduleList
                     _upcomingPageNo.value = it.pageNo
                     _isLastUpcoming.value = it.last
-                    Log.d("getMyUpcomingScheduleList", "onSuccess")
                 }.onError {
                     Log.e("getMyUpcomingScheduleList", "onError ${it.message}")
                 }
@@ -60,7 +59,6 @@ class MyScheduleViewModel(
                     _elapsedSchedules.value = it.myElapsedScheduleList
                     _elapsedPageNo.value = it.pageNo
                     _isLastElapsed.value = it.last
-                    Log.d("getMyElapsedScheduleList", "onSuccess")
                 }.onError {
                     Log.e("getMyElapsedScheduleList", "onError ${it.message}")
                 }

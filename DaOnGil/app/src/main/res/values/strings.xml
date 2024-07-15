@@ -148,7 +148,7 @@
     <string name="text_schedule_form_name">여행 제목</string>
     <string name="hint_schedule_form_name">15자 이내로 입력해주세요</string>
     <string name="text_schedule_form_period">여행 기간</string>
-    <string name="hint_schedule_form_period"><b>＋</b> 여행 기간 설정하기</string>
+    <string name="hint_schedule_form_period">여행 기간을 설정해주세요</string>
     <string name="text_schedule_form_next">다음으로</string>
     <string name="text_schedule_form_add_place">새로운 장소 추가</string>
 

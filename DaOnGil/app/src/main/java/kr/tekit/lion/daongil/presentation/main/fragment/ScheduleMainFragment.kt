@@ -15,6 +15,7 @@ import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.login.LogInState
+import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
@@ -201,6 +202,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     override fun onPosBtnClick() {
         // login 화면으로 이동
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        // FLAG_ACTIVITY_NEW_TASK : 새로운 task의 시작
+        // FLAG_ACTIVITY_CLEAR_TASK : 기존 task 의 모든 activity 제거
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
 

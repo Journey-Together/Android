@@ -124,14 +124,14 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(
                         itemClickListener = { position ->
-                            val intent = Intent(requireActivity(), ScheduleActivity::class.java)
-                            // to do - 여행 일정 idx 전달
-                            intent.putExtra("placeId", it?.get(position)?.planId)
-                            startActivity(intent)
+                            val planId = it[position]?.planId
+                            planId?.let {
+                                initScheduleDetailActivity(it)
+                            }
                         },
                         reviewClickListener = { position ->
                             val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
-                            intent.putExtra("planId", it?.get(position)?.planId)
+                            intent.putExtra("planId", it.get(position)?.planId)
                             scheduleReviewLauncher.launch(intent)
                         }
                     )
@@ -148,8 +148,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
-                            // 공개 일정 상세보기 페이지로 이동
-                            // onScheduleMainItemClick(it[position].planId)
+                            val planId = it[position].planId
+                            initScheduleDetailActivity(planId.toLong())
                         }
                     )
                     schedulePublicAdapter.addItems(it)
@@ -215,6 +215,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 startActivity(intent)
             }
         }
+    }
+
+    private fun initScheduleDetailActivity(planId: Long){
+        val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+        intent.putExtra("planId", planId)
+        startActivity(intent)
     }
 
 }

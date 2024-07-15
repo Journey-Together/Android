@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -120,6 +121,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         name: String,
         address: String,
         overview: String,
+        tel: String,
+        homepage: String,
         image: String?,
         longitude: Double,
         latitude: Double,
@@ -134,18 +137,38 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
 
         settingReviewBtn(placeId, name, address, image)
 
-        binding.detailTitleTv.text = name
-        binding.detailAddressTv.text = address
-        binding.detailBasicContentTv.text = overview
-        binding.detailToolbarTitleTv.text = category
-        binding.detailRouteTv.text = category
+        with(binding) {
+            detailTitleTv.text = name
+            detailAddressTv.text = address
+            detailBasicContentTv.text = overview
+            detailToolbarTitleTv.text = category
+            detailRouteTv.text = category
+            detailBasicAddressContentTv.text = address
+            detailCallContentTv.text = tel
+            detailHomepageContentTv.text = homepage
 
-        if (image != null) {
-            Glide.with(binding.detailThumbnailIv.context)
-                .load(image)
-                .error(R.drawable.empty_view)
-                .into(binding.detailThumbnailIv)
+            detailCallContentTv.setOnClickListener {
+                if (tel != "문의 정보가 제공되지 않습니다") {
+                    val intent = Intent(Intent.ACTION_DIAL)
+                    intent.data = Uri.parse("tel:$tel")
+                    startActivity(intent)
+                }
+            }
+
+            detailHomepageContentTv.setOnClickListener {
+                val url = detailHomepageContentTv.text.toString()
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)
+            }
+
+            if (image != null) {
+                Glide.with(detailThumbnailIv.context)
+                    .load(image)
+                    .error(R.drawable.empty_view)
+                    .into(detailThumbnailIv)
+            }
         }
+
 
         val cameraUpdate = CameraUpdate.scrollTo(LatLng(longitude, latitude))
         naverMap.moveCamera(cameraUpdate)
@@ -164,6 +187,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 detailPlaceInfo.name,
                 detailPlaceInfo.address,
                 detailPlaceInfo.overview,
+                detailPlaceInfo.tel,
+                detailPlaceInfo.homepage,
                 detailPlaceInfo.image,
                 detailPlaceInfo.longitude.toDouble(),
                 detailPlaceInfo.latitude.toDouble(),
@@ -205,6 +230,9 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.getDetailPlaceGuest(placeId)
 
         viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) { detailPlaceInfoGuest ->
+            val tel = detailPlaceInfoGuest.tel ?: "문의 번호 정보가 제공되지 않습니다"
+            val homepage = detailPlaceInfoGuest.homepage ?: "홈페이지 정보가 제공되지 않습니다"
+
             handleCommonDetailPlaceInfo(
                 detailPlaceInfoGuest.placeId,
                 detailPlaceInfoGuest.reviewList,
@@ -212,6 +240,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 detailPlaceInfoGuest.name,
                 detailPlaceInfoGuest.address,
                 detailPlaceInfoGuest.overview,
+                tel,
+                homepage,
                 detailPlaceInfoGuest.image,
                 detailPlaceInfoGuest.longitude.toDouble(),
                 detailPlaceInfoGuest.latitude.toDouble(),

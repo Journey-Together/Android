@@ -39,10 +39,7 @@
             android:layout_height="4dp"
             android:layout_weight="1"
             android:background="@color/primary"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="visible" />
 
         <View
             android:layout_width="wrap_content"
@@ -50,20 +47,14 @@
             android:layout_marginHorizontal="4dp"
             android:layout_weight="1"
             android:background="@color/schedule_detail_divider"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="visible" />
 
         <View
             android:layout_width="wrap_content"
             android:layout_height="4dp"
             android:layout_weight="1"
             android:background="@color/schedule_detail_divider"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:visibility="visible" />
     </LinearLayout>
 
     <TextView

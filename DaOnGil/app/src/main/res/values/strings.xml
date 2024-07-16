@@ -150,7 +150,7 @@
     <string name="text_schedule_form_period">여행 기간</string>
     <string name="hint_schedule_form_period">여행 기간을 설정해주세요</string>
     <string name="text_schedule_form_next">다음으로</string>
-    <string name="text_schedule_form_add_place">새로운 장소 추가</string>
+    <string name="text_schedule_form_add_place">새로운 장소 추가하기</string>
 
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
 

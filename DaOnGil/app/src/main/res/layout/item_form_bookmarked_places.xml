@@ -7,20 +7,22 @@
 
     <Button
         android:id="@+id/buttonBookmarkedPlace"
-        style="@style/Widget.Material3.Button.ElevatedButton"
+        style="@style/Widget.Material3.Button.OutlinedButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:backgroundTint="@color/item_background"
-        android:elevation="10dp"
-        tools:text="여행지명"
-        android:textColor="@color/black"
-        app:cornerRadius="10dp"
+        android:paddingHorizontal="16dp"
+        android:textColor="@color/text_tertiary"
+        app:cornerRadius="20dp"
         app:icon="@drawable/ic_add_24px"
         app:iconGravity="end"
-        app:iconPadding="20dp"
+        app:iconPadding="@dimen/margin_small2"
+        app:iconTint="@color/text_secondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/text_tertiary"
+        tools:text="여행지명" />
 </androidx.constraintlayout.widget.ConstraintLayout>

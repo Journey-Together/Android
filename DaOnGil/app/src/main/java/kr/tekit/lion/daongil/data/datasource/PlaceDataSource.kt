@@ -77,4 +77,8 @@ class PlaceDataSource(
     suspend fun deleteMyPlaceReview(reviewId: Long) {
         placeService.deleteMyPlaceReview(reviewId)
     }
+
+    suspend fun updateMyPlaceReviewData(reviewId: Long, reviewUpdateReq: RequestBody, addImages: List<MultipartBody.Part>): ResponseBody {
+        return placeService.updateMyPlaceReviewData(reviewId, reviewUpdateReq, addImages)
+    }
 }

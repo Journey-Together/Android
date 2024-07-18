@@ -43,6 +43,7 @@ class MyReviewModifyImageRVAdapter(
                 if (position != RecyclerView.NO_POSITION) {
                     adapter.imageList.removeAt(position)
                     adapter.notifyDataSetChanged()
+                    onDeleteImage(position)
                 }
             }
         }

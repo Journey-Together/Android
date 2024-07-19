@@ -7,16 +7,20 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.MyPlaceReview
+import kr.tekit.lion.daongil.domain.model.MyPlaceReviewImages
 import kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo
+import kr.tekit.lion.daongil.domain.model.UpdateMyPlaceReview
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.domain.usecase.place.DeleteMyPlaceReviewUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetMyPlaceReviewUseCase
+import kr.tekit.lion.daongil.domain.usecase.place.UpdateMyPlaceReviewUseCase
 import java.time.LocalDate
 
 class MyReviewViewModel(
     private val getMyPlaceReviewUseCase: GetMyPlaceReviewUseCase,
-    private val deleteMyPlaceReviewUseCase: DeleteMyPlaceReviewUseCase
+    private val deleteMyPlaceReviewUseCase: DeleteMyPlaceReviewUseCase,
+    private val updateMyPlaceReviewUseCase: UpdateMyPlaceReviewUseCase,
 ) : ViewModel() {
 
     private val _myPlaceReview = MutableLiveData<MyPlaceReview>()
@@ -25,11 +29,14 @@ class MyReviewViewModel(
     private val _reviewData = MutableLiveData<MyPlaceReviewInfo>()
     val reviewData: LiveData<MyPlaceReviewInfo> = _reviewData
 
+    private val _reviewImages = MutableLiveData<List<String>>()
+
+    private val _newImages = MutableLiveData<List<String>>()
+
+    private val _deletedImages = MutableLiveData<List<String>>()
+
     private val _visitDate = MutableLiveData<LocalDate>()
     val visitDate: LiveData<LocalDate> = _visitDate
-
-    private val _reviewImages = MutableLiveData<List<String>>()
-    val reviewImages : LiveData<List<String>> = _reviewImages
 
     private val _numOfImages = MutableLiveData<Int>()
     val numOfImages: LiveData<Int> = _numOfImages
@@ -100,9 +107,49 @@ class MyReviewViewModel(
         }
     }
 
+    fun updateMyPlaceReview(reviewId: Long, grade: Float, date: LocalDate, content: String) {
+        val deleteImages = _deletedImages.value ?: listOf()
+        val newImages = _newImages.value ?: listOf()
+        val currentImages = _reviewImages.value ?: listOf()
+        val updateImages = currentImages.plus(newImages)
+
+        _reviewData.value = _reviewData.value?.copy(
+            grade = grade,
+            date = date,
+            content = content,
+            images = updateImages
+        )
+
+        viewModelScope.launch {
+            updateMyPlaceReviewUseCase(
+                reviewId,
+                UpdateMyPlaceReview(grade, date, content, deleteImages),
+                MyPlaceReviewImages(newImages)
+            ).onSuccess {
+                _myPlaceReview.value?.let { currentReviewData ->
+                    val updatedReviews = currentReviewData.myPlaceReviewInfoList.map {
+                        if (it.reviewId == reviewId) {
+                            _reviewData.value!!
+                        } else {
+                            it
+                        }
+                    }
+                    _myPlaceReview.value = currentReviewData.copy(myPlaceReviewInfoList = updatedReviews)
+                }
+                Log.d("updateMyPlaceReview", it.toString())
+            }.onError {
+                Log.d("updateMyPlaceReview", it.toString())
+            }
+        }
+    }
+
     fun setReviewData(review: MyPlaceReviewInfo) {
         _reviewData.value = review
         _reviewImages.value = review.images.toMutableList()
+        _newImages.value = listOf()
+        _deletedImages.value = listOf()
+        _visitDate.value = review.date
+
         updateNumOfImages()
     }
 
@@ -114,19 +161,44 @@ class MyReviewViewModel(
         val currentImages = _reviewImages.value?.toMutableList() ?: mutableListOf()
         currentImages.add(image)
         _reviewImages.value = currentImages
+
         updateNumOfImages()
     }
 
     fun deleteImage(position: Int) {
         val currentImages = _reviewImages.value?.toMutableList() ?: mutableListOf()
+        val currentNewImages = _newImages.value?.toMutableList() ?: mutableListOf()
+
         if (position in currentImages.indices) {
-            currentImages.removeAt(position)
+            val deletedImage = currentImages.removeAt(position)
             _reviewImages.value = currentImages
-            updateNumOfImages()
+
+            val deletedImageList = _deletedImages.value?.toMutableList() ?: mutableListOf()
+            deletedImageList.add(deletedImage)
+            _deletedImages.value = deletedImageList
+        } else {
+            val newPosition = position - currentImages.size
+            if (newPosition in currentNewImages.indices) {
+                currentNewImages.removeAt(newPosition)
+                _newImages.value = currentNewImages
+            }
         }
+
+        updateNumOfImages()
+    }
+
+
+    fun addNewImage(image: String) {
+        val currentNewImages = _newImages.value?.toMutableList() ?: mutableListOf()
+        currentNewImages.add(image)
+        _newImages.value = currentNewImages
+
+        updateNumOfImages()
     }
 
     private fun updateNumOfImages() {
-        _numOfImages.value = _reviewImages.value?.size ?: 0
+        val reviewImageCount = _reviewImages.value?.size ?: 0
+        val newImageCount = _newImages.value?.size ?: 0
+        _numOfImages.value = reviewImageCount + newImageCount
     }
 }

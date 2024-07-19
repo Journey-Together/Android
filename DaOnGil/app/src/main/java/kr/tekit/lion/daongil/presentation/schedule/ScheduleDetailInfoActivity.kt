@@ -94,7 +94,6 @@ class ScheduleDetailInfoActivity : AppCompatActivity(), ConfirmDialogInterface {
                 } ?: run {
                     scheduleDday.visibility = View.GONE
 
-
                     // 지나간 일정 + 내가 작성자
                     if(scheduleDetailInfo.isWriter){
                         // 리뷰가 없을 때
@@ -155,7 +154,7 @@ class ScheduleDetailInfoActivity : AppCompatActivity(), ConfirmDialogInterface {
                     }
 
                     is LogInState.LoginRequired -> {
-
+                        viewModel.getScheduleDetailInfoGuest(planId)
                         initView(false)
                     }
                 }

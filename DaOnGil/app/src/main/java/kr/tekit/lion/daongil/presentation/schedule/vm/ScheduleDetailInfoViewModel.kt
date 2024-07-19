@@ -7,16 +7,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kr.tekit.lion.daongil.data.repository.AuthRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
+import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoGuestUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class ScheduleDetailInfoViewModel(
     private val getScheduleDetailInfoUseCase: GetScheduleDetailInfoUseCase,
-    private val authRepository: AuthRepository
+    private val authRepository: AuthRepository,
+    private val getScheduleDetailInfoGuestUseCase: GetScheduleDetailInfoGuestUseCase
 ) : ViewModel() {
 
     private val _scheduleDetailInfo = MutableLiveData<ScheduleDetail>()
@@ -32,6 +33,13 @@ class ScheduleDetailInfoViewModel(
     fun getScheduleDetailInfo(planId: Long) =
         viewModelScope.launch {
             getScheduleDetailInfoUseCase.invoke(planId).onSuccess {
+                _scheduleDetailInfo.value = it
+            }
+        }
+
+    fun getScheduleDetailInfoGuest(planId: Long) =
+        viewModelScope.launch {
+            getScheduleDetailInfoGuestUseCase.invoke(planId).onSuccess {
                 _scheduleDetailInfo.value = it
             }
         }

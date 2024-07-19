@@ -48,4 +48,8 @@ class PlanDataSource(
     suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailResponse {
         return planService.getDetailScheduleInfo(planId)
     }
+
+    suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailResponse {
+        return planService.getDetailScheduleInfoGuest(planId)
+    }
 }

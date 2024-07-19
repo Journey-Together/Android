@@ -33,6 +33,8 @@ interface PlanRepository {
 
     suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetail
 
+    suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetail
+
     companion object{
         fun create(): PlanRepositoryImpl{
             return PlanRepositoryImpl(

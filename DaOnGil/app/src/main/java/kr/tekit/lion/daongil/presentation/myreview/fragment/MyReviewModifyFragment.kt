@@ -14,6 +14,7 @@ import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -21,9 +22,10 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewModifyBinding
-import kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo
+import kr.tekit.lion.daongil.presentation.ext.showSoftInput
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
@@ -58,7 +60,7 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
                     imageRVAdapter.notifyDataSetChanged()
 
                     val path = requireContext().toAbsolutePath(uri)
-                    viewModel.setReviewImages(path!!)
+                    viewModel.addNewImage(path!!)
                 } else {
                     Snackbar.make(requireView(), "이미지는 최대 4장까지 첨부 가능합니다", Snackbar.LENGTH_SHORT).show()
                 }
@@ -113,8 +115,10 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         settingReviewData(binding)
         settingImageRVAdapter(binding)
         settingButton(binding)
+        settingErrorHandling(binding)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun settingReviewData(binding: FragmentMyReviewModifyBinding) {
         viewModel.reviewData.observe(viewLifecycleOwner) { review ->
             binding.textViewMyReviewModifyTitle.text = review.name
@@ -152,6 +156,24 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         }
 
         binding.buttonMyReviewModify.setOnClickListener {
+            if (isFormValid(binding)) {
+                val grade = binding.ratingbarMyReviewModify.rating
+                val date = viewModel.visitDate.value
+                val content = binding.textFieldMyReviewModifyWrite.text.toString()
+
+                viewModel.updateMyPlaceReview(viewModel.reviewData.value?.reviewId ?:0, grade, date!!, content)
+
+                Snackbar.make(binding.root, "여행지 후기가 수정되었습니다.", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.text_secondary
+                        )
+                    )
+                    .show()
+
+                findNavController().popBackStack()
+            }
         }
     }
 
@@ -223,6 +245,41 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         val albumIntent = Intent(Intent.ACTION_GET_CONTENT)
         albumIntent.type = "image/*"  // 이미지 타입만 선택하도록 설정
         albumLauncher.launch(albumIntent)
+    }
+
+    private fun isFormValid(binding: FragmentMyReviewModifyBinding): Boolean {
+        val date = viewModel.visitDate.value
+        val reviewContent = binding.textFieldMyReviewModifyWrite.text.toString()
+
+        return if (date == null) {
+            Snackbar.make(binding.root, "방문 날짜를 선택해 주세요", Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_secondary
+                    )
+                )
+                .show()
+            false
+
+        } else if (reviewContent.isEmpty()) {
+            binding.textInputLayoutMyReviewModifyWrite.error = "후기 내용을 입력해 주세요"
+            binding.textFieldMyReviewModifyWrite.requestFocus()
+            requireContext().showSoftInput(binding.textFieldMyReviewModifyWrite)
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun settingErrorHandling(binding: FragmentMyReviewModifyBinding) {
+        binding.textFieldMyReviewModifyWrite.addTextChangedListener {
+            clearErrorMessage(binding.textInputLayoutMyReviewModifyWrite)
+        }
+    }
+
+    private fun clearErrorMessage(textInputLayout: TextInputLayout) {
+        textInputLayout.error = null
     }
 
     override fun onPosBtnClick() {

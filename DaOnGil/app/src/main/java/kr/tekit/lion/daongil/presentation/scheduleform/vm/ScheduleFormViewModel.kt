@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.presentation.scheduleform.vm
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import kr.tekit.lion.daongil.domain.model.DailyPlace
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.domain.model.NewPlan
+import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.usecase.plan.AddNewPlanUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
@@ -49,6 +51,18 @@ class ScheduleFormViewModel(
     val placeSearchResult : LiveData<PlaceSearchResult> get() = _placeSearchResult
 
     private val _keyword = MutableLiveData<String>()
+
+    // 검색 결과 수와 장소 목록을 하나의 List로 관리
+    private val _searchResultsWithNum = MediatorLiveData<List<PlaceSearchInfoList>>().apply {
+        // _placeSearchResult: 이 값이 변경될 때마다 값 update
+        addSource(_placeSearchResult) {
+            val combinedList = mutableListOf<PlaceSearchInfoList>()
+            combinedList.add(it.totalElements)
+            combinedList.addAll(it.placeInfoList)
+            value = combinedList
+        }
+    }
+    val searchResultsWithNum : LiveData<List<PlaceSearchInfoList>> get() = _searchResultsWithNum
 
     init {
         getBookmarkedPlaceList()

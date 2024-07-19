@@ -6,5 +6,5 @@ data class UpdateMyPlaceReview(
     val grade: Float,
     val date: LocalDate,
     val content: String,
-    val deleteImages: List<String>
+    val deleteImgUrls: List<String>
 )

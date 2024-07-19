@@ -55,17 +55,14 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                if (selectedImages.size < 4) {
-                    selectedImages.add(uri)
-                    imageRVAdapter.notifyDataSetChanged()
+                selectedImages.add(uri)
+                imageRVAdapter.notifyDataSetChanged()
 
-                    val path = requireContext().toAbsolutePath(uri)
-                    viewModel.addNewImage(path!!)
-                } else {
-                    Snackbar.make(requireView(), "이미지는 최대 4장까지 첨부 가능합니다", Snackbar.LENGTH_SHORT).show()
-                }
+                val path = requireContext().toAbsolutePath(uri)
+                viewModel.addNewImage(path!!)
             }
         }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private val albumLauncher =
@@ -144,6 +141,18 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
 
     private fun settingButton(binding: FragmentMyReviewModifyBinding) {
         binding.imageButtonMyReviewModify.setOnClickListener {
+            if (!viewModel.isMoreImageAttachable()) {
+                Snackbar.make(requireView(), "이미지는 최대 4장까지 첨부 가능합니다", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.text_secondary
+                        )
+                    )
+                    .show()
+                return@setOnClickListener
+            }
+
             if (isPhotoPickerAvailable()) {
                 this.pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             } else {

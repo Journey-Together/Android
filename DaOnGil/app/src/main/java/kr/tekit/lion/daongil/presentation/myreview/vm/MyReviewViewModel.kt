@@ -201,4 +201,9 @@ class MyReviewViewModel(
         val newImageCount = _newImages.value?.size ?: 0
         _numOfImages.value = reviewImageCount + newImageCount
     }
+
+    fun isMoreImageAttachable(): Boolean{
+        val currentValue = _numOfImages.value ?: 0
+        return currentValue in 0..3
+    }
 }

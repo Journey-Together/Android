@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/margin_basic"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="@dimen/margin_basic"
         android:layout_marginBottom="@dimen/margin_big3"
         android:fontFamily="@font/pretendard_semibold"
         android:text="@string/text_number_of_result"

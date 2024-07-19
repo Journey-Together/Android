@@ -107,11 +107,9 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
         }*/
 
         scheduleFormViewModel.searchResultsWithNum.observe(viewLifecycleOwner) {
-            if (it.isNotEmpty()) {
-                // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
-                searchResultAdapter.submitList(it)
-            } else {
-                binding.recyclerViewFSResult.visibility = View.GONE
+            // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
+            searchResultAdapter.submitList(it)
+            if (it.size <= 1) {
                 binding.textViewFSResultEmpty.visibility = View.VISIBLE
             }
         }

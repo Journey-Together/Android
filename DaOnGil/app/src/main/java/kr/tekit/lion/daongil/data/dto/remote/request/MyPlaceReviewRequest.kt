@@ -10,11 +10,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.time.LocalDate
 
 @JsonClass(generateAdapter = true)
-class MyPlaceReviewRequest(
+data class MyPlaceReviewRequest(
     val grade: Float,
     val date: LocalDate,
     val content: String,
-    val deleteImages: List<String>
+    val deleteImgUrls: List<String>
 )
 
 fun UpdateMyPlaceReview.toRequestBody(): RequestBody {
@@ -27,7 +27,7 @@ fun UpdateMyPlaceReview.toRequestBody(): RequestBody {
             this.grade,
             this.date,
             this.content,
-            this.deleteImages
+            this.deleteImgUrls
         )
     ).toRequestBody("application/json".toMediaTypeOrNull())
 }

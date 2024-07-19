@@ -23,7 +23,7 @@ import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
@@ -114,9 +114,9 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(
                         itemClickListener = { position ->
-                            val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+                            val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
                             // to do - 여행 일정 idx 전달
-                            intent.putExtra("placeId", it?.get(position)?.planId)
+                            intent.putExtra("planId", it?.get(position)?.planId)
                             startActivity(intent)
                         },
                         reviewClickListener = { position ->
@@ -138,6 +138,10 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
+                            val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
+                            // to do - 여행 일정 idx 전달
+                            intent.putExtra("planId", it?.get(position)?.planId)
+                            startActivity(intent)
                             // 공개 일정 상세보기 페이지로 이동
                             // onScheduleMainItemClick(it[position].planId)
                         }

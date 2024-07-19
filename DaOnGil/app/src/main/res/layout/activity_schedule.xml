@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.schedule.ScheduleActivity">
+    tools:context=".presentation.schedule.ScheduleDetailInfoActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -321,20 +321,19 @@
                 android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/scheduleEmptyReviewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="여행은 어떠셨나요?\n후기를 남겨주세요"
                     android:textColor="@color/text_quaternary"
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewScheduleLeaveReview"
+                    android:id="@+id/scheduleEmptyReviewContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/margin_small1"
-                    android:text="@string/text_leave_schedule_review"
                     android:textColor="@color/text_quaternary"
                     android:textSize="@dimen/font_small2" />
             </LinearLayout>

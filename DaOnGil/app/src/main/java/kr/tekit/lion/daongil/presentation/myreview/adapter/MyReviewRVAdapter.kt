@@ -64,7 +64,7 @@ class MyReviewRVAdapter(
             binding.textViewMyReviewDate.text = myPlaceReview.date.toString()
             binding.textViewMyReviewContent.text = myPlaceReview.content
 
-            binding.imageViewMove.setOnClickListener {
+            binding.layoutLocationName.setOnClickListener {
                 onMoveReviewListClick(myPlaceReview.placeId)
             }
 

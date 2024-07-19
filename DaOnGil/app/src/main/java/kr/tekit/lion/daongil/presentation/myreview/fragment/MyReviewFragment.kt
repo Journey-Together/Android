@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.myreview.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
@@ -10,6 +11,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewBinding
 import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
+import kr.tekit.lion.daongil.presentation.home.ReviewListActivity
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewRVAdapter
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModel
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
@@ -42,7 +44,11 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 val myReviewRVAdapter = MyReviewRVAdapter(
                     myPlaceReview,
                     myPlaceReview.myPlaceReviewInfoList,
-                    onMoveReviewListClick = {},
+                    onMoveReviewListClick = { reviewPlaceId ->
+                        val intent = Intent(requireContext(), ReviewListActivity::class.java)
+                        intent.putExtra("reviewPlaceId", reviewPlaceId)
+                        startActivity(intent)
+                    },
                     onModifyClick = { myPlaceReviewInfo ->
                         val action = MyReviewFragmentDirections.actionMyReviewFragmentToMyReviewModifyFragment(myPlaceReviewInfo)
                         findNavController().navigate(action)

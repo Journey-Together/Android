@@ -96,11 +96,21 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             }
         }
 
-        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
+/*        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
             if(it.placeInfoList.isNotEmpty()){
                 // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
                 searchResultAdapter.submitList(it.placeInfoList)
             }else{
+                binding.recyclerViewFSResult.visibility = View.GONE
+                binding.textViewFSResultEmpty.visibility = View.VISIBLE
+            }
+        }*/
+
+        scheduleFormViewModel.searchResultsWithNum.observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
+                // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
+                searchResultAdapter.submitList(it)
+            } else {
                 binding.recyclerViewFSResult.visibility = View.GONE
                 binding.textViewFSResultEmpty.visibility = View.VISIBLE
             }

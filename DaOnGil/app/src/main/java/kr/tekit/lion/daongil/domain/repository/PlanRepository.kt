@@ -11,6 +11,7 @@ import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ReviewImg
+import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 
 interface PlanRepository {
     suspend fun getOpenPlanList(size: Int, page: Int): OpenPlan
@@ -29,6 +30,8 @@ interface PlanRepository {
         scheduleReview: NewScheduleReview,
         images: List<ReviewImg>
     )
+
+    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetail
 
     companion object{
         fun create(): PlanRepositoryImpl{

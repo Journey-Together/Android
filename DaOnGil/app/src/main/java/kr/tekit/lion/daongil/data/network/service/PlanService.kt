@@ -4,6 +4,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlan
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail.ScheduleDetailResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -66,5 +67,12 @@ interface PlanService {
         @Path("planId") planId: Long,
         @Part("planReviewReq") scheduleReview: RequestBody,
     )
+
+    // 여행 일정 상세보기 (로그인버전)
+    @GET("plan/detail/{planId}")
+    suspend fun getDetailScheduleInfo(
+        @Path("planId") planId: Long
+    ): ScheduleDetailResponse
+
 
 }

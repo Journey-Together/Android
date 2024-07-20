@@ -9,17 +9,10 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 
 fun MyPlaceReviewImages.toMultiPartBody(): List<MultipartBody.Part> {
-    val parts = mutableListOf<MultipartBody.Part>()
-
-    this.addImages?.let { images ->
-        for (imageUrl in images) {
-            val file = File(imageUrl)
-            val bitmap = BitmapFactory.decodeFile(file.path).compressBitmap(60)
-            val requestFile = bitmap.toRequestBody("MultiPartFile".toMediaTypeOrNull())
-            val part = MultipartBody.Part.createFormData("addImages", file.name, requestFile)
-            parts.add(part)
-        }
-    }
-
-    return parts
+    return this.addImages?.map { imageUrl ->
+        val file = File(imageUrl)
+        val bitmap = BitmapFactory.decodeFile(file.path).compressBitmap(60)
+        val requestFile = bitmap.toRequestBody("MultiPartFile".toMediaTypeOrNull())
+        MultipartBody.Part.createFormData("addImages", file.name, requestFile)
+    } ?: emptyList()
 }

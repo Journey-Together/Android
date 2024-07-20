@@ -76,6 +76,12 @@
 
     <string name="text_my_schedule">내 일정</string>
     <string name="text_public_schedule">공개 일정</string>
+    <string name="text_schedule_info_writer_not_leave_title">여행이 종료되지 않았습니다.</string>
+    <string name="text_schedule_info_writer_not_leave_content">종료 후 후기를 남겨주세요.</string>
+    <string name="text_schedule_info_not_leave_title">여행이 종료되지 않았습니다.</string>
+    <string name="text_schedule_info_not_leave_content">종료 후 후기가 작성될 예정입니다.</string>
+    <string name="text_schedule_info_leave_title">작성된 후기가 없습니다.</string>
+    <string name="text_schedule_info_leave_content">후기가 작성될 때까지 기다려주세요.</string>
     <string name="text_leave_schedule_review"><u>후기/만족도 남기기 ＞</u></string>
     <string name="text_schedule_detail_review">여행 후기</string>
     <string name="text_schedule_review">후기</string>
@@ -148,6 +154,7 @@
     <string name="hint_schedule_form_period"><b>＋</b> 여행 기간 설정하기</string>
     <string name="text_schedule_form_next">다음으로</string>
     <string name="text_schedule_form_add_place">새로운 장소 추가</string>
+
 
     <string name="text_make_public">일정을 공개하시겠습니까?</string>
 

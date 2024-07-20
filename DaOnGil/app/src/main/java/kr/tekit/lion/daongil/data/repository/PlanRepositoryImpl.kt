@@ -10,6 +10,7 @@ import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ReviewImg
+import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 
 class PlanRepositoryImpl(
@@ -47,5 +48,13 @@ class PlanRepositoryImpl(
             scheduleReview.toRequestBody(),
             images.toMultiPartBodyList()
         )
+    }
+
+    override suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetail {
+        return planDataSource.getDetailScheduleInfo(planId).toDomainModel()
+    }
+
+    override suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetail {
+        return planDataSource.getDetailScheduleInfoGuest(plandId).toDomainModel()
     }
 }

@@ -179,7 +179,7 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
 
     private fun showPlaceDetail(placeId: Long){
         val intent = Intent(requireActivity(), DetailActivity::class.java)
-        intent.putExtra("detailPlaceId", placeId.toInt())
+        intent.putExtra("detailPlaceId", placeId)
         startActivity(intent)
     }
 }

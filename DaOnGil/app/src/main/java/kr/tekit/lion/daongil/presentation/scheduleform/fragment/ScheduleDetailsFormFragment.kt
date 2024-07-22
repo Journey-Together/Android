@@ -147,7 +147,7 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         calendar.time = date
         calendar.add(Calendar.DAY_OF_MONTH, n)
 
-        val dayString = SimpleDateFormat("M월 d일 E요일", Locale.KOREAN).format(calendar.time)
+        val dayString = SimpleDateFormat("M월 d일 (E)", Locale.KOREAN).format(calendar.time)
 
         return dayString
     }

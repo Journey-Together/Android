@@ -25,6 +25,9 @@
         <action
             android:id="@+id/action_scheduleDetailsFormFragment_to_nameAndPeriodFormFragment"
             app:destination="@id/nameAndPeriodFormFragment" />
+        <action
+            android:id="@+id/action_scheduleDetailsFormFragment_to_formScheduleConfirmFragment"
+            app:destination="@id/formScheduleConfirmFragment" />
     </fragment>
     <fragment
         android:id="@+id/formSearchFragment"
@@ -37,5 +40,14 @@
         <argument
             android:name="schedulePosition"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/formScheduleConfirmFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ScheduleConfirmFormFragment"
+        android:label="@string/add_new_schedule"
+        tools:layout="@layout/fragment_schedule_confirm_form" >
+        <action
+            android:id="@+id/action_formScheduleConfirmFragment_to_scheduleDetailsFormFragment"
+            app:destination="@id/scheduleDetailsFormFragment" />
     </fragment>
 </navigation>

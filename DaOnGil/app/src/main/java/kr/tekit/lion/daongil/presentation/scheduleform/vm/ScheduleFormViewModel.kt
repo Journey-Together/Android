@@ -211,7 +211,7 @@ class ScheduleFormViewModel(
             placeId?.let {
                 getPlaceDetailInfoUseCase(placeId).onSuccess {
                     val formPlace =
-                        FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
+                        FormPlace(it.placeId, it.image, it.name, it.category)
                     addNewPlace(formPlace, dayPosition)
 
                 }.onError {

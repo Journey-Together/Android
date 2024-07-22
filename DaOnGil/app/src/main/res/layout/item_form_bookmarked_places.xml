@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         android:backgroundTint="@color/item_background"
+        android:gravity="fill_horizontal|center_vertical"
         android:paddingHorizontal="16dp"
         android:textColor="@color/text_tertiary"
         app:cornerRadius="20dp"

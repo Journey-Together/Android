@@ -88,6 +88,17 @@ class ScheduleFormViewModel(
         return startDate.value != null
     }
 
+    fun getScheduleTitle(): String {
+        return _title.value ?: ""
+    }
+
+    fun getSchedulePeriod(): String {
+        val startDateString = _startDate.value?.let { formatDateValue(it) }
+        val endDateString = _endDate.value?.let { formatDateValue(it) }
+
+        return "$startDateString - $endDateString"
+    }
+
     private fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
         // 업데이트 될 기존 데이터
         val updatedSchedule = _schedule.value?.toMutableList()

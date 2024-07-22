@@ -89,6 +89,12 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
     }
 
     private fun initView(binding: FragmentScheduleDetailsFormBinding) {
+        // 여행 제목, 기간
+        val title = scheduleFormViewModel.getScheduleTitle()
+        binding.textViewDFTitle.text = getString(R.string.text_selected_title, title)
+        val period = scheduleFormViewModel.getSchedulePeriod()
+        binding.textViewDFDate.text = getString(R.string.text_selected_period, period)
+
         // ViewModel의 리스트를 토대로 리사이클러뷰 세팅
         scheduleFormViewModel.schedule.observe(viewLifecycleOwner) {
             if (it != null) { // 데이터가 바뀔 때마다 recyclerView 갱신?

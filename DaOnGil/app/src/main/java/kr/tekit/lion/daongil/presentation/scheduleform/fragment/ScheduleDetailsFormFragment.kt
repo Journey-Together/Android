@@ -1,16 +1,13 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleDetailsFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
@@ -59,7 +56,7 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
             initView(binding)
         }
 
-        initButtonSubmit(binding)
+        initButtonNextStep(binding)
     }
 
     private fun initToolbar(binding: FragmentScheduleDetailsFormBinding) {
@@ -158,23 +155,12 @@ class ScheduleDetailsFormFragment : Fragment(R.layout.fragment_schedule_details_
         return dayString
     }
 
-    private fun initButtonSubmit(binding: FragmentScheduleDetailsFormBinding){
-        binding.buttonDFSubmit.setOnClickListener { view ->
-            scheduleFormViewModel.submitNewPlan{ _, requestFlag ->
-                if(requestFlag){
-                    requireActivity().setResult(Activity.RESULT_OK)
-                    requireActivity().finish()
-                }else{
-                    showSnackBar(view, "다시 시도해주세요")
-                }
-            }
+    private fun initButtonNextStep(binding: FragmentScheduleDetailsFormBinding){
+        binding.buttonDFNextStep.setOnClickListener { view ->
+            val navController = findNavController()
+            val action = ScheduleDetailsFormFragmentDirections.actionScheduleDetailsFormFragmentToFormScheduleConfirmFragment()
+            navController.navigate(action)
         }
-    }
-
-    private fun showSnackBar(view: View, message : String ){
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
-            .show()
     }
 
     private fun showPlaceDetail(placeId: Long){

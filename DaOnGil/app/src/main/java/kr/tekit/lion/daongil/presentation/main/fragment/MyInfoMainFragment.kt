@@ -124,6 +124,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun moveConcernType(binding: FragmentMyInfoMainBinding) {
         binding.layoutConcernType.setOnClickListener {
             val intent = Intent(requireActivity(), ConcernTypeActivity::class.java)
+            intent.putExtra("nickName", binding.tvNameOrLogin.text.toString())
             startActivity(intent)
         }
     }

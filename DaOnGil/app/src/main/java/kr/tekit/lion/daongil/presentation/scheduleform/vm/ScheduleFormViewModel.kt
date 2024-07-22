@@ -297,5 +297,10 @@ class ScheduleFormViewModel(
         }
     }
 
+    fun getPlaceId(selectedPlacePosition: Int): Long {
+        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId ?: -1L
+
+        return placeId
+    }
 
 }

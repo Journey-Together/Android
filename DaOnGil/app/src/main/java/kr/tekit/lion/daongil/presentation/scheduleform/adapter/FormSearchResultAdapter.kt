@@ -12,7 +12,8 @@ import kr.tekit.lion.daongil.databinding.ItemFormSearchTotalBinding
 import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList
 
 class FormSearchResultAdapter(
-    private val onPlaceSelectedListener: (selectedPlacePosition: Int) -> Unit
+    private val onPlaceSelectedListener: (selectedPlacePosition: Int) -> Unit,
+    private val onItemClickListener: (selectedPlacePosition: Int) -> Unit
 ) : ListAdapter<PlaceSearchInfoList, RecyclerView.ViewHolder>(diffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -28,7 +29,8 @@ class FormSearchResultAdapter(
             VIEW_TYPE_PLACE -> {
                 FormSearchResultViewHolder(
                     ItemFormSearchResultBinding.inflate(inflater, parent, false),
-                    onPlaceSelectedListener
+                    onPlaceSelectedListener,
+                    onItemClickListener
                 )
             }
             else -> throw IllegalArgumentException("Unknown view type")
@@ -51,12 +53,17 @@ class FormSearchResultAdapter(
 
     class FormSearchResultViewHolder(
         private val binding: ItemFormSearchResultBinding,
-        private val onPlaceSelectedListener: (selectedPlacePosition: Int) -> Unit
+        private val onPlaceSelectedListener: (selectedPlacePosition: Int) -> Unit,
+        private val onItemClickListener: (selectedPlacePosition: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.imageButtonSearchResultAdd.setOnClickListener {
                 // 장소 목록 앞에 검색 결과 수 item 이 추가되었으므로 AdapterPosition에서 1을 빼준다
                 onPlaceSelectedListener(absoluteAdapterPosition - 1)
+            }
+
+            binding.root.setOnClickListener {
+                onItemClickListener(absoluteAdapterPosition -1)
             }
         }
 

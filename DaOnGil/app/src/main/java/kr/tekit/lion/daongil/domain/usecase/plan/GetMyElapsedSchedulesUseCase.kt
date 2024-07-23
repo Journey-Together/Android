@@ -9,7 +9,11 @@ class GetMyElapsedSchedulesUseCase (
     private val planRepository: PlanRepository
 ): BaseUseCase() {
 
-    suspend operator fun invoke(size: Int, page: Int) : Result<MyElapsedSchedules> = execute {
-        planRepository.getMyElapsedScheduleList(size, page)
+    companion object{
+        private const val PAGE_SIZE = 10
+    }
+
+    suspend operator fun invoke(page: Int) : Result<MyElapsedSchedules> = execute {
+        planRepository.getMyElapsedScheduleList(PAGE_SIZE, page)
     }
 }

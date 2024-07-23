@@ -18,13 +18,9 @@ class MyScheduleViewModel(
     private val getMyElapsedSchedulesUseCase: GetMyElapsedSchedulesUseCase
 ) : ViewModel() {
 
-    companion object {
-        const val PAGE_SIZE = 10
-    }
-
     init {
-        getMyUpcomingScheduleList(PAGE_SIZE, 0)
-        getMyElapsedScheduleList(PAGE_SIZE, 0)
+        getMyUpcomingScheduleList(0)
+        getMyElapsedScheduleList(0)
     }
 
     private val _upcomingSchedules = MutableLiveData<List<MyUpcomingScheduleInfo>?>()
@@ -39,9 +35,9 @@ class MyScheduleViewModel(
     private val _elapsedPageNo = MutableLiveData<Int>()
     private val _isLastElapsed = MutableLiveData<Boolean>()
 
-    private fun getMyUpcomingScheduleList(size: Int, page: Int) {
+    private fun getMyUpcomingScheduleList(page: Int) {
         viewModelScope.launch {
-            getMyUpcomingSchedulesUseCase(size, page)
+            getMyUpcomingSchedulesUseCase(page)
                 .onSuccess {
                     _upcomingSchedules.value = it.myUpcomingScheduleList
                     _upcomingPageNo.value = it.pageNo
@@ -52,9 +48,9 @@ class MyScheduleViewModel(
         }
     }
 
-    private fun getMyElapsedScheduleList(size: Int, page: Int) {
+    private fun getMyElapsedScheduleList(page: Int) {
         viewModelScope.launch {
-            getMyElapsedSchedulesUseCase(size, page)
+            getMyElapsedSchedulesUseCase(page)
                 .onSuccess {
                     _elapsedSchedules.value = it.myElapsedScheduleList
                     _elapsedPageNo.value = it.pageNo
@@ -86,7 +82,7 @@ class MyScheduleViewModel(
 
         if(page != null){
             viewModelScope.launch {
-                getMyUpcomingSchedulesUseCase(PAGE_SIZE, page+1)
+                getMyUpcomingSchedulesUseCase(page+1)
                     .onSuccess {
                         val newList = _upcomingSchedules.value.orEmpty() + it.myUpcomingScheduleList
                         _upcomingSchedules.value = newList
@@ -104,7 +100,7 @@ class MyScheduleViewModel(
 
         if(page != null){
             viewModelScope.launch {
-                getMyElapsedSchedulesUseCase(PAGE_SIZE, page+1)
+                getMyElapsedSchedulesUseCase(page+1)
                     .onSuccess {
                         val newList = _elapsedSchedules.value.orEmpty() + it.myElapsedScheduleList
                         _elapsedSchedules.value = newList
@@ -115,7 +111,6 @@ class MyScheduleViewModel(
                     }
             }
         }
-
     }
 
 }

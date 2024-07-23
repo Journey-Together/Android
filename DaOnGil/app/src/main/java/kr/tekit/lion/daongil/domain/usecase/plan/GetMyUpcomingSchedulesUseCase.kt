@@ -8,7 +8,12 @@ import kr.tekit.lion.daongil.domain.usecase.base.Result
 class GetMyUpcomingSchedulesUseCase (
     private val planRepository: PlanRepository
 ): BaseUseCase() {
-    suspend operator fun invoke(size: Int, page: Int) : Result<MyUpcomingSchedules> = execute {
-        planRepository.getMyUpcomingScheduleList(size, page)
+
+    companion object{
+        private const val PAGE_SIZE = 10
+    }
+
+    suspend operator fun invoke(page: Int) : Result<MyUpcomingSchedules> = execute {
+        planRepository.getMyUpcomingScheduleList(PAGE_SIZE, page)
     }
 }

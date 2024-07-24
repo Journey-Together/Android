@@ -20,9 +20,6 @@ data class MyUpcomingsResponse (
                     remainDate = it.remainDate
                 )
             },
-            pageNo = data.pageNo,
-            pageSize = data.pageSize,
-            totalPages = data.totalPages,
             last = data.last
         )
     }

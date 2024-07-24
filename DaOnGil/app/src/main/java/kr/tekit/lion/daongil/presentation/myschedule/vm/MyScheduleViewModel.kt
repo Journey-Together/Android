@@ -18,11 +18,6 @@ class MyScheduleViewModel(
     private val getMyElapsedSchedulesUseCase: GetMyElapsedSchedulesUseCase
 ) : ViewModel() {
 
-    init {
-        getMyUpcomingScheduleList(0)
-        getMyElapsedScheduleList(0)
-    }
-
     private val _upcomingSchedules = MutableLiveData<List<MyUpcomingScheduleInfo>?>()
     val upcomingSchedules : LiveData<List<MyUpcomingScheduleInfo>?> get() = _upcomingSchedules
 
@@ -35,12 +30,24 @@ class MyScheduleViewModel(
     private val _elapsedPageNo = MutableLiveData<Int>()
     private val _isLastElapsed = MutableLiveData<Boolean>()
 
+    init {
+        getMyUpcomingScheduleList(0)
+        getMyElapsedScheduleList(0)
+    }
+    private fun setUpcomingPageNo(pageNum: Int){
+        _upcomingPageNo.value = pageNum
+    }
+
+    private fun setElapsedPageNo(pageNum: Int){
+        _elapsedPageNo.value = pageNum
+    }
+
     private fun getMyUpcomingScheduleList(page: Int) {
+        setUpcomingPageNo(page)
         viewModelScope.launch {
             getMyUpcomingSchedulesUseCase(page)
                 .onSuccess {
                     _upcomingSchedules.value = it.myUpcomingScheduleList
-                    _upcomingPageNo.value = it.pageNo
                     _isLastUpcoming.value = it.last
                 }.onError {
                     Log.e("getMyUpcomingScheduleList", "onError ${it.message}")
@@ -81,12 +88,15 @@ class MyScheduleViewModel(
         val page = _upcomingPageNo.value
 
         if(page != null){
+            setUpcomingPageNo(page+1) // 페이지 번호 갱신
+
             viewModelScope.launch {
                 getMyUpcomingSchedulesUseCase(page+1)
                     .onSuccess {
                         val newList = _upcomingSchedules.value.orEmpty() + it.myUpcomingScheduleList
                         _upcomingSchedules.value = newList
-                        _upcomingPageNo.value = it.pageNo
+                        _upcomingPageNo.value = page+1
+//                        _upcomingPageNo.value = it.pageNo
                         _isLastUpcoming.value = it.last
                     }.onError {
                         Log.e("fetchNextUpcomingSchedules", "onError ${it.message}")

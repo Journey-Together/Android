@@ -132,7 +132,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                         },
                         reviewClickListener = { position ->
                             val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
-                            intent.putExtra("planId", it.get(position)?.planId)
+                            intent.putExtra("planId", it[position]?.planId)
                             scheduleReviewLauncher.launch(intent)
                         }
                     )
@@ -150,11 +150,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
                             val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
-                            // to do - 여행 일정 idx 전달
                             intent.putExtra("planId", it?.get(position)?.planId)
                             startActivity(intent)
-                            // 공개 일정 상세보기 페이지로 이동
-                            // onScheduleMainItemClick(it[position].planId)
                         }
                     )
                     schedulePublicAdapter.addItems(it)
@@ -228,7 +225,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     }
 
     private fun initScheduleDetailActivity(planId: Long){
-        val intent = Intent(requireActivity(), ScheduleActivity::class.java)
+        val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
         intent.putExtra("planId", planId)
         startActivity(intent)
     }

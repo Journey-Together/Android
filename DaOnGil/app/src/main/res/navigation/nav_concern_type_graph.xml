@@ -18,9 +18,5 @@
         android:id="@+id/concernTypeModifyFragment"
         android:name="kr.tekit.lion.daongil.presentation.concerntype.fragment.ConcernTypeModifyFragment"
         android:label="fragment_concern_type_modify"
-        tools:layout="@layout/fragment_concern_type_modify" >
-        <action
-            android:id="@+id/action_concernTypeModifyFragment_to_concernTypeFragment"
-            app:destination="@id/concernTypeFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_concern_type_modify" />
 </navigation>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/viewFSCTopDeco"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:layerType="software"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/viewFSCDateDeco"
+        app:layout_constraintEnd_toEndOf="@+id/viewFSCDateDeco"
+        app:layout_constraintStart_toStartOf="@+id/viewFSCDateDeco"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dotted_line_vertical" />
+
+    <View
+        android:id="@+id/viewFSCDateDeco"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:background="@drawable/white_radius"
+        android:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFSCDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewFSCDate" />
+
+    <ImageView
+        android:id="@+id/viewFSCDeco"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:layerType="software"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/viewFSCDateDeco"
+        app:layout_constraintStart_toStartOf="@+id/viewFSCDateDeco"
+        app:layout_constraintTop_toBottomOf="@+id/viewFSCDateDeco"
+        app:srcCompat="@drawable/dotted_line_vertical" />
+
+    <TextView
+        android:id="@+id/textViewFSCDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="@dimen/font_big2"
+        app:layout_constraintStart_toEndOf="@+id/viewFSCDateDeco"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="0월 0일(월)" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewFSCPlaces"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_big4"
+        android:paddingBottom="@dimen/margin_big2"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewFSCDateDeco"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFSCDate" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

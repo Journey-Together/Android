@@ -1,7 +1,8 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.plan
 
 import com.squareup.moshi.JsonClass
-import kr.tekit.lion.daongil.domain.model.PlaceSearchInfo
+import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList.TotalElementsInfo
+import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList.PlaceSearchInfo
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 
 @JsonClass(generateAdapter = true)
@@ -21,9 +22,10 @@ data class PlaceSearchResultsResponse (
                 )
             },
             pageNo = this.data.pageNo,
-            pageSize = this.data.pageSize,
-            totalPages = this.data.totalPages,
-            last = this.data.last
+            last = this.data.last,
+            TotalElementsInfo(
+                totalElements = this.data.totalElements
+            )
         )
     }
 }

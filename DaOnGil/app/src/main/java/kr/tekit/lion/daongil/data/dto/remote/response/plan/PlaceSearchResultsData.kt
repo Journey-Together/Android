@@ -9,4 +9,5 @@ data class PlaceSearchResultsData(
     val pageSize: Int,
     val totalPages: Int,
     val last: Boolean,
+    val totalElements: Long
 )

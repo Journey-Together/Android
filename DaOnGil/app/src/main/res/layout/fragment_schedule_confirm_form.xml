@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/navi_background"
     android:fillViewport="true"
-    tools:context=".presentation.scheduleform.fragment.ScheduleDetailsFormFragment">
+    tools:context=".presentation.scheduleform.fragment.ScheduleConfirmFormFragment" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbarScheduleDetailsForm"
+            android:id="@+id/toolbarSConfirmForm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/navi_background"
@@ -29,7 +29,6 @@
         </com.google.android.material.appbar.MaterialToolbar>
 
         <LinearLayout
-            android:id="@+id/layoutNPFeStep"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -38,23 +37,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="4dp"
                 android:layout_weight="1"
-                android:background="@color/primary"
-                android:visibility="visible" />
+                android:background="@color/primary" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="4dp"
                 android:layout_marginHorizontal="4dp"
                 android:layout_weight="1"
-                android:background="@color/primary"
-                android:visibility="visible" />
+                android:background="@color/primary" />
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="4dp"
                 android:layout_weight="1"
-                android:background="@color/schedule_detail_divider"
-                android:visibility="visible" />
+                android:background="@color/primary" />
         </LinearLayout>
 
         <TextView
@@ -63,7 +59,7 @@
             android:layout_marginStart="@dimen/margin_basic"
             android:layout_marginTop="45dp"
             android:fontFamily="@font/pretendard_semibold"
-            android:text="@string/text_guide_places"
+            android:text="@string/text_guide_confirm"
             android:textSize="24dp" />
 
         <LinearLayout
@@ -75,27 +71,22 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textViewDFTitle"
+                android:id="@+id/textViewSConfirmFormTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_bold"
                 tools:text="@string/text_selected_title" />
 
             <TextView
-                android:id="@+id/textViewDFDate"
+                android:id="@+id/textViewSConfirmFormDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/pretendard_regular"
                 tools:text="@string/text_selected_period" />
         </LinearLayout>
 
-        <com.google.android.material.divider.MaterialDivider
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp" />
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewDF"
+            android:id="@+id/recyclerViewSConfirmForm"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="30dp"
@@ -105,7 +96,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <Button
-            android:id="@+id/buttonDFNextStep"
+            android:id="@+id/buttonSConfirmFormSubmit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_basic"
@@ -114,7 +105,9 @@
             android:layout_marginBottom="@dimen/margin_basic"
             android:background="@drawable/background_radius_10"
             android:fontFamily="@font/pretendard_bold"
-            android:text="@string/text_schedule_form_next"
+            android:text="@string/text_save_schedule_review"
             android:textSize="@dimen/font_big2" />
+
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

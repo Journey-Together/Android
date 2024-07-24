@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -17,6 +18,7 @@ import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentFormSearchBinding
 import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormBookmarkedPlacesAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormSearchResultAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
@@ -28,11 +30,18 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
     private val scheduleFormViewModel : ScheduleFormViewModel by activityViewModels{ ScheduleFormViewModelFactory() }
 
     private val searchResultAdapter by lazy {
-        FormSearchResultAdapter{ selectedPlacePosition ->
-            addNewPlace(args.schedulePosition, selectedPlacePosition, false)
-        }
+        FormSearchResultAdapter(
+            onPlaceSelectedListener = { selectedPlacePosition ->
+               addNewPlace(args.schedulePosition, selectedPlacePosition, false)
+            },
+            onItemClickListener = { selectedPlacePosition ->
+                val placeId = scheduleFormViewModel.getPlaceId(selectedPlacePosition)
+                if(placeId != -1L){
+                    showPlaceDetail(placeId)
+                }
+            }
+        )
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -96,12 +105,20 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             }
         }
 
-        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
+/*        scheduleFormViewModel.placeSearchResult.observe(viewLifecycleOwner){
             if(it.placeInfoList.isNotEmpty()){
                 // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
                 searchResultAdapter.submitList(it.placeInfoList)
             }else{
                 binding.recyclerViewFSResult.visibility = View.GONE
+                binding.textViewFSResultEmpty.visibility = View.VISIBLE
+            }
+        }*/
+
+        scheduleFormViewModel.searchResultsWithNum.observe(viewLifecycleOwner) {
+            // ListAdapter 사용 시, submitList 메서드를 호출하여 데이터를 전달해준다.
+            searchResultAdapter.submitList(it)
+            if (it.size <= 1) {
                 binding.textViewFSResultEmpty.visibility = View.VISIBLE
             }
         }
@@ -149,4 +166,9 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             .show()
     }
 
+    private fun showPlaceDetail(placeId: Long){
+        val intent = Intent(requireActivity(), DetailActivity::class.java)
+        intent.putExtra("detailPlaceId", placeId)
+        startActivity(intent)
+    }
 }

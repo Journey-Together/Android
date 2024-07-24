@@ -7,138 +7,94 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardViewFPlace"
+        style="@style/Widget.Material3.CardView.Filled"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="14dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="@color/item_background"
-        app:cardCornerRadius="10dp"
-        app:strokeColor="@color/primary_disabled"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="4dp"
+        app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            style="@style/Widget.Material3.CardView.Outlined"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <View
+                android:id="@+id/viewFPlaceDeco"
+                android:layout_width="5dp"
+                android:layout_height="0dp"
+                android:background="@color/primary"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <ImageView
                 android:id="@+id/imageViewFPlaceThumbnail"
-                android:layout_width="0dp"
-                android:layout_height="160dp"
+                android:layout_width="58dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="@dimen/margin_small1"
+                android:layout_marginTop="@dimen/margin_small1"
+                android:layout_marginBottom="@dimen/margin_small1"
                 android:contentDescription="대표 사진"
                 android:scaleType="centerCrop"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/viewFPlaceDeco"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/empty_view" />
-
-            <TextView
-                android:id="@+id/textViewFPlaceAddr"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_big3"
-                android:layout_marginTop="@dimen/margin_big3"
-                android:layout_marginEnd="@dimen/margin_big3"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:textSize="10dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageViewFPlaceThumbnail"
-                tools:text="OO시 OO구" />
 
             <TextView
                 android:id="@+id/textViewFPlaceName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_big3"
-                android:layout_marginTop="@dimen/margin_small2"
-                android:layout_marginEnd="@dimen/margin_big3"
+                android:layout_marginStart="@dimen/margin_small1"
+                android:layout_marginTop="@dimen/margin_big3"
+                android:layout_marginEnd="@dimen/margin_small1"
+                android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
                 android:lineSpacingMultiplier="1.1"
-                android:textSize="@dimen/font_big3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceAddr"
-                tools:text="OO 해변 공원" />
+                android:maxLines="3"
+                android:textColor="@color/text_primary"
+                android:textSize="@dimen/font_big2"
+                android:visibility="visible"
+                app:layout_constraintEnd_toStartOf="@+id/imageButtonFPlaceRemove"
+                app:layout_constraintStart_toEndOf="@+id/imageViewFPlaceThumbnail"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="여행지 이름" />
 
-            <LinearLayout
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/textViewFPlaceCategory"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_big3"
-                android:layout_marginTop="@dimen/margin_big4"
-                android:layout_marginEnd="@dimen/margin_big3"
+                android:layout_marginTop="6dp"
                 android:layout_marginBottom="@dimen/margin_big3"
-                android:orientation="horizontal"
+                android:fontFamily="@font/pretendard_light"
+                android:textColor="@color/text_secondary"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceName">
-
-                <ImageView
-                    android:id="@+id/iconFPlacePhysicalDisability"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:contentDescription="@string/text_physical_disability"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/physical_disability_radius_icon" />
-
-                <ImageView
-                    android:id="@+id/iconFPlaceVisualImpair"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:contentDescription="@string/text_visual_impairmnet"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/visual_impairment_radius_icon" />
-
-                <ImageView
-                    android:id="@+id/iconFPlaceHearingImpair"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:contentDescription="@string/text_hearing_impairment"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/hearing_impairment_radius_icon" />
-
-                <ImageView
-                    android:id="@+id/iconFPlaceInfantFamily"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:contentDescription="@string/text_infant_family"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/infant_familly_radius_icon" />
-
-                <ImageView
-                    android:id="@+id/iconFPlaceElderlyPeople"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_small2"
-                    android:contentDescription="@string/text_elderly_person"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/elderly_people_radius_icon" />
-            </LinearLayout>
+                app:layout_constraintStart_toStartOf="@+id/textViewFPlaceName"
+                app:layout_constraintTop_toBottomOf="@+id/textViewFPlaceName"
+                tools:text="관광지" />
 
             <ImageButton
                 android:id="@+id/imageButtonFPlaceRemove"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_big4"
-                android:layout_marginEnd="@dimen/margin_big4"
+                android:layout_height="0dp"
                 android:background="@drawable/background_radius_50"
-                android:backgroundTint="@color/background_color"
+                android:backgroundTint="@color/item_background"
                 android:contentDescription="@string/text_schedule_delete"
-                android:padding="@dimen/margin_small1"
-                app:tint="@color/primary"
+                android:paddingHorizontal="@dimen/margin_big3"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/cancel_icon" />
+                app:srcCompat="@drawable/form_remove_icon"
+                app:tint="@color/primary" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

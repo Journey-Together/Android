@@ -33,7 +33,7 @@ class ScheduleListAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(dailyPlan: DailyPlan, scheduleListListener: (Int, Int) -> Unit) {
             with(binding) {
-                textViewItemDay.text = "Day ${dailyPlan.dailyPlanDay}"
+                textViewItemDay.text = "Day ${absoluteAdapterPosition + 1}"
                 textViewItemDate.text = dailyPlan.dailyPlanDate
                 rvItemScheduleList.adapter = SchedulePlaceAdapter(dailyPlan.schedulePlaces) { childPosition ->
                     scheduleListListener(absoluteAdapterPosition, childPosition)

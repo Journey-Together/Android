@@ -52,6 +52,9 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_big2"
+                app:layout_constraintEnd_toStartOf="@+id/textViewRowScheduleDDay"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="경주여행" />
@@ -61,10 +64,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
+                android:layout_marginEnd="@dimen/margin_small1"
                 android:enabled="true"
                 android:fontFamily="@font/pretendard_semibold"
                 android:textColor="@color/color_schedule_d_day"
                 app:layout_constraintBottom_toBottomOf="@+id/textViewRowScheduleName"
+                app:layout_constraintEnd_toStartOf="@+id/imageViewRowSchedule"
+                app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@+id/textViewRowScheduleName"
                 app:layout_constraintTop_toTopOf="@+id/textViewRowScheduleName"
                 tools:text="D-1" />
@@ -105,6 +111,7 @@
                 android:layout_marginBottom="@dimen/margin_small1"
                 android:background="@drawable/background_radius_5"
                 android:minHeight="0dp"
+                android:text="@string/text_write_schedule_review"
                 android:textColor="@color/text_quinary"
                 android:visibility="gone"
                 app:backgroundTint="@color/button_quaternary"
@@ -113,8 +120,7 @@
                 app:iconTint="@color/text_quinary"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco"
-                tools:text="리뷰 쓰러가기" />
+                app:layout_constraintStart_toEndOf="@+id/viewRowScheduleRemainingDeco" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

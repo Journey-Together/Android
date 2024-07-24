@@ -4,6 +4,9 @@ import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlan
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleElapsed.MyElapsedResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleUpcoming.MyUpcomingsResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail.ScheduleDetailResponse
 import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -67,4 +70,30 @@ interface PlanService {
         @Part("planReviewReq") scheduleReview: RequestBody,
     )
 
+    // 다가오는 일정 목록
+    @GET("plan/my/not-complete")
+    suspend fun getMyUpcomingScheduleList(
+        @Query("size") size: Int,
+        @Query("page") page: Int
+    ): MyUpcomingsResponse
+
+    // 다녀온 일정 목록
+    @GET("plan/my/complete")
+    suspend fun getMyElapsedScheduleList(
+        @Query("size") size: Int,
+        @Query("page") page: Int
+    ): MyElapsedResponse
+
+    // 여행 일정 상세보기 (로그인버전)
+    @GET("plan/detail/{planId}")
+    suspend fun getDetailScheduleInfo(
+        @Path("planId") planId: Long
+    ): ScheduleDetailResponse
+
+    // 여행 일정 상세보기 (게스트버전)
+    @GET("plan/guest/detail/{planId}")
+    suspend fun getDetailScheduleInfoGuest(
+        @Path("planId") planId: Long,
+        @Tag authType: AuthType = AuthType.NO_AUTH
+    ): ScheduleDetailResponse
 }

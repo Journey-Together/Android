@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.MyElapsedScheduleInfo
+import kr.tekit.lion.daongil.domain.model.MyElapsedSchedules
 import kr.tekit.lion.daongil.domain.model.MyUpcomingScheduleInfo
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
@@ -56,11 +57,12 @@ class MyScheduleViewModel(
     }
 
     private fun getMyElapsedScheduleList(page: Int) {
+        setElapsedPageNo(page)
         viewModelScope.launch {
             getMyElapsedSchedulesUseCase(page)
                 .onSuccess {
+                    val ff : MyElapsedSchedules= it
                     _elapsedSchedules.value = it.myElapsedScheduleList
-                    _elapsedPageNo.value = it.pageNo
                     _isLastElapsed.value = it.last
                 }.onError {
                     Log.e("getMyElapsedScheduleList", "onError ${it.message}")
@@ -95,8 +97,6 @@ class MyScheduleViewModel(
                     .onSuccess {
                         val newList = _upcomingSchedules.value.orEmpty() + it.myUpcomingScheduleList
                         _upcomingSchedules.value = newList
-                        _upcomingPageNo.value = page+1
-//                        _upcomingPageNo.value = it.pageNo
                         _isLastUpcoming.value = it.last
                     }.onError {
                         Log.e("fetchNextUpcomingSchedules", "onError ${it.message}")
@@ -109,12 +109,13 @@ class MyScheduleViewModel(
         val page = _elapsedPageNo.value
 
         if(page != null){
+            setElapsedPageNo(page+1)
+
             viewModelScope.launch {
                 getMyElapsedSchedulesUseCase(page+1)
                     .onSuccess {
                         val newList = _elapsedSchedules.value.orEmpty() + it.myElapsedScheduleList
                         _elapsedSchedules.value = newList
-                        _elapsedPageNo.value = it.pageNo
                         _isLastElapsed.value = it.last
                     }.onError {
                         Log.e("fetchNextElapsedSchedules", "onError ${it.message}")

@@ -22,9 +22,6 @@ data class MyElapsedResponse(
                     hasReview = it.hasReview
                 )
             },
-            pageNo = data.pageNo,
-            pageSize = data.pageSize,
-            totalPages = data.totalPages,
             last = data.last
         )
     }

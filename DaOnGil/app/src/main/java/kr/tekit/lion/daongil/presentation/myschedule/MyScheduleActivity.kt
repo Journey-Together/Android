@@ -13,7 +13,7 @@ import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleElapsedAd
 import kr.tekit.lion.daongil.presentation.myschedule.adapter.MyScheduleUpcomingAdapter
 import kr.tekit.lion.daongil.presentation.myschedule.vm.MyScheduleViewModel
 import kr.tekit.lion.daongil.presentation.myschedule.vm.MyScheduleViewModelFactory
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
 class MyScheduleActivity : AppCompatActivity() {
@@ -132,7 +132,7 @@ class MyScheduleActivity : AppCompatActivity() {
     }
 
     private fun startScheduleDetailActivity(planId: Long){
-        val intent = Intent(this, ScheduleActivity::class.java)
+        val intent = Intent(this, ScheduleDetailInfoActivity::class.java)
         intent.putExtra("planId", planId)
         startActivity(intent)
     }

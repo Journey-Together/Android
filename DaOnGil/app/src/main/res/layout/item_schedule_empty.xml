@@ -13,10 +13,11 @@
         android:layout_marginHorizontal="@dimen/margin_basic"
         android:layout_marginTop="@dimen/margin_small2"
         android:layout_marginBottom="@dimen/margin_small1"
-        android:backgroundTint="@color/empty_schedule_background"
+        android:backgroundTint="@color/navi_background"
         app:cardCornerRadius="5dp"
-        app:cardElevation="4dp"
-        app:cardPreventCornerOverlap="true">
+        app:cardPreventCornerOverlap="true"
+        app:strokeColor="@color/schedule_detail_divider"
+        app:strokeWidth="1dp">
 
         <TextView
             android:layout_width="wrap_content"

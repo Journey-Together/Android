@@ -23,6 +23,8 @@ data class DetailPlaceGuestResponse(
             longitude = data.mapY,
             name = data.name,
             overview = data.overview,
+            tel = data.tel.orEmpty(),
+            homepage = data.homepage.orEmpty(),
             placeId = data.placeId,
             reviewList = data.reviewList?.map {
                 Review(

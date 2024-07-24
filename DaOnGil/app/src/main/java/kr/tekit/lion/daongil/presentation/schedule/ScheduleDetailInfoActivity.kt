@@ -1,27 +1,36 @@
 package kr.tekit.lion.daongil.presentation.schedule
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityScheduleBinding
-import kr.tekit.lion.daongil.domain.model.DailyPlan
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
-import kr.tekit.lion.daongil.domain.model.SchedulePlace
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedule.adapter.ScheduleImageViewPagerAdapter
 import kr.tekit.lion.daongil.presentation.schedule.adapter.ScheduleListAdapter
-import kr.tekit.lion.daongil.presentation.schedule.adapter.SchedulePlaceAdapter
 import kr.tekit.lion.daongil.presentation.schedule.customview.ReviewReportDialog
 import kr.tekit.lion.daongil.presentation.schedule.customview.ScheduleManageBottomSheet
 import kr.tekit.lion.daongil.presentation.schedule.customview.ScheduleReviewManageBottomSheet
-import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
+import kr.tekit.lion.daongil.presentation.schedule.vm.ScheduleDetailInfoViewModel
+import kr.tekit.lion.daongil.presentation.schedule.vm.ScheduleDetailInfoViewModelFactory
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Handler
+import android.os.Looper
+import androidx.core.content.ContextCompat
+import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
+import kr.tekit.lion.daongil.presentation.home.DetailActivity
+import kr.tekit.lion.daongil.presentation.login.LogInState
+import kr.tekit.lion.daongil.presentation.login.LoginActivity
+import java.util.Timer
+import kotlin.concurrent.scheduleAtFixedRate
 
 // 회원 - 본인 - 다가오는 일정
 // 회원 - 본인 - 지난 일정 - 리뷰 O
@@ -30,65 +39,19 @@ import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActi
 // 회원 - 타인 - 지난 일정 - 리뷰 X (후기 관련 view 숨기기)
 // 비회원 - 타인일정 - 지난 일정 - 리뷰 O (리뷰 신고하기 버튼, 북마크 메뉴에 로그인 팝업 연결)
 // 비회원 - 타인일정 - 지난 일정 - 리뷰 X (북마크 메뉴에 로그인 팝업 연결, 리뷰 작성화면 숨기기)
-class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePlaceClickListener,
-    ConfirmDialogInterface {
-    // 회원-비회원 여부
-    private var isUser = true
-    // 다가오는 일정 여부
-    private var isUpcoming = false
+class ScheduleDetailInfoActivity : AppCompatActivity(), ConfirmDialogInterface {
+
+    private val viewModel: ScheduleDetailInfoViewModel by viewModels {
+        ScheduleDetailInfoViewModelFactory(
+            this@ScheduleDetailInfoActivity
+        )
+    }
+
     // 리뷰 작성 여부
     private var reviewState = true
+
     // 북마크 여부
     private var isBookmarked = false
-
-    // 임시 데이터
-    private val place1 = SchedulePlace(0, "장태산자연휴양림", "관광지", listOf(1))
-    private val place2 = SchedulePlace(1, "양평군립미술관", "여행지", listOf(1, 2, 4, 5))
-    private val place3 = SchedulePlace(2, "태평소국밥", "음식점", listOf(1))
-    private val place4 = SchedulePlace(3, "한국보훈복지의료공단 보훈휴양원", "숙박시설", listOf(1))
-    private val place5 = SchedulePlace(4, "보물섬남해한우프라자 (남해축협)", "음식점", listOf(1, 2))
-
-    private val day1 = DailyPlan(1, listOf(place1, place2, place3))
-    private val day2 = DailyPlan(2, listOf())
-    private val day3 = DailyPlan(3, listOf(place4, place5))
-
-    private val schedule = ScheduleDetail(
-        0,
-        "꼭 가봐야 할 경주 맛집투어",
-        "2024-06-01",
-        "2024-06-05",
-        null,
-        true,
-        true,
-        "멋쟁이",
-        listOf("https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20210317_54%2F1615960399867iteUS_JPEG%2Fbanner_x.jpg",
-            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_262%2F1441013639801FoVs2_JPEG%2F11663971_2.jpg",
-            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20200106_270%2F1578237425235vhzPG_JPEG%2FBtFgbHMA5t8daqoR2j0zHNBL.jpeg.jpg"), // images
-        listOf(day1, day2, day3),
-        null,
-        null,
-        null,
-    )
-
-    private val schedule2 = ScheduleDetail(
-        1,
-        "제주 둘레길 여행",
-        "2024-06-01",
-        "2024-06-05",
-        4,
-        true,
-        false,
-        "김사자",
-        listOf("https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_201%2F1440997727629Eh1lL_JPEG%2F11571707_1.jpg",
-            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150901_90%2F1441045537302H8wax_JPEG%2F156281538832608_4.jpg",
-            "https://search.pstatic.net/common/?src=https%3A%2F%2Fldb-phinf.pstatic.net%2F20150831_207%2F1440992289833tONYr_JPEG%2F11491637_0.jpg"), // images
-        listOf(day1, day2, day3),
-        1,
-        """안녕하세요. 서울부터 제주도까지 여행하고왔어요. 첫번쨰 사진은 경복궁 사진입니다. 예뻐요. 그리고 제주도 어느 해변가 사진도 찍어왔는데 예뻐요. 그리고 나머지 하나는 제주도 어딘가에서
-            |촬영했어요. 맛있는 것도 많이 먹었어요. 제주도에 맛집이 많아서 여행하기 좋았어요. 제가 방문했던 장소들 꼭 다녀오세요. 여행 일정 구경하고 가세요~
-        """.trimMargin(),
-        null,
-    )
 
     private val binding: ActivityScheduleBinding by lazy {
         ActivityScheduleBinding.inflate(layoutInflater)
@@ -99,65 +62,156 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
         setContentView(binding.root)
 
-        initView(schedule)
-        settingScheduleAdapter(schedule)
+        checkLogin()
+
+
     }
 
-    private fun initView(scheduleDetail: ScheduleDetail) {
+    private fun initView(isUser: Boolean) {
         with(binding) {
-            initToolbarMenu(scheduleDetail.isWriter, scheduleDetail.isPublic)
 
-            // '다녀는 일정' 정보를 볼 때, '남은 기간' 변수에 null 값을 전달해줄 것이라고 가정하고 작성한 코드입니다.
-            // 서버에서 전달해주는 값에 따라 코드 수정할게요
-            scheduleDetail.daysRemaining?.let {
-                textViewScheduleDDay.text = getString(R.string.text_schedule_d_day, it)
-                textViewScheduleDDay.visibility = View.VISIBLE
-            }
+            viewModel.scheduleDetailInfo.observe(this@ScheduleDetailInfoActivity){ scheduleDetailInfo ->
 
-            textViewScheduleName.text = scheduleDetail.title
-            textViewSchedulePeriod.text = getString(
-                R.string.text_schedule_period,
-                scheduleDetail.startDate,
-                scheduleDetail.endDate
-            )
-            if (scheduleDetail.isWriter) {
-                textViewScheduleType.text = if (scheduleDetail.isPublic) {
-                    getString(R.string.text_schedule_public)
-                } else {
-                    getString(R.string.text_schedule_private)
+                initToolbarMenu(isUser, scheduleDetailInfo.isWriter, scheduleDetailInfo.isPublic)
+
+                settingScheduleAdapter(scheduleDetailInfo)
+
+                scheduleDetailInfo.remainDate?.let {
+                    scheduleDday.text = it
+
+                    cardViewScheduleEmptyReview.visibility = View.VISIBLE
+
+                    // 지나가지 않은 일정 + 내가 작성자
+                    if(scheduleDetailInfo.isWriter){
+                        this.scheduleEmptyReviewTitle.text = getString(R.string.text_schedule_info_writer_not_leave_title)
+                        this.scheduleEmptyReviewContent.text = getString(R.string.text_schedule_info_writer_not_leave_content)
+                    }
+                    // 지나가지 않은 일정 + 내가 작성자가 아님
+                    else{
+                        this.scheduleEmptyReviewTitle.text = getString(R.string.text_schedule_info_not_leave_title)
+                        this.scheduleEmptyReviewContent.text = getString(R.string.text_schedule_info_not_leave_content)
+                    }
+                } ?: run {
+                    scheduleDday.visibility = View.GONE
+
+                    // 지나간 일정 + 내가 작성자
+                    if(scheduleDetailInfo.isWriter){
+                        // 리뷰가 없을 때
+                        cardViewScheduleEmptyReview.visibility = View.VISIBLE
+                        this.scheduleEmptyReviewTitle.text = getString(R.string.text_my_review)
+                        this.scheduleEmptyReviewContent.text = getString(R.string.text_leave_schedule_review)
+
+                        // 리뷰가 있을때
+                        // cardViewScheduleReview.visibility = View.VISIBLE
+                    }
+
+                    // 지나간 일정 + 내가 작성자가 아닐 때
+                    else {
+                        // 리뷰가 없을때
+                        cardViewScheduleEmptyReview.visibility = View.VISIBLE
+                        this.scheduleEmptyReviewTitle.text = getString(R.string.text_schedule_info_leave_title)
+                        this.scheduleEmptyReviewContent.text = getString(R.string.text_schedule_info_leave_content)
+
+                        // 리뷰가 있을때
+                        // cardViewScheduleReview.visibility = View.VISIBLE
+                    }
                 }
-            } else {
-                textViewScheduleType.text = scheduleDetail.nickname
+
+                if (scheduleDetailInfo.isPublic) {
+                    schedulePublic.text = getString(R.string.text_schedule_public)
+                } else {
+                    schedulePublic.text = getString(R.string.text_schedule_private)
+                }
+
+                textViewScheduleName.text = scheduleDetailInfo.title
+                textViewSchedulePeriod.text = getString(
+                    R.string.text_schedule_period,
+                    scheduleDetailInfo.startDate,
+                    scheduleDetailInfo.endDate
+                )
+
+                // initReviewView(scheduleDetail)
+                scheduleDetailInfo.images?.let {
+                    initImageViewPager(this@ScheduleDetailInfoActivity, it)
+                }
             }
-
-            initReviewView(scheduleDetail)
-            initImageViewPager(scheduleDetail.images)
         }
     }
 
-    private fun initImageViewPager(images : List<String>){
+    private fun checkLogin(){
+        val planId = intent.getLongExtra("planId", -1)
+
+        repeatOnStarted {
+            viewModel.loginState.collect { uiState ->
+                when (uiState) {
+                    is LogInState.Checking -> {
+                        return@collect
+                    }
+
+                    is LogInState.LoggedIn -> {
+                        viewModel.getScheduleDetailInfo(planId)
+                        initView(true)
+                    }
+
+                    is LogInState.LoginRequired -> {
+                        viewModel.getScheduleDetailInfoGuest(planId)
+                        initView(false)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initImageViewPager(context: Context, images: List<String>) {
+        val imageList: List<String> = if (images.isEmpty()) {
+            val drawableId = R.drawable.empty_view
+            val uri = Uri.parse("android.resource://${context.packageName}/$drawableId").toString()
+            listOf(uri)
+        } else {
+            images
+        }
+
         binding.viewPagerScheduleImages.apply {
-            adapter = ScheduleImageViewPagerAdapter(images)
+            val scheduleAdpater = ScheduleImageViewPagerAdapter(imageList)
+            adapter = scheduleAdpater
+            startAutoSlide(scheduleAdpater)
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        }
 
-            binding.indicatorScheduleImages.setViewPager(this)
+    }
+
+    private fun startAutoSlide(adpater: ScheduleImageViewPagerAdapter) {
+        val timer = Timer()
+        val handler = Handler(Looper.getMainLooper())
+
+        // 일정 간격으로 슬라이드 변경 (4초마다)
+        timer.scheduleAtFixedRate(3000, 4000) {
+            handler.post {
+                val nextItem = binding.viewPagerScheduleImages.currentItem + 1
+                if (nextItem < adpater.itemCount) {
+                    binding.viewPagerScheduleImages.currentItem = nextItem
+                } else {
+                    binding.viewPagerScheduleImages.currentItem = 0 // 마지막 페이지에서 첫 페이지로 순환
+                }
+            }
         }
     }
 
-    private fun initToolbarMenu(isWriter: Boolean, isPublic: Boolean) {
+    private fun initToolbarMenu(isUser: Boolean, isWriter: Boolean, isPublic: Boolean) {
         binding.toolbarViewSchedule.apply {
             setNavigationOnClickListener {
                 finish()
             }
             if (isWriter) { // 로그인한 사용자의 일정인 경우
                 inflateMenu(R.menu.menu_schedule_private)
+                binding.textViewScheduleType.text = getString(R.string.text_my_schedule)
                 setOnMenuItemClickListener {
                     showScheduleManageBottomSheet(isPublic)
                     true
                 }
 
             } else { // 로그인 여부와 상관없이 타인의 일정인 경우
-                title = getString(R.string.text_public_schedule)
+                binding.textViewScheduleType.text = getString(R.string.text_public_schedule)
                 inflateMenu(R.menu.menu_schedule_public)
                 val menuItemBookmark =
                     binding.toolbarViewSchedule.menu.findItem(R.id.menuSchedulPublicBookmark)
@@ -177,9 +231,9 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
     private fun setBookmarkIcon(menuItem: MenuItem) {
         if (isBookmarked) {
             // 임시 아이콘 -> 교체 예정
-            menuItem.setIcon(R.drawable.bookmark_filled_icon)
+            menuItem.setIcon(R.drawable.bookmark_fill_scheduledetail_icon)
         } else {
-            menuItem.setIcon(R.drawable.bookmark_icon)
+            menuItem.setIcon(R.drawable.bookmark_schedule_detail_icon)
         }
     }
 
@@ -190,17 +244,19 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
         setBookmarkIcon(menuItem)
     }
 
-    private fun initReviewView(scheduleDetail: ScheduleDetail) {
+    /*private fun initReviewView(scheduleDetail: ScheduleDetail) {
         // TO DO - daysRemaining!=null : 여행 일정이 "다녀온 일정" 일때만 리뷰 작성 View를 보여준다.
         // daysRemaining 리턴 타입에 맞춰서 코드 수정 필요
         if (scheduleDetail.reviewIdx == null) {
-            if (scheduleDetail.isWriter && scheduleDetail.daysRemaining == null) {
+            if (scheduleDetail.isWriter && scheduleDetail.remainDate != null) {
                 binding.apply {
                     cardViewScheduleEmptyReview.visibility = View.VISIBLE
                     textViewScheduleLeaveReview.setOnClickListener {
-                        val intent = Intent(this@ScheduleActivity, WriteScheduleReviewActivity::class.java)
-                        intent.putExtra("planId", scheduleDetail.scheduleIdx)
-                        startActivity(intent)
+                        val newIntent =
+                            Intent(this@ScheduleDetailInfoActivity, WriteScheduleReviewActivity::class.java)
+                        val planId = intent.getLongExtra("planId", -1)
+                        newIntent.putExtra("planId", planId)
+                        startActivity(newIntent)
                     }
                 }
 
@@ -215,9 +271,9 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
                 initReviewMenu(scheduleDetail)
             }
         }
-    }
+    }*/
 
-    private fun initReviewMenu(scheduleDetail: ScheduleDetail) {
+    private fun initReviewMenu(isUser: Boolean, scheduleDetail: ScheduleDetail) {
         if (scheduleDetail.isWriter) {
             binding.imageButtonScheduleManageReview.apply {
                 visibility = View.VISIBLE
@@ -233,7 +289,10 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
                         val reviewReportDialog = ReviewReportDialog { reasonType ->
                             // TO DO -> 서버에 신고 내용 접수
                             // 리뷰 idx : scheduleDetail.reviewIdx. 신고 사유: reasonType (Int/String)
-                            showSnackBar(binding.toolbarViewSchedule, R.string.text_report_submitted)
+                            showSnackBar(
+                                binding.toolbarViewSchedule,
+                                R.string.text_report_submitted
+                            )
                         }
                         reviewReportDialog.isCancelable = false
                         reviewReportDialog.show(supportFragmentManager, "ModeSettingDialog")
@@ -260,14 +319,17 @@ class ScheduleActivity : AppCompatActivity(), SchedulePlaceAdapter.OnSchedulePla
 
     override fun onPosBtnClick() {
         // TO DO 로그인 화면으로 이동
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun settingScheduleAdapter(scheduleDetail: ScheduleDetail) {
-        binding.rvScheduleFullList.adapter = ScheduleListAdapter(scheduleDetail.dailyPlans, this)
-    }
-
-    override fun onSchedulePlaceClick(placeId: Int) {
-        // TO DO - 여행지 상세보기 화면으로 이동
+        binding.rvScheduleFullList.adapter = ScheduleListAdapter(scheduleDetail.dailyPlans,
+            scheduleListListener = { schedulePosition, placePosition ->
+                val intent = Intent(this, DetailActivity::class.java)
+                intent.putExtra("detailPlaceId", scheduleDetail.dailyPlans[schedulePosition].schedulePlaces[placePosition].placeId)
+                startActivity(intent)
+            })
     }
 
     private fun showScheduleManageBottomSheet(isPublic: Boolean) {

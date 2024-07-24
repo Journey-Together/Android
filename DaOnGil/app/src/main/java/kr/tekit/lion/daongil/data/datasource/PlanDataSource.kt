@@ -6,6 +6,7 @@ import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.Bri
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleElapsed.MyElapsedResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleUpcoming.MyUpcomingsResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail.ScheduleDetailResponse
 import kr.tekit.lion.daongil.data.network.service.PlanService
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -49,7 +50,16 @@ class PlanDataSource(
         return planService.getMyUpcomingScheduleList(size, page)
     }
 
+
     suspend fun getMyElapsedScheduleList(size: Int, page: Int): MyElapsedResponse {
         return planService.getMyElapsedScheduleList(size, page)
+    }
+
+    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailResponse {
+        return planService.getDetailScheduleInfo(planId)
+    }
+
+    suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailResponse {
+        return planService.getDetailScheduleInfoGuest(planId)
     }
 }

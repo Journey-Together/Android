@@ -10,15 +10,12 @@ import kr.tekit.lion.daongil.domain.model.SchedulePlace
 
 class SchedulePlaceAdapter(
     private val schedulePlaces: List<SchedulePlace?>,
-    private val schedulePlaceListener: OnSchedulePlaceClickListener
+    private val placeClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_PLACE = 0
     private val VIEW_TYPE_EMPTY = 1
 
     //https://mashup-android.vercel.app/mashup-10th/hyeonseong/sealed_class/
-    interface OnSchedulePlaceClickListener {
-        fun onSchedulePlaceClick(placeId: Int)
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -27,19 +24,15 @@ class SchedulePlaceAdapter(
             VIEW_TYPE_PLACE -> {
                 return SchedulePlaceViewHolder(
                     ItemSchedulePlaceBinding.inflate(
-                        inflater,
-                        parent,
-                        false
-                    )
+                        inflater, parent, false
+                    ), placeClickListener
                 )
             }
             // VIEW_TYPE_EMPTY
             else -> {
                 return ScheduleEmptyViewHolder(
                     ItemScheduleEmptyBinding.inflate(
-                        inflater,
-                        parent,
-                        false
+                        inflater, parent, false
                     )
                 )
             }
@@ -51,7 +44,7 @@ class SchedulePlaceAdapter(
         when (holder) {
             is SchedulePlaceViewHolder -> {
                 schedulePlaces[position]?.let {
-                    holder.bind(it, schedulePlaceListener)
+                    holder.bind(it)
                 }
             }
 
@@ -61,31 +54,30 @@ class SchedulePlaceAdapter(
 
 
     override fun getItemCount(): Int {
-        val placesSize = schedulePlaces.size
-        return if (placesSize == 0) {
-            1
-        } else {
-            placesSize
-        }
+        return if (schedulePlaces.isEmpty()) 1 else schedulePlaces.size
     }
 
     override fun getItemViewType(position: Int): Int {
-        val placesSize = schedulePlaces.size
-        return if (placesSize != 0) {
-            VIEW_TYPE_PLACE
-        } else {
-            VIEW_TYPE_EMPTY
-        }
+        return if (schedulePlaces.isNotEmpty()) VIEW_TYPE_PLACE else VIEW_TYPE_EMPTY
     }
 }
 
-class SchedulePlaceViewHolder(private val binding: ItemSchedulePlaceBinding) :
-    RecyclerView.ViewHolder(binding.root) {
+class SchedulePlaceViewHolder(
+    private val binding: ItemSchedulePlaceBinding,
+    private val placeClickListener: (Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.root.setOnClickListener {
+            placeClickListener.invoke(absoluteAdapterPosition)
+        }
+    }
+
     fun bind(
-        schedulePlace: SchedulePlace,
-        schedulePlacelistener: SchedulePlaceAdapter.OnSchedulePlaceClickListener
+        schedulePlace: SchedulePlace
     ) {
         with(binding) {
+            schedulePlacePostion.text = (absoluteAdapterPosition + 1).toString()
             textViewItemSPlaceName.text = schedulePlace.name
             textViewItemSPlaceCategory.text = schedulePlace.category
 
@@ -99,10 +91,6 @@ class SchedulePlaceViewHolder(private val binding: ItemSchedulePlaceBinding) :
                     4 -> iconISPInfantFamily.visibility = View.VISIBLE
                     5 -> iconISPElderlyPeople.visibility = View.VISIBLE
                 }
-            }
-
-            root.setOnClickListener {
-                schedulePlacelistener.onSchedulePlaceClick(schedulePlace.placeId)
             }
         }
     }

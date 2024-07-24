@@ -13,7 +13,7 @@
     <color name="text_tertiary">#949494</color>
     <color name="text_quaternary">#6E6E6E</color>
     <color name="text_quinary">#969390</color>
-    <color name="text_primary_reverse">#FFFFFF</color>
+    <color name="text_primary_reverse">#000000</color>
 
     <color name="button_secondary">#999999</color>
     <color name="toolbar_main_title">#969390</color>
@@ -58,6 +58,12 @@
     <color name="profile_background_centerColor">#294DE7</color>
     <color name="profile_background_endColor">#1631DB</color>
 
+    <color name="schedule_detail_divider">#383838</color>
+    <color name="schedule_number">#000000</color>
+    <color name="schedule_report_button">#313131</color>
+    <color name="schedule_report_text">#969390</color>
+    <color name="schedule_detail_public">#262626</color>
+
     <color name="button_tertiary">#C92A2A</color>
 
     <color name="emergency_color">#26A6A6</color>
@@ -70,5 +76,7 @@
     <color name="radio_button_public_background_checked">#969390</color>
     <color name="radio_button_public_background_default">#2E2C2B</color>
     <color name="radio_button_public_text_default">#5E6161</color>
+
+    <color name="text_field_background">#414141</color>
 
 </resources>

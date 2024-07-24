@@ -8,7 +8,7 @@ import kr.tekit.lion.daongil.databinding.ActivityPublicScheduleBinding
 import kr.tekit.lion.daongil.presentation.publicschedule.adapter.PublicScheduleAdapter
 import kr.tekit.lion.daongil.presentation.publicschedule.vm.PublicScheduleViewModel
 import kr.tekit.lion.daongil.presentation.publicschedule.vm.PublicScheduleViewModelFactory
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
 
 class PublicScheduleActivity : AppCompatActivity() {
     private val binding : ActivityPublicScheduleBinding by lazy {
@@ -37,7 +37,7 @@ class PublicScheduleActivity : AppCompatActivity() {
                 val scheduleAdpater = PublicScheduleAdapter(
                     onPublicScheduleClicked = { position ->
                         // 공개 일정 상세보기 페이지로 이동 it[position].planId
-                        val intent = Intent(this@PublicScheduleActivity,ScheduleActivity::class.java)
+                        val intent = Intent(this@PublicScheduleActivity,ScheduleDetailInfoActivity::class.java)
                         intent.putExtra("planId", it[position].planId)
                         startActivity(intent)
                     }

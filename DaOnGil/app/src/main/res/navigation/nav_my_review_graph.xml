@@ -21,8 +21,5 @@
         <argument
             android:name="myPlaceReviewInfo"
             app:argType="kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo" />
-        <action
-            android:id="@+id/action_myReviewModifyFragment_to_myReviewFragment"
-            app:destination="@id/myReviewFragment" />
     </fragment>
 </navigation>

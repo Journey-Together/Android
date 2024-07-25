@@ -28,3 +28,19 @@ fun <T> Result<T>.onError(action: (Throwable) -> Unit): Result<T> {
         }
     }
 }
+
+fun <A, B, R> combineResults(
+    resultA: Result<A>,
+    resultB: Result<B>,
+    combine: (A, B) -> R
+): Result<R> {
+    return when (resultA) {
+        is Result.Success -> {
+            when (resultB) {
+                is Result.Success -> Result.Success(combine(resultA.value, resultB.value))
+                is Result.Error -> Result.Error(resultB.error)
+            }
+        }
+        is Result.Error -> Result.Error(resultA.error)
+    }
+}

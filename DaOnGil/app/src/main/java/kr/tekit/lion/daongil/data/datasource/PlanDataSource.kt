@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.data.datasource
 
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlanListResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.ScheduleDetailReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myMainSchedule.MyMainScheduleResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail.ScheduleDetailResponse
@@ -51,5 +52,9 @@ class PlanDataSource(
 
     suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailResponse {
         return planService.getDetailScheduleInfoGuest(planId)
+    }
+
+    suspend fun getDetailScheduleReview(planId: Long): ScheduleDetailReviewResponse {
+        return planService.getDetailScheduleReview(planId)
     }
 }

@@ -10,18 +10,16 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
-import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoGuestUseCase
-import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
-class ScheduleDetailInfoViewModel(
-    private val getScheduleDetailInfoUseCase: GetScheduleDetailInfoUseCase,
+class ScheduleDetailViewModel(
+    private val getScheduleDetailInfoUseCase: GetScheduleDetailUseCase,
     private val authRepository: AuthRepository,
-    private val getScheduleDetailInfoGuestUseCase: GetScheduleDetailInfoGuestUseCase
 ) : ViewModel() {
 
-    private val _scheduleDetailInfo = MutableLiveData<ScheduleDetail>()
-    val scheduleDetailInfo: LiveData<ScheduleDetail> = _scheduleDetailInfo
+    private val _scheduleDetail = MutableLiveData<ScheduleDetail>()
+    val scheduleDetail: LiveData<ScheduleDetail> = _scheduleDetail
 
     private val _loginState = MutableStateFlow<LogInState>(LogInState.Checking)
     val loginState = _loginState.asStateFlow()
@@ -33,16 +31,16 @@ class ScheduleDetailInfoViewModel(
     fun getScheduleDetailInfo(planId: Long) =
         viewModelScope.launch {
             getScheduleDetailInfoUseCase.invoke(planId).onSuccess {
-                _scheduleDetailInfo.value = it
+                _scheduleDetail.value = it
             }
         }
 
-    fun getScheduleDetailInfoGuest(planId: Long) =
+    /*fun getScheduleDetailInfoGuest(planId: Long) =
         viewModelScope.launch {
             getScheduleDetailInfoGuestUseCase.invoke(planId).onSuccess {
-                _scheduleDetailInfo.value = it
+                _scheduleDetailInfoInfo.value = it
             }
-        }
+        }*/
 
     private fun checkLoginState() =
         viewModelScope.launch {

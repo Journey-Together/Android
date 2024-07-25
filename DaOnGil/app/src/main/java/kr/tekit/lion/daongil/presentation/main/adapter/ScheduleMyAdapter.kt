@@ -4,9 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.RowScheduleMyBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
+import kr.tekit.lion.daongil.presentation.ext.setImage
 
 class ScheduleMyAdapter(
     private val itemClickListener: (Int) -> Unit,
@@ -44,6 +46,7 @@ class ScheduleMyAdapter(
                     item.startDate,
                     item.endDate
                 )
+                root.context.setImage(imageViewRowSchedule, item.imageUrl)
 
                 // 다녀온 일정인 경우
                 if (item.remainDate == null) {

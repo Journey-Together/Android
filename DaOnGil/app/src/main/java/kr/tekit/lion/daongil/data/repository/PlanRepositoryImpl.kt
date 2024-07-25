@@ -62,4 +62,8 @@ class PlanRepositoryImpl(
     override suspend fun getDetailScheduleReview(planId: Long): ScheduleDetailReview {
         return planDataSource.getDetailScheduleReview(planId).toDomainModel()
     }
+
+    override suspend fun getDetailScheduleReviewGuest(planId: Long): ScheduleDetailReview {
+        return planDataSource.getDetailScheduleReviewGuest(planId).toDomainModel()
+    }
 }

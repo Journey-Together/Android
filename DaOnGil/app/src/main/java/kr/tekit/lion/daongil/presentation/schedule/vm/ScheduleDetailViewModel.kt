@@ -10,12 +10,14 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
+import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailGuestUsecase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class ScheduleDetailViewModel(
     private val getScheduleDetailInfoUseCase: GetScheduleDetailUseCase,
     private val authRepository: AuthRepository,
+    private val getScheduleDetailGuestUsecase: GetScheduleDetailGuestUsecase,
 ) : ViewModel() {
 
     private val _scheduleDetail = MutableLiveData<ScheduleDetail>()
@@ -35,12 +37,12 @@ class ScheduleDetailViewModel(
             }
         }
 
-    /*fun getScheduleDetailInfoGuest(planId: Long) =
+    fun getScheduleDetailInfoGuest(planId: Long) =
         viewModelScope.launch {
-            getScheduleDetailInfoGuestUseCase.invoke(planId).onSuccess {
-                _scheduleDetailInfoInfo.value = it
-            }
-        }*/
+           getScheduleDetailGuestUsecase.invoke(planId).onSuccess {
+               _scheduleDetail.value = it
+           }
+        }
 
     private fun checkLoginState() =
         viewModelScope.launch {

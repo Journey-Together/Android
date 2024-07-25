@@ -216,7 +216,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                     }
 
                     is LogInState.LoginRequired -> {
-                        // viewModel.getScheduleDetailInfoGuest(planId)
+                        viewModel.getScheduleDetailInfoGuest(planId)
                         initView(false)
                     }
                 }

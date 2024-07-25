@@ -88,4 +88,11 @@ interface PlanService {
         @Path("planId") planId: Long
     ): ScheduleDetailReviewResponse
 
+    // 여행 일정 상세보기 페이지에서의 여행 일정 후기 정보 (게스트 버전)
+    @GET("plan/guest/review/{planId}")
+    suspend fun getDetailScheduleReviewGuest(
+        @Path("planId") planId: Long,
+        @Tag authType: AuthType = AuthType.NO_AUTH
+    ): ScheduleDetailReviewResponse
+
 }

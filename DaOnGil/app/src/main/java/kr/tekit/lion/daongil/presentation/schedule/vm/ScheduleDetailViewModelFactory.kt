@@ -12,21 +12,9 @@ import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import java.lang.IllegalArgumentException
 
 class ScheduleDetailViewModelFactory(context: Context): ViewModelProvider.Factory {
-    private val getScheduleDetailnfoUseCase = GetScheduleDetailnfoUseCase(
-        PlanRepository.create()
-    )
-
-    private val getScheduleDetailInfoGuestUseCase = GetScheduleDetailInfoGuestUseCase(
-        PlanRepository.create()
-    )
-
-    private val getScheduleReviewDetailUseCase = GetScheduleDetailReviewUseCase(
-        PlanRepository.create()
-    )
 
     private val getScheduleDetailUseCase = GetScheduleDetailUseCase(
-        getScheduleDetailnfoUseCase = getScheduleDetailnfoUseCase,
-        getScheduleDetailReviewUseCase = getScheduleReviewDetailUseCase
+       PlanRepository.create()
     )
 
     private val authRepository = AuthRepository.create(context)

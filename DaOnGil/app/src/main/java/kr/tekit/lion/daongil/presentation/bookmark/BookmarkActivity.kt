@@ -94,9 +94,9 @@ class BookmarkActivity : AppCompatActivity() {
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
                     itemClickListener = { position ->
-                        val placeBookmark = planBookmarkList[position]
+                        val planBookmark = planBookmarkList[position]
                         val intent = Intent(this, ScheduleDetailInfoActivity::class.java)
-                        intent.putExtra("planId", placeBookmark.planId)
+                        intent.putExtra("planId", planBookmark.planId)
                         startActivity(intent)
                     },
                     onBookmarkClick = { planId ->

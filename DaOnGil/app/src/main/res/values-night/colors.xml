@@ -81,4 +81,6 @@
   
     <color name="text_field_background">#414141</color>
 
+    <color name="search_view_main">#26A6A6</color>
+
 </resources>

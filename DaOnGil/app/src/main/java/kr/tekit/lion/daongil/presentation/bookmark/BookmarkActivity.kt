@@ -76,7 +76,11 @@ class BookmarkActivity : AppCompatActivity() {
                         viewModel.updatePlaceBookmark(placeId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE
@@ -103,7 +107,11 @@ class BookmarkActivity : AppCompatActivity() {
                         viewModel.updatePlanBookmark(planId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = planBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE

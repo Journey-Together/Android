@@ -392,7 +392,8 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     }
 
     private fun showScheduleReviewManageBottomSheet() {
-        ScheduleReviewManageBottomSheet {
+        val planId = intent.getLongExtra("planId", -1)
+        ScheduleReviewManageBottomSheet(planId) {
             // TO DO - 서버에 여행 일정 후기 삭제 요청
             // TO DO - 이 화면에서 관리하고 있는 일정정보 data에도 후기 값 업데이트? (보류)
             binding.cardViewScheduleReview.visibility = View.GONE

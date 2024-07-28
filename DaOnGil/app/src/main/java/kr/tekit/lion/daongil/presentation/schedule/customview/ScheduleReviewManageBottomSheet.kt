@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.schedule.customview
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -7,8 +8,11 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.BottomSheetScheduleReviewManageBinding
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedulereview.ModifyScheduleReviewActivity
 
-class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: () -> Unit) :
+class ScheduleReviewManageBottomSheet(
+    private val planId: Long,
+    private val onReviewDeleteClickListener: () -> Unit) :
     BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_review_manage),
     ConfirmDialogInterface {
 
@@ -24,6 +28,9 @@ class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: (
         binding.apply {
             textViewScheduleReviewManageEdit.setOnClickListener {
                 // 리뷰 수정 화면으로 이동
+                val intent = Intent(requireActivity(), ModifyScheduleReviewActivity::class.java)
+                intent.putExtra("planId", planId)
+                startActivity(intent)
             }
 
             textViewScheduleReviewManageDelete.setOnClickListener {

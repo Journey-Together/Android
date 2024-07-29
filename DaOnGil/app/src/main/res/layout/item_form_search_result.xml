@@ -37,7 +37,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
-                android:layout_marginTop="@dimen/margin_small1"
+                android:layout_marginTop="@dimen/margin_big3"
                 android:layout_marginEnd="@dimen/margin_small1"
                 android:ellipsize="end"
                 android:fontFamily="@font/pretendard_semibold"
@@ -54,8 +54,8 @@
                 android:id="@+id/textViewSearchResultCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_small2"
-                android:layout_marginBottom="@dimen/margin_small1"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="@dimen/margin_big3"
                 android:fontFamily="@font/pretendard_light"
                 android:textColor="@color/text_secondary"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -65,14 +65,16 @@
 
             <ImageView
                 android:id="@+id/imageViewSearchResultThumbnail"
-                android:layout_width="@dimen/search_bar_height"
+                android:layout_width="58dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="@dimen/margin_small1"
+                android:layout_marginTop="@dimen/margin_small1"
+                android:layout_marginBottom="@dimen/margin_small1"
                 android:contentDescription="대표 사진"
                 android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="@+id/textViewSearchResultCategory"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/viewSearchResultDeco"
-                app:layout_constraintTop_toTopOf="@+id/textViewSearchResultName"
+                app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/empty_view" />
 
             <ImageButton
@@ -81,10 +83,11 @@
                 android:layout_height="0dp"
                 android:backgroundTint="@color/item_background"
                 android:contentDescription="여행지 추가"
+                android:paddingHorizontal="@dimen/margin_big3"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/ic_add_24px"
+                app:srcCompat="@drawable/form_add_icon"
                 app:tint="@color/primary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

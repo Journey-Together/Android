@@ -99,7 +99,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
             }
 
             toolbar.setNavigationOnClickListener {
-                findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment)
+                findNavController().popBackStack()
             }
 
             btnSubmit.setOnClickListener {
@@ -126,7 +126,7 @@ class PersonalInfoModifyFragment : Fragment(R.layout.fragment_personal_info_modi
                             )
                         )
                         .show()
-                    findNavController().navigate(R.id.action_personalInfoModifyFragment_to_myInfoFragment)
+                    findNavController().popBackStack()
                 }
             }
         }

@@ -8,7 +8,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeBinding
-import kr.tekit.lion.daongil.databinding.FragmentConcernTypeModifyBinding
 import kr.tekit.lion.daongil.domain.model.ConcernType
 import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModel
 import kr.tekit.lion.daongil.presentation.concerntype.vm.ConcernTypeViewModelFactory
@@ -22,19 +21,21 @@ class ConcernTypeFragment : Fragment(R.layout.fragment_concern_type) {
 
         val binding = FragmentConcernTypeBinding.bind(view)
 
-        initView(binding)
+        val nickName = requireActivity().intent.getStringExtra("nickName")
+
+        initView(binding, nickName)
         observeSelection(binding)
         moveConcernTypeModify(binding)
     }
 
-    private fun initView(binding: FragmentConcernTypeBinding) {
+    private fun initView(binding: FragmentConcernTypeBinding, nickName: String?) {
         with(binding) {
             toolbarConcernType.setNavigationIcon(R.drawable.back_icon)
             toolbarConcernType.setNavigationOnClickListener {
                 requireActivity().finish()
             }
 
-            textViewConcernTypeUseNickname.text = "다온길"
+            textViewConcernTypeUseNickname.text = nickName ?: ""
         }
     }
 

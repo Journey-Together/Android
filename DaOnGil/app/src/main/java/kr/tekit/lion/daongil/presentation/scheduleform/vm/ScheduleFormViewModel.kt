@@ -2,6 +2,7 @@ package kr.tekit.lion.daongil.presentation.scheduleform.vm
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,6 +12,7 @@ import kr.tekit.lion.daongil.domain.model.DailyPlace
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
 import kr.tekit.lion.daongil.domain.model.NewPlan
+import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.usecase.plan.AddNewPlanUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
@@ -50,6 +52,18 @@ class ScheduleFormViewModel(
 
     private val _keyword = MutableLiveData<String>()
 
+    // 검색 결과 수와 장소 목록을 하나의 List로 관리
+    private val _searchResultsWithNum = MediatorLiveData<List<PlaceSearchInfoList>>().apply {
+        // _placeSearchResult: 이 값이 변경될 때마다 값 update
+        addSource(_placeSearchResult) {
+            val combinedList = mutableListOf<PlaceSearchInfoList>()
+            combinedList.add(it.totalElements)
+            combinedList.addAll(it.placeInfoList)
+            value = combinedList
+        }
+    }
+    val searchResultsWithNum : LiveData<List<PlaceSearchInfoList>> get() = _searchResultsWithNum
+
     init {
         getBookmarkedPlaceList()
     }
@@ -72,6 +86,17 @@ class ScheduleFormViewModel(
 
     fun hasStartDate() : Boolean {
         return startDate.value != null
+    }
+
+    fun getScheduleTitle(): String {
+        return _title.value ?: ""
+    }
+
+    fun getSchedulePeriod(): String {
+        val startDateString = _startDate.value?.let { formatDateValue(it) }
+        val endDateString = _endDate.value?.let { formatDateValue(it) }
+
+        return "$startDateString - $endDateString"
     }
 
     private fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
@@ -186,7 +211,7 @@ class ScheduleFormViewModel(
             placeId?.let {
                 getPlaceDetailInfoUseCase(placeId).onSuccess {
                     val formPlace =
-                        FormPlace(it.placeId, it.image, it.address, it.name, it.disability)
+                        FormPlace(it.placeId, it.image, it.name, it.category)
                     addNewPlace(formPlace, dayPosition)
 
                 }.onError {
@@ -272,5 +297,10 @@ class ScheduleFormViewModel(
         }
     }
 
+    fun getPlaceId(selectedPlacePosition: Int): Long {
+        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId ?: -1L
+
+        return placeId
+    }
 
 }

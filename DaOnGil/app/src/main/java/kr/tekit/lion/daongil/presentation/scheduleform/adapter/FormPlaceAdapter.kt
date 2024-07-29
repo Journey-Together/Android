@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -51,19 +50,8 @@ class FormPlaceAdapter(
 
         fun bind(place: FormPlace) {
             binding.apply {
-                textViewFPlaceAddr.text = place.placeAddress
+                textViewFPlaceCategory.text = place.placeCategory
                 textViewFPlaceName.text = place.placeName
-
-                initDisabilityIcons()
-                place.placeDisability.forEach {
-                    when (it) {
-                        1 -> iconFPlacePhysicalDisability.visibility = View.VISIBLE
-                        2 -> iconFPlaceVisualImpair.visibility = View.VISIBLE
-                        3 -> iconFPlaceHearingImpair.visibility = View.VISIBLE
-                        4 -> iconFPlaceInfantFamily.visibility = View.VISIBLE
-                        5 -> iconFPlaceElderlyPeople.visibility = View.VISIBLE
-                    }
-                }
 
                 place.placeImage?.let {
                     Glide.with(imageViewFPlaceThumbnail.context)
@@ -72,16 +60,6 @@ class FormPlaceAdapter(
                         .error(R.drawable.empty_view)
                         .into(imageViewFPlaceThumbnail)
                 }
-            }
-        }
-
-        private fun initDisabilityIcons(){
-            binding.apply {
-                iconFPlacePhysicalDisability.visibility = View.GONE
-                iconFPlaceVisualImpair.visibility = View.GONE
-                iconFPlaceHearingImpair.visibility = View.GONE
-                iconFPlaceInfantFamily.visibility = View.GONE
-                iconFPlaceElderlyPeople.visibility = View.GONE
             }
         }
     }

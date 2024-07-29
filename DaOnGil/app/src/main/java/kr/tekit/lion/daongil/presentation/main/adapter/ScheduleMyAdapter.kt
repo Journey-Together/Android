@@ -68,13 +68,6 @@ class ScheduleMyAdapter(
                     textViewRowScheduleDDay.text = item.remainDate
                     buttonRowScheduleReview.visibility = View.GONE // 후기작성 버튼 숨김처리
                 }
-
-                if(item.imageUrl != ""){
-                    Glide.with(imageViewRowSchedule.context)
-                        .load(item.imageUrl)
-                        .error(R.drawable.empty_view_small)
-                        .into(binding.imageViewRowSchedule)
-                }
             }
         }
     }

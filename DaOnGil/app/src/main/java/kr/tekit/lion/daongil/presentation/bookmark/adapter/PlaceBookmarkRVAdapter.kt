@@ -45,7 +45,8 @@ class PlaceBookmarkRVAdapter(
 
             Glide.with(binding.imageViewLocationBookmark.context)
                 .load(placeBookmark.image)
-                .error(R.drawable.empty_view)
+                .placeholder(R.drawable.empty_view_long)
+                .error(R.drawable.empty_view_long)
                 .into(binding.imageViewLocationBookmark)
 
             binding.locationBookmarkBtn.setOnClickListener {

@@ -26,8 +26,8 @@
             android:id="@+id/action_modifyScheduleDetailsFragment_to_modifyScheduleConfirmFragment"
             app:destination="@id/modifyScheduleConfirmFragment" />
         <action
-            android:id="@+id/action_modifyScheduleDetailsFragment_to_formSearchFragment2"
-            app:destination="@id/formSearchFragment2" />
+            android:id="@+id/action_modifyScheduleDetailsFragment_to_modifySearchFragment"
+            app:destination="@id/modifySearchFragment" />
     </fragment>
     <fragment
         android:id="@+id/modifyScheduleConfirmFragment"
@@ -39,12 +39,12 @@
             app:destination="@id/modifyScheduleDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/formSearchFragment2"
-        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.FormSearchFragment"
+        android:id="@+id/modifySearchFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ModifySearchFragment"
         android:label="@string/search_places_to_add"
-        tools:layout="@layout/fragment_form_search" >
+        tools:layout="@layout/fragment_modify_search" >
         <action
-            android:id="@+id/action_formSearchFragment2_to_modifyScheduleDetailsFragment"
+            android:id="@+id/action_modifySearchFragment_to_modifyScheduleDetailsFragment"
             app:destination="@id/modifyScheduleDetailsFragment" />
     </fragment>
 </navigation>

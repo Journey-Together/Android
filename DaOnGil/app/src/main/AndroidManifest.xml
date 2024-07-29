@@ -24,6 +24,9 @@
             android:name=".presentation.schedulereview.ModifyScheduleReviewActivity"
             android:exported="false" />
         <activity
+            android:name=".presentation.scheduleform.ModifyScheduleFormActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.report.ReportActivity"
             android:exported="false" />
         <activity

@@ -1,6 +1,6 @@
 package kr.tekit.lion.daongil.domain.model
 
-data class ScheduleDetail(
+data class ScheduleDetailnfo (
     val title : String,
     val startDate : String,
     val endDate : String,
@@ -13,11 +13,5 @@ data class ScheduleDetail(
     val nickname : String,
     val images : List<String>?,
     val dailyPlans: List<DailyPlan>,
-    val writerId: Long,
-    val reviewId: Long?,
-    val content: String?,
-    val grade: Double?,
-    val reviewImages: List<String>?,
-    val hasReview: Boolean,
-    val profileUrl: String
+    val writerId: Long
 )

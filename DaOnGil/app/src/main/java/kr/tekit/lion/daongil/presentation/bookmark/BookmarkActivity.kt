@@ -14,7 +14,7 @@ import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlanBookmarkRVAdapter
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModel
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModelFactory
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 
 class BookmarkActivity : AppCompatActivity() {
 
@@ -95,7 +95,7 @@ class BookmarkActivity : AppCompatActivity() {
                     planBookmarkList,
                     itemClickListener = { position ->
                         val placeBookmark = planBookmarkList[position]
-                        val intent = Intent(this, ScheduleDetailInfoActivity::class.java)
+                        val intent = Intent(this, ScheduleDetailActivity::class.java)
                         intent.putExtra("planId", placeBookmark.planId)
                         startActivity(intent)
                     },

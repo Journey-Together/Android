@@ -10,6 +10,7 @@ import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -95,4 +96,9 @@ interface PlanService {
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): ScheduleDetailReviewResponse
 
+    // 여행 일정 후기 삭제
+    @DELETE("plan/review/{reviewId}")
+    suspend fun deleteMyPlanReview(
+        @Path("reviewId") reviewId: Long
+    )
 }

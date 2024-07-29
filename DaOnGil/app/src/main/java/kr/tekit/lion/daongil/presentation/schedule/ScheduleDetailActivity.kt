@@ -74,9 +74,13 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                 initToolbarMenu(isUser, scheduleDetail.isWriter, scheduleDetail.isPublic)
 
                 settingScheduleAdapter(scheduleDetail)
+                schedulePublic.visibility = View.VISIBLE
+
+                textViewReview.visibility = View.VISIBLE
 
                 scheduleDetail.remainDate?.let {
                     scheduleDday.text = it
+                    scheduleDday.visibility = View.VISIBLE
 
                     cardViewScheduleEmptyReview.visibility = View.VISIBLE
 
@@ -103,8 +107,12 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
 
                     // 리뷰가 있을때
                     if(scheduleDetail.hasReview){
-
-                        initReviewMenu(scheduleDetail.isWriter, isUser)
+                        val planId = intent.getLongExtra("planId", -1)
+                        scheduleDetail.reviewId?.let {
+                            initReviewMenu(scheduleDetail.isWriter, isUser, planId,
+                                it
+                            )
+                        }
 
                         cardViewScheduleReview.visibility = View.VISIBLE
                         this@ScheduleDetailActivity.setImage(ivProfileImage, scheduleDetail.profileUrl)
@@ -159,6 +167,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                     // 리뷰가 없을 때
                     else {
                         if(scheduleDetail.isWriter){
+                            cardViewScheduleReview.visibility = View.GONE
                             cardViewScheduleEmptyReview.visibility = View.VISIBLE
                             this.scheduleEmptyReviewTitle.text = getString(R.string.text_my_review)
                             this.scheduleEmptyReviewContent.text = getString(R.string.text_leave_schedule_review)
@@ -306,12 +315,15 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         setBookmarkIcon(menuItem)
     }
 
-    private fun initReviewMenu(isWriter: Boolean, isUser: Boolean) {
+    private fun initReviewMenu(isWriter: Boolean, isUser: Boolean, planId: Long, reviewId: Long) {
         if (isWriter) {
             with(binding.imageButtonScheduleManageReview) {
                 visibility = View.VISIBLE
                 setOnClickListener {
-                    showScheduleReviewManageBottomSheet()
+                    showScheduleReviewManageBottomSheet(
+                        planId = planId,
+                        reviewId = reviewId
+                    )
                 }
             }
         } else {
@@ -391,13 +403,17 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         }.show(supportFragmentManager, "ScheduleManageBottomSheet")
     }
 
-    private fun showScheduleReviewManageBottomSheet() {
-        val planId = intent.getLongExtra("planId", -1)
+    private fun showScheduleReviewManageBottomSheet(planId: Long, reviewId: Long) {
         ScheduleReviewManageBottomSheet(planId) {
             // TO DO - 서버에 여행 일정 후기 삭제 요청
+            viewModel.deleteMyPlanReview(
+                reviewId = reviewId,
+                planId = planId
+            )
+
             // TO DO - 이 화면에서 관리하고 있는 일정정보 data에도 후기 값 업데이트? (보류)
-            binding.cardViewScheduleReview.visibility = View.GONE
-            binding.cardViewScheduleEmptyReview.visibility = View.VISIBLE
+            /*binding.cardViewScheduleReview.visibility = View.GONE
+            binding.cardViewScheduleEmptyReview.visibility = View.VISIBLE*/
             showSnackBar(
                 binding.imageButtonScheduleManageReview,
                 R.string.text_schedule_review_deleted,

@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.schedule.vm
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +11,7 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
+import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanReviewUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailGuestUsecase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
@@ -18,6 +20,7 @@ class ScheduleDetailViewModel(
     private val getScheduleDetailInfoUseCase: GetScheduleDetailUseCase,
     private val authRepository: AuthRepository,
     private val getScheduleDetailGuestUsecase: GetScheduleDetailGuestUsecase,
+    private val deleteMyPlanReviewUseCase: DeleteMyPlanReviewUseCase,
 ) : ViewModel() {
 
     private val _scheduleDetail = MutableLiveData<ScheduleDetail>()
@@ -42,6 +45,19 @@ class ScheduleDetailViewModel(
            getScheduleDetailGuestUsecase.invoke(planId).onSuccess {
                _scheduleDetail.value = it
            }
+        }
+
+    fun deleteMyPlanReview(reviewId: Long, planId: Long) =
+        viewModelScope.launch {
+            deleteMyPlanReviewUseCase.invoke(reviewId, planId).onSuccess {
+                _scheduleDetail.value = _scheduleDetail.value?.copy(
+                reviewId = it.reviewId,
+                content = it.content,
+                grade = it.grade,
+                reviewImages = it.imageList,
+                hasReview = it.hasReview
+                )
+            }
         }
 
     private fun checkLoginState() =

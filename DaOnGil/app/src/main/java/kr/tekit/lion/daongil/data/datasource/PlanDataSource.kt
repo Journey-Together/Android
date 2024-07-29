@@ -62,4 +62,8 @@ class PlanDataSource(
     suspend fun getDetailScheduleReviewGuest(planId: Long): ScheduleDetailReviewResponse {
         return planService.getDetailScheduleReviewGuest(planId)
     }
+
+    suspend fun deleteMyPlanReview(reviewId: Long) {
+        return planService.deleteMyPlanReview(reviewId)
+    }
 }

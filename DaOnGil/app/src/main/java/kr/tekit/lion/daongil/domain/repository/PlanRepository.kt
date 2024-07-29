@@ -40,6 +40,8 @@ interface PlanRepository {
 
     suspend fun getDetailScheduleReviewGuest(planId: Long): ScheduleDetailReview
 
+    suspend fun deleteMyPlanReview(reviewId: Long)
+
     companion object{
         fun create(): PlanRepositoryImpl{
             return PlanRepositoryImpl(

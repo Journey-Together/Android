@@ -43,8 +43,8 @@ class ScheduleReviewManageBottomSheet(
     private fun showScheduleReviewDeleteDialog() {
         val dialog = ConfirmDialog(
             this,
-            "여행 일정 삭제",
-            "삭제한 데이터는 되돌릴 수 없습니다.",
+            "여행 후기 삭제",
+            "삭제한 후기는 되돌릴 수 없습니다.",
             "삭제하기",
             R.color.button_tertiary,
             R.color.white

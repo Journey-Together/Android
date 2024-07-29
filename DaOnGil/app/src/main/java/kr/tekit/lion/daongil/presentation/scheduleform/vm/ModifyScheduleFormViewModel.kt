@@ -73,6 +73,10 @@ class ModifyScheduleFormViewModel (
         getBookmarkedPlaceList()
     }
 
+    fun setTitle(title: String?){
+        _title.value = title
+    }
+
     fun setStartDate(startDate: Date?){
         _startDate.value = startDate
     }

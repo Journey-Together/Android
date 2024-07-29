@@ -22,15 +22,24 @@ class ModifyNamePeriodFragment : Fragment(R.layout.fragment_modify_name_period) 
 
         val binding = FragmentModifyNamePeriodBinding.bind(view)
 
+        initToolbar(binding)
         initScheduleData(binding)
         setPeriod(binding)
         initButtonNextStep(binding)
     }
 
-    private fun initScheduleData(binding: FragmentModifyNamePeriodBinding){
-        val planId = requireActivity().intent.getLongExtra("planId", -1)
-        viewModel.initScheduleDetailInfo(planId)
+    private fun initToolbar(binding: FragmentModifyNamePeriodBinding){
+        binding.toolbarModifyNP.setNavigationOnClickListener {
+            requireActivity().finish()
+        }
+    }
 
+    private fun initScheduleData(binding: FragmentModifyNamePeriodBinding){
+        binding.textInputModifyName.showSnackbar("startdate= ${viewModel.startDate.value}")
+        if(!viewModel.hasStartDate()){
+            val planId = requireActivity().intent.getLongExtra("planId", -1)
+            viewModel.initScheduleDetailInfo(planId)
+        }
         initScheduleName(binding)
         initSchedulePeriod(binding)
     }
@@ -69,6 +78,8 @@ class ModifyNamePeriodFragment : Fragment(R.layout.fragment_modify_name_period) 
                 val isNameAndPeriodValidate = validateScheduleNameAndPeriod(this)
 
                 if(isNameAndPeriodValidate){
+                    viewModel.setTitle(editTextModifyName.text.toString())
+
                     val navController = findNavController()
                     val action = ModifyNamePeriodFragmentDirections.actionModifyNamePeriodFragmentToModifyScheduleDetailsFragment()
                     navController.navigate(action)

@@ -1,7 +1,6 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -70,7 +69,6 @@ class ModifyNamePeriodFragment : Fragment(R.layout.fragment_modify_name_period) 
                 val isNameAndPeriodValidate = validateScheduleNameAndPeriod(this)
 
                 if(isNameAndPeriodValidate){
-                    Log.d("test1234", "sdfsdfsdfsdf")
                     val navController = findNavController()
                     val action = ModifyNamePeriodFragmentDirections.actionModifyNamePeriodFragmentToModifyScheduleDetailsFragment()
                     navController.navigate(action)

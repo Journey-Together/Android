@@ -20,6 +20,7 @@
     <string name="save">저장하기</string>
     <string name="block_report">신고</string>
     <string name="text_guide_info">새로운 여행 정보를\n입력해주세요</string>
+    <string name="text_guide_modify_info">여행 정보를\n입력해주세요</string>
     <string name="text_guide_places">날짜마다 방문할\n여행지를 추가해주세요</string>
     <string name="text_guide_confirm">입력하신 여행정보를\n확인해보세요</string>
     <string name="text_number_of_result">검색결과 %s건</string>

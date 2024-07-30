@@ -76,7 +76,11 @@ class BookmarkActivity : AppCompatActivity() {
                         viewModel.updatePlaceBookmark(placeId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE
@@ -94,16 +98,20 @@ class BookmarkActivity : AppCompatActivity() {
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
                     itemClickListener = { position ->
-                        val placeBookmark = planBookmarkList[position]
-                        val intent = Intent(this, ScheduleDetailActivity::class.java)
-                        intent.putExtra("planId", placeBookmark.planId)
+                        val planBookmark = planBookmarkList[position]
+                        val intent = Intent(this, ScheduleDetailInfoActivity::class.java)
+                        intent.putExtra("planId", planBookmark.planId)
                         startActivity(intent)
                     },
                     onBookmarkClick = { planId ->
                         viewModel.updatePlanBookmark(planId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = planBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE

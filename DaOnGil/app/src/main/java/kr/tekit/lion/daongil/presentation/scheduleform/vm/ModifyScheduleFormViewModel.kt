@@ -92,6 +92,10 @@ class ModifyScheduleFormViewModel (
         return startDate.value != null
     }
 
+    fun isLastPage(): Boolean {
+        return _placeSearchResult.value?.last ?: true
+    }
+
     private fun getBookmarkedPlaceList(){
         viewModelScope.launch {
             getPlaceBookmarkListUseCase().onSuccess {
@@ -227,6 +231,24 @@ class ModifyScheduleFormViewModel (
         return "$startDateString - $endDateString"
     }
 
+    private fun addNewPlace(newPlace:FormPlace, dayPosition:Int){
+        // 업데이트 될 기존 데이터
+        val updatedSchedule = _schedule.value?.toMutableList()
+        val daySchedule = updatedSchedule?.get(dayPosition)
+
+        if (daySchedule != null) {
+            // 업데이트할 날짜의 장소 목록
+            val updatedPlaces = daySchedule.dailyPlaces.toMutableList()
+            // 검색 결과에서 선택한 장소 정보를 추가
+            updatedPlaces.add(newPlace)
+            // copy = 일부 속성만 변경할 수 있게 해준다.
+            // 여기선 dailyPlaces 속성만 updatedPlaces 로 바꿔준다.
+            updatedSchedule[dayPosition] = daySchedule.copy(dailyPlaces = updatedPlaces)
+            // 데이터 갱신
+            _schedule.value = updatedSchedule
+        }
+    }
+
     fun removePlace(dayPosition: Int, placePosition: Int){
         // 하나의 장소를 삭제할 예정인 기존 데이터
         val removedSchedule = _schedule.value?.toMutableList()
@@ -244,4 +266,87 @@ class ModifyScheduleFormViewModel (
         }
     }
 
+    fun isPlaceAlreadyAdded(
+        dayPosition: Int,
+        selectedPlacePosition: Int,
+        isBookmarkedPlace: Boolean
+    ): Boolean {
+        val placeId = if (isBookmarkedPlace) {
+            _bookmarkedPlaces.value?.get(selectedPlacePosition)?.bookmarkedPlaceId
+        } else {
+            _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+        }
+
+        // 선택한 관광지 정보가 같은 날에 추가된 경우
+        val daySchedule = _schedule.value?.get(dayPosition)?.dailyPlaces
+        daySchedule?.forEach {
+            if (it.placeId == placeId) {
+                return true
+            }
+        }
+        return false
+    }
+
+    fun getPlaceSearchResult(word: String, page: Int){
+        _keyword.value = word
+
+        viewModelScope.launch {
+            getPlaceSearchResultUseCase(word, page)
+                .onSuccess {
+                    _placeSearchResult.value = it
+                }.onError {
+                    Log.e("getPlaceSearchResult", "${it.message}")
+                }
+        }
+    }
+
+    fun fetchNextPlaceResults() {
+        val page = _placeSearchResult.value?.pageNo
+        val keyword = _keyword.value
+
+        if (keyword != null && page != null) {
+            viewModelScope.launch {
+                getPlaceSearchResultUseCase(keyword, page + 1)
+                    .onSuccess {
+                        val newList =
+                            _placeSearchResult.value?.placeInfoList.orEmpty() + it.placeInfoList
+                        val updatedResult = it.copy(placeInfoList = newList)
+                        _placeSearchResult.value = updatedResult
+                    }
+                    .onError {
+                        Log.e("fetchNextPlaceResults", "onError ${it.message}")
+                    }
+            }
+        }
+    }
+
+    fun getSearchedPlaceDetailInfo(
+        dayPosition: Int,
+        selectedPlacePosition: Int,
+        isBookmarkedPlace: Boolean
+    ) {
+        val placeId = if (isBookmarkedPlace) {
+            _bookmarkedPlaces.value?.get(selectedPlacePosition)?.bookmarkedPlaceId
+        } else {
+            _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId
+        }
+
+        viewModelScope.launch {
+            placeId?.let {
+                getPlaceDetailInfoUseCase(placeId).onSuccess {
+                    val formPlace =
+                        FormPlace(it.placeId, it.image, it.name, it.category)
+                    addNewPlace(formPlace, dayPosition)
+                }.onError {
+                    //Log.e("getSearchedPlaceDetailInfo", "placeId $placeId onError ${it.message}")
+                }
+            }
+        }
+    }
+
+    fun getPlaceId(selectedPlacePosition: Int): Long {
+        val placeId = _placeSearchResult.value?.placeInfoList?.get(selectedPlacePosition)?.placeId ?: -1L
+
+        return placeId
+    }
 }

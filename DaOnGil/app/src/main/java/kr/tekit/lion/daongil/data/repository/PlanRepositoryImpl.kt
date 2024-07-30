@@ -85,4 +85,8 @@ class PlanRepositoryImpl(
     override suspend fun updateMyPlanPublic(planId: Long) {
         return planDataSource.updateMyPlanPublic(planId)
     }
+
+    override suspend fun deleteMyPlanSchedule(planId: Long) {
+        return planDataSource.deleteMyPlanSchedule(planId)
+    }
 }

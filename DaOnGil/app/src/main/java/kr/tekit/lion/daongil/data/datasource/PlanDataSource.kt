@@ -80,4 +80,8 @@ class PlanDataSource(
     suspend fun updateMyPlanPublic(planId: Long) {
         return planService.updateMyPlanPublic(planId)
     }
+
+    suspend fun deleteMyPlanSchedule(planId: Long) {
+        return planService.deleteMyPlanSchedule(planId)
+    }
 }

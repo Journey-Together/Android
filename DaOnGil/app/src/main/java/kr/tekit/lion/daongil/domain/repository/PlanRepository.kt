@@ -50,6 +50,8 @@ interface PlanRepository {
 
     suspend fun updateMyPlanPublic(planId: Long)
 
+    suspend fun deleteMyPlanSchedule(planId: Long)
+
     companion object{
         fun create(): PlanRepositoryImpl{
             return PlanRepositoryImpl(

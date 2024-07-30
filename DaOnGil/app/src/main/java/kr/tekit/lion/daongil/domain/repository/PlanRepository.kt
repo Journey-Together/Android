@@ -13,7 +13,8 @@ import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ReviewImg
-import kr.tekit.lion.daongil.domain.model.ScheduleDetail
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
 
 interface PlanRepository {
     suspend fun getOpenPlanList(size: Int, page: Int): OpenPlan
@@ -37,9 +38,15 @@ interface PlanRepository {
 
     suspend fun getMyElapsedScheduleList(size: Int, page: Int): MyElapsedSchedules
 
-    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetail
+    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailnfo
 
-    suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetail
+    suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetailnfo
+
+    suspend fun getDetailScheduleReview(planId: Long): ScheduleDetailReview
+
+    suspend fun getDetailScheduleReviewGuest(planId: Long): ScheduleDetailReview
+
+    suspend fun deleteMyPlanReview(reviewId: Long)
 
     companion object{
         fun create(): PlanRepositoryImpl{

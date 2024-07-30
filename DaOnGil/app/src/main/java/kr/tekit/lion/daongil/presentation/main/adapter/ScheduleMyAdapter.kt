@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.RowScheduleMyBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
+import kr.tekit.lion.daongil.presentation.ext.setImage
 
 class ScheduleMyAdapter(
     private val itemClickListener: (Int) -> Unit,
@@ -45,6 +46,7 @@ class ScheduleMyAdapter(
                     item.startDate,
                     item.endDate
                 )
+                root.context.setImage(imageViewRowSchedule, item.imageUrl)
 
                 // 다녀온 일정인 경우
                 if (item.remainDate == null) {
@@ -65,13 +67,6 @@ class ScheduleMyAdapter(
                     textViewRowScheduleDDay.isEnabled = true // 일정 상태에 따라 TextColor 변경
                     textViewRowScheduleDDay.text = item.remainDate
                     buttonRowScheduleReview.visibility = View.GONE // 후기작성 버튼 숨김처리
-                }
-
-                if(item.imageUrl != ""){
-                    Glide.with(imageViewRowSchedule.context)
-                        .load(item.imageUrl)
-                        .error(R.drawable.empty_view_small)
-                        .into(binding.imageViewRowSchedule)
                 }
             }
         }

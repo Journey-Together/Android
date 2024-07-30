@@ -1,15 +1,15 @@
 package kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail
 
-import kr.tekit.lion.daongil.domain.model.ScheduleDetail
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
 
 data class ScheduleDetailResponse(
     val code: Int,
     val data: Data,
     val message: String
 ) {
-    fun toDomainModel(): ScheduleDetail {
+    fun toDomainModel(): ScheduleDetailnfo {
         return data.let{
-            ScheduleDetail(
+            ScheduleDetailnfo(
                 title = it.title,
                 startDate = it.startDate,
                 endDate = it.endDate,

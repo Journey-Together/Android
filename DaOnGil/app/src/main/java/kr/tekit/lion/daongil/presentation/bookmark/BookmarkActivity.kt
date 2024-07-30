@@ -14,7 +14,7 @@ import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlanBookmarkRVAdapter
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModel
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModelFactory
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 
 class BookmarkActivity : AppCompatActivity() {
 

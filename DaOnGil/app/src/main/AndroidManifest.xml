@@ -39,7 +39,7 @@
             android:name=".presentation.myschedule.MyScheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.schedule.ScheduleDetailInfoActivity"
+            android:name=".presentation.schedule.ScheduleDetailActivity"
             android:exported="false" />
         <activity
             android:name=".presentation.home.WriteReviewActivity"

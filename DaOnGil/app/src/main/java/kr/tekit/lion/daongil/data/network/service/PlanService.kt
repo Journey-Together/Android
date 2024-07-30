@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.data.network.service
 
+import kr.tekit.lion.daongil.data.dto.remote.response.plan.ScheduleDetailReviewResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.openSchedule.OpenPlanListResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.PlaceSearchResultsResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.briefScheduleInfo.BriefScheduleInfoResponse
@@ -11,6 +12,7 @@ import kr.tekit.lion.daongil.data.network.AuthType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -96,4 +98,23 @@ interface PlanService {
         @Path("planId") planId: Long,
         @Tag authType: AuthType = AuthType.NO_AUTH
     ): ScheduleDetailResponse
+
+    // 여행 일정 상세보기 페이지에서의 여행 일정 후기 정보 (로그인 버전)
+    @GET("plan/review/{planId}")
+    suspend fun getDetailScheduleReview(
+        @Path("planId") planId: Long
+    ): ScheduleDetailReviewResponse
+
+    // 여행 일정 상세보기 페이지에서의 여행 일정 후기 정보 (게스트 버전)
+    @GET("plan/guest/review/{planId}")
+    suspend fun getDetailScheduleReviewGuest(
+        @Path("planId") planId: Long,
+        @Tag authType: AuthType = AuthType.NO_AUTH
+    ): ScheduleDetailReviewResponse
+
+    // 여행 일정 후기 삭제
+    @DELETE("plan/review/{reviewId}")
+    suspend fun deleteMyPlanReview(
+        @Path("reviewId") reviewId: Long
+    )
 }

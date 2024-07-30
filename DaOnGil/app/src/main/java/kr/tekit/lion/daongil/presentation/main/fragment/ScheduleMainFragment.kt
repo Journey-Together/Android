@@ -24,7 +24,7 @@ import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailInfoActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
@@ -125,6 +125,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(
                         itemClickListener = { position ->
+                            val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
+                            // to do - 여행 일정 idx 전달
                             val planId = it[position]?.planId
                             planId?.let {
                                 initScheduleDetailActivity(it)
@@ -149,9 +151,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
-                            val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
-                            intent.putExtra("planId", it?.get(position)?.planId)
-                            startActivity(intent)
+                          val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
+                            // to do - 여행 일정 idx 전달
+                            val planId = it[position]?.planId
+                            planId?.let {
+                                initScheduleDetailActivity(it)
+                            }
                         }
                     )
                     schedulePublicAdapter.addItems(it)
@@ -225,7 +230,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     }
 
     private fun initScheduleDetailActivity(planId: Long){
-        val intent = Intent(requireActivity(), ScheduleDetailInfoActivity::class.java)
+        val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
         intent.putExtra("planId", planId)
         startActivity(intent)
     }

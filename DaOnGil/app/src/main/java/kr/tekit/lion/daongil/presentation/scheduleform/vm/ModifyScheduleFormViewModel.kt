@@ -41,6 +41,9 @@ class ModifyScheduleFormViewModel (
 
     private val _endDate = MutableLiveData<Date?>()
     val endDate: LiveData<Date?> get() = _endDate
+    
+    // 기간이 한 번이라도 수정되었는지 확인하는 flag
+    val _isPeriodChanged = MutableLiveData<Boolean>(false)
 
     private val _title = MutableLiveData<String?>()
     val title: LiveData<String?> get() = _title
@@ -128,7 +131,7 @@ class ModifyScheduleFormViewModel (
         return plans.mapIndexed { index, dailyPlan ->
             DailySchedule(
                 dailyIdx = index,
-                dailyDate = getDayNString(dailyPlan.dailyPlanDate, null, index),
+                dailyDate = getDayNString(dailyPlan.dailyPlanDate, null, 0),
                 dailyPlaces = dailyPlan.schedulePlaces.map { schedulePlace ->
                     FormPlace(
                         placeId = schedulePlace.placeId,
@@ -149,7 +152,7 @@ class ModifyScheduleFormViewModel (
             else -> throw IllegalArgumentException("date error")
         }
 
-        val calendar = Calendar.getInstance()
+        val calendar = Calendar.getInstance(Locale.KOREA)
         calendar.time = date
         calendar.add(Calendar.DAY_OF_MONTH, index)
 
@@ -158,16 +161,17 @@ class ModifyScheduleFormViewModel (
         return dayString
     }
 
-    private fun formatDateValue(date: Date): String {
-        val dateFormat = SimpleDateFormat("yyyy.MM.dd(E)", Locale.KOREA)
+    private fun formatDateValue(date: Date, pattern: String): String {
+        val dateFormat = SimpleDateFormat(pattern, Locale.KOREA)
         val formattedDate = dateFormat.format(date)
 
         return formattedDate
     }
 
     fun formatPickedDates() : String {
-        val startDateFormatted = _startDate.value?.let { formatDateValue(it) } ?: ""
-        val endDateFormatted = _endDate.value?.let { formatDateValue(it) } ?: ""
+        val datePattern = "yyyy.MM.dd(E)"
+        val startDateFormatted = _startDate.value?.let { formatDateValue(it, datePattern) } ?: ""
+        val endDateFormatted = _endDate.value?.let { formatDateValue(it, datePattern) } ?: ""
         return "$startDateFormatted - $endDateFormatted"
     }
 
@@ -181,8 +185,14 @@ class ModifyScheduleFormViewModel (
         val isStartDateChanged = originalStart==currentStart
         val isEndDateChanged = originalEnd==currentEnd
 
+        // 수정되기 전 일정의 여행 기간과, 새로 선택한 날짜가 다른 경우
         if(!isStartDateChanged || !isEndDateChanged){
             initScheduleList()
+            _isPeriodChanged.value = true
+        }else{
+            // 여행 기간은 똑같이 설정되었지만, 이미 기간이 변경된 적이 있다면
+            val isChanged = _isPeriodChanged.value ?: false
+            if(isChanged) initScheduleList()
         }
     }
 
@@ -204,4 +214,34 @@ class ModifyScheduleFormViewModel (
             Log.d("test1234", "_schedule.value: ${_schedule.value}")
         }
     }
+
+    fun getScheduleTitle(): String {
+        return _title.value ?: ""
+    }
+
+    fun getSchedulePeriod(): String {
+        val datePattern = "yyyy-MM-dd"
+        val startDateString = _startDate.value?.let { formatDateValue(it, datePattern) }
+        val endDateString = _endDate.value?.let { formatDateValue(it, datePattern) }
+
+        return "$startDateString - $endDateString"
+    }
+
+    fun removePlace(dayPosition: Int, placePosition: Int){
+        // 하나의 장소를 삭제할 예정인 기존 데이터
+        val removedSchedule = _schedule.value?.toMutableList()
+        val daySchedule = removedSchedule?.get(dayPosition)
+
+        if(daySchedule != null){
+            // 하나의 장소를 삭제할 날짜의 장소 목록
+            val removedPlaces = daySchedule.dailyPlaces.toMutableList()
+            // 선택된 장소 정보를 List에서 제거
+            removedPlaces.removeAt(placePosition)
+            // 수정된 데이터를 반영해준다.
+            removedSchedule[dayPosition] = daySchedule.copy(dailyPlaces = removedPlaces)
+            // 데이터 갱신
+            _schedule.value = removedSchedule
+        }
+    }
+
 }

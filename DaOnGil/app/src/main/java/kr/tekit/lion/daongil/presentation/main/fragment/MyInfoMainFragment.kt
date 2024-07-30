@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.main.fragment
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -29,8 +30,6 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         MyInfoMainViewModelFactory(requireContext())
     }
 
-    private var originalStatusBarColor: Int? = null
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = FragmentMyInfoMainBinding.bind(view)
@@ -52,7 +51,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
             }
         }
 
-        changeStatusBarColor()
+        setNoLimitsFlag()
     }
 
     private fun setUiLoggedInState(binding: FragmentMyInfoMainBinding) {
@@ -96,21 +95,15 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         }
     }
 
-    private fun changeStatusBarColor() {
-        activity?.let {
-            originalStatusBarColor = it.window.statusBarColor
-
-            it.window.statusBarColor =
-                ContextCompat.getColor(requireContext(), R.color.profile_background_endColor)
-        }
+    private fun setNoLimitsFlag() {
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
-    private fun restoreStatusBarColor() {
-        activity?.let {
-            originalStatusBarColor?.let { color ->
-                it.window.statusBarColor = color
-            }
-        }
+    private fun clearNoLimitsFlag() {
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     private fun moveMyInfo(binding: FragmentMyInfoMainBinding) {
@@ -173,9 +166,8 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         Snackbar.make(requireView(), "로그아웃", Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        restoreStatusBarColor()
+    override fun onStop() {
+        super.onStop()
+        clearNoLimitsFlag()
     }
 }

@@ -11,6 +11,7 @@ import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanReviewUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanScheduleUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailGuestUsecase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.UpdateMyPlanPublicUseCase
@@ -22,6 +23,7 @@ class ScheduleDetailViewModel(
     private val getScheduleDetailGuestUsecase: GetScheduleDetailGuestUsecase,
     private val deleteMyPlanReviewUseCase: DeleteMyPlanReviewUseCase,
     private val updateMyPlanPublicUseCase: UpdateMyPlanPublicUseCase,
+    private val deleteMyPlanScheduleUseCase: DeleteMyPlanScheduleUseCase,
 ) : ViewModel() {
 
     private val _scheduleDetail = MutableLiveData<ScheduleDetail>()
@@ -67,6 +69,13 @@ class ScheduleDetailViewModel(
                 _scheduleDetail.value = _scheduleDetail.value?.copy(
                     isPublic = it.isPublic
                 )
+            }
+        }
+
+    fun deleteMyPlanSchedule(planId: Long) =
+        viewModelScope.launch {
+            deleteMyPlanScheduleUseCase.invoke(planId).onSuccess {
+
             }
         }
 

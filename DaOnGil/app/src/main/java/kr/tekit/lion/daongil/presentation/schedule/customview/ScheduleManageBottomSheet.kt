@@ -10,7 +10,8 @@ import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 
 class ScheduleManageBottomSheet(
     private val isPublic:Boolean,
-    private val onScheuldeStateToggleListener: () -> Unit
+    private val onScheduleStateToggleListener: () -> Unit,
+    private val onScheduleDeleteClickListener: () -> Unit
 ) : BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_manage),
 
     ConfirmDialogInterface {
@@ -44,7 +45,7 @@ class ScheduleManageBottomSheet(
             }
 
             layoutScheduleManagePublicToggle.setOnClickListener {
-                onScheuldeStateToggleListener()
+                onScheduleStateToggleListener()
                 dismiss()
             }
 
@@ -55,7 +56,7 @@ class ScheduleManageBottomSheet(
         val dialog = ConfirmDialog(
             this,
             "여행 일정 삭제",
-            "삭제한 데이터는 되돌릴 수 없습니다.",
+            "삭제한 일정은 되돌릴 수 없습니다.",
             "삭제하기",
             R.color.button_tertiary,
             R.color.white
@@ -66,7 +67,8 @@ class ScheduleManageBottomSheet(
 
     override fun onPosBtnClick() {
         // TO DO 서버 데이터 삭제 요청
-        requireActivity().finish()
+        onScheduleDeleteClickListener()
+        dismiss()
     }
 
     override fun getTheme(): Int {

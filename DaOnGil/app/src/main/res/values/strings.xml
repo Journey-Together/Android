@@ -111,6 +111,7 @@
     <string name="text_schedule_changed_to_private">여행 일정이 비공개되었습니다.</string>
     <string name="text_schedule_changed_to_public">여행 일정이 공개되었습니다.</string>
     <string name="text_schedule_review_deleted">여행 일정 후기가 삭제되었습니다.</string>
+    <string name="text_schedule_deleted">여행 일정 후기가 삭제되었습니다.</string>
     <string name="text_report_reason">신고 사유</string>
     <string name="text_report_commercial_promotion">영리목적/홍보성</string>
     <string name="text_report_copyright_infringement">저작권 침해</string>

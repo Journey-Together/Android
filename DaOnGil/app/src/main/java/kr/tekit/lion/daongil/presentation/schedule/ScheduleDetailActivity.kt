@@ -381,10 +381,12 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
         ScheduleManageBottomSheet(isPublic) {
             // 공개/비공개 상태 Toggle Listener
             // 공개 -> 비공개
+            val planId = intent.getLongExtra("planId", -1)
+            viewModel.updateMyPlanPublic(planId)
             if (isPublic) {
                 // TO DO - 서버에 비공개 상태로 변경 요청
                 // TO DO - isPublic 값 업데이트 (이건 어떤 식으로 관리하면 좋을지.. 데이터 연결 후 살펴볼 것)
-                binding.textViewScheduleType.text = getString(R.string.text_schedule_private)
+                // binding.textViewScheduleType.text = getString(R.string.text_schedule_private)
                 showSnackBar(
                     binding.cardViewScheduleReview,
                     R.string.text_schedule_changed_to_private
@@ -394,7 +396,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
             else {
                 // TO DO - 서버에 공개 상태로 변경 요청
                 // TO DO - isPublic 값 업데이트 (이건 어떤 식으로 관리하면 좋을지.. 데이터 연결 후 살펴볼 것)
-                binding.textViewScheduleType.text = getString(R.string.text_schedule_public)
+                // binding.textViewScheduleType.text = getString(R.string.text_schedule_public)
                 showSnackBar(
                     binding.cardViewScheduleReview,
                     R.string.text_schedule_changed_to_public

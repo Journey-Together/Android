@@ -31,7 +31,6 @@ class ScheduleMainViewModel(
     val loginState = _loginState.asStateFlow()
 
     init {
-        getOpenPlanList(6, 0)
         checkLoginState()
     }
 

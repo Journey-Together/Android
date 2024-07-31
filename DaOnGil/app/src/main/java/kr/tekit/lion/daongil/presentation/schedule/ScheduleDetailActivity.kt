@@ -24,6 +24,8 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
@@ -31,6 +33,10 @@ import kr.tekit.lion.daongil.presentation.ext.setImage
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
 import kr.tekit.lion.daongil.presentation.login.LogInState
 import kr.tekit.lion.daongil.presentation.login.LoginActivity
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_EDIT
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_WRITE
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_SCHEDULE_EDIT
+import kr.tekit.lion.daongil.presentation.schedulereview.ModifyScheduleReviewActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
@@ -56,6 +62,29 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     private val binding: ActivityScheduleBinding by lazy {
         ActivityScheduleBinding.inflate(layoutInflater)
     }
+
+    private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val planId = intent.getLongExtra("planId", -1)
+        viewModel.getScheduleDetailInfo(planId)
+        when(result.resultCode){
+            RESULT_REVIEW_WRITE -> {
+                Snackbar.make(binding.root, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(this, R.color.text_secondary))
+                    .show()
+            }
+            RESULT_SCHEDULE_EDIT -> {
+                Snackbar.make(binding.root, "일정이 수정되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(this, R.color.text_secondary))
+                    .show()
+            }
+            RESULT_REVIEW_EDIT -> {
+                Snackbar.make(binding.root, "리뷰가 수정되었습니다", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(this, R.color.text_secondary))
+                    .show()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -89,13 +118,6 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                     if(scheduleDetail.isWriter){
                         this.scheduleEmptyReviewTitle.text = getString(R.string.text_schedule_info_writer_not_leave_title)
                         this.scheduleEmptyReviewContent.text = getString(R.string.text_schedule_info_writer_not_leave_content)
-                        cardViewScheduleEmptyReview.setOnClickListener {
-                            val newIntent =
-                                Intent(this@ScheduleDetailActivity, WriteScheduleReviewActivity::class.java)
-                            val planId = intent.getLongExtra("planId", -1)
-                            newIntent.putExtra("planId", planId)
-                            startActivity(newIntent)
-                        }
                     }
                     // 지나가지 않은 일정 + 내가 작성자가 아님
                     else{
@@ -116,6 +138,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                         }
 
                         cardViewScheduleReview.visibility = View.VISIBLE
+                        cardViewScheduleEmptyReview.visibility = View.GONE
                         this@ScheduleDetailActivity.setImage(ivProfileImage, scheduleDetail.profileUrl)
                         textNickname.text = scheduleDetail.nickname
                         ratingBarScheduleSatisfaction.rating = scheduleDetail.grade?.toFloat() ?: 0F
@@ -178,7 +201,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                                     Intent(this@ScheduleDetailActivity, WriteScheduleReviewActivity::class.java)
                                 val planId = intent.getLongExtra("planId", -1)
                                 newIntent.putExtra("planId", planId)
-                                startActivity(newIntent)
+                                scheduleReviewLauncher.launch(newIntent)
                             }
                         }
                         else {
@@ -270,8 +293,11 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
     }
 
     private fun initToolbarMenu(isUser: Boolean, isWriter: Boolean, isPublic: Boolean) {
+
         binding.toolbarViewSchedule.apply {
+            menu.clear()
             setNavigationOnClickListener {
+                setResult(Activity.RESULT_CANCELED)
                 finish()
             }
             if (isWriter) { // 로그인한 사용자의 일정인 경우
@@ -413,24 +439,33 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                 viewModel.deleteMyPlanSchedule(planId)
                 setResult(Activity.RESULT_OK)
                 finish()
+            },
+            onScheduleEditClickListener = {
+                // 일정 수정 activity로
             }).show(supportFragmentManager, "ScheduleManageBottomSheet")
     }
 
     private fun showScheduleReviewManageBottomSheet(planId: Long, reviewId: Long) {
-        ScheduleReviewManageBottomSheet(planId) {
-            // TO DO - 서버에 여행 일정 후기 삭제 요청
-            viewModel.deleteMyPlanReview(
-                reviewId = reviewId,
-                planId = planId
-            )
-            // TO DO - 이 화면에서 관리하고 있는 일정정보 data에도 후기 값 업데이트? (보류)
-            /*binding.cardViewScheduleReview.visibility = View.GONE
-            binding.cardViewScheduleEmptyReview.visibility = View.VISIBLE*/
-            showSnackBar(
-                binding.imageButtonScheduleManageReview,
-                R.string.text_schedule_review_deleted,
-            )
-        }.show(supportFragmentManager, "ScheduleReviewManageBottomSheet")
+        ScheduleReviewManageBottomSheet(
+            reviewId = planId,
+            onReviewDeleteClickListener = {
+                // TO DO - 서버에 여행 일정 후기 삭제 요청
+                viewModel.deleteMyPlanReview(
+                    reviewId = reviewId,
+                    planId = planId
+                )
+                showSnackBar(
+                    binding.imageButtonScheduleManageReview,
+                    R.string.text_schedule_review_deleted,
+                )
+            },
+            onReviewEditClickListener = {
+                // 리뷰 수정 activity
+                val newIntent =
+                    Intent(this@ScheduleDetailActivity, ModifyScheduleReviewActivity::class.java)
+                newIntent.putExtra("reviewId", reviewId)
+                scheduleReviewLauncher.launch(newIntent)
+            }).show(supportFragmentManager, "ScheduleReviewManageBottomSheet")
     }
 
     private fun showSnackBar(view: View, message: Int) {

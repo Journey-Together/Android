@@ -11,7 +11,8 @@ import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 class ScheduleManageBottomSheet(
     private val isPublic:Boolean,
     private val onScheduleStateToggleListener: () -> Unit,
-    private val onScheduleDeleteClickListener: () -> Unit
+    private val onScheduleDeleteClickListener: () -> Unit,
+    private val onScheduleEditClickListener: () -> Unit
 ) : BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_manage),
 
     ConfirmDialogInterface {
@@ -38,7 +39,7 @@ class ScheduleManageBottomSheet(
             }
 
             layoutScheduleManageEdit.setOnClickListener {
-                // TO DO 일정 수정 화면으로
+                onScheduleEditClickListener()
             }
             layoutScheduleManageDelete.setOnClickListener {
                 showScheduleDeleteDialog()
@@ -66,7 +67,6 @@ class ScheduleManageBottomSheet(
     }
 
     override fun onPosBtnClick() {
-        // TO DO 서버 데이터 삭제 요청
         onScheduleDeleteClickListener()
         dismiss()
     }

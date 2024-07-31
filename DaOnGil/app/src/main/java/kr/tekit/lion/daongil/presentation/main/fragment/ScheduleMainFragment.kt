@@ -65,13 +65,16 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     private val scheduleDetailLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.getMyMainPlanList()
-            viewModel.getOpenPlanList(6, 0)
             view?.let {
                 Snackbar.make(it, "일정이 삭제되었습니다.", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
                     .show()
             }
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
+        } else {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
         }
     }
 
@@ -86,6 +89,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
+        viewModel.getOpenPlanList(6, 0)
 
         repeatOnStarted {
             viewModel.loginState.collect { uiState ->

@@ -1,10 +1,11 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import androidx.core.content.ContextCompat
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -28,6 +29,12 @@ import kr.tekit.lion.daongil.presentation.myreview.MyReviewActivity
 class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDialogInterface {
     private val viewModel: MyInfoMainViewModel by activityViewModels {
         MyInfoMainViewModelFactory(requireContext())
+    }
+
+    private val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.onStateLoggedIn()
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -110,7 +117,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         binding.btnLoginOrUpdate.setOnClickListener {
             val intent = Intent(requireActivity(), MyInfoActivity::class.java)
             intent.putExtra("name", binding.tvNameOrLogin.text.toString())
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
     }
 
@@ -132,7 +139,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun moveMyReview(binding: FragmentMyInfoMainBinding) {
         binding.layoutMyReview.setOnClickListener {
             val intent = Intent(requireActivity(), MyReviewActivity::class.java)
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
     }
 

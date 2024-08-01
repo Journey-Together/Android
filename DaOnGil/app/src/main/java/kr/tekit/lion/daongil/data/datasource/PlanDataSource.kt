@@ -22,6 +22,11 @@ class PlanDataSource(
     suspend fun addNewPlan(request: RequestBody){
         planService.addNewPlan(request)
     }
+
+    suspend fun modifySchedule(planId: Long, request: RequestBody){
+        planService.modifySchedule(planId, request)
+    }
+
     suspend fun getPlaceSearchResult(word: String, page: Int, size: Int) : PlaceSearchResultsResponse {
         return planService.getPlaceSearchResults(word, page, size)
     }

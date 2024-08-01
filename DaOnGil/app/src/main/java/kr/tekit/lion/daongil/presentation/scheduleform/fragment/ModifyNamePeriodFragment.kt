@@ -35,7 +35,6 @@ class ModifyNamePeriodFragment : Fragment(R.layout.fragment_modify_name_period) 
     }
 
     private fun initScheduleData(binding: FragmentModifyNamePeriodBinding){
-        binding.textInputModifyName.showSnackbar("startdate= ${viewModel.startDate.value}")
         if(!viewModel.hasStartDate()){
             val planId = requireActivity().intent.getLongExtra("planId", -1)
             viewModel.initScheduleDetailInfo(planId)

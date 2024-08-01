@@ -20,6 +20,8 @@ interface PlanRepository {
 
     suspend fun addNewPlan(request: NewPlan)
 
+    suspend fun modifySchedule(planId: Long, request: NewPlan)
+
     // 구현해야 할 메서드
     suspend fun getPlaceSearchResult(word: String, page: Int, size: Int) : PlaceSearchResult
 

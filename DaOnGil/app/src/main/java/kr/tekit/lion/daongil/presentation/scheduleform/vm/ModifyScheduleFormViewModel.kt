@@ -146,7 +146,7 @@ class ModifyScheduleFormViewModel (
                     FormPlace(
                         placeId = schedulePlace.placeId,
                         placeName = schedulePlace.name,
-                        placeImage = "",
+                        placeImage = schedulePlace.imageUrl,
                         placeCategory = schedulePlace.category
 
                     )

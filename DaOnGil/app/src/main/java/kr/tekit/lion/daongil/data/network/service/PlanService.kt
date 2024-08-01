@@ -13,6 +13,7 @@ import okhttp3.RequestBody
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -42,6 +43,13 @@ interface PlanService {
     suspend fun addNewPlan(
         @Body newPlan: RequestBody,
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
+    )
+
+    // 일정 수정
+    @PATCH("plan/{planId}")
+    suspend fun modifySchedule(
+        @Path("planId") planId: Long,
+        @Body newPlan: RequestBody
     )
 
     // 내 일정 정보

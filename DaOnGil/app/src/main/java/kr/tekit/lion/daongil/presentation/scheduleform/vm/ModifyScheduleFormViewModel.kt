@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.BookmarkedPlace
+import kr.tekit.lion.daongil.domain.model.DailyPlace
 import kr.tekit.lion.daongil.domain.model.DailyPlan
 import kr.tekit.lion.daongil.domain.model.DailySchedule
 import kr.tekit.lion.daongil.domain.model.FormPlace
+import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchInfoList
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
@@ -20,6 +22,7 @@ import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceSearchResultUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.ModifyScheduleUseCase
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -29,7 +32,7 @@ class ModifyScheduleFormViewModel (
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase,
     private val getPlaceDetailInfoUseCase: GetPlaceDetailInfoUseCase,
     private val getPlaceBookmarkListUseCase: GetPlaceBookmarkListUseCase,
-    // + patch schedule use case
+    private val modifyScheduleUseCase: ModifyScheduleUseCase
 ) : ViewModel() {
 
     // 수정 전 일정 정보
@@ -135,7 +138,10 @@ class ModifyScheduleFormViewModel (
         return plans.mapIndexed { index, dailyPlan ->
             DailySchedule(
                 dailyIdx = index,
-                dailyDate = getDayNString(dailyPlan.dailyPlanDate, null, 0),
+                dailyDate = formatDateValue(
+                    dateString = dailyPlan.dailyPlanDate,
+                    pattern = "M월 d일 (E)"
+                ),
                 dailyPlaces = dailyPlan.schedulePlaces.map { schedulePlace ->
                     FormPlace(
                         placeId = schedulePlace.placeId,
@@ -149,23 +155,22 @@ class ModifyScheduleFormViewModel (
         }
     }
 
-    private fun getDayNString(dateString: String = "", dateInfo: Date? = null, index: Int): String {
-        val date = when {
-            dateString.isNotEmpty() -> dateStringToDate(dateString)
-            dateInfo != null -> dateInfo
-            else -> throw IllegalArgumentException("date error")
-        }
-
+    private fun getDayNString(date: Date, index: Int, pattern: String): String {
         val calendar = Calendar.getInstance(Locale.KOREA)
         calendar.time = date
         calendar.add(Calendar.DAY_OF_MONTH, index)
 
-        val dayString = SimpleDateFormat("M월 d일 (E)", Locale.KOREAN).format(calendar.time)
+        val dayString = SimpleDateFormat(pattern, Locale.KOREAN).format(calendar.time)
 
         return dayString
     }
 
-    private fun formatDateValue(date: Date, pattern: String): String {
+    private fun formatDateValue(dateString: String = "", dateObj: Date? = null, pattern: String): String {
+        val date = when {
+            dateString.isNotEmpty() -> dateStringToDate(dateString)
+            dateObj != null -> dateObj
+            else -> throw IllegalArgumentException("date error")
+        }
         val dateFormat = SimpleDateFormat(pattern, Locale.KOREA)
         val formattedDate = dateFormat.format(date)
 
@@ -174,8 +179,10 @@ class ModifyScheduleFormViewModel (
 
     fun formatPickedDates() : String {
         val datePattern = "yyyy.MM.dd(E)"
-        val startDateFormatted = _startDate.value?.let { formatDateValue(it, datePattern) } ?: ""
-        val endDateFormatted = _endDate.value?.let { formatDateValue(it, datePattern) } ?: ""
+        val startDateFormatted =
+            _startDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) } ?: ""
+        val endDateFormatted =
+            _endDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) } ?: ""
         return "$startDateFormatted - $endDateFormatted"
     }
 
@@ -210,7 +217,7 @@ class ModifyScheduleFormViewModel (
 
             val schedule = mutableListOf<DailySchedule>()
             for (day in 0..diffInDays) {
-                val dateInfo = getDayNString("", startDate, day)
+                val dateInfo = getDayNString(startDate, day, "M월 d일 (E)")
                 schedule.add(DailySchedule(day + 1, dateInfo, mutableListOf<FormPlace>()))
             }
 
@@ -225,8 +232,8 @@ class ModifyScheduleFormViewModel (
 
     fun getSchedulePeriod(): String {
         val datePattern = "yyyy-MM-dd"
-        val startDateString = _startDate.value?.let { formatDateValue(it, datePattern) }
-        val endDateString = _endDate.value?.let { formatDateValue(it, datePattern) }
+        val startDateString = _startDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) }
+        val endDateString = _endDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) }
 
         return "$startDateString - $endDateString"
     }
@@ -349,4 +356,53 @@ class ModifyScheduleFormViewModel (
 
         return placeId
     }
+
+    fun submitRevisedSchedule(planId: Long, callback: (Boolean, Boolean) -> Unit) {
+        val datePattern = "yyyy-MM-dd"
+        val title = _title.value
+        val startDateString = _startDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) }
+        val endDateString = _endDate.value?.let { formatDateValue(dateObj = it, pattern = datePattern) }
+        val dailyPlace = getDailyPlaceList()
+
+        if (title != null && startDateString != null && endDateString != null) {
+            val revisedPlan = NewPlan(title, startDateString, endDateString, dailyPlace)
+
+            var requestFlag = false
+
+            viewModelScope.launch {
+                val success = try {
+                    modifyScheduleUseCase(planId, revisedPlan).onSuccess {
+                        requestFlag = true
+                    }.onError {
+                        Log.d("submitRevisedSchedule", "onError : ${it.message}")
+                    }
+                    true
+                } catch (e: Exception) {
+                    Log.d("submitRevisedSchedule", "${e.message}")
+                    false
+                }
+                callback(success, requestFlag)
+            }
+        }
+    }
+
+    private fun getDailyPlaceList() : List<DailyPlace>{
+        val dailyPlaceList = mutableListOf<DailyPlace>()
+        val schedule = _schedule.value
+        val startDate = _startDate.value
+
+        startDate?.let {
+            schedule?.forEachIndexed { index, dailySchedule ->
+                val date = getDayNString(startDate, index, "yyyy-MM-dd")
+                val places = mutableListOf<Long>()
+                dailySchedule.dailyPlaces.forEach {
+                    places.add(it.placeId)
+                }
+                dailyPlaceList.add(DailyPlace(date, places))
+            }
+        }
+
+        return dailyPlaceList.toList()
+    }
+
 }

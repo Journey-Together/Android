@@ -9,6 +9,7 @@ import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceSearchResultUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.ModifyScheduleUseCase
 
 class ModifyScheduleFormViewModelFactory : ViewModelProvider.Factory {
     private val getScheduleDetailInfoUseCase = GetScheduleDetailInfoUseCase(
@@ -27,13 +28,18 @@ class ModifyScheduleFormViewModelFactory : ViewModelProvider.Factory {
         BookmarkRepository.create()
     )
 
+    private val modifyScheduleUseCase = ModifyScheduleUseCase(
+        PlanRepository.create()
+    )
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if(modelClass.isAssignableFrom(ModifyScheduleFormViewModel::class.java)){
             return ModifyScheduleFormViewModel(
                 getScheduleDetailInfoUseCase,
                 getPlaceSearchResultUseCase,
                 getPlaceDetailInfoUseCase,
-                getPlaceBookmarkListUseCase
+                getPlaceBookmarkListUseCase,
+                modifyScheduleUseCase
             ) as T
         }
         throw IllegalArgumentException("unknown ViewModel Class")

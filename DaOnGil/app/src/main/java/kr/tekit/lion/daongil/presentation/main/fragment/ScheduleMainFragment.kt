@@ -41,6 +41,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
             view?.let {
                 Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -51,6 +53,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
             view?.let{
                 Snackbar.make(it, "일정이 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -59,22 +63,33 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        viewModel.getMyMainPlanList()
+    private val scheduleDetailLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let {
+                Snackbar.make(it, "일정이 삭제되었습니다.", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+            }
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
+        } else {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
+        }
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentScheduleMainBinding.bind(view)
 
-        // initView(binding)
         settingRecyclerView(binding)
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
+        viewModel.getOpenPlanList(6, 0)
 
         repeatOnStarted {
             viewModel.loginState.collect { uiState ->
@@ -99,17 +114,6 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     }
 
-    /*private fun initView(binding: FragmentScheduleMainBinding) {
-        if (isUser) {
-            // 회원의 일정 정보를 불러온다
-            viewModel.getMyMainPlanList()
-        } else { // 비회원
-            binding.textViewMyScheduleMore.visibility = View.INVISIBLE
-            displayAddSchedulePrompt(binding)
-        }
-    }*/
-
-
     private fun settingRecyclerView(binding: FragmentScheduleMainBinding) {
 
         with(binding) {
@@ -125,7 +129,6 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(
                         itemClickListener = { position ->
-                            val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
                             // to do - 여행 일정 idx 전달
                             val planId = it[position]?.planId
                             planId?.let {
@@ -151,7 +154,6 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
-                          val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
                             // to do - 여행 일정 idx 전달
                             val planId = it[position]?.planId
                             planId?.let {
@@ -232,7 +234,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     private fun initScheduleDetailActivity(planId: Long){
         val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
         intent.putExtra("planId", planId)
-        startActivity(intent)
+        scheduleDetailLauncher.launch(intent)
     }
 
 }

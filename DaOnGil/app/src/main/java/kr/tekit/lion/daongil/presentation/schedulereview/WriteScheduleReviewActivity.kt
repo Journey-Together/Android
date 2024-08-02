@@ -23,6 +23,8 @@ import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_WRITE
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModelFactory
@@ -151,7 +153,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
                     viewModel.submitScheduleReview(planId, reviewDetail) { _, requestFlag ->
                         if (requestFlag) {
-                            setResult(Activity.RESULT_OK)
+                            setResult(RESULT_REVIEW_WRITE)
                             finish()
                         }
                     }

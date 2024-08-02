@@ -76,4 +76,12 @@ class PlanDataSource(
     suspend fun deleteMyPlanReview(reviewId: Long) {
         return planService.deleteMyPlanReview(reviewId)
     }
+
+    suspend fun updateMyPlanPublic(planId: Long) {
+        return planService.updateMyPlanPublic(planId)
+    }
+
+    suspend fun deleteMyPlanSchedule(planId: Long) {
+        return planService.deleteMyPlanSchedule(planId)
+    }
 }

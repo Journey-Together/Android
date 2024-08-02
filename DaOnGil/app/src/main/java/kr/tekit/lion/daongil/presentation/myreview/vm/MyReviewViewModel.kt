@@ -41,13 +41,15 @@ class MyReviewViewModel(
     private val _numOfImages = MutableLiveData<Int>()
     val numOfImages: LiveData<Int> = _numOfImages
 
-    private val _isLastPage = MutableLiveData<Boolean>()
+    private val _isLastPage = MutableLiveData(false)
     val isLastPage: LiveData<Boolean> = _isLastPage
+
+    private val _isReviewDelete = MutableLiveData(false)
+    val isReviewDelete: LiveData<Boolean> = _isReviewDelete
 
     private var isRequesting = false
 
     init {
-        _isLastPage.value = false
         getMyPlaceReview(5, 0)
     }
 
@@ -100,6 +102,7 @@ class MyReviewViewModel(
                         reviewNum = currentReviewData.reviewNum - 1
                     )
                     _myPlaceReview.value = updatedReviewData
+                    if(_isReviewDelete.value == false) _isReviewDelete.value = true
                 }
             }.onError {
                 Log.d("deleteMyPlaceReview", it.toString())

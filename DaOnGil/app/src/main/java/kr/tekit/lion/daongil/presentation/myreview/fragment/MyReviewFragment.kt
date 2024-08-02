@@ -1,9 +1,11 @@
 package kr.tekit.lion.daongil.presentation.myreview.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,11 +29,15 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
         settingToolbar(binding)
         settingMyReviewRVAdapter(binding)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleBackPress()
+        }
     }
 
     private fun settingToolbar(binding: FragmentMyReviewBinding) {
         binding.toolbarMyReview.setNavigationOnClickListener {
-            requireActivity().finish()
+            handleBackPress()
         }
     }
 
@@ -83,5 +89,12 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 binding.textViewNotExistReview.text = getString(R.string.text_my_review)
             }
         }
+    }
+
+    private fun handleBackPress() {
+        if (viewModel.isReviewDelete.value == true) {
+            requireActivity().setResult(Activity.RESULT_OK)
+        }
+        requireActivity().finish()
     }
 }

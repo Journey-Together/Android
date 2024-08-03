@@ -12,7 +12,7 @@ class ModifyScheduleReviewUseCase (
     suspend operator fun invoke(
         reviewId: Long,
         scheduleReview: ModifiedScheduleReview,
-        images: List<ReviewImage>
+        images: List<ReviewImage>?
     ): Result<Unit> = execute {
         planRepository.modifyScheduleReview(reviewId, scheduleReview, images)
     }

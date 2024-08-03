@@ -58,12 +58,12 @@ class PlanRepositoryImpl(
     override suspend fun modifyScheduleReview(
         reviewId: Long,
         scheduleReview: ModifiedScheduleReview,
-        images: List<ReviewImage>
+        images: List<ReviewImage>?
     ) {
         return planDataSource.modifyScheduleReview(
             reviewId,
             scheduleReview.toRequestBody(),
-            images.toMultiPartBodyList()
+            images?.toMultiPartBodyList()
         )
     }
 

@@ -39,7 +39,7 @@ interface PlanRepository {
     suspend fun modifyScheduleReview(
         reviewId: Long,
         scheduleReview: ModifiedScheduleReview,
-        images: List<ReviewImage>
+        images: List<ReviewImage>?
     )
 
     suspend fun getMyUpcomingScheduleList(size: Int, page: Int): MyUpcomingSchedules

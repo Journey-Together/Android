@@ -19,19 +19,34 @@ class PublicScheduleViewModel(
     private val _isLastPage = MutableLiveData<Boolean>()
     val isLastPage: LiveData<Boolean> = _isLastPage
 
-    private val _currentPageNo = MutableLiveData<Int>()
-    val currentPageNo: LiveData<Int> = _currentPageNo
+    private val _pageNo = MutableLiveData<Int>()
+    val pageNo: LiveData<Int> = _pageNo
 
     init {
-        getOpenPlanList(8, 0)
+        getOpenPlanList()
     }
 
-    fun getOpenPlanList(size: Int, page: Int) =
+    fun getOpenPlanList() =
         viewModelScope.launch {
-            getOpenPlanListUseCase(size, page).onSuccess {
+            getOpenPlanListUseCase(10, 0).onSuccess {
                 _openPlanList.value = it.openPlanList
                 _isLastPage.value = it.last
-                _currentPageNo.value = it.pageNo + 1
+                _pageNo.value = it.pageNo + 1
             }
         }
+
+    fun getOpenPlanListPaging() =
+        viewModelScope.launch {
+            if(isLastPage.value == false){
+                pageNo.value?.let {
+                    getOpenPlanListUseCase(10, it).onSuccess {
+                        val currentList = _openPlanList.value.orEmpty()
+                        _openPlanList.value = currentList + it.openPlanList
+                        _isLastPage.value = it.last
+                        _pageNo.value = it.pageNo + 1
+                    }
+                }
+            }
+        }
+
 }

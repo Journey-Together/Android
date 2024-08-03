@@ -91,4 +91,6 @@
     <color name="radio_button_public_background_default">#F4F6F8</color>
     <color name="radio_button_public_text_default">#AFABAB</color>
 
+    <color name="indicator_unselected">#C7C7C7</color>
+
 </resources>

@@ -77,4 +77,6 @@
     <color name="radio_button_public_background_default">#2E2C2B</color>
     <color name="radio_button_public_text_default">#5E6161</color>
 
+    <color name="indicator_unselected">#4D4D4D</color>
+
 </resources>

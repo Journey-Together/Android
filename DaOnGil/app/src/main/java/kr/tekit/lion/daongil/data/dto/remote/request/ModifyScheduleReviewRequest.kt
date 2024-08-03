@@ -18,7 +18,6 @@ import java.net.URL
 data class ModifyScheduleReviewRequest(
     val grade: Float?,
     val content: String?,
-    //val isPublic: Boolean
 )
 
 fun ModifiedScheduleReview.toRequestBody(): RequestBody {
@@ -26,7 +25,6 @@ fun ModifiedScheduleReview.toRequestBody(): RequestBody {
         ModifyScheduleReviewRequest(
             grade = this.grade,
             content = this.content,
-            //isPublic = this.isPublic
         )
     ).toRequestBody("application/json".toMediaTypeOrNull())
 }

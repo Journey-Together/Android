@@ -41,23 +41,11 @@ class ModifyReviewImageAdapter (
         }
 
         fun bind(reviewImage: ReviewImage) {
-            val imageData = determineImageType(reviewImage)
+            Glide.with(binding.itemWriteReviewImage.context)
+                .load(reviewImage.imageUri)
+                .error(R.drawable.empty_view_small)
+                .into(binding.itemWriteReviewImage)
 
-            imageData?.let {
-                Glide.with(binding.itemWriteReviewImage.context)
-                    .load(it)
-                    .error(R.drawable.empty_view_small)
-                    .into(binding.itemWriteReviewImage)
-            }
-        }
-
-        private fun determineImageType(reviewImage: ReviewImage) : Any? {
-            if (reviewImage.imageUri != null) {
-                return reviewImage.imageUri
-            } else if (reviewImage.imageUrl != null) {
-                return reviewImage.imageUrl
-            }
-            return null
         }
     }
 }

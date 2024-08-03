@@ -1,6 +1,9 @@
 package kr.tekit.lion.daongil.data.dto.remote.request
 
 import android.graphics.BitmapFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kr.tekit.lion.daongil.data.dto.remote.base.AdapterProvider
 import kr.tekit.lion.daongil.domain.model.ModifiedScheduleReview
 import kr.tekit.lion.daongil.domain.model.ReviewImage
@@ -28,13 +31,14 @@ fun ModifiedScheduleReview.toRequestBody(): RequestBody {
     ).toRequestBody("application/json".toMediaTypeOrNull())
 }
 
-fun List<ReviewImage>.toMultiPartBodyList(): List<MultipartBody.Part> {
+suspend fun List<ReviewImage>.toMultiPartBodyList(): List<MultipartBody.Part> {
     return this.map { image ->
         val fileName =
             image.imagePath?.let { File(it).name } ?: System.currentTimeMillis().toString()
 
         val bitmap = if (image.imageUrl != null) {
-            URL(image.imageUrl).readBytes()
+            //URL(image.imageUrl).readBytes()
+            urlToByteArray(image.imageUrl)
         } else {
             val file = File(image.imagePath!!)
             BitmapFactory.decodeFile(file.path).compressBitmap(60)
@@ -42,4 +46,12 @@ fun List<ReviewImage>.toMultiPartBodyList(): List<MultipartBody.Part> {
         val requestFile = bitmap.toRequestBody("image/jpeg".toMediaTypeOrNull())
         MultipartBody.Part.createFormData("images", fileName, requestFile)
     }
+}
+
+private suspend fun urlToByteArray(imageUrl: String) : ByteArray {
+    val job = CoroutineScope(Dispatchers.IO).async {
+        URL(imageUrl).readBytes()
+    }
+
+    return job.await()
 }

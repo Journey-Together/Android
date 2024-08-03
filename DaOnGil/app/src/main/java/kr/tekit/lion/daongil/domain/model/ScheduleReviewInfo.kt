@@ -5,7 +5,6 @@ data class ScheduleReviewInfo(
     val title: String,
     val startDate: String,
     val endDate: String,
-    val isPublic: Boolean,
     val imageUrl: String,
     // 리뷰 정보
     val reviewId: Long,

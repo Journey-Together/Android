@@ -16,7 +16,6 @@ class GetScheduleReviewInfoUseCase (
             title = scheduleInfo.title,
             startDate = scheduleInfo.startDate,
             endDate = scheduleInfo.endDate,
-            isPublic = scheduleInfo.isPublic,
             imageUrl = scheduleInfo.images?.get(0) ?: "",
             reviewId = detailReview.reviewId ?: -1,
             content = detailReview.content ?: "",

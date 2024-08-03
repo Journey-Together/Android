@@ -19,13 +19,14 @@ class HomeVPAdapter(private val images: List<Drawable>)
     override fun getItemCount(): Int = images.size
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
-        holder.bind(images[position])
+        holder.bind(images[position], position + 1)
     }
 
     class ImageViewHolder(private val binding: ItemHomeVpBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(image: Drawable) {
+        fun bind(image: Drawable, currentPage: Int) {
             binding.itemHomeIv.setImageDrawable(image)
+            binding.itemHomeCountTv.text = currentPage.toString()
         }
     }
 }

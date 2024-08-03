@@ -42,7 +42,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.getMyMainPlanList()
-            viewModel.getOpenPlanList(6, 0)
+            viewModel.getOpenPlanList()
             view?.let {
                 Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -54,7 +54,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
     private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK) {
             viewModel.getMyMainPlanList()
-            viewModel.getOpenPlanList(6, 0)
+            viewModel.getOpenPlanList()
             view?.let{
                 Snackbar.make(it, "일정이 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -71,10 +71,10 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                     .show()
             }
             viewModel.getMyMainPlanList()
-            viewModel.getOpenPlanList(6, 0)
+            viewModel.getOpenPlanList()
         } else {
             viewModel.getMyMainPlanList()
-            viewModel.getOpenPlanList(6, 0)
+            viewModel.getOpenPlanList()
         }
     }
 
@@ -89,7 +89,7 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
-        viewModel.getOpenPlanList(6, 0)
+        viewModel.getOpenPlanList()
 
         repeatOnStarted {
             viewModel.loginState.collect { uiState ->

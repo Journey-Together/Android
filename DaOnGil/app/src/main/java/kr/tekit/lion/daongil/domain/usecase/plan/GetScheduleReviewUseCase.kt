@@ -14,7 +14,7 @@ class GetScheduleReviewInfoUseCase (
         ScheduleReviewInfo(
             reviewId = detailReview.reviewId ?: -1,
             content = detailReview.content ?: "",
-            grade = detailReview.grade ?: 0.0,
+            grade = detailReview.grade?.toFloat() ?: 0.0F,
             imageList = detailReview.imageList
         )
     }

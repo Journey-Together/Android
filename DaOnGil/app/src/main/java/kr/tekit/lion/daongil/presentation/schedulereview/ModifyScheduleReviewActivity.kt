@@ -19,15 +19,19 @@ import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityModifyScheduleReviewBinding
 import kr.tekit.lion.daongil.domain.model.ReviewImage
+import kr.tekit.lion.daongil.presentation.ext.setImage
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.ModifyReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.ModifyScheduleReviewViewModel
+import kr.tekit.lion.daongil.presentation.schedulereview.vm.ModifyScheduleReviewViewModelFactory
 
 class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
-    private val viewModel : ModifyScheduleReviewViewModel by viewModels()
+    private val viewModel : ModifyScheduleReviewViewModel by viewModels {
+        ModifyScheduleReviewViewModelFactory()
+    }
 
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
@@ -70,20 +74,14 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-//        val planId = intent.getLongExtra("planId", -1)
+        val planId = intent.getLongExtra("planId", -1)
 
-        initTestView()
         initToolbar()
-        initView()
+        loadScheduleReview(planId)
+
         initReviewContentWatcher()
         settingImageRVAdapter()
         settingButtonClickListner()
-    }
-
-    private fun initTestView() {
-        binding.textViewModifyScheReviewName.text = "즐거운 여행"
-        binding.textViewModifyScheReviewPeriod.text = "2024.07.01 - 2024.07.02"
-        binding.textViewModifyScheReviewPhotoNum.text = getString(R.string.text_num_of_images, 0)
     }
 
     private fun initToolbar() {
@@ -92,7 +90,37 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         }
     }
 
+    private fun loadScheduleReview(planId: Long){
+        viewModel.getScheduleReviewInfo(planId)
+
+        initView()
+    }
+
     private fun initView() {
+        viewModel.originalReview.observe(this@ModifyScheduleReviewActivity) { scheduleReviewInfo ->
+            with(binding){
+                textViewModifyScheReviewName.text = scheduleReviewInfo.title
+                textViewModifyScheReviewPeriod.text = getString(
+                    R.string.text_schedule_period,
+                    scheduleReviewInfo?.startDate,
+                    scheduleReviewInfo?.endDate
+                )
+                val isImageAvailable = scheduleReviewInfo.imageUrl.isNotEmpty()
+                if(isImageAvailable){
+                    this@ModifyScheduleReviewActivity.setImage(
+                        imageViewModifyScheReviewThumb,
+                        scheduleReviewInfo.imageUrl
+                    )
+                }
+                val isPublic = scheduleReviewInfo.isPublic
+                if(isPublic) radioButtonModifyScheReviewPublic.isChecked = true
+                else radioButtonModifyScheReviewPrivate.isChecked = true
+
+                ratingbarModifyScheReview.rating = scheduleReviewInfo.grade
+                editTextModifyScheReviewContent.setText(scheduleReviewInfo.content)
+            }
+        }
+
         viewModel.numOfImages.observe(this@ModifyScheduleReviewActivity) { numOfImages ->
             binding.textViewModifyScheReviewPhotoNum.text =
                 getString(R.string.text_num_of_images, numOfImages)
@@ -176,7 +204,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
     private fun saveImageDataAndPath(uri: Uri) {
         val imagePath = toAbsolutePath(uri)
         if (imagePath != null) {
-            val newImage = ReviewImage(imageUri = uri, uriPath = imagePath)
+            val newImage = ReviewImage(imageUri = uri, imagePath = imagePath)
             viewModel.addNewReviewImage(newImage)
         }
     }

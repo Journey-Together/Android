@@ -15,6 +15,7 @@ import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -70,6 +71,23 @@ interface PlanService {
     suspend fun addNewScheduleReviewTextOnly(
         @Path("planId") planId: Long,
         @Part("planReviewReq") scheduleReview: RequestBody,
+    )
+
+    // 여행 일정 후기 수정
+    @Multipart
+    @PATCH("plan/review/{reviewId}")
+    suspend fun modifyScheduleReview(
+        @Path("reviewId") reviewId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    )
+
+    // 여행 일정 후기 수정 (이미지 제외)
+    @Multipart
+    @PATCH("plan/review/{reviewId}")
+    suspend fun modifyScheduleReviewTextOnly(
+        @Path("reviewId") reviewId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody
     )
 
     // 다가오는 일정 목록

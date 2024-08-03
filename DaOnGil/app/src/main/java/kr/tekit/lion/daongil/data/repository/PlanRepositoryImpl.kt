@@ -4,6 +4,7 @@ import kr.tekit.lion.daongil.data.datasource.PlanDataSource
 import kr.tekit.lion.daongil.data.dto.remote.request.toMultiPartBodyList
 import kr.tekit.lion.daongil.data.dto.remote.request.toRequestBody
 import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
+import kr.tekit.lion.daongil.domain.model.ModifiedScheduleReview
 import kr.tekit.lion.daongil.domain.model.MyElapsedSchedules
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.domain.model.MyUpcomingSchedules
@@ -11,6 +12,7 @@ import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
+import kr.tekit.lion.daongil.domain.model.ReviewImage
 import kr.tekit.lion.daongil.domain.model.ReviewImg
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
@@ -53,6 +55,18 @@ class PlanRepositoryImpl(
         )
     }
 
+    override suspend fun modifyScheduleReview(
+        reviewId: Long,
+        scheduleReview: ModifiedScheduleReview,
+        images: List<ReviewImage>
+    ) {
+        return planDataSource.modifyScheduleReview(
+            reviewId,
+            scheduleReview.toRequestBody(),
+            images.toMultiPartBodyList()
+        )
+    }
+
     override suspend fun getMyUpcomingScheduleList(size: Int, page: Int): MyUpcomingSchedules {
         return planDataSource.getMyUpcomingScheduleList(size, page).toDomainModel()
     }
@@ -66,8 +80,8 @@ class PlanRepositoryImpl(
         return planDataSource.getDetailScheduleInfo(planId).toDomainModel()
     }
 
-    override suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetailnfo {
-        return planDataSource.getDetailScheduleInfoGuest(plandId).toDomainModel()
+    override suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailnfo {
+        return planDataSource.getDetailScheduleInfoGuest(planId).toDomainModel()
     }
 
     override suspend fun getDetailScheduleReview(planId: Long): ScheduleDetailReview {

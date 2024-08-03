@@ -4,7 +4,8 @@
 
     <item
         android:id="@+id/menuSchedulPublicBookmark"
-        android:icon="@drawable/bookmark_icon"
+        android:icon="@drawable/bookmark_schedule_detail_icon"
+        android:iconTint="@color/white"
         android:title="@string/text_schedule_bookmark"
         app:showAsAction="always" />
 </menu>

@@ -10,7 +10,7 @@
         android:label="fragment_my_review"
         tools:layout="@layout/fragment_my_review" >
         <action
-            android:id="@+id/action_myReviewFragment_to_myReviewModifyFragment2"
+            android:id="@+id/action_myReviewFragment_to_myReviewModifyFragment"
             app:destination="@id/myReviewModifyFragment" />
     </fragment>
     <fragment
@@ -18,8 +18,8 @@
         android:name="kr.tekit.lion.daongil.presentation.myreview.fragment.MyReviewModifyFragment"
         android:label="fragment_my_review_modify"
         tools:layout="@layout/fragment_my_review_modify" >
-        <action
-            android:id="@+id/action_myReviewModifyFragment_to_myReviewFragment2"
-            app:destination="@id/myReviewFragment" />
+        <argument
+            android:name="myPlaceReviewInfo"
+            app:argType="kr.tekit.lion.daongil.domain.model.MyPlaceReviewInfo" />
     </fragment>
 </navigation>

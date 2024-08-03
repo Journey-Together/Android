@@ -1,8 +1,11 @@
 package kr.tekit.lion.daongil.presentation.myreview.fragment
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +13,7 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewBinding
 import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
 import kr.tekit.lion.daongil.presentation.ext.showConfirmDialog
+import kr.tekit.lion.daongil.presentation.home.ReviewListActivity
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewRVAdapter
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModel
 import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
@@ -25,11 +29,15 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
 
         settingToolbar(binding)
         settingMyReviewRVAdapter(binding)
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleBackPress()
+        }
     }
 
     private fun settingToolbar(binding: FragmentMyReviewBinding) {
         binding.toolbarMyReview.setNavigationOnClickListener {
-            requireActivity().finish()
+            handleBackPress()
         }
     }
 
@@ -42,9 +50,14 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 val myReviewRVAdapter = MyReviewRVAdapter(
                     myPlaceReview,
                     myPlaceReview.myPlaceReviewInfoList,
-                    onMoveReviewListClick = {},
-                    onModifyClick = {
-                        findNavController().navigate(R.id.action_myReviewFragment_to_myReviewModifyFragment2)
+                    onMoveReviewListClick = { reviewPlaceId ->
+                        val intent = Intent(requireContext(), ReviewListActivity::class.java)
+                        intent.putExtra("reviewPlaceId", reviewPlaceId)
+                        startActivity(intent)
+                    },
+                    onModifyClick = { myPlaceReviewInfo ->
+                        val action = MyReviewFragmentDirections.actionMyReviewFragmentToMyReviewModifyFragment(myPlaceReviewInfo)
+                        findNavController().navigate(action)
                     },
                     onDeleteClick = { reviewId ->
                         requireContext().showConfirmDialog(
@@ -76,5 +89,12 @@ class MyReviewFragment : Fragment(R.layout.fragment_my_review) {
                 binding.textViewNotExistReview.text = getString(R.string.text_my_review)
             }
         }
+    }
+
+    private fun handleBackPress() {
+        if (viewModel.isReviewDelete.value == true) {
+            requireActivity().setResult(Activity.RESULT_OK)
+        }
+        requireActivity().finish()
     }
 }

@@ -15,6 +15,7 @@ import kr.tekit.lion.daongil.databinding.FragmentScheduleMainBinding
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.presentation.ext.repeatOnStarted
 import kr.tekit.lion.daongil.presentation.login.LogInState
+import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.main.adapter.ScheduleMyAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.SchedulePublicAdapter
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
@@ -23,7 +24,7 @@ import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 
@@ -40,6 +41,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
             view?.let {
                 Snackbar.make(it, "후기가 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -50,6 +53,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     private val scheduleFormLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
         if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
             view?.let{
                 Snackbar.make(it, "일정이 저장되었습니다", Snackbar.LENGTH_LONG)
                     .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
@@ -58,16 +63,33 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         }
     }
 
+    private val scheduleDetailLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            view?.let {
+                Snackbar.make(it, "일정이 삭제되었습니다.", Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
+                    .show()
+            }
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
+        } else {
+            viewModel.getMyMainPlanList()
+            viewModel.getOpenPlanList(6, 0)
+        }
+    }
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val binding = FragmentScheduleMainBinding.bind(view)
 
-        // initView(binding)
         settingRecyclerView(binding)
         initNewScheduleButton(binding)
 
         initMoreViewClickListener(binding)
+        viewModel.getOpenPlanList(6, 0)
 
         repeatOnStarted {
             viewModel.loginState.collect { uiState ->
@@ -92,36 +114,30 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     }
 
-    /*private fun initView(binding: FragmentScheduleMainBinding) {
-        if (isUser) {
-            // 회원의 일정 정보를 불러온다
-            viewModel.getMyMainPlanList()
-        } else { // 비회원
-            binding.textViewMyScheduleMore.visibility = View.INVISIBLE
-            displayAddSchedulePrompt(binding)
-        }
-    }*/
-
-
     private fun settingRecyclerView(binding: FragmentScheduleMainBinding) {
 
         with(binding) {
             viewModel.myMainPlanList.observe(viewLifecycleOwner) {
                 if (it.isNullOrEmpty()) {
                     displayAddSchedulePrompt(binding)
+                    return@observe
                 }
+
+                binding.recyclerViewMySchedule.visibility = View.VISIBLE
+                binding.cardViewEmptySchedule.visibility = View.GONE
 
                 recyclerViewMySchedule.apply {
                     val myscheduleAdapter = ScheduleMyAdapter(
                         itemClickListener = { position ->
-                            val intent = Intent(requireActivity(), ScheduleActivity::class.java)
                             // to do - 여행 일정 idx 전달
-                            intent.putExtra("placeId", it?.get(position)?.planId)
-                            startActivity(intent)
+                            val planId = it[position]?.planId
+                            planId?.let {
+                                initScheduleDetailActivity(it)
+                            }
                         },
                         reviewClickListener = { position ->
                             val intent = Intent(requireActivity(), WriteScheduleReviewActivity::class.java)
-                            intent.putExtra("planId", it?.get(position)?.planId)
+                            intent.putExtra("planId", it[position]?.planId)
                             scheduleReviewLauncher.launch(intent)
                         }
                     )
@@ -138,8 +154,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 viewModel.openPlanList.observe(viewLifecycleOwner) {
                     val schedulePublicAdapter = SchedulePublicAdapter(
                         itemClickListener = { position ->
-                            // 공개 일정 상세보기 페이지로 이동
-                            // onScheduleMainItemClick(it[position].planId)
+                            // to do - 여행 일정 idx 전달
+                            val planId = it[position]?.planId
+                            planId?.let {
+                                initScheduleDetailActivity(it)
+                            }
                         }
                     )
                     schedulePublicAdapter.addItems(it)
@@ -191,6 +210,11 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
 
     override fun onPosBtnClick() {
         // login 화면으로 이동
+        val intent = Intent(requireActivity(), LoginActivity::class.java)
+        // FLAG_ACTIVITY_NEW_TASK : 새로운 task의 시작
+        // FLAG_ACTIVITY_CLEAR_TASK : 기존 task 의 모든 activity 제거
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
     }
 
 
@@ -205,6 +229,12 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
                 startActivity(intent)
             }
         }
+    }
+
+    private fun initScheduleDetailActivity(planId: Long){
+        val intent = Intent(requireActivity(), ScheduleDetailActivity::class.java)
+        intent.putExtra("planId", planId)
+        scheduleDetailLauncher.launch(intent)
     }
 
 }

@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.schedule.ScheduleActivity">
+    tools:context=".presentation.schedule.ScheduleDetailActivity">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -72,11 +72,12 @@
                         android:id="@+id/schedulePublic"
                         android:layout_width="50dp"
                         android:layout_height="25dp"
-                        android:backgroundTint="@color/schedule_detail_public"
                         android:background="@drawable/background_radius_50"
+                        android:backgroundTint="@color/schedule_detail_public"
                         android:fontFamily="@font/pretendard_semibold"
                         android:textColor="@color/text_primary"
                         android:textSize="@dimen/font_small2"
+                        android:visibility="gone"
                         tools:text="공개" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -84,11 +85,12 @@
                         android:layout_width="50dp"
                         android:layout_height="25dp"
                         android:layout_marginLeft="@dimen/margin_small1"
-                        android:backgroundTint="@color/total_cnt"
                         android:background="@drawable/background_radius_50"
+                        android:backgroundTint="@color/total_cnt"
                         android:fontFamily="@font/pretendard_semibold"
                         android:textColor="@color/text_primary_reverse"
                         android:textSize="@dimen/font_small2"
+                        android:visibility="gone"
                         tools:text="D-10" />
 
 
@@ -161,6 +163,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/textViewReview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_basic"
@@ -168,7 +171,8 @@
                 android:fontFamily="@font/pretendard_medium"
                 android:text="@string/text_schedule_detail_review"
                 android:textColor="@color/text_primary"
-                android:textSize="@dimen/font_big2" />
+                android:textSize="@dimen/font_big2"
+                android:visibility="gone" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/cardViewScheduleReview"
@@ -202,7 +206,7 @@
                     android:layout_marginStart="@dimen/margin_small1"
                     android:layout_marginBottom="@dimen/margin_big4"
                     android:fontFamily="@font/pretendard_semibold"
-                    android:textSize="@dimen/font_big1"
+                    android:textSize="@dimen/font_big2"
                     app:layout_constraintBottom_toTopOf="@+id/ratingBarScheduleSatisfaction"
                     app:layout_constraintStart_toEndOf="@+id/profileImg"
                     app:layout_constraintTop_toTopOf="parent"
@@ -214,6 +218,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_big4"
                     android:src="@drawable/report_button"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/ratingBarScheduleSatisfaction"
                     app:layout_constraintEnd_toStartOf="@+id/imageButtonScheduleManageReview"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -225,6 +230,7 @@
                     android:layout_marginBottom="@dimen/margin_big4"
                     android:background="@null"
                     android:contentDescription="@string/text_manage_review"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toTopOf="@+id/ratingBarScheduleSatisfaction"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -274,6 +280,7 @@
                             android:layout_width="130dp"
                             android:layout_height="130dp"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             tools:src="@drawable/img_8272" />
 
                         <ImageView
@@ -282,6 +289,7 @@
                             android:layout_height="130dp"
                             android:layout_marginStart="@dimen/margin_small1"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             tools:src="@drawable/img_8272" />
 
                         <ImageView
@@ -290,6 +298,7 @@
                             android:layout_height="130dp"
                             android:layout_marginStart="@dimen/margin_small1"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             tools:src="@drawable/img_8272" />
 
                         <ImageView
@@ -298,6 +307,7 @@
                             android:layout_height="130dp"
                             android:layout_marginStart="@dimen/margin_small1"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             tools:src="@drawable/img_8272" />
 
                         <ImageView
@@ -306,6 +316,7 @@
                             android:layout_height="130dp"
                             android:layout_marginStart="@dimen/margin_small1"
                             android:scaleType="fitXY"
+                            android:visibility="gone"
                             tools:src="@drawable/img_8272" />
                     </LinearLayout>
                 </HorizontalScrollView>
@@ -321,20 +332,19 @@
                 android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/scheduleEmptyReviewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="여행은 어떠셨나요?\n후기를 남겨주세요"
                     android:textColor="@color/text_quaternary"
                     android:textSize="@dimen/font_big2" />
 
                 <TextView
-                    android:id="@+id/textViewScheduleLeaveReview"
+                    android:id="@+id/scheduleEmptyReviewContent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:padding="@dimen/margin_small1"
-                    android:text="@string/text_leave_schedule_review"
                     android:textColor="@color/text_quaternary"
                     android:textSize="@dimen/font_small2" />
             </LinearLayout>

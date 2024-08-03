@@ -34,7 +34,7 @@ class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify
         with(binding) {
             toolbarConcernTypeModify.setNavigationIcon(R.drawable.back_icon)
             toolbarConcernTypeModify.setNavigationOnClickListener {
-                findNavController().navigate(R.id.action_concernTypeModifyFragment_to_concernTypeFragment)
+                findNavController().popBackStack()
             }
 
             imageViewConcernTypeModifyPhysical.setOnClickListener {
@@ -117,7 +117,7 @@ class ConcernTypeModifyFragment : Fragment(R.layout.fragment_concern_type_modify
 
             viewModel.updateConcernType(ConcernType(isPhysical, isHear, isVisual, isElderly, isChild))
             showSnackbar(binding, "관심 유형이 수정되었습니다.")
-            findNavController().navigate(R.id.action_concernTypeModifyFragment_to_concernTypeFragment)
+            findNavController().popBackStack()
         }
     }
 

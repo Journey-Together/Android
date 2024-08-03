@@ -39,9 +39,10 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbarMyBookmark"
         app:tabGravity="start"
         app:tabIndicatorFullWidth="true"
-        app:tabSelectedTextColor="@color/text_primary"
-        app:tabTextColor="@color/text_tertiary"
-        app:tabRippleColor="@android:color/transparent" />
+        app:tabRippleColor="@android:color/transparent"
+        app:tabSelectedTextColor="@color/search_view_main"
+        app:tabTextColor="@color/text_primary"
+        app:tabIndicatorColor="@color/search_view_main"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewBookmark"

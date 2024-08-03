@@ -11,6 +11,6 @@ data class OpenPlanRes(
     val memberId: Int,
     val memberImageUrl: String,
     val memberNickname: String,
-    val planId: Int,
+    val planId: Long,
     val title: String
 )

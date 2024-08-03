@@ -8,7 +8,7 @@
         android:id="@+id/item_disability_type_iv"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginEnd="@dimen/margin_small2"
         android:src="@drawable/physical_disability_radius_icon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

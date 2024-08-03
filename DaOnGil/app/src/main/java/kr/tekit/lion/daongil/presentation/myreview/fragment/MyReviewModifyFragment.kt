@@ -14,30 +14,55 @@ import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointBackward
+import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentMyReviewModifyBinding
+import kr.tekit.lion.daongil.presentation.ext.showSoftInput
+import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
 import kr.tekit.lion.daongil.presentation.myreview.adapter.MyReviewModifyImageRVAdapter
+import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModel
+import kr.tekit.lion.daongil.presentation.myreview.vm.MyReviewViewModelFactory
+import java.time.Instant
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
     ConfirmDialogInterface {
 
-    private val imagesList: ArrayList<Uri> = ArrayList()
+    private val viewModel: MyReviewViewModel by activityViewModels { MyReviewViewModelFactory() }
+
+    private val selectedImages: ArrayList<Uri> = ArrayList()
 
     private val imageRVAdapter: MyReviewModifyImageRVAdapter by lazy {
-        MyReviewModifyImageRVAdapter(imagesList)
+        MyReviewModifyImageRVAdapter(selectedImages) { position ->
+            viewModel.deleteImage(position)
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                imagesList.add(uri)
+                selectedImages.add(uri)
                 imageRVAdapter.notifyDataSetChanged()
+
+                val path = requireContext().toAbsolutePath(uri)
+                viewModel.addNewImage(path!!)
             }
         }
+
 
     @SuppressLint("NotifyDataSetChanged")
     private val albumLauncher =
@@ -47,9 +72,16 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
                 // 선택한 이미지의 Uri 가져오기
                 val uri = result.data?.data
                 uri?.let {
-                    // 이미지를 리스트에 추가하고 어댑터에 데이터 변경을 알림
-                    imagesList.add(it)
-                    imageRVAdapter.notifyDataSetChanged()
+                    if (selectedImages.size < 4) {
+                        // 이미지를 리스트에 추가하고 어댑터에 데이터 변경을 알림
+                        selectedImages.add(it)
+                        imageRVAdapter.notifyDataSetChanged()
+
+                        val path = requireContext().toAbsolutePath(uri)
+                        viewModel.setReviewImages(path!!)
+                    } else {
+                        Snackbar.make(requireView(), "이미지는 최대 4장까지 첨부 가능합니다", Snackbar.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -73,37 +105,54 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
 
         val binding = FragmentMyReviewModifyBinding.bind(view)
 
+        val args: MyReviewModifyFragmentArgs by navArgs()
+        viewModel.setReviewData(args.myPlaceReviewInfo)
+
         settingToolbar(binding)
+        settingReviewData(binding)
         settingImageRVAdapter(binding)
         settingButton(binding)
-        setDummyData(binding)
+        settingErrorHandling(binding)
     }
 
-    private fun setDummyData(binding: FragmentMyReviewModifyBinding) {
-        // 더미 데이터
-        val dummyTitle = "광화문"
-        val dummySatisfaction = 4.5f
-        val dummyReview = "여행지에 대한 샘플 리뷰 내용입니다. 정말 멋진 경험이었어요!"
-        val dummyImages = listOf(
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzA4MTRfMjc2%2FMDAxNjkyMDEwNjg4NjY5.xVKBUWPTf9iUZ2LOjmY3F5xxaP0PYb0boV6VwdDOK1cg.dICKJGMMb1H_FT6ezq-QMLSqNJzukn5wsNowbU7Nsu4g.PNG.khy920630%2F001-%25C8%25AD%25B8%25E9_%25C4%25B8%25C3%25B3_2023-08-14_195616.png&type=sc960_832"),
-            Uri.parse("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMzAxMDNfMTU0%2FMDAxNjcyNzQ2ODU1MDg4.UH9YeGpMu5OJrZYVnpeOTc7yVq6wA4M-MlErHMOt1bsg.cR1T4IxL60xSvjClSDJrVgl1bGHsU5KXaVKKuH49JaUg.JPEG.cellosj%2FKakaoTalk_20230103_193055989.jpg&type=sc960_832"),
-        )
+    @SuppressLint("NotifyDataSetChanged")
+    private fun settingReviewData(binding: FragmentMyReviewModifyBinding) {
+        viewModel.reviewData.observe(viewLifecycleOwner) { review ->
+            binding.textViewMyReviewModifyTitle.text = review.name
+            binding.ratingbarMyReviewModify.rating = review.grade
+            binding.textFieldMyReviewModifyDate.setText(review.date.toString())
+            binding.textFieldMyReviewModifyWrite.setText(review.content)
 
-        binding.textViewMyReviewModifyTitle.text = dummyTitle
-        binding.ratingbarMyReviewModify.rating = dummySatisfaction
-        binding.textFieldMyReviewModifyWrite.setText(dummyReview)
-        imagesList.clear()
-        imagesList.addAll(dummyImages)
-        imageRVAdapter.notifyDataSetChanged()
+            selectedImages.clear()
+            selectedImages.addAll(review.images.map { Uri.parse(it) })
+            imageRVAdapter.notifyDataSetChanged()
+
+            viewModel.numOfImages.observe(viewLifecycleOwner) {
+                binding.textViewMyReviewModifyPhotoNum.text = it.toString()
+            }
+        }
     }
 
     private fun settingToolbar(binding: FragmentMyReviewModifyBinding) {
         binding.toolbarMyReviewModify.setNavigationOnClickListener {
+            findNavController().popBackStack()
         }
     }
 
     private fun settingButton(binding: FragmentMyReviewModifyBinding) {
-        binding.layoutImageAddBtn.setOnClickListener {
+        binding.imageButtonMyReviewModify.setOnClickListener {
+            if (!viewModel.isMoreImageAttachable()) {
+                Snackbar.make(requireView(), "이미지는 최대 4장까지 첨부 가능합니다", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.text_secondary
+                        )
+                    )
+                    .show()
+                return@setOnClickListener
+            }
+
             if (isPhotoPickerAvailable()) {
                 this.pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             } else {
@@ -111,8 +160,64 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
             }
         }
 
-        binding.buttonMyReviewModify.setOnClickListener {
+        binding.textFieldMyReviewModifyDate.setOnClickListener {
+            settingDate(binding)
         }
+
+        binding.buttonMyReviewModify.setOnClickListener {
+            if (isFormValid(binding)) {
+                val grade = binding.ratingbarMyReviewModify.rating
+                val date = viewModel.visitDate.value
+                val content = binding.textFieldMyReviewModifyWrite.text.toString()
+
+                viewModel.updateMyPlaceReview(viewModel.reviewData.value?.reviewId ?:0, grade, date!!, content)
+
+                Snackbar.make(binding.root, "여행지 후기가 수정되었습니다.", Snackbar.LENGTH_SHORT)
+                    .setBackgroundTint(
+                        ContextCompat.getColor(
+                            requireContext(),
+                            R.color.text_secondary
+                        )
+                    )
+                    .show()
+
+                findNavController().popBackStack()
+            }
+        }
+    }
+
+    private fun settingDate(binding: FragmentMyReviewModifyBinding) {
+        val constraintsBuilder = CalendarConstraints.Builder()
+        val maxValidator = DateValidatorPointBackward.now()
+
+        constraintsBuilder.setValidator(maxValidator)
+
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setTheme(R.style.DateRangePickerTheme)
+            .setTitleText("방문 기간을 설정해주세요")
+            .setCalendarConstraints(constraintsBuilder.build())
+            .build()
+
+        datePicker.show(parentFragmentManager, "WriteReviewDate")
+        datePicker.addOnPositiveButtonClickListener {
+            val selectedDate = Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+            viewModel.setVisitDate(selectedDate)
+            showPickedDates(binding)
+        }
+    }
+
+    private fun showPickedDates(binding: FragmentMyReviewModifyBinding) {
+        val visitDate = viewModel.visitDate.value
+        val visitDateValue = visitDate?.let {
+            formatDateValue(visitDate)
+        }
+        binding.textFieldMyReviewModifyDate.setText(visitDateValue)
+    }
+
+    private fun formatDateValue(date: LocalDate): String {
+        val dateFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA)
+
+        return dateFormat.format(date)
     }
 
     private fun settingImageRVAdapter(binding: FragmentMyReviewModifyBinding) {
@@ -149,6 +254,41 @@ class MyReviewModifyFragment : Fragment(R.layout.fragment_my_review_modify),
         val albumIntent = Intent(Intent.ACTION_GET_CONTENT)
         albumIntent.type = "image/*"  // 이미지 타입만 선택하도록 설정
         albumLauncher.launch(albumIntent)
+    }
+
+    private fun isFormValid(binding: FragmentMyReviewModifyBinding): Boolean {
+        val date = viewModel.visitDate.value
+        val reviewContent = binding.textFieldMyReviewModifyWrite.text.toString()
+
+        return if (date == null) {
+            Snackbar.make(binding.root, "방문 날짜를 선택해 주세요", Snackbar.LENGTH_SHORT)
+                .setBackgroundTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.text_secondary
+                    )
+                )
+                .show()
+            false
+
+        } else if (reviewContent.isEmpty()) {
+            binding.textInputLayoutMyReviewModifyWrite.error = "후기 내용을 입력해 주세요"
+            binding.textFieldMyReviewModifyWrite.requestFocus()
+            requireContext().showSoftInput(binding.textFieldMyReviewModifyWrite)
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun settingErrorHandling(binding: FragmentMyReviewModifyBinding) {
+        binding.textFieldMyReviewModifyWrite.addTextChangedListener {
+            clearErrorMessage(binding.textInputLayoutMyReviewModifyWrite)
+        }
+    }
+
+    private fun clearErrorMessage(textInputLayout: TextInputLayout) {
+        textInputLayout.error = null
     }
 
     override fun onPosBtnClick() {

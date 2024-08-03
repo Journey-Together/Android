@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.scheduleform.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kr.tekit.lion.daongil.databinding.ItemFormScheduleBinding
@@ -55,6 +56,11 @@ class FormScheduleAdapter(
                 onRemoveButtonClickListener
             )
             binding.recyclerViewFSchedulePlaces.adapter = formPlaceAdapter
+
+            binding.viewFScheduleTopDeco.visibility = when (absoluteAdapterPosition) {
+                0 -> View.INVISIBLE
+                else -> View.VISIBLE
+            }
         }
     }
 }

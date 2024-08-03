@@ -30,7 +30,7 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
         with(binding) {
 
             toolbarIceModify.setNavigationOnClickListener {
-                findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment)
+                findNavController().popBackStack()
             }
 
             buttonIceSubmit.setOnClickListener {
@@ -49,7 +49,7 @@ class IceModifyFragment : Fragment(R.layout.fragment_ice_modify) {
                             part2Phone = tvContact2.text.toString()
                         )
                     )
-                    findNavController().navigate(R.id.action_iceModifyFragment_to_myInfoFragment)
+                    findNavController().popBackStack()
                 }
             }
 

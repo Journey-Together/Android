@@ -126,15 +126,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin_small1"
-                    app:boxStrokeColor="@color/button_quaternary"
-                    app:cursorColor="@color/text_primary"
-                    app:boxBackgroundColor="@color/button_quaternary"
+                    app:boxBackgroundColor="@color/text_field_background"
+                    app:boxStrokeColor="@color/text_field_background"
                     app:boxStrokeWidth="0dp"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="1000"
+                    app:cursorColor="@color/text_primary"
                     app:endIconMode="clear_text"
                     app:errorEnabled="true"
-                    app:hintEnabled="false"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="1000">
+                    app:hintEnabled="false">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/textFieldEtc"
@@ -144,9 +144,9 @@
                         android:gravity="top"
                         android:hint="@string/hint_report_reason_etc"
                         android:inputType="text|textMultiLine"
+                        android:maxLength="1000"
                         android:textColor="@color/text_primary"
-                        android:textSize="@dimen/font_small1"
-                        android:maxLength="1000" />
+                        android:textSize="@dimen/font_small1" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView

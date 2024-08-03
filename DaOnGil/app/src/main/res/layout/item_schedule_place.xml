@@ -65,14 +65,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_small1"
-                android:layout_marginTop="@dimen/margin_big3"
                 android:layout_marginEnd="@dimen/margin_small1"
                 android:fontFamily="@font/pretendard_regular"
                 android:textColor="@color/text_secondary"
                 android:textSize="@dimen/font_small2"
                 app:layout_constraintEnd_toStartOf="@id/iconItemSPlaceMore"
                 app:layout_constraintStart_toEndOf="@+id/textViewItemSPlaceName"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iconItemSPlaceMore"
+                app:layout_constraintBottom_toBottomOf="@id/iconItemSPlaceMore"
                 tools:text="음식점" />
 
             <ImageView
@@ -144,4 +144,5 @@
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>
+
 

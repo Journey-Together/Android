@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/modify_schedule_form_graph"
+    app:startDestination="@id/modifyNamePeriodFragment">
+
+    <fragment
+        android:id="@+id/modifyNamePeriodFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ModifyNamePeriodFragment"
+        android:label="@string/modify_schedule"
+        tools:layout="@layout/fragment_modify_name_period" >
+        <action
+            android:id="@+id/action_modifyNamePeriodFragment_to_modifyScheduleDetailsFragment"
+            app:destination="@id/modifyScheduleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyScheduleDetailsFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ModifyScheduleDetailsFragment"
+        android:label="@string/modify_schedule"
+        tools:layout="@layout/fragment_modify_schedule_details" >
+        <action
+            android:id="@+id/action_modifyScheduleDetailsFragment_to_modifyNamePeriodFragment"
+            app:destination="@id/modifyNamePeriodFragment" />
+        <action
+            android:id="@+id/action_modifyScheduleDetailsFragment_to_modifyScheduleConfirmFragment"
+            app:destination="@id/modifyScheduleConfirmFragment" />
+        <action
+            android:id="@+id/action_modifyScheduleDetailsFragment_to_modifySearchFragment"
+            app:destination="@id/modifySearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifyScheduleConfirmFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ModifyScheduleConfirmFragment"
+        android:label="@string/modify_schedule"
+        tools:layout="@layout/fragment_modify_schedule_confirm" >
+        <action
+            android:id="@+id/action_modifyScheduleConfirmFragment_to_modifyScheduleDetailsFragment"
+            app:destination="@id/modifyScheduleDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/modifySearchFragment"
+        android:name="kr.tekit.lion.daongil.presentation.scheduleform.fragment.ModifySearchFragment"
+        android:label="@string/search_places_to_add"
+        tools:layout="@layout/fragment_modify_search" >
+        <action
+            android:id="@+id/action_modifySearchFragment_to_modifyScheduleDetailsFragment"
+            app:destination="@id/modifyScheduleDetailsFragment" />
+        <argument
+            android:name="schedulePosition"
+            app:argType="integer" />
+    </fragment>
+</navigation>

@@ -28,6 +28,10 @@ class PlanRepositoryImpl(
         return planDataSource.addNewPlan(request.toRequestBody())
     }
 
+    override suspend fun modifySchedule(planId: Long, request: NewPlan) {
+        return planDataSource.modifySchedule(planId, request.toRequestBody())
+    }
+
     override suspend fun getPlaceSearchResult(word: String, page: Int, size: Int
     ): PlaceSearchResult {
         return planDataSource.getPlaceSearchResult(word, page, size).toDomainModel()

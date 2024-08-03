@@ -3,14 +3,13 @@ package kr.tekit.lion.daongil.presentation.scheduleform.fragment
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentScheduleConfirmFormBinding
 import kr.tekit.lion.daongil.domain.model.DailySchedule
+import kr.tekit.lion.daongil.presentation.ext.showSnackbar
 import kr.tekit.lion.daongil.presentation.scheduleform.adapter.FormConfirmScheduleAdapter
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModel
 import kr.tekit.lion.daongil.presentation.scheduleform.vm.ScheduleFormViewModelFactory
@@ -65,15 +64,9 @@ class ScheduleConfirmFormFragment : Fragment(R.layout.fragment_schedule_confirm_
                     requireActivity().setResult(Activity.RESULT_OK)
                     requireActivity().finish()
                 }else{
-                    showSnackBar(view, "다시 시도해주세요")
+                    view.showSnackbar("다시 시도해주세요")
                 }
             }
         }
-    }
-
-    private fun showSnackBar(view: View, message : String ){
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(ContextCompat.getColor(requireActivity(), R.color.text_secondary))
-            .show()
     }
 }

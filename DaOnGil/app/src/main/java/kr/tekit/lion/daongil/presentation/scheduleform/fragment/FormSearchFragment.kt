@@ -99,7 +99,7 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
             addOnScrollEndListener{
                 with(scheduleFormViewModel){
                     if(!isLastPage()){
-                        fetchNextPlaceResults(20)
+                        fetchNextPlaceResults()
                     }
                 }
             }
@@ -152,7 +152,7 @@ class FormSearchFragment : Fragment(R.layout.fragment_form_search) {
                     }else{
                         binding.recyclerViewFSResult.visibility = View.VISIBLE
                         binding.textViewFSResultEmpty.visibility = View.GONE
-                        scheduleFormViewModel.getPlaceSearchResult(word, 0, 20)
+                        scheduleFormViewModel.getPlaceSearchResult(word, 0)
                     }
                 }
                 false

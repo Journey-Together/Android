@@ -9,9 +9,15 @@ class GetScheduleReviewInfoUseCase (
     private val planRepository: PlanRepository
 ): BaseUseCase() {
     suspend operator fun invoke(planId: Long): Result<ScheduleReviewInfo> = execute {
+        val scheduleInfo = planRepository.getDetailScheduleInfo(planId)
         val detailReview = planRepository.getDetailScheduleReview(planId)
 
         ScheduleReviewInfo(
+            title = scheduleInfo.title,
+            startDate = scheduleInfo.startDate,
+            endDate = scheduleInfo.endDate,
+            isPublic = scheduleInfo.isPublic,
+            imageUrl = scheduleInfo.images?.get(0) ?: "",
             reviewId = detailReview.reviewId ?: -1,
             content = detailReview.content ?: "",
             grade = detailReview.grade?.toFloat() ?: 0.0F,

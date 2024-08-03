@@ -79,4 +79,7 @@
 
     <color name="indicator_unselected">#4D4D4D</color>
 
+    <color name="vp_item_background">#0625B6</color>
+    <color name="home_search_banner_background">#2E2E2E</color>
+    <color name="home_background">#262626</color>
 </resources>

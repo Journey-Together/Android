@@ -93,4 +93,7 @@
 
     <color name="indicator_unselected">#C7C7C7</color>
 
+    <color name="vp_item_background">#F9DA49</color>
+    <color name="home_search_banner_background">#F4F4F4</color>
+    <color name="home_background">#FFFFFF</color>
 </resources>

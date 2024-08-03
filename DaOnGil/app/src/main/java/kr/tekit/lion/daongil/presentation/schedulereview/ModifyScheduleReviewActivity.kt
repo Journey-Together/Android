@@ -112,9 +112,6 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
                         scheduleReviewInfo.imageUrl
                     )
                 }
-                val isPublic = scheduleReviewInfo.isPublic
-                if(isPublic) radioButtonModifyScheReviewPublic.isChecked = true
-                else radioButtonModifyScheReviewPrivate.isChecked = true
 
                 ratingbarModifyScheReview.rating = scheduleReviewInfo.grade
                 editTextModifyScheReviewContent.setText(scheduleReviewInfo.content)
@@ -211,12 +208,6 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
     private fun isReviewValid(): Boolean {
         with(binding){
-            val isPrivateOrPublic = buttonGroupModifyScheReviewPublic.checkedRadioButtonId
-            if(isPrivateOrPublic == View.NO_ID){
-                showSnackBar(buttonGroupModifyScheReviewPublic, "여행 일정 공개 범주를 선택해주세요")
-                return false
-            }
-
             val reviewContent = editTextModifyScheReviewContent.text.toString()
             if(reviewContent.isBlank()){
                 inputLayoutModifyScheReviewContent.error = getString(R.string.text_warning_review_content_empty)

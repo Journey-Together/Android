@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.ItemTouristSmallBinding
+import kr.tekit.lion.daongil.databinding.ItemTouristRecommendBinding
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
 
 class HomeRecommendRVAdapter(
@@ -15,21 +15,21 @@ class HomeRecommendRVAdapter(
 ) : RecyclerView.Adapter<HomeRecommendRVAdapter.RecommendViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendViewHolder {
-        val binding: ItemTouristSmallBinding = ItemTouristSmallBinding.inflate(
+        val binding: ItemTouristRecommendBinding = ItemTouristRecommendBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
         return RecommendViewHolder(binding, onClick)
     }
 
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = 3
 
     override fun onBindViewHolder(holder: RecommendViewHolder, position: Int) {
         holder.bind(recommendPlaceList[position])
     }
 
     class RecommendViewHolder(
-        val binding: ItemTouristSmallBinding,
+        val binding: ItemTouristRecommendBinding,
         private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -39,19 +39,19 @@ class HomeRecommendRVAdapter(
             }
         }
         fun bind(recommendPlace: RecommendPlace) {
-            binding.touristSmallLocationTv.text = recommendPlace.address
-            binding.touristSmallTitleTv.text = recommendPlace.name
+            binding.touristRecommendAddressTv.text = recommendPlace.address
+            binding.touristRecommendNameTv.text = recommendPlace.name
 
             val disabilityList = recommendPlace.disability
 
-            Glide.with(binding.touristSmallIv.context)
+            Glide.with(binding.touristRecommendIv.context)
                 .load(recommendPlace.image)
-                .error(R.drawable.empty_view_small)
-                .into(binding.touristSmallIv)
+                .error(R.drawable.empty_view)
+                .into(binding.touristRecommendIv)
 
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
-            binding.touristSmallDisabilityRv.adapter = disabilityRVAdapter
-            binding.touristSmallDisabilityRv.layoutManager =
+            binding.touristRecommendRv.adapter = disabilityRVAdapter
+            binding.touristRecommendRv.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
         }
     }

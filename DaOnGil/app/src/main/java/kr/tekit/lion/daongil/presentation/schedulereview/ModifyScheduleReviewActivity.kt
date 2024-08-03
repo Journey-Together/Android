@@ -152,7 +152,21 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
                 val isValid = isReviewValid()
                 if(!isValid) return@setOnClickListener
 
-                // TO DO - API 연결
+                submitScheduleReviewUpdate()
+            }
+        }
+    }
+
+    private fun submitScheduleReviewUpdate() {
+        binding.apply {
+            val reviewContent = editTextModifyScheReviewContent.text.toString()
+            val reviewGrade = ratingbarModifyScheReview.rating
+
+            viewModel.updateScheduleReview(reviewGrade, reviewContent) { _, requestFlag ->
+                if(requestFlag) {
+                    //setResult(Activity.RESULT_OK)
+                    //finish()
+                }
             }
         }
     }

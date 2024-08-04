@@ -58,8 +58,9 @@ class ReviewListActivity : AppCompatActivity() {
         }
 
         viewModel.placeReviewInfo.observe(this@ReviewListActivity) { placeReviewInfo ->
-            binding.reviewListTitle.text = placeReviewInfo.placeName
-            binding.reviewListAddress.text = placeReviewInfo.placeAddress
+            binding.reviewListTitleTv.text = placeReviewInfo.placeName
+            binding.reviewListAddressTv.text = placeReviewInfo.placeAddress
+            binding.reviewListCount2Tv.text = placeReviewInfo.placeReviewList.size.toString()
 
             settingReviewListRVAdapter(placeReviewInfo.placeReviewList)
         }

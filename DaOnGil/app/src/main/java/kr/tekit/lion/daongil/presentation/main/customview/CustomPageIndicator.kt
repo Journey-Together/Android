@@ -18,10 +18,10 @@ class CustomPageIndicator(
         for (i in 0 until itemCount) {
             val dot = ImageView(context)
             val params = LinearLayout.LayoutParams(
-                6.dpToPx(context), // 적절한 크기로 설정
-                6.dpToPx(context)  // 적절한 크기로 설정
+                6.dpToPx(context),
+                6.dpToPx(context)
             )
-            params.setMargins(6.dpToPx(context), 0, 6.dpToPx(context), 0) // 적절한 마진으로 설정
+            params.setMargins(6.dpToPx(context), 0, 6.dpToPx(context), 0)
             dot.layoutParams = params
             dot.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.indicator_unselected))
             indicators.add(dot)

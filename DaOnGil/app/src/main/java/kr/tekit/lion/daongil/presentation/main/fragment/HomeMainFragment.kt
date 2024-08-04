@@ -148,7 +148,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         val itemCount = recommendPlaceList.size
         val customPageIndicator = CustomPageIndicator(requireActivity(), binding.homeRecommendRvIndicator, itemCount)
 
-        // 스냅 효과를 적용
         val snapHelper = LinearSnapHelper()
         snapHelper.attachToRecyclerView(binding.homeRecommendRv)
 
@@ -161,11 +160,10 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
 
                 val centerX = recyclerView.width / 2
 
-                // 스냅된 뷰를 찾기
+                // 스냅된 뷰 찾기
                 val snapView = snapHelper.findSnapView(recyclerView.layoutManager)
                 val position = recyclerView.getChildAdapterPosition(snapView ?: return)
 
-                // 인디케이터 업데이트
                 customPageIndicator.onPageSelected(position)
 
                 for (i in 0 until recyclerView.childCount) {
@@ -186,7 +184,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
                     val translationXFactor = 0.25f * distanceFromCenter / centerX
                     child.translationX = (if (childCenterX < centerX) translationXFactor else -translationXFactor) * child.width
 
-                    // 어두운 오버레이 투명도 조정
                     if (distanceFromCenter < recyclerView.width / 2) {
                         itemBinding.touristRecommendDark.visibility = View.GONE
                     } else {

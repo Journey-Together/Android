@@ -3,7 +3,6 @@ package kr.tekit.lion.daongil.presentation.myreview
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.get
 import androidx.fragment.app.DialogFragment
@@ -28,19 +27,35 @@ class PhotoDialog(
         super.onViewCreated(view, savedInstanceState)
         val binding = DialogPhotoBinding.bind(view)
 
+
+        settingToolbar(binding)
+        settingViewPager(binding)
+        settingIndicators(binding)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog?.window?.decorView?.let { decorView ->
+            val insetsController = WindowInsetsControllerCompat(dialog?.window!!, decorView)
+            insetsController.isAppearanceLightStatusBars = false
+        }
+    }
+
+    private fun settingToolbar(binding: DialogPhotoBinding) {
         binding.toolbarPhoto.setNavigationOnClickListener {
             dismiss()
         }
 
+        binding.textViewPhotoNum.text = getString(R.string.text_num_of_images, initialPosition + 1)
+        binding.textViewPhotoTotalNum.text = getString(R.string.text_num_of_total_images, imageList.size)
+    }
+
+    private fun settingViewPager(binding: DialogPhotoBinding) {
         val photoVPAdapter = PhotoVPAdapter(imageList)
         binding.viewPagerPhoto.adapter = photoVPAdapter
         binding.viewPagerPhoto.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-        binding.photoVPIndicator.setViewPager(binding.viewPagerPhoto)
-
         binding.viewPagerPhoto.setCurrentItem(initialPosition, false)
-        binding.textViewPhotoNum.text = getString(R.string.text_num_of_images, initialPosition + 1)
-        binding.textViewPhotoTotalNum.text = getString(R.string.text_num_of_total_images, imageList.size)
 
         binding.viewPagerPhoto.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -53,13 +68,8 @@ class PhotoDialog(
         })
     }
 
-    override fun onResume() {
-        super.onResume()
-        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        dialog?.window?.decorView?.let { decorView ->
-            val insetsController = WindowInsetsControllerCompat(dialog?.window!!, decorView)
-            insetsController.isAppearanceLightStatusBars = false
-        }
+    private fun settingIndicators(binding: DialogPhotoBinding) {
+        binding.photoVPIndicator.setViewPager(binding.viewPagerPhoto)
     }
 
     private fun resetZoom(binding: DialogPhotoBinding, position: Int) {

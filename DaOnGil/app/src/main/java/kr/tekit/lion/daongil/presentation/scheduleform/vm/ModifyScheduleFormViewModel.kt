@@ -21,14 +21,14 @@ import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceBookmarkListUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceDetailInfoUseCase
 import kr.tekit.lion.daongil.domain.usecase.place.GetPlaceSearchResultUseCase
-import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailInfoUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.ModifyScheduleUseCase
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 class ModifyScheduleFormViewModel (
-    private val getScheduleDetailInfoUseCase: GetScheduleDetailInfoUseCase,
+    private val getScheduleDetailInfoUseCase: GetScheduleDetailUseCase,
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase,
     private val getPlaceDetailInfoUseCase: GetPlaceDetailInfoUseCase,
     private val getPlaceBookmarkListUseCase: GetPlaceBookmarkListUseCase,

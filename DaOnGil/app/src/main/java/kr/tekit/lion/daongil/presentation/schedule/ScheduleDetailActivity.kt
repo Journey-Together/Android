@@ -24,7 +24,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
@@ -36,6 +35,7 @@ import kr.tekit.lion.daongil.presentation.login.LoginActivity
 import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_EDIT
 import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_WRITE
 import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_SCHEDULE_EDIT
+import kr.tekit.lion.daongil.presentation.scheduleform.ModifyScheduleFormActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.ModifyScheduleReviewActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
 import java.util.Timer
@@ -441,7 +441,10 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                 finish()
             },
             onScheduleEditClickListener = {
-                // 일정 수정 activity로
+                val newIntent =
+                    Intent(this@ScheduleDetailActivity, ModifyScheduleFormActivity::class.java)
+                newIntent.putExtra("planId", planId)
+                scheduleReviewLauncher.launch(newIntent)
             }).show(supportFragmentManager, "ScheduleManageBottomSheet")
     }
 

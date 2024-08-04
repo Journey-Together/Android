@@ -27,11 +27,11 @@ class DetailDisabilityRVAdapter(private val disabilityList: List<Int>) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: Int) {
             val imageResource = when (data) {
-                1 -> R.drawable.sv_unselected_physical_disability_icon
-                2 -> R.drawable.sv_unselected_visual_impairment_icon
-                3 -> R.drawable.sv_unselected_hearing_impairment_icon
-                4 -> R.drawable.sv_unselected_infant_family_icon
-                else -> R.drawable.sv_unselected_elderly_people_icon
+                1 -> R.drawable.detail_physical_disability_icon
+                2 -> R.drawable.detail_visual_impairment_icon
+                3 -> R.drawable.detail_hearing_impairment_icon
+                4 -> R.drawable.detail_infant_family_icon
+                else -> R.drawable.detail_elderly_people_icon
             }
             binding.itemDetailDisabilityIv.setImageResource(imageResource)
         }

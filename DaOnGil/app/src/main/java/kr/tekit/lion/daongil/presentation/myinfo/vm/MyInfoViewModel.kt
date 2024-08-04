@@ -39,6 +39,9 @@ class MyInfoViewModel(
     private val _IceInfo = MutableStateFlow(IceInfo())
     val myIceInfo = _IceInfo.asStateFlow()
 
+    private val _isPersonalInfoModified = MutableStateFlow(false)
+    val isPersonalInfoModified = _isPersonalInfoModified.asStateFlow()
+
     init {
         initUiData()
     }
@@ -76,7 +79,9 @@ class MyInfoViewModel(
             phone = phone
         )
         viewModelScope.launch {
-            modifyMyPersonalInfoUseCase(PersonalInfo(nickname, phone))
+            modifyMyPersonalInfoUseCase(PersonalInfo(nickname, phone)).onSuccess {
+                _isPersonalInfoModified.value = true
+            }
         }
     }
 
@@ -85,6 +90,7 @@ class MyInfoViewModel(
             onCompleteModifyPersonal(nickname, phone)
             modifyMyProfileImageUseCase(ProfileImg(profileImg.value))
                 .onSuccess {
+                    _isPersonalInfoModified.value = true
                     Log.d("MyOkHttpResult", it.toString())
                 }.onError {
                     Log.d("MyOkHttpResult", it.toString())

@@ -89,7 +89,7 @@ class NameAndPeriodFormFragment : Fragment(R.layout.fragment_name_and_period_for
     }
 
     private fun formatDateValue(date: Date): String {
-        val dateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+        val dateFormat = SimpleDateFormat("yyyy.MM.dd(E)", Locale.KOREA)
         val formattedDate = dateFormat.format(date)
 
         return formattedDate

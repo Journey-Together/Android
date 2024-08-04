@@ -50,11 +50,13 @@ class PlanBookmarkRVAdapter(
 
             Glide.with(binding.imageViewScheduleBookmark.context)
                 .load(planBookmark.image)
-                .error(R.drawable.empty_view)
+                .placeholder(R.drawable.empty_view_long)
+                .error(R.drawable.empty_view_long)
                 .into(binding.imageViewScheduleBookmark)
 
             Glide.with(binding.imageViewBookmarkUserProfile.context)
                 .load(planBookmark.profileImg)
+                .placeholder(R.drawable.empty_view)
                 .error(R.drawable.empty_view)
                 .into(binding.imageViewBookmarkUserProfile)
         }

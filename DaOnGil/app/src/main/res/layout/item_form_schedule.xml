@@ -5,45 +5,86 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/viewFScheduleTopDeco"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:layerType="software"
+        android:scaleType="fitXY"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/viewFScheduleDateDeco"
+        app:layout_constraintEnd_toEndOf="@+id/viewFScheduleDateDeco"
+        app:layout_constraintStart_toStartOf="@+id/viewFScheduleDateDeco"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dotted_line_vertical" />
+
+
+    <View
+        android:id="@+id/viewFScheduleDateDeco"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="@dimen/margin_basic"
+        android:background="@drawable/white_radius"
+        android:backgroundTint="@color/primary"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFScheduleDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewFScheduleDate" />
+
+    <ImageView
+        android:id="@+id/viewFScheduleDeco"
+        android:layout_width="2dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:layerType="software"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/viewFScheduleDateDeco"
+        app:layout_constraintStart_toStartOf="@+id/viewFScheduleDateDeco"
+        app:layout_constraintTop_toBottomOf="@+id/viewFScheduleDateDeco"
+        app:srcCompat="@drawable/dotted_line_vertical" />
+
     <TextView
         android:id="@+id/textViewFScheduleDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_basic"
-        android:fontFamily="@font/pretendard_bold"
-        android:textSize="@dimen/font_big1"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/pretendard_medium"
+        android:textSize="@dimen/font_big2"
+        app:layout_constraintStart_toEndOf="@+id/viewFScheduleDateDeco"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="0월 0일 0요일" />
+        tools:text="0월 0일(월)" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFSchedulePlaces"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_big4"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/viewFScheduleDateDeco"
         app:layout_constraintTop_toBottomOf="@+id/textViewFScheduleDate" />
 
     <Button
         android:id="@+id/buttonFScheduleAddPlace"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_basic"
+        android:layout_marginStart="@dimen/margin_small2"
         android:layout_marginEnd="@dimen/margin_basic"
-        android:layout_marginBottom="@dimen/margin_big1"
-        android:backgroundTint="@color/primary_disabled"
+        android:layout_marginBottom="@dimen/margin_big2"
+        android:background="@drawable/dotted_line_border"
         android:drawableTint="@color/text_primary"
         android:fontFamily="@font/pretendard_regular"
         android:text="@string/text_schedule_form_add_place"
         android:textColor="@color/text_primary"
+        app:backgroundTint="@null"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_add_24px"
         app:iconGravity="textStart"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textViewFScheduleDate"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewFSchedulePlaces" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

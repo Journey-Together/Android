@@ -1,9 +1,11 @@
 package kr.tekit.lion.daongil.presentation.main.fragment
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.view.WindowManager
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
@@ -29,7 +31,11 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         MyInfoMainViewModelFactory(requireContext())
     }
 
-    private var originalStatusBarColor: Int? = null
+    private val activityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.onStateLoggedIn()
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -52,7 +58,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
             }
         }
 
-        changeStatusBarColor()
+        setNoLimitsFlag()
     }
 
     private fun setUiLoggedInState(binding: FragmentMyInfoMainBinding) {
@@ -96,34 +102,29 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         }
     }
 
-    private fun changeStatusBarColor() {
-        activity?.let {
-            originalStatusBarColor = it.window.statusBarColor
-
-            it.window.statusBarColor =
-                ContextCompat.getColor(requireContext(), R.color.profile_background_endColor)
-        }
+    private fun setNoLimitsFlag() {
+        activity?.window?.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
-    private fun restoreStatusBarColor() {
-        activity?.let {
-            originalStatusBarColor?.let { color ->
-                it.window.statusBarColor = color
-            }
-        }
+    private fun clearNoLimitsFlag() {
+        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
     }
 
     private fun moveMyInfo(binding: FragmentMyInfoMainBinding) {
         binding.btnLoginOrUpdate.setOnClickListener {
             val intent = Intent(requireActivity(), MyInfoActivity::class.java)
             intent.putExtra("name", binding.tvNameOrLogin.text.toString())
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
     }
 
     private fun moveConcernType(binding: FragmentMyInfoMainBinding) {
         binding.layoutConcernType.setOnClickListener {
             val intent = Intent(requireActivity(), ConcernTypeActivity::class.java)
+            intent.putExtra("nickName", binding.tvNameOrLogin.text.toString())
             startActivity(intent)
         }
     }
@@ -138,7 +139,7 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
     private fun moveMyReview(binding: FragmentMyInfoMainBinding) {
         binding.layoutMyReview.setOnClickListener {
             val intent = Intent(requireActivity(), MyReviewActivity::class.java)
-            startActivity(intent)
+            activityResultLauncher.launch(intent)
         }
     }
 
@@ -172,9 +173,8 @@ class MyInfoMainFragment : Fragment(R.layout.fragment_my_info_main), ConfirmDial
         Snackbar.make(requireView(), "로그아웃", Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-
-        restoreStatusBarColor()
+    override fun onStop() {
+        super.onStop()
+        clearNoLimitsFlag()
     }
 }

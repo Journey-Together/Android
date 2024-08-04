@@ -2,7 +2,6 @@ package kr.tekit.lion.daongil.presentation.bookmark
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,7 @@ import kr.tekit.lion.daongil.presentation.bookmark.adapter.PlanBookmarkRVAdapter
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModel
 import kr.tekit.lion.daongil.presentation.bookmark.vm.BookmarkViewModelFactory
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
-import kr.tekit.lion.daongil.presentation.schedule.ScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 
 class BookmarkActivity : AppCompatActivity() {
 
@@ -77,7 +76,11 @@ class BookmarkActivity : AppCompatActivity() {
                         viewModel.updatePlaceBookmark(placeId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = placeBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE
@@ -95,16 +98,20 @@ class BookmarkActivity : AppCompatActivity() {
                 val planBookmarkRVAdapter = PlanBookmarkRVAdapter(
                     planBookmarkList,
                     itemClickListener = { position ->
-                        val placeBookmark = planBookmarkList[position]
-                        val intent = Intent(this, ScheduleActivity::class.java)
-                        intent.putExtra("planId", placeBookmark.planId)
+                        val planBookmark = planBookmarkList[position]
+                        val intent = Intent(this, ScheduleDetailActivity::class.java)
+                        intent.putExtra("planId", planBookmark.planId)
                         startActivity(intent)
                     },
                     onBookmarkClick = { planId ->
                         viewModel.updatePlanBookmark(planId)
                     }
                 )
+                val rvState = binding.recyclerViewBookmark.layoutManager?.onSaveInstanceState()
                 binding.recyclerViewBookmark.adapter = planBookmarkRVAdapter
+                rvState?.let {
+                    binding.recyclerViewBookmark.layoutManager?.onRestoreInstanceState(it)
+                }
             } else {
                 binding.recyclerViewBookmark.visibility = View.INVISIBLE
                 binding.notExistBookmarkLayout.visibility = View.VISIBLE

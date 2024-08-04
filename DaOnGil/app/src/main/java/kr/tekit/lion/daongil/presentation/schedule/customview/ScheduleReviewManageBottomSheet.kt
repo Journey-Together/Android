@@ -1,5 +1,6 @@
 package kr.tekit.lion.daongil.presentation.schedule.customview
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -7,8 +8,13 @@ import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.BottomSheetScheduleReviewManageBinding
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedulereview.ModifyScheduleReviewActivity
 
-class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: () -> Unit) :
+class ScheduleReviewManageBottomSheet(
+    private val reviewId: Long,
+    private val onReviewDeleteClickListener: () -> Unit,
+    private val onReviewEditClickListener: () -> Unit,
+) :
     BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_review_manage),
     ConfirmDialogInterface {
 
@@ -23,7 +29,7 @@ class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: (
     private fun initView(binding: BottomSheetScheduleReviewManageBinding) {
         binding.apply {
             textViewScheduleReviewManageEdit.setOnClickListener {
-                // 리뷰 수정 화면으로 이동
+                onReviewEditClickListener()
             }
 
             textViewScheduleReviewManageDelete.setOnClickListener {
@@ -36,8 +42,8 @@ class ScheduleReviewManageBottomSheet(private val onReviewDeleteClickListener: (
     private fun showScheduleReviewDeleteDialog() {
         val dialog = ConfirmDialog(
             this,
-            "여행 일정 삭제",
-            "삭제한 데이터는 되돌릴 수 없습니다.",
+            "여행 후기 삭제",
+            "삭제한 후기는 되돌릴 수 없습니다.",
             "삭제하기",
             R.color.button_tertiary,
             R.color.white

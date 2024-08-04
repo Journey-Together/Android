@@ -1,9 +1,6 @@
 package kr.tekit.lion.daongil.data.dto.remote.request
 
 import android.graphics.BitmapFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kr.tekit.lion.daongil.data.dto.remote.base.AdapterProvider
 import kr.tekit.lion.daongil.domain.model.ModifiedScheduleReview
 import kr.tekit.lion.daongil.domain.model.ReviewImage
@@ -13,11 +10,11 @@ import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
-import java.net.URL
 
 data class ModifyScheduleReviewRequest(
     val grade: Float?,
     val content: String?,
+    val deleteImgUrls: List<String>?
 )
 
 fun ModifiedScheduleReview.toRequestBody(): RequestBody {
@@ -25,31 +22,16 @@ fun ModifiedScheduleReview.toRequestBody(): RequestBody {
         ModifyScheduleReviewRequest(
             grade = this.grade,
             content = this.content,
+            deleteImgUrls = this.deleteImgUrls
         )
     ).toRequestBody("application/json".toMediaTypeOrNull())
 }
 
-suspend fun List<ReviewImage>.toMultiPartBodyList(): List<MultipartBody.Part> {
+fun List<ReviewImage>.toMultiPartBodyList(): List<MultipartBody.Part> {
     return this.map { image ->
-        val fileName =
-            image.imagePath?.let { File(it).name } ?: System.currentTimeMillis().toString()
-
-        val bitmap = if (image.imageUrl != null) {
-            //URL(image.imageUrl).readBytes()
-            urlToByteArray(image.imageUrl)
-        } else {
-            val file = File(image.imagePath!!)
-            BitmapFactory.decodeFile(file.path).compressBitmap(60)
-        }
+        val file = image.imagePath?.let { File(it) }
+        val bitmap = BitmapFactory.decodeFile(file?.path).compressBitmap(60)
         val requestFile = bitmap.toRequestBody("image/jpeg".toMediaTypeOrNull())
-        MultipartBody.Part.createFormData("images", fileName, requestFile)
+        MultipartBody.Part.createFormData("images", file?.name, requestFile)
     }
-}
-
-private suspend fun urlToByteArray(imageUrl: String) : ByteArray {
-    val job = CoroutineScope(Dispatchers.IO).async {
-        URL(imageUrl).readBytes()
-    }
-
-    return job.await()
 }

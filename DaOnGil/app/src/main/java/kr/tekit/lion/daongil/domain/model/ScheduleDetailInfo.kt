@@ -1,6 +1,6 @@
 package kr.tekit.lion.daongil.domain.model
 
-data class ScheduleDetailnfo (
+data class ScheduleDetailInfo (
     val title : String,
     val startDate : String,
     val endDate : String,

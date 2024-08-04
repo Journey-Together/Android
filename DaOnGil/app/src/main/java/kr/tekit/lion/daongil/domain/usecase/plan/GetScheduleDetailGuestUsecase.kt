@@ -2,7 +2,7 @@ package kr.tekit.lion.daongil.domain.usecase.plan
 
 import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
-import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailInfo
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.base.BaseUseCase
 import kr.tekit.lion.daongil.domain.usecase.base.Result
@@ -21,7 +21,7 @@ class GetScheduleDetailGuestUsecase(
 
 
 private fun combineScheduleDetail(
-    info: ScheduleDetailnfo,
+    info: ScheduleDetailInfo,
     review: ScheduleDetailReview
 ): ScheduleDetail {
     return ScheduleDetail(

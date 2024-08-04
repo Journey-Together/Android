@@ -12,7 +12,7 @@ import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ReviewImg
-import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailInfo
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 
@@ -26,6 +26,10 @@ class PlanRepositoryImpl(
 
     override suspend fun addNewPlan(request: NewPlan) {
         return planDataSource.addNewPlan(request.toRequestBody())
+    }
+
+    override suspend fun modifySchedule(planId: Long, request: NewPlan) {
+        return planDataSource.modifySchedule(planId, request.toRequestBody())
     }
 
     override suspend fun getPlaceSearchResult(word: String, page: Int, size: Int
@@ -61,12 +65,12 @@ class PlanRepositoryImpl(
         return planDataSource.getMyElapsedScheduleList(size, page).toDomainModel()
     }
 
-    override suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailnfo {
+    override suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailInfo {
 
         return planDataSource.getDetailScheduleInfo(planId).toDomainModel()
     }
 
-    override suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetailnfo {
+    override suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetailInfo {
         return planDataSource.getDetailScheduleInfoGuest(plandId).toDomainModel()
     }
 
@@ -80,5 +84,13 @@ class PlanRepositoryImpl(
 
     override suspend fun deleteMyPlanReview(reviewId: Long) {
         return planDataSource.deleteMyPlanReview(reviewId)
+    }
+
+    override suspend fun updateMyPlanPublic(planId: Long) {
+        return planDataSource.updateMyPlanPublic(planId)
+    }
+
+    override suspend fun deleteMyPlanSchedule(planId: Long) {
+        return planDataSource.deleteMyPlanSchedule(planId)
     }
 }

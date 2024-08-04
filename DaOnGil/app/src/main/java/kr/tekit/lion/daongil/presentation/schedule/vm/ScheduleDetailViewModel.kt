@@ -1,6 +1,5 @@
 package kr.tekit.lion.daongil.presentation.schedule.vm
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,8 +11,10 @@ import kr.tekit.lion.daongil.domain.model.ScheduleDetail
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
 import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanReviewUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanScheduleUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailGuestUsecase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.UpdateMyPlanPublicUseCase
 import kr.tekit.lion.daongil.presentation.login.LogInState
 
 class ScheduleDetailViewModel(
@@ -21,6 +22,8 @@ class ScheduleDetailViewModel(
     private val authRepository: AuthRepository,
     private val getScheduleDetailGuestUsecase: GetScheduleDetailGuestUsecase,
     private val deleteMyPlanReviewUseCase: DeleteMyPlanReviewUseCase,
+    private val updateMyPlanPublicUseCase: UpdateMyPlanPublicUseCase,
+    private val deleteMyPlanScheduleUseCase: DeleteMyPlanScheduleUseCase,
 ) : ViewModel() {
 
     private val _scheduleDetail = MutableLiveData<ScheduleDetail>()
@@ -57,6 +60,22 @@ class ScheduleDetailViewModel(
                 reviewImages = it.imageList,
                 hasReview = it.hasReview
                 )
+            }
+        }
+
+    fun updateMyPlanPublic(planId: Long) =
+        viewModelScope.launch {
+            updateMyPlanPublicUseCase.invoke(planId).onSuccess {
+                _scheduleDetail.value = _scheduleDetail.value?.copy(
+                    isPublic = it.isPublic
+                )
+            }
+        }
+
+    fun deleteMyPlanSchedule(planId: Long) =
+        viewModelScope.launch {
+            deleteMyPlanScheduleUseCase.invoke(planId).onSuccess {
+
             }
         }
 

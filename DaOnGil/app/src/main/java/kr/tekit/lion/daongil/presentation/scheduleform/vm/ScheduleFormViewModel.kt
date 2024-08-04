@@ -134,12 +134,12 @@ class ScheduleFormViewModel(
         }
     }
 
-    fun getPlaceSearchResult(word: String, page: Int, size: Int){
+    fun getPlaceSearchResult(word: String, page: Int){
         _keyword.value = word
 
         // viewModelScope = ViewModel에 정의된 코루틴 스코프
         viewModelScope.launch {
-            getPlaceSearchResultUseCase(word, page, size)
+            getPlaceSearchResultUseCase(word, page)
                 .onSuccess {
                 // 검색 결과를 받아오면 _placeSearchResult에 값을 갱신해준다
                 _placeSearchResult.value = it
@@ -153,13 +153,13 @@ class ScheduleFormViewModel(
         return _placeSearchResult.value?.last ?: true
     }
 
-    fun fetchNextPlaceResults(size: Int) {
+    fun fetchNextPlaceResults() {
         val page = _placeSearchResult.value?.pageNo
         val keyword = _keyword.value
 
         if (keyword != null && page != null) {
             viewModelScope.launch {
-                getPlaceSearchResultUseCase(keyword, page + 1, size)
+                getPlaceSearchResultUseCase(keyword, page + 1)
                     .onSuccess {
                         // orEmpty() : null 인 경우 빈 리스트로 처리해준다.
                         val newList =

@@ -19,6 +19,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -33,13 +35,16 @@ import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.HighThemeApp
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentHomeMainBinding
+import kr.tekit.lion.daongil.databinding.ItemTouristRecommendBinding
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 import kr.tekit.lion.daongil.domain.model.RecommendPlace
 import kr.tekit.lion.daongil.presentation.ext.showPermissionSnackBar
 import kr.tekit.lion.daongil.presentation.home.DetailActivity
+import kr.tekit.lion.daongil.presentation.main.ItemDeco.ItemOffsetDecoration
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeLocationRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeRecommendRVAdapter
 import kr.tekit.lion.daongil.presentation.main.adapter.HomeVPAdapter
+import kr.tekit.lion.daongil.presentation.main.customview.CustomPageIndicator
 import kr.tekit.lion.daongil.presentation.main.dialog.ModeSettingDialog
 import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.HomeViewModelFactory
@@ -47,6 +52,7 @@ import java.io.IOException
 import java.util.Locale
 import java.util.Timer
 import kotlin.concurrent.scheduleAtFixedRate
+import kotlin.math.abs
 
 class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private val app = HighThemeApp.getInstance()
@@ -138,6 +144,54 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         binding.homeRecommendRv.adapter = homeRecommendRVAdapter
         binding.homeRecommendRv.layoutManager =
             LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+        val itemCount = recommendPlaceList.size
+        val customPageIndicator = CustomPageIndicator(requireActivity(), binding.homeRecommendRvIndicator, itemCount)
+
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.homeRecommendRv)
+
+        binding.homeRecommendRv.addItemDecoration(ItemOffsetDecoration(70, 70))
+
+        // 스크롤에 따라 아이템의 크기와 알파를 조정
+        binding.homeRecommendRv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val centerX = recyclerView.width / 2
+
+                // 스냅된 뷰 찾기
+                val snapView = snapHelper.findSnapView(recyclerView.layoutManager)
+                val position = recyclerView.getChildAdapterPosition(snapView ?: return)
+
+                customPageIndicator.onPageSelected(position)
+
+                for (i in 0 until recyclerView.childCount) {
+                    val child = recyclerView.getChildAt(i)
+                    val itemBinding = ItemTouristRecommendBinding.bind(child)
+                    val childCenterX = (child.left + child.right) / 2
+                    val distanceFromCenter = abs(centerX - childCenterX)
+                    val scaleFactor = 1 - (distanceFromCenter.toFloat() / centerX)
+
+                    // 아이템의 크기 및 알파값 조정
+                    child.scaleX = 1.0f + 0.2f * scaleFactor
+                    child.scaleY = 1.0f + 0.2f * scaleFactor
+
+                    // Z축 이동량 조정 - 겹쳐 보이도록 음수 값으로 조정
+                    child.translationZ = (-distanceFromCenter / centerX).toFloat()
+
+                    // 좌우 이동 조정 - 중앙에 가까운 아이템이 앞으로 나오는 효과
+                    val translationXFactor = 0.25f * distanceFromCenter / centerX
+                    child.translationX = (if (childCenterX < centerX) translationXFactor else -translationXFactor) * child.width
+
+                    if (distanceFromCenter < recyclerView.width / 2) {
+                        itemBinding.touristRecommendDark.visibility = View.GONE
+                    } else {
+                        itemBinding.touristRecommendDark.visibility = View.VISIBLE
+                    }
+                }
+            }
+        })
     }
 
     private fun settingLocationRVAdapter(
@@ -152,7 +206,6 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
                 startActivity(intent)
             })
         binding.homeMyLocationRv.adapter = homeLocationRVAdapter
-        binding.homeMyLocationRv.layoutManager = LinearLayoutManager(context)
     }
 
     private fun settingDialog() {

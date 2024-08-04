@@ -24,6 +24,11 @@ class PlanDataSource(
     suspend fun addNewPlan(request: RequestBody){
         planService.addNewPlan(request)
     }
+
+    suspend fun modifySchedule(planId: Long, request: RequestBody){
+        planService.modifySchedule(planId, request)
+    }
+
     suspend fun getPlaceSearchResult(word: String, page: Int, size: Int) : PlaceSearchResultsResponse {
         return planService.getPlaceSearchResults(word, page, size)
     }
@@ -75,5 +80,13 @@ class PlanDataSource(
 
     suspend fun deleteMyPlanReview(reviewId: Long) {
         return planService.deleteMyPlanReview(reviewId)
+    }
+
+    suspend fun updateMyPlanPublic(planId: Long) {
+        return planService.updateMyPlanPublic(planId)
+    }
+
+    suspend fun deleteMyPlanSchedule(planId: Long) {
+        return planService.deleteMyPlanSchedule(planId)
     }
 }

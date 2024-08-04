@@ -15,6 +15,8 @@ class CustomPageIndicator(
     private val indicators = ArrayList<ImageView>()
 
     init {
+        indicatorLayout.removeAllViews()
+
         for (i in 0 until itemCount) {
             val dot = ImageView(context)
             val params = LinearLayout.LayoutParams(

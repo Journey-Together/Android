@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.ItemTouristBigBinding
+import kr.tekit.lion.daongil.databinding.ItemTouristLocationBinding
 import kr.tekit.lion.daongil.domain.model.AroundPlace
 
 class HomeLocationRVAdapter(
@@ -15,21 +15,21 @@ class HomeLocationRVAdapter(
 ) : RecyclerView.Adapter<HomeLocationRVAdapter.LocationViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LocationViewHolder {
-        val binding: ItemTouristBigBinding = ItemTouristBigBinding.inflate(
+        val binding: ItemTouristLocationBinding = ItemTouristLocationBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
 
         return LocationViewHolder(binding, onClick)
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int = aroundPlaceList.size
 
     override fun onBindViewHolder(holder: LocationViewHolder, position: Int) {
         holder.bind(aroundPlaceList[position])
     }
 
     class LocationViewHolder(
-        val binding: ItemTouristBigBinding,
+        val binding: ItemTouristLocationBinding,
         private val onClick: (Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -39,19 +39,19 @@ class HomeLocationRVAdapter(
             }
         }
         fun bind(aroundPlace: AroundPlace) {
-            binding.touristBigLocationTv.text = aroundPlace.address
-            binding.touristBigTitleTv.text = aroundPlace.name
+            binding.touristLocationAddressTv.text = aroundPlace.address
+            binding.touristLocationNameTv.text = aroundPlace.name
 
-            Glide.with(binding.touristBigIv.context)
+            Glide.with(binding.touristLocationIv.context)
                 .load(aroundPlace.image)
                 .error(R.drawable.empty_view)
-                .into(binding.touristBigIv)
+                .into(binding.touristLocationIv)
 
             val disabilityList = aroundPlace.disability
 
             val disabilityRVAdapter = DisabilityRVAdapter(disabilityList)
-            binding.touristBigDisabilityRv.adapter = disabilityRVAdapter
-            binding.touristBigDisabilityRv.layoutManager =
+            binding.touristLocationRv.adapter = disabilityRVAdapter
+            binding.touristLocationRv.layoutManager =
                 LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
 
         }

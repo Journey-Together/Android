@@ -2,6 +2,8 @@ package kr.tekit.lion.daongil.presentation.publicschedule.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
@@ -10,13 +12,16 @@ import kr.tekit.lion.daongil.domain.model.OpenPlanInfo
 
 class PublicScheduleAdapter(
     private val onPublicScheduleClicked: (Int) -> Unit
-) : RecyclerView.Adapter<PublicScheduleAdapter.PublicScheduleViewHolder>() {
+) : ListAdapter<OpenPlanInfo, PublicScheduleAdapter.PublicScheduleViewHolder>(diffUtil) {
 
-    private var items: MutableList<OpenPlanInfo> = mutableListOf()
+    companion object diffUtil : DiffUtil.ItemCallback<OpenPlanInfo>() {
+        override fun areItemsTheSame(oldItem: OpenPlanInfo, newItem: OpenPlanInfo): Boolean {
+            return oldItem.planId == newItem.planId
+        }
 
-    fun addItems(newItems: List<OpenPlanInfo>) {
-        items = newItems.toMutableList()
-        notifyDataSetChanged()
+        override fun areContentsTheSame(oldItem: OpenPlanInfo, newItem: OpenPlanInfo): Boolean {
+            return oldItem == newItem
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PublicScheduleViewHolder {
@@ -28,23 +33,18 @@ class PublicScheduleAdapter(
     }
 
     override fun onBindViewHolder(holder: PublicScheduleViewHolder, position: Int) {
-        holder.bind(items[position])
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        holder.bind(getItem(position))
     }
 
     class PublicScheduleViewHolder(
         private val binding: ItemPublicScheduleBinding,
         private val onPublicScheduleClicked: (Int) -> Unit
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
-            init{
-                binding.root.setOnClickListener {
-                    onPublicScheduleClicked(absoluteAdapterPosition)
-                }
+    ) : RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+                onPublicScheduleClicked(absoluteAdapterPosition)
             }
+        }
 
         fun bind(publicSchedule: OpenPlanInfo) {
             binding.apply {

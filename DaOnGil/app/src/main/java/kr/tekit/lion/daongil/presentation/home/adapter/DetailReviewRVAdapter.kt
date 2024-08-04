@@ -3,7 +3,6 @@ package kr.tekit.lion.daongil.presentation.home.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
@@ -33,7 +32,7 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>)
                 itemDetailReviewNickname.text = reviewData.nickname
                 itemDetailReviewContent.text = reviewData.content
                 itemDetailReviewDate.text = reviewData.date.toString()
-                itemDetailReviewStarScoreTv.text = reviewData.grade.toString()
+                itemDetailReviewRatingbar.rating = reviewData.grade
 
                 Glide.with(itemDetailReviewProfileIv.context)
                     .load(reviewData.profileImg)
@@ -41,12 +40,14 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>)
                     .into(itemDetailReviewProfileIv)
 
                 if (reviewData.reviewImg != null) {
+                    itemDetailReviewIv.visibility = View.VISIBLE
+
                     Glide.with(itemDetailReviewIv.context)
                         .load(reviewData.reviewImg)
                         .error(R.drawable.empty_view_small)
                         .into(itemDetailReviewIv)
                 } else {
-                    itemDetailReviewCard.visibility = View.GONE
+                    itemDetailReviewIv.visibility = View.GONE
                 }
             }
         }

@@ -21,6 +21,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSnapHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.SnapHelper
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -60,6 +61,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private val retryDelayMillis = 5000L
+    private var snapHelper: SnapHelper? = null
 
     private val requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
@@ -148,8 +150,10 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
         val itemCount = recommendPlaceList.size
         val customPageIndicator = CustomPageIndicator(requireActivity(), binding.homeRecommendRvIndicator, itemCount)
 
-        val snapHelper = LinearSnapHelper()
-        snapHelper.attachToRecyclerView(binding.homeRecommendRv)
+        if (snapHelper == null) {
+            snapHelper = LinearSnapHelper()
+            snapHelper?.attachToRecyclerView(binding.homeRecommendRv)
+        }
 
         binding.homeRecommendRv.addItemDecoration(ItemOffsetDecoration(70, 70))
 
@@ -161,7 +165,7 @@ class HomeMainFragment : Fragment(R.layout.fragment_home_main) {
                 val centerX = recyclerView.width / 2
 
                 // 스냅된 뷰 찾기
-                val snapView = snapHelper.findSnapView(recyclerView.layoutManager)
+                val snapView = snapHelper!!.findSnapView(recyclerView.layoutManager)
                 val position = recyclerView.getChildAdapterPosition(snapView ?: return)
 
                 customPageIndicator.onPageSelected(position)

@@ -103,4 +103,6 @@
 
     <color name="search_view_main">#FF4949</color>
 
+    <color name="photo_dialog_toolbar">#80000000</color>
+
 </resources>

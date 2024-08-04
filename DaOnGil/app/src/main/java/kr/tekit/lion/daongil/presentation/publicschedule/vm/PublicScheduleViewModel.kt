@@ -26,27 +26,26 @@ class PublicScheduleViewModel(
         getOpenPlanList()
     }
 
-    fun getOpenPlanList() =
-        viewModelScope.launch {
-            getOpenPlanListUseCase(10, 0).onSuccess {
-                _openPlanList.value = it.openPlanList
-                _isLastPage.value = it.last
-                _pageNo.value = it.pageNo + 1
-            }
+    fun getOpenPlanList() = viewModelScope.launch {
+        getOpenPlanListUseCase(10, 0).onSuccess {
+            _openPlanList.value = it.openPlanList
+            _isLastPage.value = it.last
+            _pageNo.value = it.pageNo + 1
         }
+    }
 
-    fun getOpenPlanListPaging() =
-        viewModelScope.launch {
-            if(isLastPage.value == false){
-                pageNo.value?.let {
-                    getOpenPlanListUseCase(10, it).onSuccess {
-                        val currentList = _openPlanList.value.orEmpty()
-                        _openPlanList.value = currentList + it.openPlanList
-                        _isLastPage.value = it.last
-                        _pageNo.value = it.pageNo + 1
-                    }
+    fun getOpenPlanListPaging() = viewModelScope.launch {
+        if (isLastPage.value == false) {
+            pageNo.value?.let { pageNo ->
+                getOpenPlanListUseCase(10, pageNo).onSuccess {
+                    val currentList = _openPlanList.value.orEmpty()
+                    _openPlanList.value = currentList + it.openPlanList
+                    _isLastPage.value = it.last
+                    _pageNo.value = it.pageNo + 1
                 }
             }
         }
+    }
+
 
 }

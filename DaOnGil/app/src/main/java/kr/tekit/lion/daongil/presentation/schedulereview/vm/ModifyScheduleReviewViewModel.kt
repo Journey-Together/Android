@@ -30,6 +30,8 @@ class ModifyScheduleReviewViewModel(
     private val _originalReview = MutableLiveData<ScheduleReviewInfo>()
     val originalReview: LiveData<ScheduleReviewInfo> get() = _originalReview
 
+    private val _deleteImgUrls = MutableLiveData<List<String>>()
+
     fun addNewReviewImage(newImage: ReviewImage) {
         val currentImageList = _imageList.value?.toMutableList() ?: mutableListOf<ReviewImage>()
         currentImageList.add(newImage)
@@ -39,11 +41,22 @@ class ModifyScheduleReviewViewModel(
     }
 
     fun removeReviewImageFromList(position: Int) {
+        val imageUrl = _imageList.value?.get(position)?.imageUrl
+        if(imageUrl != null){
+            addDeletedImageUrl(imageUrl)
+        }
+
         val currentImageList = _imageList.value?.toMutableList() ?: mutableListOf<ReviewImage>()
         currentImageList.removeAt(position)
         currentImageList.let { _imageList.value = it }
 
         updateNumOfImages()
+    }
+
+    private fun addDeletedImageUrl(url: String) {
+        val currentUrlList = _deleteImgUrls.value?.toMutableList() ?: mutableListOf<String>()
+        currentUrlList.add(url)
+        currentUrlList.let { _deleteImgUrls.value = it }
     }
 
     private fun updateNumOfImages() {
@@ -87,24 +100,30 @@ class ModifyScheduleReviewViewModel(
     ) {
         val newGrade = if (isGradeSame(grade)) null else grade
         val newContent = if (isContentSame(content)) null else content
+        val deleteImgUrls = _deleteImgUrls.value
 
-        val modifiedReview = ModifiedScheduleReview(newGrade, newContent) // , newIsPublic
+        val modifiedReview = ModifiedScheduleReview(newGrade, newContent, deleteImgUrls)
 
-        val images = if(isImagesChanged()) _imageList.value else listOf<ReviewImage>()
-        Log.d("modifyScheduleReview", "images: $images")
+        val images = getNewImages()
 
         _originalReview.value?.reviewId?.let { reviewId ->
             viewModelScope.launch {
-                modifyScheduleReviewUseCase.invoke(reviewId, modifiedReview, images)
-                    .onSuccess {
-                        Log.d("updateScheduleReview", "onSuc")
-                    }.onError {
-                        Log.e("updateScheduleReview", "onError : ${it.message}")
-                    }
+                var requestFlag = false
+                val success = try {
+                    modifyScheduleReviewUseCase.invoke(reviewId, modifiedReview, images)
+                        .onSuccess {
+                            requestFlag = true
+                        }.onError {
+                            Log.e("updateScheduleReview", "onError : ${it.message}")
+                        }
+                    true
+                } catch (e: Exception) {
+                    Log.d("updateScheduleReview", "Error: ${e.message}")
+                    false
+                }
+                callback(success, requestFlag)
             }
         }
-
-        // TO DO - call back 처리
     }
 
     private fun isContentSame(newContent: String) : Boolean {
@@ -119,24 +138,13 @@ class ModifyScheduleReviewViewModel(
         } ?: true
     }
 
-    private fun isImagesChanged() : Boolean {
-        val originalImageSize = originalReview.value?.imageList?.size ?: 0
-        if((originalImageSize > 0) && (originalImageSize==_numOfImages.value)){
-            originalReview.value?.imageList?.forEachIndexed {  index, imageUrl ->
-                val currentImageUrl = _imageList.value?.get(index)?.imageUrl
-                // 화면에 있는 index 번째 이미지와 서버에 저장돤 index 번째 이미지가 일치하지 않는다면 -> 이미지 변경된 상태 (true)
-                if(currentImageUrl.isNullOrEmpty()) return true
-                else if (imageUrl != currentImageUrl){
-                    return true
-                }
-            }
-            // 모든 이미지가 일치하는 경우 -> 이미지가 변경되지 않음 (false)
-            return false
-        }else {
-            val currentImageSize = _numOfImages.value ?: 0
-            if(currentImageSize != originalImageSize) return true
-        }
+    private fun getNewImages() : List<ReviewImage> {
+        val originalImageSize = _originalReview.value?.imageList?.size ?: 0
+        val deletedImageSize = _deleteImgUrls.value?.size ?: 0
+        val currentImageSize = _imageList.value?.size ?: 0
 
-        return false
+        val startPoint = originalImageSize - deletedImageSize
+
+        return _imageList.value?.subList(startPoint, currentImageSize) ?: emptyList()
     }
 }

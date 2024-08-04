@@ -86,6 +86,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
     private fun initToolbar() {
         binding.toolbarModifyScheReview.setNavigationOnClickListener {
+            setResult(RESULT_CANCELED)
             finish()
         }
     }
@@ -164,8 +165,8 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
             viewModel.updateScheduleReview(reviewGrade, reviewContent) { _, requestFlag ->
                 if(requestFlag) {
-                    //setResult(Activity.RESULT_OK)
-                    //finish()
+                    setResult(Activity.RESULT_OK)
+                    finish()
                 }
             }
         }

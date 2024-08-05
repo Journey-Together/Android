@@ -8,28 +8,28 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ext.SdkExtensions
 import android.provider.Settings
-import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityModifyScheduleReviewBinding
 import kr.tekit.lion.daongil.domain.model.ReviewImage
 import kr.tekit.lion.daongil.presentation.ext.setImage
+import kr.tekit.lion.daongil.presentation.ext.showSnackbar
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.ModifyReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.ModifyScheduleReviewViewModel
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.ModifyScheduleReviewViewModelFactory
 
 class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
-    private val viewModel : ModifyScheduleReviewViewModel by viewModels {
+    private val viewModel: ModifyScheduleReviewViewModel by viewModels {
         ModifyScheduleReviewViewModelFactory()
     }
 
@@ -91,7 +91,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         }
     }
 
-    private fun loadScheduleReview(planId: Long){
+    private fun loadScheduleReview(planId: Long) {
         viewModel.getScheduleReviewInfo(planId)
 
         initView()
@@ -99,7 +99,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
     private fun initView() {
         viewModel.originalReview.observe(this@ModifyScheduleReviewActivity) { scheduleReviewInfo ->
-            with(binding){
+            with(binding) {
                 textViewModifyScheReviewName.text = scheduleReviewInfo.title
                 textViewModifyScheReviewPeriod.text = getString(
                     R.string.text_schedule_period,
@@ -107,7 +107,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
                     scheduleReviewInfo?.endDate
                 )
                 val isImageAvailable = scheduleReviewInfo.imageUrl.isNotEmpty()
-                if(isImageAvailable){
+                if (isImageAvailable) {
                     this@ModifyScheduleReviewActivity.setImage(
                         imageViewModifyScheReviewThumb,
                         scheduleReviewInfo.imageUrl
@@ -138,7 +138,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
         binding.apply {
             imageButtonModifyScheReviewPhotoAdd.setOnClickListener {
                 if (!viewModel.isMoreImageAttachable()) {
-                    showSnackBar(it, "사진은 최대 4개까지 첨부할 수 있습니다")
+                    it.showSnackbar("사진은 최대 4개까지 첨부할 수 있습니다")
                     return@setOnClickListener
                 }
 
@@ -151,7 +151,7 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
 
             buttonModifyScheReivewSubmit.setOnClickListener {
                 val isValid = isReviewValid()
-                if(!isValid) return@setOnClickListener
+                if (!isValid) return@setOnClickListener
 
                 submitScheduleReviewUpdate()
             }
@@ -164,8 +164,8 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
             val reviewGrade = ratingbarModifyScheReview.rating
 
             viewModel.updateScheduleReview(reviewGrade, reviewContent) { _, requestFlag ->
-                if(requestFlag) {
-                    setResult(Activity.RESULT_OK)
+                if (requestFlag) {
+                    setResult(ResultCode.RESULT_SCHEDULE_EDIT)
                     finish()
                 }
             }
@@ -222,10 +222,11 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
     }
 
     private fun isReviewValid(): Boolean {
-        with(binding){
+        with(binding) {
             val reviewContent = editTextModifyScheReviewContent.text.toString()
-            if(reviewContent.isBlank()){
-                inputLayoutModifyScheReviewContent.error = getString(R.string.text_warning_review_content_empty)
+            if (reviewContent.isBlank()) {
+                inputLayoutModifyScheReviewContent.error =
+                    getString(R.string.text_warning_review_content_empty)
                 return false
             }
         }
@@ -233,17 +234,10 @@ class ModifyScheduleReviewActivity : AppCompatActivity(), ConfirmDialogInterface
     }
 
     private fun initReviewContentWatcher() {
-        with(binding){
+        with(binding) {
             editTextModifyScheReviewContent.addTextChangedListener {
                 inputLayoutModifyScheReviewContent.error = null
             }
         }
     }
-
-    private fun showSnackBar(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(getColor(R.color.text_secondary))
-            .show()
-    }
-
 }

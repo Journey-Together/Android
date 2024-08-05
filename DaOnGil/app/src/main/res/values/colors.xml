@@ -96,6 +96,7 @@
     <color name="vp_item_background">#F9DA49</color>
     <color name="home_search_banner_background">#F4F4F4</color>
     <color name="home_background">#FFFFFF</color>
+    <color name="detail_divider">#1A000000</color>
 
     <color name="text_input_start_icon_tint">#D0D0D1</color>
 

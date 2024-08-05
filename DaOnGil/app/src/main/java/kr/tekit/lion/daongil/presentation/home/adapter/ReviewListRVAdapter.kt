@@ -1,6 +1,7 @@
 package kr.tekit.lion.daongil.presentation.home.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,12 +44,18 @@ class ReviewListRVAdapter(
                 .error(R.drawable.default_profile)
                 .into(binding.itemDetailReviewBigProfileIv)
 
-            val reviewImageRVAdapter = ReviewImageRVAdapter(review.imageList)
-            binding.itemDetailReviewBigRv.adapter = reviewImageRVAdapter
-            binding.itemDetailReviewBigRv.layoutManager =
-                LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            if (review.imageList != null) {
+                binding.itemDetailReviewBigRv.visibility = View.VISIBLE
 
-            binding.itemDetailReviewBigComplain.setOnClickListener {
+                val reviewImageRVAdapter = ReviewImageRVAdapter(review.imageList)
+                binding.itemDetailReviewBigRv.adapter = reviewImageRVAdapter
+                binding.itemDetailReviewBigRv.layoutManager =
+                    LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
+            } else {
+                binding.itemDetailReviewBigRv.visibility = View.GONE
+            }
+
+            binding.itemDetailReviewBigReportBtn.setOnClickListener {
                dialogCallback()
             }
         }

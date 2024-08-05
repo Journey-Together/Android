@@ -3,6 +3,7 @@ package kr.tekit.lion.daongil.presentation.home.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ItemDetailServiceInfoBinding
 import kr.tekit.lion.daongil.domain.model.SubDisability
 
@@ -28,6 +29,13 @@ class DetailInfoRVAdapter(private val infoList: List<SubDisability>) :
         fun bind(infoData: SubDisability) {
             binding.itemDetailInfoTitleTv.text = infoData.subDisabilityName
             binding.itemDetailInfoContentTv.text = infoData.description
+
+            val imageResource = when (infoData.subDisabilityName) {
+                "주차여부" -> R.drawable.detail_parking_icon
+                "핵심동선" -> R.drawable.detail_road_icon
+                else -> R.drawable.detail_wheelchair_icon
+            }
+            binding.itemDetailInfoIv.setImageResource(imageResource)
         }
     }
 }

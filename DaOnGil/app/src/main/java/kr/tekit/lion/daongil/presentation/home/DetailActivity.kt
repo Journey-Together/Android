@@ -7,7 +7,6 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -79,7 +78,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun settingDisabilityRVAdapter(disabilityList: List<Int>) {
         val disabilityRVAdapter = DetailDisabilityRVAdapter(disabilityList)
         binding.detailDisabilityIvRv.adapter = disabilityRVAdapter
-        binding.detailDisabilityIvRv.layoutManager = GridLayoutManager(applicationContext, 3)
+        binding.detailDisabilityIvRv.layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.HORIZONTAL, false)
     }
 
     private fun settingToolbar() {
@@ -142,7 +141,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
             detailAddressTv.text = address
             detailBasicContentTv.text = overview
             detailToolbarTitleTv.text = category
-            detailRouteTv.text = category
+            detailRoutePlaceTv.text = category
             detailBasicAddressContentTv.text = address
             detailCallContentTv.text = tel
             detailHomepageContentTv.text = homepage
@@ -211,10 +210,7 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 } else {
                     detailPlaceInfo.bookmarkNum--
                 }
-                binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
             }
-
-            binding.detailBookmarkCount.text = detailPlaceInfo.bookmarkNum.toString()
 
             if (detailPlaceInfo.isReview) {
                 binding.detailWriteReviewBtn.visibility = View.GONE
@@ -230,8 +226,8 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
         viewModel.getDetailPlaceGuest(placeId)
 
         viewModel.detailPlaceInfoGuest.observe(this@DetailActivity) { detailPlaceInfoGuest ->
-            val tel = detailPlaceInfoGuest.tel ?: "문의 번호 정보가 제공되지 않습니다"
-            val homepage = detailPlaceInfoGuest.homepage ?: "홈페이지 정보가 제공되지 않습니다"
+            val tel = detailPlaceInfoGuest.tel
+            val homepage = detailPlaceInfoGuest.homepage
 
             handleCommonDetailPlaceInfo(
                 detailPlaceInfoGuest.placeId,
@@ -249,7 +245,6 @@ class DetailActivity : AppCompatActivity(), OnMapReadyCallback {
                 detailPlaceInfoGuest.subDisability
             )
             binding.detailBookmarkBtn.visibility = View.GONE
-            binding.detailBookmarkCount.visibility = View.GONE
             binding.detailWriteReviewBtn.visibility = View.GONE
             binding.detailModifyReviewBtn.visibility = View.GONE
         }

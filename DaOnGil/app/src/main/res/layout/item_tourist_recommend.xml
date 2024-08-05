@@ -61,7 +61,7 @@
                 android:fontFamily="@font/pretendard_semibold"
                 android:maxLines="1"
                 android:text="장소명"
-                android:textColor="@color/item_background"
+                android:textColor="@color/home_recommend_item_text"
                 android:textSize="@dimen/font_big1"
                 app:layout_constraintBottom_toTopOf="@+id/tourist_recommend_address_tv"
                 app:layout_constraintStart_toStartOf="@+id/tourist_recommend_address_tv" />
@@ -77,7 +77,7 @@
                 android:fontFamily="@font/pretendard_regular"
                 android:maxLines="1"
                 android:text="주소"
-                android:textColor="@color/item_background"
+                android:textColor="@color/home_recommend_item_text"
                 android:textSize="@dimen/font_small2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/tourist_recommend_rv"

@@ -15,13 +15,15 @@ import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
 import kr.tekit.lion.daongil.domain.model.ReviewImage
 import kr.tekit.lion.daongil.domain.model.ReviewImg
-import kr.tekit.lion.daongil.domain.model.ScheduleDetailnfo
+import kr.tekit.lion.daongil.domain.model.ScheduleDetailInfo
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
 
 interface PlanRepository {
     suspend fun getOpenPlanList(size: Int, page: Int): OpenPlan
 
     suspend fun addNewPlan(request: NewPlan)
+
+    suspend fun modifySchedule(planId: Long, request: NewPlan)
 
     // 구현해야 할 메서드
     suspend fun getPlaceSearchResult(word: String, page: Int, size: Int) : PlaceSearchResult
@@ -46,7 +48,7 @@ interface PlanRepository {
 
     suspend fun getMyElapsedScheduleList(size: Int, page: Int): MyElapsedSchedules
 
-    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailnfo
+    suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailInfo
 
     suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailnfo
 
@@ -55,6 +57,10 @@ interface PlanRepository {
     suspend fun getDetailScheduleReviewGuest(planId: Long): ScheduleDetailReview
 
     suspend fun deleteMyPlanReview(reviewId: Long)
+
+    suspend fun updateMyPlanPublic(planId: Long)
+
+    suspend fun deleteMyPlanSchedule(planId: Long)
 
     companion object{
         fun create(): PlanRepositoryImpl{

@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.presentation.myinfo.ConfirmDialog
+import kr.tekit.lion.daongil.presentation.myreview.PhotoDialog
 
 fun Context.showSoftInput(view: View) {
     val inputMethodManger =
@@ -114,4 +115,15 @@ fun Context.showConfirmDialog(
         posBtnTitle,
         onClick
     ).show(fragmentManager, "ConfirmDialog")
+}
+
+fun Context.showPhotoDialog(
+    fragmentManager: FragmentManager,
+    imageList: List<String>,
+    position: Int
+) {
+    PhotoDialog(
+        imageList,
+        position
+    ).show(fragmentManager, "PhotoDialog")
 }

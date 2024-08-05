@@ -12,7 +12,9 @@ import kr.tekit.lion.daongil.presentation.schedulereview.ModifyScheduleReviewAct
 
 class ScheduleReviewManageBottomSheet(
     private val reviewId: Long,
-    private val onReviewDeleteClickListener: () -> Unit) :
+    private val onReviewDeleteClickListener: () -> Unit,
+    private val onReviewEditClickListener: () -> Unit,
+) :
     BottomSheetDialogFragment(R.layout.bottom_sheet_schedule_review_manage),
     ConfirmDialogInterface {
 
@@ -27,10 +29,7 @@ class ScheduleReviewManageBottomSheet(
     private fun initView(binding: BottomSheetScheduleReviewManageBinding) {
         binding.apply {
             textViewScheduleReviewManageEdit.setOnClickListener {
-                // 리뷰 수정 화면으로 이동
-                val intent = Intent(requireActivity(), ModifyScheduleReviewActivity::class.java)
-                intent.putExtra("planId", reviewId)
-                startActivity(intent)
+                onReviewEditClickListener()
             }
 
             textViewScheduleReviewManageDelete.setOnClickListener {

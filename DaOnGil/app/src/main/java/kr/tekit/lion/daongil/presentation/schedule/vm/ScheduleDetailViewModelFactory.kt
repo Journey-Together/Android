@@ -6,8 +6,10 @@ import androidx.lifecycle.ViewModelProvider
 import kr.tekit.lion.daongil.domain.repository.AuthRepository
 import kr.tekit.lion.daongil.domain.repository.PlanRepository
 import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanReviewUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.DeleteMyPlanScheduleUseCase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailGuestUsecase
 import kr.tekit.lion.daongil.domain.usecase.plan.GetScheduleDetailUseCase
+import kr.tekit.lion.daongil.domain.usecase.plan.UpdateMyPlanPublicUseCase
 import java.lang.IllegalArgumentException
 
 class ScheduleDetailViewModelFactory(context: Context): ViewModelProvider.Factory {
@@ -25,9 +27,25 @@ class ScheduleDetailViewModelFactory(context: Context): ViewModelProvider.Factor
     private val deleteMyPlanReviewUseCase = DeleteMyPlanReviewUseCase(
         PlanRepository.create()
     )
+
+    private val updateMyPlanPublicUseCase = UpdateMyPlanPublicUseCase(
+        PlanRepository.create()
+    )
+
+    private val deleteMyPlanScheduleUseCase = DeleteMyPlanScheduleUseCase(
+        PlanRepository.create()
+    )
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(ScheduleDetailViewModel::class.java)){
-            return ScheduleDetailViewModel(getScheduleDetailUseCase, authRepository, getScheduleDetailGuestUsecase, deleteMyPlanReviewUseCase) as T
+        if (modelClass.isAssignableFrom(ScheduleDetailViewModel::class.java)) {
+            return ScheduleDetailViewModel(
+                getScheduleDetailUseCase,
+                authRepository,
+                getScheduleDetailGuestUsecase,
+                deleteMyPlanReviewUseCase,
+                updateMyPlanPublicUseCase,
+                deleteMyPlanScheduleUseCase
+            ) as T
         }
         throw IllegalArgumentException("unknown ViewModel class")
     }

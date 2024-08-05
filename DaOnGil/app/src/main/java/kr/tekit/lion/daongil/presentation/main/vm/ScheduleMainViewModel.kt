@@ -31,13 +31,12 @@ class ScheduleMainViewModel(
     val loginState = _loginState.asStateFlow()
 
     init {
-        getOpenPlanList(5, 0)
         checkLoginState()
     }
 
-    fun getOpenPlanList(size: Int, page: Int) =
+    fun getOpenPlanList() =
         viewModelScope.launch {
-            getOpenPlanListUseCase(size, page).onSuccess {
+            getOpenPlanListUseCase(8, 0).onSuccess {
                 _openPlanList.value = it.openPlanList
             }
         }

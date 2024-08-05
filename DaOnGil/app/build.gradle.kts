@@ -152,4 +152,6 @@ dependencies {
     implementation("com.squareup.moshi:moshi-adapters:1.15.1")
 
     implementation ("com.google.android.flexbox:flexbox:3.0.0")
+
+    implementation("io.getstream:photoview:1.0.2")
 }

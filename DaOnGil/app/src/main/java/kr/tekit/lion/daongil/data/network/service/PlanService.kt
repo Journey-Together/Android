@@ -47,6 +47,13 @@ interface PlanService {
         @Tag authType: AuthType = AuthType.ACCESS_TOKEN
     )
 
+    // 일정 수정
+    @PATCH("plan/{planId}")
+    suspend fun modifySchedule(
+        @Path("planId") planId: Long,
+        @Body newPlan: RequestBody
+    )
+
     // 내 일정 정보
     @GET("plan/my")
     suspend fun getMyMainSchedule(): MyMainScheduleResponse
@@ -134,5 +141,17 @@ interface PlanService {
     @DELETE("plan/review/{reviewId}")
     suspend fun deleteMyPlanReview(
         @Path("reviewId") reviewId: Long
+    )
+
+    // 일정 공개 비공개 수정
+    @PATCH("plan/{planId}/ispublic")
+    suspend fun updateMyPlanPublic(
+        @Path("planId") planId: Long
+    )
+
+    // 여행 일정 삭제
+    @DELETE("plan/{planId}")
+    suspend fun deleteMyPlanSchedule(
+        @Path("planId") planId: Long
     )
 }

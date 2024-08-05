@@ -1,8 +1,10 @@
 package kr.tekit.lion.daongil.presentation.myinfo.fragment
 
+import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
@@ -19,7 +21,9 @@ class MyInfoFragment : Fragment(R.layout.fragment_my_info) {
         val binding = FragmentMyInfoBinding.bind(view)
 
         with(binding) {
-            toolbarMyInfo.setNavigationOnClickListener { requireActivity().finish() }
+            toolbarMyInfo.setNavigationOnClickListener {
+                handleBackPress()
+            }
 
             repeatOnViewStarted {
                 viewModel.name.collect {
@@ -56,5 +60,16 @@ class MyInfoFragment : Fragment(R.layout.fragment_my_info) {
                 findNavController().navigate(R.id.action_myInfoFragment_to_iceModifyFragment)
             }
         }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            handleBackPress()
+        }
+    }
+
+    private fun handleBackPress() {
+        if (viewModel.isPersonalInfoModified.value) {
+            requireActivity().setResult(Activity.RESULT_OK)
+        }
+        requireActivity().finish()
     }
 }

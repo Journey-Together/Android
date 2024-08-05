@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import kr.tekit.lion.daongil.domain.model.MyElapsedScheduleInfo
-import kr.tekit.lion.daongil.domain.model.MyElapsedSchedules
 import kr.tekit.lion.daongil.domain.model.MyUpcomingScheduleInfo
 import kr.tekit.lion.daongil.domain.usecase.base.onError
 import kr.tekit.lion.daongil.domain.usecase.base.onSuccess
@@ -43,7 +42,7 @@ class MyScheduleViewModel(
         _elapsedPageNo.value = pageNum
     }
 
-    private fun getMyUpcomingScheduleList(page: Int) {
+    fun getMyUpcomingScheduleList(page: Int) {
         setUpcomingPageNo(page)
         viewModelScope.launch {
             getMyUpcomingSchedulesUseCase(page)
@@ -56,12 +55,11 @@ class MyScheduleViewModel(
         }
     }
 
-    private fun getMyElapsedScheduleList(page: Int) {
+    fun getMyElapsedScheduleList(page: Int) {
         setElapsedPageNo(page)
         viewModelScope.launch {
             getMyElapsedSchedulesUseCase(page)
                 .onSuccess {
-                    val ff : MyElapsedSchedules= it
                     _elapsedSchedules.value = it.myElapsedScheduleList
                     _isLastElapsed.value = it.last
                 }.onError {

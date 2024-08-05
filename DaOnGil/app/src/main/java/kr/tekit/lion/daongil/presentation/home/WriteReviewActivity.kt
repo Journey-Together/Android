@@ -9,13 +9,13 @@ import android.os.Build
 import android.os.Bundle
 import android.os.ext.SdkExtensions
 import android.provider.Settings
+import android.text.Editable
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointBackward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -101,11 +101,9 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
 
         val placeId = intent.getLongExtra("reviewPlaceId", -1)
         val placeName = intent.getStringExtra("reviewPlaceName") ?: "관광지"
-        val placeAddress = intent.getStringExtra("reviewPlaceAddress") ?: "관광지 주소"
-        val placeImage = intent.getStringExtra("reviewPlaceImage") ?: ""
 
         settingToolbar()
-        settingPlaceData(placeName, placeAddress, placeImage)
+        settingPlaceData(placeName)
         settingImageRVAdapter()
         settingBtn(placeId)
     }
@@ -116,15 +114,8 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         }
     }
 
-    private fun settingPlaceData(placeName: String, placeAddress: String, placeImage: String) {
+    private fun settingPlaceData(placeName: String) {
         binding.writeReviewTitleTv.text = placeName
-        binding.writeReviewAddressTv.text = placeAddress
-
-        Glide.with(binding.writeReviewIv)
-            .load(placeImage)
-            .placeholder(R.drawable.empty_view)
-            .error(R.drawable.empty_view)
-            .into(binding.writeReviewIv)
     }
 
     private fun settingImageRVAdapter() {
@@ -145,7 +136,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
             }
         }
 
-        binding.writeReviewDateBtn.setOnClickListener {
+        binding.writeReviewDateEdit.setOnClickListener {
             setDate()
         }
 
@@ -249,7 +240,7 @@ class WriteReviewActivity : AppCompatActivity(), ConfirmDialogInterface {
         val visitDateValue = visitDate?.let {
             formatDateValue(visitDate)
         }
-        binding.writeReviewDateBtn.text = visitDateValue
+        binding.writeReviewDateEdit.text = Editable.Factory.getInstance().newEditable(visitDateValue)
     }
 
     private fun checkReviewValid(): Boolean {

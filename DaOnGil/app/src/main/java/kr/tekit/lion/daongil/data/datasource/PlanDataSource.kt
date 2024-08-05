@@ -9,7 +9,6 @@ import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleElapsed.MyE
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.myScheduleUpcoming.MyUpcomingsResponse
 import kr.tekit.lion.daongil.data.dto.remote.response.plan.scheduleDetail.ScheduleDetailResponse
 import kr.tekit.lion.daongil.data.network.service.PlanService
-import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -50,6 +49,18 @@ class PlanDataSource(
             planService.addNewScheduleReviewTextOnly(planId, scheduleReview)
         }else{
             planService.addNewScheduleReview(planId, scheduleReview, images)
+        }
+    }
+
+    suspend fun modifyScheduleReview(
+        reviewId: Long,
+        scheduleReview: RequestBody,
+        images: List<MultipartBody.Part>?
+    ) {
+        if(images.isNullOrEmpty()){
+            planService.modifyScheduleReviewTextOnly(reviewId, scheduleReview)
+        }else{
+            planService.modifyScheduleReview(reviewId, scheduleReview, images)
         }
     }
 

@@ -80,6 +80,23 @@ interface PlanService {
         @Part("planReviewReq") scheduleReview: RequestBody,
     )
 
+    // 여행 일정 후기 수정
+    @Multipart
+    @PATCH("plan/review/{reviewId}")
+    suspend fun modifyScheduleReview(
+        @Path("reviewId") reviewId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody,
+        @Part images: List<MultipartBody.Part>
+    )
+
+    // 여행 일정 후기 수정 (이미지 제외)
+    @Multipart
+    @PATCH("plan/review/{reviewId}")
+    suspend fun modifyScheduleReviewTextOnly(
+        @Path("reviewId") reviewId: Long,
+        @Part("planReviewReq") scheduleReview: RequestBody
+    )
+
     // 다가오는 일정 목록
     @GET("plan/my/not-complete")
     suspend fun getMyUpcomingScheduleList(

@@ -145,11 +145,10 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                     else -> false // isPrivateOrPublic == R.id.radioButtonWriteScheReviewPrivate
                 }
 
-                binding.apply {
-                    val reviewContent = editTextWriteScheReviewContent.text.toString()
-                    val reviewRating = ratingbarWriteScheReview.rating
+                val reviewContent = editTextWriteScheReviewContent.text.toString()
+                val reviewRating = ratingbarWriteScheReview.rating
 
-                    val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
+                val reviewDetail = NewScheduleReview(reviewRating, reviewContent, isPublic)
 
                     viewModel.submitScheduleReview(planId, reviewDetail) { _, requestFlag ->
                         if (requestFlag) {

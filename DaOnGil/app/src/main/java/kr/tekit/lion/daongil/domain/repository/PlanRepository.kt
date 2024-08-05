@@ -5,6 +5,7 @@ import kr.tekit.lion.daongil.data.network.RetrofitInstance
 import kr.tekit.lion.daongil.data.network.service.PlanService
 import kr.tekit.lion.daongil.data.repository.PlanRepositoryImpl
 import kr.tekit.lion.daongil.domain.model.BriefScheduleInfo
+import kr.tekit.lion.daongil.domain.model.ModifiedScheduleReview
 import kr.tekit.lion.daongil.domain.model.MyElapsedSchedules
 import kr.tekit.lion.daongil.domain.model.MyMainSchedule
 import kr.tekit.lion.daongil.domain.model.MyUpcomingSchedules
@@ -12,6 +13,7 @@ import kr.tekit.lion.daongil.domain.model.NewPlan
 import kr.tekit.lion.daongil.domain.model.NewScheduleReview
 import kr.tekit.lion.daongil.domain.model.OpenPlan
 import kr.tekit.lion.daongil.domain.model.PlaceSearchResult
+import kr.tekit.lion.daongil.domain.model.ReviewImage
 import kr.tekit.lion.daongil.domain.model.ReviewImg
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailInfo
 import kr.tekit.lion.daongil.domain.model.ScheduleDetailReview
@@ -36,13 +38,19 @@ interface PlanRepository {
         images: List<ReviewImg>
     )
 
+    suspend fun modifyScheduleReview(
+        reviewId: Long,
+        scheduleReview: ModifiedScheduleReview,
+        images: List<ReviewImage>?
+    )
+
     suspend fun getMyUpcomingScheduleList(size: Int, page: Int): MyUpcomingSchedules
 
     suspend fun getMyElapsedScheduleList(size: Int, page: Int): MyElapsedSchedules
 
     suspend fun getDetailScheduleInfo(planId: Long): ScheduleDetailInfo
 
-    suspend fun getDetailScheduleInfoGuest(plandId: Long): ScheduleDetailInfo
+    suspend fun getDetailScheduleInfoGuest(planId: Long): ScheduleDetailnfo
 
     suspend fun getDetailScheduleReview(planId: Long): ScheduleDetailReview
 

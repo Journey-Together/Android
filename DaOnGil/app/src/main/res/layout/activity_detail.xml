@@ -76,17 +76,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/detail_bookmark_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_big3"
-                    android:layout_marginEnd="@dimen/margin_basic"
-                    android:background="@color/transparent"
-                    android:src="@drawable/bookmark_icon"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <com.google.android.material.appbar.MaterialToolbar
                     android:id="@+id/detail_toolbar"
                     android:layout_width="match_parent"
@@ -110,8 +99,19 @@
                         android:text="관광지"
                         android:textColor="@color/white"
                         android:textSize="@dimen/font_big2" />
-
                 </com.google.android.material.appbar.MaterialToolbar>
+
+                <ImageButton
+                    android:id="@+id/detail_bookmark_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_basic"
+                    android:background="@color/transparent"
+                    android:src="@drawable/bookmark_icon"
+                    app:layout_constraintBottom_toBottomOf="@+id/detail_toolbar"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/detail_toolbar" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView

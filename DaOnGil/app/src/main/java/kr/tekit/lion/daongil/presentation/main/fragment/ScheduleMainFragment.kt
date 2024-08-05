@@ -24,6 +24,7 @@ import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModel
 import kr.tekit.lion.daongil.presentation.main.vm.ScheduleMainViewModelFactory
 import kr.tekit.lion.daongil.presentation.myschedule.MyScheduleActivity
 import kr.tekit.lion.daongil.presentation.publicschedule.PublicScheduleActivity
+import kr.tekit.lion.daongil.presentation.schedule.ResultCode
 import kr.tekit.lion.daongil.presentation.schedule.ScheduleDetailActivity
 import kr.tekit.lion.daongil.presentation.scheduleform.ScheduleFormActivity
 import kr.tekit.lion.daongil.presentation.schedulereview.WriteScheduleReviewActivity
@@ -38,9 +39,8 @@ class ScheduleMainFragment : Fragment(R.layout.fragment_schedule_main), ConfirmD
         )
     }
 
-
     private val scheduleReviewLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
+        if (result.resultCode == ResultCode.RESULT_REVIEW_WRITE) {
             viewModel.getMyMainPlanList()
             viewModel.getOpenPlanList()
             view?.let {

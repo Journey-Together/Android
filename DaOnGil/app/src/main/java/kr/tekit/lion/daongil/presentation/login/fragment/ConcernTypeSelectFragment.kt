@@ -1,4 +1,4 @@
-package kr.tekit.lion.daongil.presentation.concerntype.fragment
+package kr.tekit.lion.daongil.presentation.login.fragment
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.FragmentConcernTypeSelectBinding
 import kr.tekit.lion.daongil.domain.model.ConcernType

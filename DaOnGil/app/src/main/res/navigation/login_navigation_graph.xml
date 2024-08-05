@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/concernTypeSelectFragment"
-        android:name="kr.tekit.lion.daongil.presentation.concerntype.fragment.ConcernTypeSelectFragment"
+        android:name="kr.tekit.lion.daongil.presentation.login.fragment.ConcernTypeSelectFragment"
         android:label="ConcernTypeSelectFragment" >
         <action
             android:id="@+id/action_concernTypeSelectFragment_to_loginFragment"

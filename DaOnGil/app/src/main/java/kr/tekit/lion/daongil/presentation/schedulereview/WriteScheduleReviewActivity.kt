@@ -16,14 +16,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityWriteScheduleReviewBinding
 import kr.tekit.lion.daongil.domain.model.NewScheduleReview
+import kr.tekit.lion.daongil.presentation.ext.showSnackbar
 import kr.tekit.lion.daongil.presentation.ext.toAbsolutePath
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialog
 import kr.tekit.lion.daongil.presentation.main.dialog.ConfirmDialogInterface
-import kr.tekit.lion.daongil.presentation.schedule.ResultCode
 import kr.tekit.lion.daongil.presentation.schedule.ResultCode.RESULT_REVIEW_WRITE
 import kr.tekit.lion.daongil.presentation.schedulereview.adapter.WriteReviewImageAdapter
 import kr.tekit.lion.daongil.presentation.schedulereview.vm.WriteScheduleReviewViewModel
@@ -85,7 +84,8 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
 
     private fun initToolbar(){
         binding.toolbarWriteScheReview.setNavigationOnClickListener {
-                finish()
+            setResult(RESULT_CANCELED)
+            finish()
         }
     }
     private fun initView(planId: Long) {
@@ -124,7 +124,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         binding.apply {
             imageButtonWriteScheReviewPhotoAdd.setOnClickListener {
                 if(!viewModel.isMoreImageAttachable()){
-                    showSnackBar(it, "사진은 최대 4개까지 첨부할 수 있습니다")
+                    it.showSnackbar("사진은 최대 4개까지 첨부할 수 있습니다")
                     return@setOnClickListener
                 }
 
@@ -212,7 +212,7 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
         with(binding){
             val isPrivateOrPublic = buttonGroupWriteScheReviewPublic.checkedRadioButtonId
             if (isPrivateOrPublic == View.NO_ID) {
-                showSnackBar(buttonGroupWriteScheReviewPublic, "여행 일정 공개 범주를 선택해주세요")
+                buttonGroupWriteScheReviewPublic.showSnackbar("여행 일정 공개 범주를 선택해주세요")
                 return false
             }
 
@@ -231,11 +231,5 @@ class WriteScheduleReviewActivity : AppCompatActivity() ,ConfirmDialogInterface 
                 inputLayoutWriteScheReviewContent.error = null
             }
         }
-    }
-
-    private fun showSnackBar(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_LONG)
-            .setBackgroundTint(getColor(R.color.text_secondary))
-            .show()
     }
 }

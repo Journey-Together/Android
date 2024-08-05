@@ -190,24 +190,29 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                     }
                     // 리뷰가 없을 때
                     else {
-                        if(scheduleDetail.isWriter){
+                        if (scheduleDetail.isWriter) {
                             cardViewScheduleReview.visibility = View.GONE
                             cardViewScheduleEmptyReview.visibility = View.VISIBLE
                             this.scheduleEmptyReviewTitle.text = getString(R.string.text_my_review)
-                            this.scheduleEmptyReviewContent.text = getString(R.string.text_leave_schedule_review)
+                            this.scheduleEmptyReviewContent.text =
+                                getString(R.string.text_leave_schedule_review)
 
                             cardViewScheduleEmptyReview.setOnClickListener {
                                 val newIntent =
-                                    Intent(this@ScheduleDetailActivity, WriteScheduleReviewActivity::class.java)
+                                    Intent(
+                                        this@ScheduleDetailActivity,
+                                        WriteScheduleReviewActivity::class.java
+                                    )
                                 val planId = intent.getLongExtra("planId", -1)
                                 newIntent.putExtra("planId", planId)
                                 scheduleReviewLauncher.launch(newIntent)
                             }
-                        }
-                        else {
+                        } else {
                             cardViewScheduleEmptyReview.visibility = View.VISIBLE
-                            this.scheduleEmptyReviewTitle.text = getString(R.string.text_schedule_info_leave_title)
-                            this.scheduleEmptyReviewContent.text = getString(R.string.text_schedule_info_leave_content)
+                            this.scheduleEmptyReviewTitle.text =
+                                getString(R.string.text_schedule_info_leave_title)
+                            this.scheduleEmptyReviewContent.text =
+                                getString(R.string.text_schedule_info_leave_content)
                         }
                     }
 
@@ -328,7 +333,6 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
 
     private fun setBookmarkIcon(menuItem: MenuItem) {
         if (isBookmarked) {
-            // 임시 아이콘 -> 교체 예정
             menuItem.setIcon(R.drawable.bookmark_fill_scheduledetail_icon)
         } else {
             menuItem.setIcon(R.drawable.bookmark_schedule_detail_icon)
@@ -450,9 +454,7 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
 
     private fun showScheduleReviewManageBottomSheet(planId: Long, reviewId: Long) {
         ScheduleReviewManageBottomSheet(
-            reviewId = planId,
             onReviewDeleteClickListener = {
-                // TO DO - 서버에 여행 일정 후기 삭제 요청
                 viewModel.deleteMyPlanReview(
                     reviewId = reviewId,
                     planId = planId
@@ -463,10 +465,9 @@ class ScheduleDetailActivity : AppCompatActivity(), ConfirmDialogInterface {
                 )
             },
             onReviewEditClickListener = {
-                // 리뷰 수정 activity
                 val newIntent =
                     Intent(this@ScheduleDetailActivity, ModifyScheduleReviewActivity::class.java)
-                newIntent.putExtra("reviewId", reviewId)
+                newIntent.putExtra("planId", planId)
                 scheduleReviewLauncher.launch(newIntent)
             }).show(supportFragmentManager, "ScheduleReviewManageBottomSheet")
     }

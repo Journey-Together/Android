@@ -30,7 +30,7 @@ data class DetailPlaceResponse(
             placeId = data.placeId,
             reviewList = data.reviewList?.map {
                 Review(
-                    reviewImg = it.reviewImg,
+                    reviewImgs = it.reviewImgs?: emptyList(),
                     nickname = it.nickname,
                     profileImg = it.profileImg,
                     content = it.content,

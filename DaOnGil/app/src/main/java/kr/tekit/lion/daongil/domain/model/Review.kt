@@ -6,7 +6,7 @@ data class Review (
     val nickname : String,
     val profileImg : String,
     val content : String,
-    val reviewImg : String?,
+    val reviewImgs : List<String>?,
     val grade : Float,
     val date : LocalDate
 )

@@ -23,6 +23,7 @@ data class PlaceReviewResponse(
                     reviewId = it.reviewId
                 )
             },
+            placeImg = data.placeImg,
             pageNo = data.pageNo,
             pageSize = data.pageSize,
             placeAddress = data.placeAddress,

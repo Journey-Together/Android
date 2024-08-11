@@ -3,17 +3,18 @@ package kr.tekit.lion.daongil.presentation.home.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import kr.tekit.lion.daongil.R
-import kr.tekit.lion.daongil.databinding.ItemDetailReviewSmallBinding
+import kr.tekit.lion.daongil.databinding.ItemDetailReviewBigBinding
 import kr.tekit.lion.daongil.domain.model.Review
 
 class DetailReviewRVAdapter(private val reviewList : List<Review>)
     : RecyclerView.Adapter<DetailReviewRVAdapter.DetailReviewViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailReviewViewHolder {
-        val binding : ItemDetailReviewSmallBinding = ItemDetailReviewSmallBinding.inflate(
+        val binding : ItemDetailReviewBigBinding = ItemDetailReviewBigBinding.inflate(
             LayoutInflater.from(parent.context), parent, false)
 
         return DetailReviewViewHolder(binding)
@@ -25,29 +26,29 @@ class DetailReviewRVAdapter(private val reviewList : List<Review>)
         holder.bind(reviewList[position])
     }
 
-    class DetailReviewViewHolder(private val binding : ItemDetailReviewSmallBinding)
+    class DetailReviewViewHolder(private val binding : ItemDetailReviewBigBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(reviewData : Review) {
             with(binding) {
-                itemDetailReviewNickname.text = reviewData.nickname
-                itemDetailReviewContent.text = reviewData.content
-                itemDetailReviewDate.text = reviewData.date.toString()
-                itemDetailReviewRatingbar.rating = reviewData.grade
+                itemDetailReviewBigNickname.text = reviewData.nickname
+                itemDetailReviewBigContent.text = reviewData.content
+                itemDetailReviewBigDate.text = reviewData.date.toString()
+                itemDetailReviewBigRatingbar.rating = reviewData.grade
 
-                Glide.with(itemDetailReviewProfileIv.context)
+                Glide.with(itemDetailReviewBigProfileIv.context)
                     .load(reviewData.profileImg)
                     .error(R.drawable.default_profile)
-                    .into(itemDetailReviewProfileIv)
+                    .into(itemDetailReviewBigProfileIv)
 
-                if (reviewData.reviewImg != null) {
-                    itemDetailReviewIv.visibility = View.VISIBLE
+                if (reviewData.reviewImgs != null) {
+                    itemDetailReviewBigRv.visibility = View.VISIBLE
 
-                    Glide.with(itemDetailReviewIv.context)
-                        .load(reviewData.reviewImg)
-                        .error(R.drawable.empty_view_small)
-                        .into(itemDetailReviewIv)
+                    val reviewImageRVAdapter = ReviewImageRVAdapter(reviewData.reviewImgs)
+                    binding.itemDetailReviewBigRv.adapter = reviewImageRVAdapter
+                    binding.itemDetailReviewBigRv.layoutManager =
+                        LinearLayoutManager(binding.root.context, LinearLayoutManager.HORIZONTAL, false)
                 } else {
-                    itemDetailReviewIv.visibility = View.GONE
+                    itemDetailReviewBigRv.visibility = View.GONE
                 }
             }
         }

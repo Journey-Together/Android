@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import kr.tekit.lion.daongil.R
 import kr.tekit.lion.daongil.databinding.ActivityReviewListBinding
 import kr.tekit.lion.daongil.domain.model.PlaceReview
 import kr.tekit.lion.daongil.presentation.ext.addOnScrollEndListener
@@ -61,6 +63,11 @@ class ReviewListActivity : AppCompatActivity() {
             binding.reviewListTitleTv.text = placeReviewInfo.placeName
             binding.reviewListAddressTv.text = placeReviewInfo.placeAddress
             binding.reviewListCount2Tv.text = placeReviewInfo.placeReviewList.size.toString()
+
+            Glide.with(binding.reviewListThumbnailIv)
+                .load(placeReviewInfo.placeImg)
+                .error(R.drawable.empty_view)
+                .into(binding.reviewListThumbnailIv)
 
             settingReviewListRVAdapter(placeReviewInfo.placeReviewList)
         }

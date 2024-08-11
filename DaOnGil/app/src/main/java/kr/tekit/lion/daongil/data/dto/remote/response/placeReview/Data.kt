@@ -7,6 +7,7 @@ import com.squareup.moshi.JsonClass
 data class Data(
     @Json(name = "myplaceReviewList")
     val myPlaceReviewList: List<MyPlaceReview>,
+    val placeImg: String,
     val pageNo: Int?,
     val pageSize: Int?,
     val placeAddress: String,

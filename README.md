@@ -1,5 +1,5 @@
 # 🍀 다온길
-<img src="https://github.com/user-attachments/assets/c4ba9df5-e5e1-451c-86ef-5ca4894504a4" width="90%"/>
+<img src="https://github.com/user-attachments/assets/c4ba9df5-e5e1-451c-86ef-5ca4894504a4"/>
 
 - 무장애 여행 정보 애플리케이션
 - 개발 기간: 2024.05.17 ~ 2024.09.12

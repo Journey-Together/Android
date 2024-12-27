@@ -7,6 +7,8 @@
 <br/>
 
 ## 📢 자세한 내용 및 소식
+Clean Architecture와 Hilt를 도입한 구조 개선을 위해 기존 프로젝트를 마이그레이션하여 새 레포로 이전하였습니다.
+
 [DaOnGil_CleanArchitecture](https://github.com/Journey-Together/DaOnGil_CleanArchitecture)
 
 <br/>
